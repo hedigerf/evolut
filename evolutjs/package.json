@@ -1,0 +1,33 @@
+{
+  "name": "evolut",
+  "version": "0.0.1",
+  "description": "Bachelor thesis",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hedigerf/evolut.git"
+  },
+  "keywords": [
+    "evolut"
+  ],
+  "author": "Fabian Hediger <hedigerf@gmail.com>, Florian Tanner <florian.tanner@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hedigerf/evolut/issues"
+  },
+  "homepage": "https://github.com/hedigerf/evolut/#readme",
+  "depencencies": {
+    "matter-js": "*",
+    "pixi": "*",
+    "jquery": "*"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.34.0",
+    "matter-js": "*",
+    "pixi": "*",
+    "jquery": "*"
+  }
+}
