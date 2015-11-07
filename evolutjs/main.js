@@ -15,7 +15,8 @@ app.on('ready', function() {
 
   mainWindow = new BrowserWindow({
     width: 1280, height: 720,
-    'web-preferences': {webgl: true, webaudio: true}
+    'web-preferences': {webgl: true, webaudio: true},
+    'dark-theme': true
   });
 
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
