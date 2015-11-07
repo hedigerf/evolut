@@ -25,9 +25,9 @@
     "jquery": "*"
   },
   "devDependencies": {
-    "electron-prebuilt": "^0.34.0",
-    "matter-js": "*",
-    "pixi.js": "2.2.9",
-    "jquery": "*"
+    "electron-prebuilt": "^0.34.0"
+  },
+  "jshintConfig": {
+    "esnext": true
   }
 }
