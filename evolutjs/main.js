@@ -13,8 +13,13 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
 
-  mainWindow = new BrowserWindow({width: 1280, height: 720});
+  mainWindow = new BrowserWindow({
+    width: 1280, height: 720,
+    'web-preferences': {webgl: true, webaudio: true}
+  });
+
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  //mainWindow.loadUrl('http://html5test.com/index.html');
   mainWindow.openDevTools();
 
   mainWindow.on('closed', function() {

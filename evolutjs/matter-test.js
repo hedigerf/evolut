@@ -1,12 +1,12 @@
 console.log('hallo');
 
 var jQuery = require('jquery');
+var PIXI = require('pixi.js');
 
 jQuery(document).ready(function() {
 
 console.log('rdy start');
 
-  var Pixi = require('pixi');
   var Matter = require('matter-js');
 
   // Matter.js module aliases
@@ -15,7 +15,13 @@ console.log('rdy start');
       Bodies = Matter.Bodies;
 
   // create a Matter.js engine
-  var engine = Engine.create(document.body);
+  //var engine = Engine.create(document.body);
+  var engine = Engine.create({
+    render: {
+      element: document.body,
+      controller: Matter.RenderPixi
+    }
+  });
 
   // create two boxes and a ground
   var boxA = Bodies.rectangle(400, 200, 80, 80);

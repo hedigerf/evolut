@@ -21,13 +21,13 @@
   "homepage": "https://github.com/hedigerf/evolut/#readme",
   "depencencies": {
     "matter-js": "*",
-    "pixi": "*",
+    "pixi.js": "2.2.9",
     "jquery": "*"
   },
   "devDependencies": {
     "electron-prebuilt": "^0.34.0",
     "matter-js": "*",
-    "pixi": "*",
+    "pixi.js": "2.2.9",
     "jquery": "*"
   }
 }
