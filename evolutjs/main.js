@@ -1,29 +1,38 @@
+//import app from 'app';
+//import BrowserWindow from 'browser-window';
+//import CrashReporter from 'crash-reporter';
+
 var app = require('app');
 var BrowserWindow = require('browser-window');
+
+//CrashReporter.start();
 
 require('crash-reporter').start();
 
 var mainWindow = null;
 
 app.on('window-all-closed', function() {
-  if (process.platform != 'darwin') {
-    app.quit();
-  }
+    if (process.platform != 'darwin') {
+        app.quit();
+    }
 });
 
 app.on('ready', function() {
 
-  mainWindow = new BrowserWindow({
-    width: 1280, height: 720,
-    'web-preferences': {webgl: true, webaudio: true},
-    'dark-theme': true
-  });
+    mainWindow = new BrowserWindow({
+        width: 1280,
+        height: 720,
+        'web-preferences': {
+            webgl: true,
+            webaudio: true
+        },
+        'dark-theme': true
+    });
 
-  mainWindow.loadUrl('file://' + __dirname + '/index.html');
-  //mainWindow.loadUrl('http://html5test.com/index.html');
-  mainWindow.openDevTools();
+    mainWindow.loadUrl('file://' + __dirname + '/index.html');
+    //mainWindow.openDevTools();
 
-  mainWindow.on('closed', function() {
-    mainWindow = null;
-  });
+    mainWindow.on('closed', function() {
+        mainWindow = null;
+    });
 });
