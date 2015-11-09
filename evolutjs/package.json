@@ -32,6 +32,8 @@
     },
     "devDependencies": {
         "electron-prebuilt": "^0.34.0",
+        "electron-compile": "latest",
+        "electron-compilers": "latest",
         "mocha": "latest",
         "chai": "latest",
         "babel-core": "5.8.33",

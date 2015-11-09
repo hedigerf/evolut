@@ -24,7 +24,8 @@
         "beforeAll",
         "context",
         "describe",
-        "it"
+        "it",
+        "document"
     ],
     "debug": false,
     "devel": true,

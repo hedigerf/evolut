@@ -1,43 +1,29 @@
-console.log('hallo');
+import * as PIXI from 'pixi.js';
+import jQuery from 'jquery';
+import Matter, {
+    Bodies, Engine, World
+}
+from 'matter-js';
 
-var jQuery = require('jquery');
-var PIXI = require('pixi.js');
+jQuery(document).ready(() => {
 
-jQuery(document).ready(function() {
-
-    console.log('rdy start');
-
-    var Matter = require('matter-js');
-
-    // Matter.js module aliases
-    var Engine = Matter.Engine,
-        World = Matter.World,
-        Bodies = Matter.Bodies;
-
-    // create a Matter.js engine
-    //var engine = Engine.create(document.body);
-    var engine = Engine.create({
+    //let engine = Engine.create(document.body);
+    let engine = Engine.create({
         render: {
             element: document.body,
             controller: Matter.RenderPixi
         }
     });
 
-    // create two boxes and a ground
-    var boxA = Bodies.rectangle(400, 200, 80, 80);
-    var boxB = Bodies.rectangle(450, 50, 80, 80);
-    var ground = Bodies.rectangle(400, 610, 810, 60, {
+    let boxA = Bodies.rectangle(400, 200, 80, 80);
+    let boxB = Bodies.rectangle(450, 50, 80, 80);
+    let box3 = Bodies.rectangle(350, 150, 40, 40);
+
+    let ground = Bodies.rectangle(400, 610, 810, 60, {
         isStatic: true
     });
 
-    // add all of the bodies to the world
-    World.add(engine.world, [boxA, boxB, ground]);
-
-    // run the engine
+    World.add(engine.world, [boxA, boxB, box3, ground]);
     Engine.run(engine);
 
-    console.log('rdy done');
-
 });
-
-console.log('eof');

@@ -1,18 +1,13 @@
-//import app from 'app';
-//import BrowserWindow from 'browser-window';
-//import CrashReporter from 'crash-reporter';
-
 var app = require('app');
 var BrowserWindow = require('browser-window');
 
-//CrashReporter.start();
-
 require('crash-reporter').start();
+require('electron-compile').init();
 
 var mainWindow = null;
 
 app.on('window-all-closed', function() {
-    if (process.platform != 'darwin') {
+    if (process.platform !== 'darwin') {
         app.quit();
     }
 });
@@ -30,7 +25,7 @@ app.on('ready', function() {
     });
 
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
-    //mainWindow.openDevTools();
+    mainWindow.openDevTools();
 
     mainWindow.on('closed', function() {
         mainWindow = null;
