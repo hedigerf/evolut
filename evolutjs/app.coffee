@@ -6,7 +6,7 @@ mainWindow = null
 
 app.on 'window-all-closed', ->
   if process.platform != 'darwin'
-    app.quit
+    app.quit()
 
 app.on 'ready', ->
   mainWindow = new BrowserWindow {
@@ -16,7 +16,7 @@ app.on 'ready', ->
   }
 
   mainWindow.loadUrl 'file://' + __dirname + '/index.html'
-  mainWindow.openDevTools
+  mainWindow.openDevTools()
 
   mainWindow.on 'closed', ->
     mainWindow = null
