@@ -20,8 +20,7 @@ app.on('ready', function() {
         'web-preferences': {
             webgl: true,
             webaudio: true
-        },
-        'dark-theme': true
+        }
     });
 
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
