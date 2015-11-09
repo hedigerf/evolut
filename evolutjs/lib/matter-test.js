@@ -1,16 +1,10 @@
-console.log('hallo');
-
 var jQuery = require('jquery');
 var PIXI = require('pixi.js');
+var Matter = require('matter-js');
 
 
 jQuery(document).ready(() => {
 
-    console.log('rdy start');
-
-    var Matter = require('matter-js');
-
-    // Matter.js module aliases
     var Engine = Matter.Engine,
         World = Matter.World,
         Bodies = Matter.Bodies,
@@ -18,16 +12,12 @@ jQuery(document).ready(() => {
         Events = Matter.Events,
         Constraint = Matter.Constraint;
 
-    // create a Matter.js engine
-    //var engine = Engine.create(document.body);
     var engine = Engine.create({
         render: {
             element: document.body,
             controller: Matter.RenderPixi
         }
     });
-
-
 
     // create two boxes and a ground
     //var boxA = Bodies.rectangle(400, 200, 80, 80);
@@ -39,6 +29,7 @@ jQuery(document).ready(() => {
     var constraint=Constraint.create({bodyA: boxC, bodyB: leg, pointA: {x: 0, y: 50}});
     var constraint2=Constraint.create({bodyA: boxC, bodyB: leg2, pointA: {x: 50, y: 50}});
     var constraint3=Constraint.create({bodyA: boxC, bodyB: leg3, pointA: {x: -50, y: 50 }});
+
     var ground = Bodies.rectangle(400, 610, 810, 60, {
         isStatic: true
     });
@@ -59,9 +50,4 @@ jQuery(document).ready(() => {
     });
     // run the engine
     Engine.run(engine);
-
-    console.log('rdy done');
-
 });
-
-console.log('eof');
