@@ -24,7 +24,12 @@
         "beforeAll",
         "context",
         "describe",
-        "it"
+        "it",
+        "Engine",
+        "document",
+        "Matter",
+        "Bodies",
+        "World"
     ],
     "debug": false,
     "devel": true,
