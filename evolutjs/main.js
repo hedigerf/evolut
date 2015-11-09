@@ -2,7 +2,6 @@ var app = require('app');
 var BrowserWindow = require('browser-window');
 
 require('crash-reporter').start();
-require('electron-compile').init();
 
 var mainWindow = null;
 
