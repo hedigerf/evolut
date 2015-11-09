@@ -14,10 +14,10 @@ jQuery(document).ready ->
   # create two boxes and a ground
   #var boxA = Bodies.rectangle(400, 200, 80, 80);
   #var boxB = Bodies.rectangle(450, 50, 80, 80);
-  boxC = Bodies.rectangle(300, 510, 200, 50)
-  leg = Bodies.rectangle(300, 560, 10, 50)
-  leg2 = Bodies.rectangle(350, 560, 10, 50)
-  leg3 = Bodies.rectangle(250, 560, 10, 50)
+  boxC = Bodies.rectangle 300, 510, 200, 50
+  leg = Bodies.rectangle 300, 560, 10, 50
+  leg2 = Bodies.rectangle 350, 560, 10, 50
+  leg3 = Bodies.rectangle 250, 560, 10, 50
   constraint = Constraint.create(
     bodyA: boxC
     bodyB: leg
