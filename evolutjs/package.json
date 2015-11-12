@@ -28,7 +28,8 @@
     "dependencies": {
 				"pixi.js": "latest",
 				"p2": "latest",
-				"p2Pixi": "git://github.com/TomWHall/p2Pixi.git#master",
+				"p2Pixi": "file:../../p2Pixi",
+				// "p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
       	"jquery": "latest"
     },
     "devDependencies": {
