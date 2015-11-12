@@ -25,10 +25,11 @@
         "url": "https://github.com/hedigerf/evolut/issues"
     },
     "homepage": "https://github.com/hedigerf/evolut/#readme",
-    "depencencies": {
-        "matter-js": "latest",
-        "pixi.js": "latest",
-        "jquery": "latest"
+    "dependencies": {
+				"pixi.js": "latest",
+				"p2": "latest",
+				"p2Pixi": "git://github.com/TomWHall/p2Pixi.git#master",
+      	"jquery": "latest"
     },
     "devDependencies": {
         "electron-prebuilt": "^0.34.0",
@@ -36,9 +37,6 @@
         "electron-compilers": "latest",
         "electron-compile": "latest",
         "mocha": "latest",
-        "chai": "latest",
-        "matter-js": "latest",
-        "pixi.js": "latest",
-        "jquery": "latest"
+        "chai": "latest"
     }
 }
