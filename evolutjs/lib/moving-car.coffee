@@ -1,106 +1,82 @@
-require 'pixi.js'
-
 jQuery = require 'jquery'
 Matter = require 'matter-js'
+
+require './lib/functional'
 
 Bodies = Matter.Bodies
 Body = Matter.Body
 Composite = Matter.Composite
+Composites = Matter.Composites
 Constraint = Matter.Constraint
 Engine = Matter.Engine
 Events = Matter.Events
 Vector = Matter.Vector
 World = Matter.World
 
-makeCarBody = (group, posX, posY, width, height) ->
-  Bodies.trapezoid posX, posY, width, height, .3,
-    collisionFilter:
-      group: group
-    friction: .01
-    chamfer:
-      radius: 10
-
-
-makeCarWheel = (group, posX, posY, wheelXOffset, wheelYOffset, wheelSize) ->
-  Bodies.circle posX + wheelXOffset, posY + wheelYOffset, wheelSize,
-    collisionFilter:
-      group: group
-    restitution: .5
-    friction: .9
-    frictionStatic: 10
-    slop: .5
-    density: .01
-
-
-makeCarAxe = (body, wheel, wheelXOffset, wheelYOffset) ->
-  Constraint.create
-    bodyA: body
-    pointA:
-      x: wheelXOffset
-      y: wheelYOffset
-    bodyB: wheel
-    stiffnes: 1
-
-
-makeCar = (posX, posY, width, height, wheelSize) ->
-
-  group = Body.nextGroup true
-
-  wheelBase = -20
-  wheelAOffset = -width / 1.8 + wheelBase
-  wheelBOffset = width / 1.8 - wheelBase
-  wheelYOffset = 0
-
-  car = Composite.create
-    force: Vector.create 0, 0
-    label: 'a car'
-    parts: []
-    position: Vector.create posX, posY
-    positionPrev: Vector.create posX, posY
-
-  body = makeCarBody group, posX, posY, width, height
-
-  wheelA = makeCarWheel group, posX, posY, wheelAOffset, wheelYOffset, wheelSize
-  wheelB = makeCarWheel group, posX, posY, wheelBOffset, wheelYOffset, wheelSize
-
-  axeA = makeCarAxe body, wheelA, wheelAOffset, wheelYOffset
-  axeB = makeCarAxe body, wheelB, wheelBOffset, wheelYOffset
-
-  Composite.addBody car, body
-  Composite.addBody car, wheelA
-  Composite.addBody car, wheelB
-
-  Composite.addConstraint car, axeA
-  Composite.addConstraint car, axeB
-
-  car
 
 makeGround = ->
   Bodies.rectangle 400, 610, 810, 60, isStatic: true
 
-onTickMoveBody = (body) -> (event) ->
-  #Body.applyForce body, Vector.create(0, 60), Vector.create(10, 0)
-  Body.translate body, Vector.create(5, 0)
+
+makeUpperGround = ->
+  Bodies.rectangle 100, 300, 400, 10,
+		isStatic: true
+		angle: -6.02
+
+
+makeCar = (x, y) ->
+	car = Composites.car x, y, 100, 40, 30
+	car.position = Vector.create x, y
+	car.positionPrev = Vector.create x, y
+	car.force = Vector.create 0, 0
+	car
+
+
+accelerateComposite = (obj, force, offset) ->
+	bodies = Composite.allBodies obj
+	body = bodies[0]
+	accelerateBody bodies[0], force, offset
+
+
+accelerateBody = (body, force, offset) ->
+	point = Vector.create(body.position.x + offset, body.position.y)
+	direction = Vector.create(force, 0)
+	Body.applyForce body, point, direction
+
+
+makeVerboseEngine = ->
+	Engine.create
+		render:
+			element: document.body
+			controller: Matter.RenderPixi
+			options:
+				wireframes: true
+				showVelocity: true
+				showAxes: true
+				showCollisions: true
+				showAngleIndicator: true
+
 
 makeWorld = ->
+	engine = makeVerboseEngine()
 
-  engine = Engine.create
-    render:
-      element: document.body,
-      controller: Matter.RenderPixi
-      options:
-        showAngleIndicator: true
-        showCollisions: true
+	ground = makeGround()
+	slope = makeUpperGround()
+	circle = Bodies.circle 50, 570, 20, friction: .5
 
-  car = makeCar 300, 300, 100, 40, 30
-  ground = makeGround()
+	car = makeCar 100, 250
+	car2 = makeCar 300, 570
 
-  World.add engine.world, [car, ground]
+	World.add engine.world, [slope, car2, circle, car, ground]
 
-  Events.on engine, 'tick', (event) ->
-    Body.translate car, Vector.create 5,0
+	Events.on engine, 'tick', ->
+		accelerateComposite car, -.0032, -100
+		accelerateBody circle, .01, 1
 
-  Engine.run engine
+	Engine.run engine
+
+	true
+
 
 jQuery(document).ready ->
   makeWorld()
