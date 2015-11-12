@@ -27,7 +27,7 @@
     "homepage": "https://github.com/hedigerf/evolut/#readme",
     "depencencies": {
         "matter-js": "latest",
-        "pixi.js": "2.2.9",
+        "pixi.js": "latest",
         "jquery": "latest"
     },
     "devDependencies": {
@@ -38,7 +38,7 @@
         "mocha": "latest",
         "chai": "latest",
         "matter-js": "latest",
-        "pixi.js": "2.2.9",
+        "pixi.js": "latest",
         "jquery": "latest"
     }
 }
