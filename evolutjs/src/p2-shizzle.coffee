@@ -1,10 +1,10 @@
-
 PIXI         = require 'pixi.js'
 P2Pixi       = require './lib/p2Pixi'
 jQuery       = require 'jquery'
 canvasBuffer = require 'electron-canvas-to-buffer'
 fs           = require 'fs'
 path         = require 'path'
+{Ant}        = require './src/ant'
 
 cosAmp = (x, amp) ->
   Math.cos(x * amp)
@@ -44,11 +44,12 @@ class CarDemoGame extends P2Pixi.Game
   beforeRun: ->
     new CarGround this
     c = new Circle this
+    a = new Ant this
 
     @world.on 'postStep', ->
       console.log c.bodies[0].position
 
-    @trackedBody = c.bodies[0]
+    @trackedBody = a.bodies[0]
 
 #
 # Ground
@@ -86,12 +87,12 @@ class Circle extends P2Pixi.GameObject
       mass: 4
 
     circle = new p2.Circle
-      radius: 1
+      radius: .25
 
     style =
-      lineWidth: 12
+      lineWidth: 1
       lineColor: 0xff0000
-      fillColor: 0x00ff00
+      fillColor: 0xffff00
 
     @addBody body
     @addShape body, circle, [0, 0], 0, bodyOptions, style
