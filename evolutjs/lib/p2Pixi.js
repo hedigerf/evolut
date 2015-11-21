@@ -117,6 +117,7 @@ var P2Pixi;
             self.lastWorldStepTime = self.time();
 
             function update() {
+
                 var timeSinceLastCall;
 
                 if (!self.paused) {

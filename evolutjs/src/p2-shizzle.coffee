@@ -38,18 +38,17 @@ class CarDemoGame extends P2Pixi.Game
       pixiOptions:
         view: document.getElementById 'viewport'
         transparent: true
+        autoResize: true
       assetUrls: [rockTexturePath()]
 
-	# @override
   beforeRun: ->
     new CarGround this
+    c = new Circle this
 
+    @world.on 'postStep', ->
+      console.log c.bodies[0].position
 
-  afterRender: ->
-    dumpCanvas @pixiAdapter.renderer.view, 'image.png'
-    @afterRender = ->
-
-
+    @trackedBody = c.bodies[0]
 
 #
 # Ground
@@ -57,20 +56,20 @@ class CarDemoGame extends P2Pixi.Game
 class CarGround extends P2Pixi.GameObject
 
   constructor: (game) ->
-
     super game
 
     bodyOptions =
+      collisionGroup: 1
       collisionMask: 1 | 2
 
     texture = PIXI.Texture.fromImage rockTexturePath(), false
 
     body = new p2.Body
-      position: [0, 10]
+      position: [0, -20]
       mass: 0
 
     @addBody body
-    @addShape body, createHeightField(), [0, 0], 0, bodyOptions, null, texture, .5
+    @addShape body, createHeightField(), [0, 10], 0, bodyOptions, null, texture
 
 
 class Circle extends P2Pixi.GameObject
@@ -79,14 +78,23 @@ class Circle extends P2Pixi.GameObject
     super game
 
     bodyOptions =
-      collisionMask: 1 | 2
+      collisionGroup: 2
+      collisionMask: 1
 
-    body = new p2.body
-      position: [50, 50]
+    body = new p2.Body
+      position: [0, 10]
       mass: 4
 
+    circle = new p2.Circle
+      radius: 1
+
+    style =
+      lineWidth: 12
+      lineColor: 0xff0000
+      fillColor: 0x00ff00
+
     @addBody body
-    @addShape body, null, [0, 0], 0, bodyOptions
+    @addShape body, circle, [0, 0], 0, bodyOptions, style
 
 
 jQuery ->
