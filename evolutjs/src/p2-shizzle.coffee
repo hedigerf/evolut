@@ -65,11 +65,11 @@ class CarGround extends P2Pixi.GameObject
     texture = PIXI.Texture.fromImage rockTexturePath(), false
 
     body = new p2.Body
-      position: [0, -20]
+      position: [-75, -10]
       mass: 0
 
     @addBody body
-    @addShape body, createHeightField(), [0, 10], 0, bodyOptions, null, texture
+    @addShape body, createHeightField(), [0, 0], 0, bodyOptions, null, texture
 
 
 class Circle extends P2Pixi.GameObject
