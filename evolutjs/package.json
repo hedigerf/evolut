@@ -7,7 +7,7 @@
   "scripts": {
     "start": "electron main.js",
     "test": "npm run lint && npm run assert",
-    "lint": "jshint lib test",
+    "lint": "coffeelint src test",
     "assert": "mocha --compilers coffee:coffee-script/register test/**/*.coffee"
   },
   "repository": {
@@ -25,7 +25,8 @@
 		"pixi.js": "latest",
 		"p2": "latest",
 		"p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
-  	"jquery": "latest"
+  	"jquery": "latest",
+    "electron-canvas-to-buffer": "1.0.2"
   },
   "devDependencies": {
     "electron-prebuilt": "^0.34.0",

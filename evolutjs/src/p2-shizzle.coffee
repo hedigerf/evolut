@@ -1,26 +1,54 @@
 
-PIXI   = require 'pixi.js'
-P2Pixi = require 'p2Pixi'
-jQuery = require 'jquery'
+PIXI         = require 'pixi.js'
+P2Pixi       = require './lib/p2Pixi'
+jQuery       = require 'jquery'
+canvasBuffer = require 'electron-canvas-to-buffer'
+fs           = require 'fs'
+path         = require 'path'
+
+cosAmp = (x, amp) ->
+  Math.cos(x * amp)
+
+toHeight = (i) ->
+  cos = (a) ->
+    cosAmp i, a
+  cos(.2) * cos(.5) * cos(.1) * cos(.05)
+
+rockTexturePath = ->
+  path.join __dirname, 'assets/textures', 'rock.jpg'
+
+# Creates a new height field
+createHeightField = ->
+  new p2.Heightfield
+    heights: [1..500].map toHeight
+    elementWidth: .3
+    material: new p2.Material()
+
+# Writes the canvas content to an image
+dumpCanvas = (canvas, imageName) ->
+  imagePath = path.join __dirname, 'assets/images', path.basename(imageName)
+  fs.writeFile imagePath, canvasBuffer(canvas)
+
 
 # Car demo game
 class CarDemoGame extends P2Pixi.Game
 
-	constructor: ->
-		super(
-			pixiOptions:
-				view: document.getElementById('viewport')
-				transparent: true
-			assetUrls: ['assets/textures/rock.jpg']
-		)
+  constructor: ->
+    super
+      pixiOptions:
+        view: document.getElementById 'viewport'
+        transparent: true
+      assetUrls: [rockTexturePath()]
 
 	# @override
-	beforeRun: ->
-		new CarGround this
+  beforeRun: ->
+    new CarGround this
 
-	afterRender: ->
-		console.log this
-		@afterRender = ->
+
+  afterRender: ->
+    dumpCanvas @pixiAdapter.renderer.view, 'image.png'
+    @afterRender = ->
+
 
 
 #
@@ -28,35 +56,38 @@ class CarDemoGame extends P2Pixi.Game
 #
 class CarGround extends P2Pixi.GameObject
 
-	constructor: (game) ->
-		super(game)
+  constructor: (game) ->
 
-		bodyOptions =
-			collisionGroup: 1
-			collisionMask: 1 | 2
+    super game
 
-		texture = PIXI.Texture.fromImage 'assets/textures/rock.jpg', false
-		material = new p2.Material
+    bodyOptions =
+      collisionMask: 1 | 2
 
-		body = new p2.Body
-			position: [0, 10]
-			mass: 0
+    texture = PIXI.Texture.fromImage rockTexturePath(), false
 
-		@addBody body
-		@addShape body, @createHeightField(material), [0, 0], 0, bodyOptions, .5, texture
-		this
+    body = new p2.Body
+      position: [0, 10]
+      mass: 0
 
-	# Creates a new height field
-	createHeightField: (material) ->
-		heights = [1 .. 500].map (i) -> Math.cos(0.2 * i) * Math.sin(0.5 * i) + 0.2 * Math.sin(0.1 * i) * Math.sin(0.05 * i)
-		heightField = new p2.Heightfield(
-			heights: heights
-			elementWidth: 0.3
-		)
-		heightField.material = material
-		heightField
+    @addBody body
+    @addShape body, createHeightField(), [0, 0], 0, bodyOptions, null, texture, .5
 
 
+class Circle extends P2Pixi.GameObject
 
-jQuery(document).ready ->
-	new CarDemoGame()
+  constructor: (game) ->
+    super game
+
+    bodyOptions =
+      collisionMask: 1 | 2
+
+    body = new p2.body
+      position: [50, 50]
+      mass: 4
+
+    @addBody body
+    @addShape body, null, [0, 0], 0, bodyOptions
+
+
+jQuery ->
+  new CarDemoGame()

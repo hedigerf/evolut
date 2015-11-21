@@ -1,0 +1,19 @@
+{
+  "indentation": {
+    "level": "error",
+    "value": 2
+  },
+  "line_endings": {
+    "value": "unix",
+    "level": "error"
+  },
+  "cyclomatic_complexity": {
+    "value": 4,
+    "level": "warn"
+  },
+  "max_line_length": {
+    "value": 120,
+    "level": "warn",
+    "limitComments": true
+  }
+}
