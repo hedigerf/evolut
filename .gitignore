@@ -36,10 +36,6 @@
 ehthumbs.db
 Thumbs.db
 
-# Fsharp compilation artefacts
-evolutapp/bin
-evolutapp/obj
-
 # Node
 npm-debug.log
 evolutjs/node_modules

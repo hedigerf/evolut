@@ -1,7 +1,8 @@
-PIXI = require 'pixi.js'
-P2Pixi = require './../../../lib/p2Pixi.js'
 p2 = require 'p2'
 path = require 'path'
+PIXI = require 'pixi.js'
+
+P2Pixi = require './../../../lib/p2Pixi.js'
 
 cosAmp = (x, amp) ->
   Math.cos(x * amp)
@@ -17,7 +18,7 @@ rockTexturePath = ->
 # Creates a new height field
 createHeightField = ->
   new p2.Heightfield
-    heights: [1..500].map toHeight2
+    heights: [1..500].map toHeight
     elementWidth: .3
     material: new p2.Material()
 

@@ -1,4 +1,6 @@
 path = require 'path'
+Random = (require 'random-js')()
+
 P2Pixi = require './../../../lib/p2Pixi.js'
 
 {CarGround} = require '../object/demoGround'
@@ -22,14 +24,17 @@ class CarDemoGame extends P2Pixi.Game
       assetUrls: [rockTexturePath()]
 
   beforeRun: ->
-    new CarGround this
-    c = new Circle this
-    a = new Ant this
 
-    @world.on 'postStep', ->
-      console.log c.bodies[0].position
+    ground = new CarGround this
+    circle = new Circle this
 
-    @trackedBody = a.bodies[0]
+    self = this
+
+    [0..200].forEach ->
+      new Circle self
+
+    @trackedBody = circle.bodies[0]
+
 
 root = exports ? this
 root.CarDemoGame = CarDemoGame

@@ -1,5 +1,13 @@
-P2Pixi = require './../../../lib/p2Pixi.js'
 p2 = require 'p2'
+Random = (require 'random-js')()
+
+P2Pixi = require './../../../lib/p2Pixi.js'
+
+randomPosition = ->
+  [Random.integer(0, 20), Random.integer(15, 25)]
+
+randomColor = ->
+  parseInt (Random.hex 6), 16
 
 class Circle extends P2Pixi.GameObject
 
@@ -7,20 +15,22 @@ class Circle extends P2Pixi.GameObject
     super game
 
     bodyOptions =
-      collisionGroup: 2
+      collisionGroup: Random.integer(2, 20)
       collisionMask: 1
 
     body = new p2.Body
-      position: [0, 10]
-      mass: 4
+      position: randomPosition()
+      mass: Random.integer(2, 200)
+
+    console.log randomColor()
 
     circle = new p2.Circle
       radius: .25
 
     style =
       lineWidth: 1
-      lineColor: 0xff0000
-      fillColor: 0xffff00
+      lineColor: randomColor()
+      fillColor: randomColor()
 
     @addBody body
     @addShape body, circle, [0, 0], 0, bodyOptions, style
