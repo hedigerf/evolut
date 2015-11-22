@@ -1,6 +1,6 @@
-PIXI   = require 'pixi.js'
-p2     = require 'p2'
-P2Pixi = require '../lib/p2Pixi'
+PIXI = require 'pixi.js'
+p2 = require 'p2'
+P2Pixi = require './../../../lib/p2Pixi.js'
 
 makeLeg = (x, y) ->
   new p2.Body

@@ -1,45 +1,58 @@
-f = _: {}
+_ = {}
 
-f.nop = ->
+nop = ->
 
 # identity function
-f.id = (x) ->
+id = (x) ->
   x
 
 # turn any native function into a regular function
-f.builtin = (f) ->
-  f.nop.call.bind f
+builtin = (f) ->
+  nop.call.bind f
 
 # returns the arguments as array
-f.variadic = (as...) ->
+variadic = (as...) ->
   as
 
-f.apply = (f, as...) ->
+apply = (f, as...) ->
   f [].concat.apply([], as)...
 
-f.notF = (f) -> (as...) ->
+notF = (f) -> (as...) ->
   not f as...
 
-f.curry = (f) -> (as...) ->
+curry = (f) -> (as...) ->
   if as.length < f.length
     f.bind [null, as...]...
   else
     f as...
 
-f.partial = (f, as...) -> (bs...) ->
+partial = (f, as...) -> (bs...) ->
   args = as.concat bs
   i = args.length
   while i--
-    if args[i] is f._
+    if args[i] is _
       args[i] = args.splice(-1, 1)[0]
   f args...
 
-f.compose = (fs...) -> fs.reduce (f, g) -> (as...) ->
+compose = (fs...) -> fs.reduce (f, g) -> (as...) ->
   f g as...
 
-f.flip = f.curry (f, x, y) -> f [y, x]...
-f.flipN = (f) -> (as...) -> f as.reverse()...
+flip = curry (f, x, y) -> f [y, x]...
+flipN = (f) -> (as...) -> f as.reverse()...
 
-f.sequence = f.flipN f.compose
+sequence = flipN compose
 
-exports = module.exports = f
+root = exports ? this
+root._ = _
+root.nop = nop
+root.id = id
+root.builtin = builtin
+root.variadic = variadic
+root.apply = apply
+root.notF = notF
+root.curry = curry
+root.partial = partial
+root.compose = compose
+root.flip = flip
+root.flipN = flipN
+root.sequence = sequence
