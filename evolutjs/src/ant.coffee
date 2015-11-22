@@ -25,25 +25,6 @@ makeHipJoint = (body, leg, legLength, distance, bodyLength) ->
     localPivotA: [0, legLength / 2]
     localPivotB: [-distance / 2, -bodyLength / 2]
 
-              ###
- var leftHipJoint = new p2.RevoluteConstraint(upperLeftLeg, pelvis, {
-                localPivotA: [0, upperLegLength/2],
-                localPivotB: [-shouldersDistance/2,-pelvisLength/2],
-            });
-
-              var leftKneeJoint = new p2.RevoluteConstraint(lowerLeftLeg, upperLeftLeg, {
-                localPivotA: [0, lowerLegLength/2],
-                localPivotB: [0,-upperLegLength/2],
-            });
-            var rightKneeJoint= new p2.RevoluteConstraint(lowerRightLeg, upperRightLeg, {
-                localPivotA: [0, lowerLegLength/2],
-                localPivotB:[0,-upperLegLength/2],
-            });
-            leftKneeJoint.setLimits(-Math.PI / 8, Math.PI / 8);
-            rightKneeJoint.setLimits(-Math.PI / 8, Math.PI / 8);
-            world.addConstraint(leftKneeJoint);
-            world.addConstraint(rightKneeJoint);###
-
 class Ant extends P2Pixi.GameObject
 
   constructor: (game) ->
