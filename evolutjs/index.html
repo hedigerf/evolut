@@ -2,10 +2,59 @@
 <html>
   <head>
     <title>evolut</title>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Sidebar CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="lib/fix-pixi.js"></script>
     <script src="src/p2-shizzle.coffee"></script>
   </head>
   <body>
-		<canvas id="viewport"></canvas>
+  <div id="wrapper">sim
+     <!-- Sidebar -->
+     <div id="sidebar-wrapper">
+         <ul class="sidebar-nav">
+             <li class="sidebar-brand">
+                 <a href="#">
+                     EvolutJS
+                 </a>
+             </li>
+             <li>
+                 <label class="checkbox-inline"><input id="paused" type="checkbox" value="">Paused</label>
+             </li>
+             <li>
+               <div class="input-group">
+                 <span class="input-group-addon" id="basic-addon1">GravityX</span>
+                 <input type="number" class="form-control" placeholder="-9.8" aria-describedby="basic-addon1">
+                </div>
+             </li>
+             <li>
+                 <a href="#">Overview</a>
+             </li>
+             <li>
+                 <a href="#">Events</a>
+             </li>
+             <li>
+                 <a href="#">About</a>
+             </li>
+             <li>
+                 <a href="#">Services</a>
+             </li>
+             <li>
+                 <a href="#">Contact</a>
+             </li>
+         </ul>
+     </div>
+     <!-- /#sidebar-wrapper -->
+
+     <!-- Page Content -->
+     <div id="page-content-wrapper">
+         <div class="container-fluid">
+           <canvas id="viewport"></canvas>
+         </div>
+     </div>
+     <!-- /#page-content-wrapper -->
+
+ </div>
   </body>
 </html>

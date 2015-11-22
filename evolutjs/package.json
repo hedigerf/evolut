@@ -22,12 +22,13 @@
   },
   "homepage": "https://github.com/hedigerf/evolut/#readme",
   "dependencies": {
-		"pixi.js": "latest",
-		"p2": "latest",
-		"p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
-  	"jquery": "latest",
+    "pixi.js": "latest",
+    "p2": "latest",
+    "p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
+    "jquery": "latest",
     "electron-canvas-to-buffer": "1.0.2",
-    "random-js": "latest"
+    "random-js": "latest",
+    "bootstrap": "latest"
   },
   "devDependencies": {
     "electron-prebuilt": "^0.34.0",
