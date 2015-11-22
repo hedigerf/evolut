@@ -1,42 +1,41 @@
 {
-    "name": "evolut",
-    "version": "0.0.1",
-    "description": "Bachelor thesis",
-    "private": true,
-    "main": "main.js",
-    "scripts": {
-        "start": "electron main.js",
-        "test": "npm run lint && npm run assert",
-        "lint": "jshint lib test",
-        "assert": "mocha --compilers coffee:coffee-script/register test/**/*.coffee"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/hedigerf/evolut.git"
-    },
-    "keywords": [
-        "evolution",
-        "phyiscs",
-        "simulation"
-    ],
-    "author": "Fabian Hediger <hedigerf@gmail.com>, Florian Tanner <florian.tanner@gmail.com>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/hedigerf/evolut/issues"
-    },
-    "homepage": "https://github.com/hedigerf/evolut/#readme",
-    "dependencies": {
-				"pixi.js": "latest",
-				"p2": "latest",
-				"p2Pixi": "git://github.com/TomWHall/p2Pixi.git#master",
-      	"jquery": "latest"
-    },
-    "devDependencies": {
-        "electron-prebuilt": "^0.34.0",
-        "coffee-script": "latest",
-        "electron-compilers": "latest",
-        "electron-compile": "latest",
-        "mocha": "latest",
-        "chai": "latest"
-    }
+  "name": "evolut",
+  "version": "0.0.2",
+  "description": "Bachelor thesis",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js",
+    "test": "npm run lint && npm run assert",
+    "lint": "coffeelint src test",
+    "assert": "mocha --compilers coffee:coffee-script/register test/**/*.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hedigerf/evolut.git"
+  },
+  "keywords": ["evolution", "phyiscs", "simulation"],
+  "author": "Fabian Hediger <hedigerf@gmail.com>, Florian Tanner <florian.tanner@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hedigerf/evolut/issues"
+  },
+  "homepage": "https://github.com/hedigerf/evolut/#readme",
+  "dependencies": {
+		"pixi.js": "latest",
+		"p2": "latest",
+		"p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
+  	"jquery": "latest",
+    "electron-canvas-to-buffer": "1.0.2",
+    "random-js": "latest"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.34.0",
+    "coffee-script": "latest",
+    "coffeelint": "latest",
+    "electron-compilers": "latest",
+    "electron-compile": "latest",
+    "mocha": "latest",
+    "chai": "latest"
+  }
 }

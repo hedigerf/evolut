@@ -9,11 +9,11 @@ app.on 'window-all-closed', ->
     app.quit()
 
 app.on 'ready', ->
-  mainWindow = new BrowserWindow {
+  mainWindow = new BrowserWindow
     width: 1280
     height: 720
-    'web-preferences': { webgl: true }
-  }
+    'web-preferences':
+      webgl: true
 
   mainWindow.loadUrl 'file://' + __dirname + '/index.html'
   mainWindow.openDevTools()
