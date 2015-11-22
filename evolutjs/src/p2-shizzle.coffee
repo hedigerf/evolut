@@ -6,5 +6,5 @@ jQuery = require 'jquery'
 
 jQuery ->
   game = new CarDemoGame()
-  settingsPannel = new SettingsPannel(game.world)
+  settingsPannel = new SettingsPannel(game)
   settingsPannel.bindEvents()
