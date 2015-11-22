@@ -9,7 +9,7 @@ class SettingsPannel
   * Bind all events on the related HTML elements (Simulation Settings)
   ###
   bindEvents: ->
-    jQuery("#paused").on "change", ->
+    jQuery("#paused").on "change", =>
       @game.pauseToggle()
 
 root = exports ? this
