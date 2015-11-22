@@ -2,7 +2,7 @@ p2 = require 'p2'
 path = require 'path'
 PIXI = require 'pixi.js'
 
-P2Pixi = require './../../../lib/p2Pixi.js'
+P2Pixi = require './../../../lib/p2Pixi'
 
 cosAmp = (x, amp) ->
   Math.cos(x * amp)
@@ -22,24 +22,22 @@ createHeightField = ->
     elementWidth: .3
     material: new p2.Material()
 
-class CarGround extends P2Pixi.GameObject
+module.exports =
+  
+  class CarGround extends P2Pixi.GameObject
 
-  constructor: (game) ->
-    super game
+    constructor: (game) ->
+      super game
 
-    bodyOptions =
-      collisionGroup: 1
-      collisionMask: 1 | 2
+      bodyOptions =
+        collisionGroup: 1
+        collisionMask: 1 | 2
 
-    texture = PIXI.Texture.fromImage rockTexturePath(), false
+      texture = PIXI.Texture.fromImage rockTexturePath(), false
 
-    body = new p2.Body
-      position: [-75, -10]
-      mass: 0
+      body = new p2.Body
+        position: [-75, -10]
+        mass: 0
 
-    @addBody body
-    @addShape body, createHeightField(), [0, 0], 0, bodyOptions, null, texture
-
-
-root = exports ? this
-root.CarGround = CarGround
+      @addBody body
+      @addShape body, createHeightField(), [0, 0], 0, bodyOptions, null, texture
