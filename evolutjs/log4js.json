@@ -5,6 +5,13 @@
     "maxLogSize": 20480,
     "backups": 3
   }, {
+    "type": "logLevelFilter",
+    "level": "ERROR",
+    "appender": {
+      "type": "file",
+      "filename": "logs/evolutjs_errors.log"
+    }
+  }, {
     "type": "console"
   }],
   "replaceConsole": true

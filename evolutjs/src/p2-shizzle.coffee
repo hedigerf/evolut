@@ -13,4 +13,3 @@ jQuery ->
   settingsPannel = new SettingsPannel game
   settingsPannel.bindEvents()
   logger.info('application successfully started.')
-  logger.error('test error')
