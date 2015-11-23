@@ -28,7 +28,8 @@
     "jquery": "latest",
     "electron-canvas-to-buffer": "1.0.2",
     "random-js": "latest",
-    "bootstrap": "latest"
+    "bootstrap": "latest",
+    "log4js": "latest"
   },
   "devDependencies": {
     "electron-prebuilt": "^0.34.0",
