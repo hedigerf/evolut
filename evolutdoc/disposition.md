@@ -4,7 +4,7 @@ Mit evolutiären Algorithmen können die verschiedensten Dinge entwickelt werden
 In der BA geht es darum künstliche Tiere mit evolutinären Algorithmen zu optimieren.
 Dabei wird gezielt auf eine Eigenschaft hin optimiert.
 Als primäre Eigenschaft in dieser Arbeit wird die Zeit die ein Tier für eine Strecke benötigt verwendet,
-unter der Einschränkung, dass eine konstante Kraft pro Zeiteinheit angewendet wird.
+unter der Einschränkung, dass eine konstante Leistung angewendet wird.
 Zudem wird den Tieren das Gehen beigebracht.
 Die Algorithmen beziehen die notwendigen Daten aus der zugrunde liegenden Physik-Engine.
 Der Fokus der Arbeit liegt auf den evolutionären Algorithmen,
