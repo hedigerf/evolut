@@ -1,0 +1,1 @@
+http://mirror.switch.ch/ftp/mirror/tex/macros/latex/contrib/IEEEtran/bibtex/IEEEtran_bst_HOWTO.pdf

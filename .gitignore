@@ -39,3 +39,8 @@ Thumbs.db
 # Node
 npm-debug.log
 evolutjs/node_modules
+
+#
+# Generated Latex Files
+#
+/evolutdoc/thesis/main.pdf
