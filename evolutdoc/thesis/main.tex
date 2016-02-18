@@ -2,45 +2,51 @@
 % Main document
 %
 
-%Inhaltsverzeichnis
-%\tableofcontents
-
-%\textbf{}
-%\setcounter{page}{1}
-%\pagenumbering{arabic}
-
-
-%\chapter{Verzeichnisse}\label{chap.verzeichnisse}
-% \include{content/literatur}
-	%\listoffigures
-	%\addcontentsline{toc}{section}{(Abbildungsverzeichnis)}
-	%\listoftables
-	%\addcontentsline{toc}{section}{(Tabellenverzeichnis)}
-	%\addcontentsline{toc}{chapter}{(Symbolverzeichnis)}
-% \include{content/glossar}
- %\addcontentsline{toc}{section}{(Stichwortverzeichnis)}
- %\lstlistoflistings
-% \addcontentsline{toc}{section}{(Listingverzeichnis)}
-
 \include{style}
-
-\title{BA Thesis}
-\author{Fabian Hediger, Florian Tanner}
 
 \begin{document}
 
+  \title{Design von artifiziellen Tieren mit evolutionären Algorithmen}
+  \author{Fabian Hediger \and Florian Tanner}
+  \date{\today}
+
+  \frontmatter
+
   \include{cover}
+  \include{table-of-contents}
 
-  \section{Welcome}
-  Hello Hello \cite{IEEEexample:article_typical}
+  \chapter{Erklärung}
+  \lipsum[1]
 
-  \section{ToThe}
-  Fucu \cite{mirrorcle_userguide}
+  \chapter{Vorwort}
+  \lipsum[2-3]
 
-  \section{Jungle}
-  Polo Loco \cite{microchip_spi} \cite{verryUseFulArticle}
+  \chapter{Abstract}
+  \lipsum[3]
 
-  \bibliographystyle{IEEEtran}
-  \bibliography{IEEEabrv,literature}
+  \mainmatter
+
+  \chapter{Einleitung}
+  \lipsum[4-5]
+  \section{Thema}
+  \lipsum[5-6]
+
+  \chapter{Theorie}
+  \lipsum[6] \cite{IEEEexample:article_typical}
+  \lipsum[7] \cite{mirrorcle_userguide}
+
+  \chapter{Methode}
+  \lipsum[8] \cite{microchip_spi} \cite{verryUseFulArticle}
+
+  \chapter{Resultate}
+  \lipsum[9]
+
+  \appendix
+  \chapter{Anhang}
+  \section{Erster Anhang}
+
+  \backmatter
+  \include{bibliography}
+  \include{glossary}
 
 \end{document}
