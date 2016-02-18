@@ -1,7 +1,6 @@
 'use strict';
 
 let path = require('path');
-let Random = require('random-js');
 
 let P2Pixi = require('./../../../lib/p2Pixi');
 
@@ -30,23 +29,13 @@ module.exports =
 
     beforeRun() {
 
-      let ground = new CarGround(this);
+      new CarGround(this);
       let circle = new Circle(this);
 
-      let self = this;
+      for (var i = 0; i < 200; i++) {
+        new Circle(this);
+      }
 
-      ((() => {
-        let result = [];
-        let i = 0;
-        while (i <= 200) {
-          result.push(i++);
-        }
-        return result;
-      })()).forEach( () => {
-        return new Circle(self);
-        }
-        );
-
-      return this.trackedBody = circle.bodies[0];
+      this.trackedBody = circle.bodies[0];
     }
   };
