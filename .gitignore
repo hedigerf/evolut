@@ -44,7 +44,6 @@ evolutjs/node_modules
 # Generated Latex Files
 #
 /evolutdoc/thesis/main.pdf
-/evolutdoc/thesis/*.log
 *.aux
 *.bbl
 *.blg
