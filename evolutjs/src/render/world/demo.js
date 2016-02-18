@@ -1,14 +1,14 @@
 'use strict';
 
-var path = require('path');
-var Random = require('random-js');
+let path = require('path');
+let Random = require('random-js');
 
-var P2Pixi = require('./../../../lib/p2Pixi');
+let P2Pixi = require('./../../../lib/p2Pixi');
 
-var CarGround = require('../object/demoGround');
-var Circle = require('../object/demoCircle');
+let CarGround = require('../object/demoGround');
+let Circle = require('../object/demoCircle');
 
-var rockTexturePath = function() {
+let rockTexturePath = () => {
   return path.join(__dirname, '../../..', 'assets/textures', 'rock.jpg');
 };
 
@@ -30,19 +30,19 @@ module.exports =
 
     beforeRun() {
 
-      var ground = new CarGround(this);
-      var circle = new Circle(this);
+      let ground = new CarGround(this);
+      let circle = new Circle(this);
 
-      var self = this;
+      let self = this;
 
-      ((function() {
-        var result = [];
-        var i = 0;
+      ((() => {
+        let result = [];
+        let i = 0;
         while (i <= 200) {
           result.push(i++);
         }
         return result;
-      })()).forEach( function() {
+      })()).forEach( () => {
         return new Circle(self);
         }
         );

@@ -19,17 +19,17 @@ module.exports =
     bindEvents() {
       jQuery("#paused").on("change", () => {
         logger.debug('pause toggled');
-        return this.game.pauseToggle();
+        this.game.pauseToggle();
       });
       jQuery("#gravityX").on("change", () => {
         var newGravityX = jQuery("#gravityX").val();
         logger.debug("new gravity x: " + newGravityX);
-        return this.world.gravity = p2.vec2.fromValues(newGravityX, this.world.gravity[1]);
+        this.world.gravity = p2.vec2.fromValues(newGravityX, this.world.gravity[1]);
       });
       return jQuery("#gravityY").on("change", () => {
         var newGravityY = jQuery("#gravityY").val();
         logger.debug("new gravity y: " + newGravityY);
-        return this.world.gravity = p2.vec2.fromValues(this.world.gravity[0], newGravityY);
+        this.world.gravity = p2.vec2.fromValues(this.world.gravity[0], newGravityY);
       });
     }
   };

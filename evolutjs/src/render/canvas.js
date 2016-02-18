@@ -1,13 +1,13 @@
-var fs = require('fs');
-var path = require('path');
-var canvasBuffer = require('electron-canvas-to-buffer');
+let fs = require('fs');
+let path = require('path');
+let canvasBuffer = require('electron-canvas-to-buffer');
 
 /**
  * Returns the path of an output image
  * @param  {String} name
  * @return {String}
 */
-var imagePath = function(name) {
+let imagePath = function(name) {
   return path.join(__dirname, 'assets/images', path.basename(name));
 };
 
@@ -16,7 +16,7 @@ var imagePath = function(name) {
  * @param  {Node} canvas
  * @param  {String} imageName
 */
-var dumpCanvas = function(canvas, imageName) {
+let dumpCanvas = function(canvas, imageName) {
   return fs.writeFile(imagePath(imageName), canvasBuffer(canvas));
 };
 

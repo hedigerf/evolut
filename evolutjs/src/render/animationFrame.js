@@ -1,4 +1,4 @@
-var animationFrame = function() {
+let animationFrame = () => {
   return window.requestAnimationFrame ||
   window.webkitRequestAnimationFrame ||
   window.mozRequestAnimationFrame ||
