@@ -1,14 +1,14 @@
 {
   "name": "evolut",
-  "version": "0.0.2",
-  "description": "Bachelor thesis",
+  "version": "0.0.3",
+  "description": "Design of artificial animals with evolutionary algorithms",
   "private": true,
   "main": "main.js",
   "scripts": {
-    "start": "electron . ",
+    "start": "electron .",
     "test": "npm run lint && npm run assert",
-    "lint": "coffeelint src test",
-    "assert": "mocha --compilers coffee:coffee-script/register test/**/*.coffee"
+    "lint": "jshint src test",
+    "assert": "mocha --compilers js:babel-register test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -22,22 +22,22 @@
   },
   "homepage": "https://github.com/hedigerf/evolut/#readme",
   "dependencies": {
-    "pixi.js": "latest",
+    "bootstrap": "latest",
+    "babel-preset-es2015": "latest",
+    "babel-preset-react": "latest",
+    "babel-register": "latest",
+    "electron-canvas-to-buffer": "latest",
+    "jquery": "latest",
+    "log4js": "latest",
     "p2": "latest",
     "p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
-    "jquery": "latest",
-    "electron-canvas-to-buffer": "latest",
-    "random-js": "latest",
-    "bootstrap": "latest",
-    "log4js": "latest",
-    "babel-preset-es2015": "latest",
-   "babel-preset-react": "latest",
-   "babel-register": "latest"
+    "pixi.js": "latest",
+    "random-js": "latest"
   },
   "devDependencies": {
+    "chai": "latest",
     "electron-prebuilt": "latest",
-    "mocha": "latest",
-    "chai": "latest"
+    "jshint": "latest",
+    "mocha": "latest"
   }
-
 }
