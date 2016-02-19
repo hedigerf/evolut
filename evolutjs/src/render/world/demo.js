@@ -1,41 +1,38 @@
 'use strict';
 
-let path = require('path');
+import path from 'path';
+import P2Pixi from './../../../lib/p2Pixi';
 
-let P2Pixi = require('./../../../lib/p2Pixi');
+import CarGround from '../object/demoGround';
+import Circle from '../object/demoCircle';
 
-let CarGround = require('../object/demoGround');
-let Circle = require('../object/demoCircle');
-
-let rockTexturePath = () => {
+function rockTexturePath() {
   return path.join(__dirname, '../../..', 'assets/textures', 'rock.jpg');
-};
+}
 
+export default class CarDemoGame extends P2Pixi.Game {
 
-module.exports =
+  constructor() {
+    super({
+      pixiOptions: {
+        view: document.getElementById('viewport'),
+        transparent: true,
+        autoResize: true
+      },
+      assetUrls: [rockTexturePath()]
+    });
+  }
 
-  class CarDemoGame extends P2Pixi.Game {
+  beforeRun() {
 
-    constructor() {
-      super(
-        {pixiOptions:
-          {view: document.getElementById('viewport'),
-          transparent: true,
-          autoResize: true
-          },
-        assetUrls: [rockTexturePath()]}
-        );
+    new CarGround(this);
+    const circle = new Circle(this);
+
+    for (let i = 0; i < 200; i++) {
+      new Circle(this);
     }
 
-    beforeRun() {
+    this.trackedBody = circle.bodies[0];
+  }
 
-      new CarGround(this);
-      let circle = new Circle(this);
-
-      for (var i = 0; i < 200; i++) {
-        new Circle(this);
-      }
-
-      this.trackedBody = circle.bodies[0];
-    }
-  };
+}

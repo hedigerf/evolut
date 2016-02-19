@@ -25,6 +25,7 @@
 *.log
 *.sql
 *.sqlite
+/evolutjs/logs/*.log.*
 
 # OS generated files #
 ######################
@@ -43,7 +44,6 @@ evolutjs/node_modules
 #
 # Generated Latex Files
 #
-/evolutdoc/thesis/main.pdf
 *.aux
 *.bbl
 *.blg
@@ -58,3 +58,4 @@ evolutjs/node_modules
 *.snm
 *.synctex.gz
 *.toc
+/evolutdoc/thesis/main.pdf

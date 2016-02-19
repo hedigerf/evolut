@@ -25,7 +25,8 @@
         "context",
         "describe",
         "it",
-        "document"
+        "document",
+        "window"
     ],
     "debug": false,
     "devel": true,

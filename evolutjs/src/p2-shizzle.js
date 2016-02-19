@@ -1,17 +1,21 @@
 'use strict';
-let jQuery = require('jquery');
-let log4js = require('log4js');
 
-let CarDemoGame = require('./render/world/demo');
-let SettingsPannel = require('./settings/settingsPanel');
+import jQuery from 'jquery';
+import log4js from 'log4js';
+
+import CarDemoGame from './render/world/demo';
+import SettingsPannel from './settings/settingsPanel';
 
 log4js.configure('log4js.json');
-let logger = log4js.getLogger('p2-shizzle');
+const logger = log4js.getLogger('p2-shizzle');
 
 jQuery(() => {
+
   logger.info('starting application...');
-  let game = new CarDemoGame();
-  let settingsPannel = new SettingsPannel(game);
+
+  const game = new CarDemoGame();
+  const settingsPannel = new SettingsPannel(game);
   settingsPannel.bindEvents();
-  return logger.info('application successfully started.');
+
+  logger.info('application successfully started.');
 });

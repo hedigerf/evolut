@@ -1,63 +1,61 @@
 'use strict';
 
-let p2 = require('p2');
-let path = require('path');
-let PIXI = require('pixi.js');
+import p2 from 'p2';
+import path from 'path';
+import PIXI from 'pixi.js';
 
-let P2Pixi = require('./../../../lib/p2Pixi');
+import P2Pixi from './../../../lib/p2Pixi';
 
-let cosAmp = (x, amp) => {
+function cosAmp(x, amp) {
   return Math.cos(x * amp);
-};
+}
 
-let toHeight = (i) => {
-  let cos = (a) => {
+function toHeight(i) {
+  const cos = (a) => {
     return cosAmp(i, a);
   };
   return cos(0.2) * cos(0.5) * cos(0.1) * cos(0.05);
-};
+}
 
-let rockTexturePath = () => {
+function rockTexturePath() {
   return path.join(__dirname, '../../..', 'assets/textures', 'rock.jpg');
-};
+}
 
 // Creates a new height field
-let createHeightField = () => {
+function createHeightField() {
+
+  const heights = [];
+  let i = 1;
+  while (i <= 500) {
+    heights.push(toHeight(i++));
+  }
+
   return new p2.Heightfield({
-    heights: ((() => {
-      let result = [];
-      let i = 1;
-      while (i <= 500) {
-        result.push(i++);
-      }
-      return result;
-    })()).map( toHeight
-      ),
+    heights,
     elementWidth: 0.3,
     material: new p2.Material()
   });
-};
+}
 
-module.exports =
+export default class CarGround extends P2Pixi.GameObject {
 
-  class CarGround extends P2Pixi.GameObject {
+  constructor(game) {
+    super(game);
 
-    constructor(game) {
-      super(game);
+    const bodyOptions = {
+      collisionGroup: 1,
+      collisionMask: 2 // 1 | 2
+    };
 
-      let bodyOptions =
-        {collisionGroup: 1,
-        collisionMask: 1 | 2
-        };
+    const texture = PIXI.Texture.fromImage(rockTexturePath(), false);
 
-      let texture = PIXI.Texture.fromImage(rockTexturePath(), false);
+    const body = new p2.Body({
+      position: [-75, -10],
+      mass: 0
+    });
 
-      let body = new p2.Body({
-        position: [-75, -10],
-        mass: 0
-      });
+    this.addBody(body);
+    this.addShape(body, createHeightField(), [0, 0], 0, bodyOptions, null, texture);
+  }
 
-      this.addBody(body);
-      this.addShape(body, createHeightField(), [0, 0], 0, bodyOptions, null, texture);
-    }
-  };
+}

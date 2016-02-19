@@ -15,35 +15,20 @@
   \include{cover}
   \include{table-of-contents}
 
-  \chapter{Erklärung}
-  \lipsum[1]
-
-  \chapter{Vorwort}
-  \lipsum[2-3]
-
-  \chapter{Abstract}
-  \lipsum[3]
+  \include{content/declaration}
+  \include{content/summary}
+  \include{content/abstract}
+  \include{content/preface}
 
   \mainmatter
 
-  \chapter{Einleitung}
-  \lipsum[4-5]
-  \section{Thema}
-  \lipsum[5-6]
-
-  \chapter{Theorie}
-  \lipsum[6] \cite{IEEEexample:article_typical}
-  \lipsum[7] \cite{mirrorcle_userguide}
-
-  \chapter{Methode}
-  \lipsum[8] \cite{microchip_spi} \cite{verryUseFulArticle}
-
-  \chapter{Resultate}
-  \lipsum[9]
+  \include{content/main/introduction}
+  \include{content/main/theory}
+  \include{content/main/method}
+  \include{content/main/result}
 
   \appendix
-  \chapter{Anhang}
-  \section{Erster Anhang}
+  \include{content/appendix}
 
   \backmatter
   \include{bibliography}

@@ -1,7 +1,7 @@
 'use strict';
-let app = require('app');
-let BrowserWindow = require('browser-window');
-console.log('apped');
+
+import {app, BrowserWindow} from 'electron';
+
 // main application window
 let mainWindow = null;
 
@@ -12,14 +12,13 @@ app.on('window-all-closed', () =>  {
 });
 
 app.on('ready', () => {
+
   mainWindow = new BrowserWindow({
     width: 1280,
-    height: 720,
-    'web-preferences':
-      {webgl: true}
+    height: 720
+  });
 
-
-  });mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.loadUrl('file://' + __dirname + '/index.html');
   mainWindow.openDevTools();
 
   return mainWindow.on('closed', () => {
