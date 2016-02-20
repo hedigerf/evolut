@@ -1,45 +1,65 @@
 'use strict';
 
-var p2 = require('p2');
-var Random = (require('random-js'))();
+import p2 from 'p2';
+import Random from 'random-js';
 
-var P2Pixi = require('./../../../lib/p2Pixi');
+import P2Pixi from './../../../lib/p2Pixi';
 
-var randomPosition = function() {
-  return [Random.integer(0, 20), Random.integer(15, 25)];
-};
+const random = new Random(Random.engines.mt19937().autoSeed());
 
-var randomColor = function() {
-  return parseInt((Random.hex(6)), 16);
-};
+/**
+ * Returns a random position vector
+ *
+ * @return {Array<Number>}
+ */
+function randomPosition() {
+  return [random.integer(0, 20), random.integer(15, 25)];
+}
 
-module.exports =
-  class Circle extends P2Pixi.GameObject {
+/**
+ * Returns a random color
+ *
+ * @return {Number}
+ */
+function randomColor() {
+  return parseInt((random.hex(6)), 16);
+}
 
-    constructor(game) {
-      super(game);
+/**
+ * Circle object with randomized position, mass and color
+ *
+ * @extends {P2Pixi.GameObject}
+ */
+export default class Circle extends P2Pixi.GameObject {
 
-      var bodyOptions =
-        {collisionGroup: Random.integer(2, 20),
-        collisionMask: 1
-        };
+  /**
+   * @param {P2Pixi.GameObject} game
+   */
+  constructor(game) {
+    super(game);
 
-      var body = new p2.Body({
-        position: randomPosition(),
-        mass: Random.integer(2, 200)
-      });
+    const bodyOptions = {
+      collisionGroup: random.integer(2, 20),
+      collisionMask: 1
+    };
 
-      var circle = new p2.Circle({
-        radius: 0.25
-      });
+    const body = new p2.Body({
+      position: randomPosition(),
+      mass: random.integer(2, 200)
+    });
 
-      var style =
-        {lineWidth: 1,
-        lineColor: randomColor(),
-        fillColor: randomColor()
-        };
+    const circle = new p2.Circle({
+      radius: 0.25
+    });
 
-      this.addBody(body);
-      this.addShape(body, circle, [0, 0], 0, bodyOptions, style);
-    }
-  };
+    const style = {
+      lineWidth: 1,
+      lineColor: randomColor(),
+      fillColor: randomColor()
+    };
+
+    this.addBody(body);
+    this.addShape(body, circle, [0, 0], 0, bodyOptions, style);
+  }
+
+}

@@ -1,18 +1,22 @@
 {
-  "appenders": [{
-    "type": "file",
-    "filename": "logs/evolutjs_full.log",
-    "maxLogSize": 20480,
-    "backups": 3
-  }, {
-    "type": "logLevelFilter",
-    "level": "ERROR",
-    "appender": {
+  "appenders": [
+    {
       "type": "file",
-      "filename": "logs/evolutjs_errors.log"
+      "filename": "logs/evolutjs_full.log",
+      "maxLogSize": 20480,
+      "backups": 3
+    },
+    {
+      "type": "logLevelFilter",
+      "level": "ERROR",
+      "appender": {
+        "type": "file",
+        "filename": "logs/evolutjs_errors.log"
+      }
+    },
+    {
+      "type": "console"
     }
-  }, {
-    "type": "console"
-  }],
+  ],
   "replaceConsole": true
 }

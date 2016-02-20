@@ -1,5 +1,6 @@
-# Compiled source #
-###################
+#
+# Compiled source
+#
 *.com
 *.class
 *.dll
@@ -7,10 +8,9 @@
 *.o
 *.so
 
-# Packages #
-############
-# its better to unpack these files and commit the raw source
-# git has its own built in compression methods
+#
+# Packages
+#
 *.7z
 *.dmg
 *.gz
@@ -20,14 +20,17 @@
 *.tar
 *.zip
 
-# Logs and databases #
-######################
+#
+# Logs and databases
+#
 *.log
 *.sql
 *.sqlite
+evolutjs/logs/*.log.*
 
-# OS generated files #
-######################
+#
+# OS generated files
+#
 .DS_Store
 .DS_Store?
 ._*
@@ -36,14 +39,19 @@
 ehthumbs.db
 Thumbs.db
 
+#
 # Node
-npm-debug.log
+#
 evolutjs/node_modules
+
+#
+# Generated API Documentation
+#
+evolutjs/doc/*
 
 #
 # Generated Latex Files
 #
-/evolutdoc/thesis/main.pdf
 *.aux
 *.bbl
 *.blg
@@ -58,3 +66,4 @@ evolutjs/node_modules
 *.snm
 *.synctex.gz
 *.toc
+evolutdoc/thesis/main.pdf

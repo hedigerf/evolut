@@ -1,1 +1,21 @@
+#
+# LaTex
+#
 http://mirror.switch.ch/ftp/mirror/tex/macros/latex/contrib/IEEEtran/bibtex/IEEEtran_bst_HOWTO.pdf
+
+#
+# ZHAW
+#
+https://intra.zhaw.ch/fileadmin/user_upload/80_Dept/T_School_of_Engineering/Bachelorstudium/Projekt-Bachelorarbeit/Richtlinien/Berichtstruktur_PABA.pdf
+
+#
+# GA/EP
+#
+https://en.wikipedia.org/wiki/Crossover_%28genetic_algorithm%29#Two-point_crossover
+
+##
+## JS
+##
+https://github.com/coreyferguson/eukaryote
+https://www.npmjs.com/package/genetic-js
+https://www.npmjs.com/package/geneticalgorithm

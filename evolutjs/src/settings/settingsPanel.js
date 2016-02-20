@@ -1,35 +1,36 @@
 'use strict';
 
-var jQuery = require('jquery');
-var p2 = require('p2');
-var log4js = require('log4js');
-var logger = log4js.getLogger('SettingsPannel');
+import jQuery from 'jquery';
+import p2 from 'p2';
+import log4js from 'log4js';
 
+const logger = log4js.getLogger('SettingsPanel');
 
-module.exports =
-  class SettingsPannel {
-    constructor(game) {
-      this.world = game.world;
-      this.game = game;
-    }
+export default class SettingsPanel {
 
-    /*
-    * Bind all events on the related HTML elements (Simulation Settings)
-    */
-    bindEvents() {
-      jQuery("#paused").on("change", () => {
-        logger.debug('pause toggled');
-        this.game.pauseToggle();
-      });
-      jQuery("#gravityX").on("change", () => {
-        var newGravityX = jQuery("#gravityX").val();
-        logger.debug("new gravity x: " + newGravityX);
-        this.world.gravity = p2.vec2.fromValues(newGravityX, this.world.gravity[1]);
-      });
-      return jQuery("#gravityY").on("change", () => {
-        var newGravityY = jQuery("#gravityY").val();
-        logger.debug("new gravity y: " + newGravityY);
-        this.world.gravity = p2.vec2.fromValues(this.world.gravity[0], newGravityY);
-      });
-    }
-  };
+  constructor(game) {
+    this.world = game.world;
+    this.game = game;
+  }
+
+  /*
+  * Bind all events on the related HTML elements (Simulation Settings)
+  */
+  bindEvents() {
+    jQuery('#paused').on('change', () => {
+      logger.debug('pause toggled');
+      this.game.pauseToggle();
+    });
+    jQuery('#gravityX').on('change', () => {
+      let newGravityX = jQuery('#gravityX').val();
+      logger.debug('new gravity x: ' + newGravityX);
+      this.world.gravity = p2.vec2.fromValues(newGravityX, this.world.gravity[1]);
+    });
+    jQuery('#gravityY').on('change', () => {
+      let newGravityY = jQuery('#gravityY').val();
+      logger.debug('new gravity y: ' + newGravityY);
+      this.world.gravity = p2.vec2.fromValues(this.world.gravity[0], newGravityY);
+    });
+  }
+
+}

@@ -1,29 +1,29 @@
 'use strict';
-let app = require('app');
-let BrowserWindow = require('browser-window');
-console.log('apped');
-// main application window
+
+import {app, BrowserWindow} from 'electron';
+import config from './config';
+
+// Main application window
 let mainWindow = null;
 
 app.on('window-all-closed', () =>  {
   if (process.platform !== 'darwin') {
-    return app.quit();
+    app.quit();
   }
 });
 
 app.on('ready', () => {
+
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 720,
-    'web-preferences':
-      {webgl: true}
+    width: config('window.width'),
+    height: config('window.height')
+  });
 
-
-  });mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.loadUrl('file://' + __dirname + '/index.html');
   mainWindow.openDevTools();
 
-  return mainWindow.on('closed', () => {
+  mainWindow.on('closed', () => {
     mainWindow = null;
-    return app.exit(0);
+    app.exit(0);
   });
 });
