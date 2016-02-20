@@ -1,8 +1,9 @@
 'use strict';
 
 import {app, BrowserWindow} from 'electron';
+import config from './config';
 
-// main application window
+// Main application window
 let mainWindow = null;
 
 app.on('window-all-closed', () =>  {
@@ -14,8 +15,8 @@ app.on('window-all-closed', () =>  {
 app.on('ready', () => {
 
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 720
+    width: config('window.width'),
+    height: config('window.height')
   });
 
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
