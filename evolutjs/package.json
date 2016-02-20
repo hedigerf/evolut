@@ -6,7 +6,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "npm run lint && npm run assert",
+    "test": "npm run style && npm run lint && npm run assert",
+    "style": "jscs src test",
     "lint": "jshint src test",
     "assert": "mocha --compilers js:babel-register test/**/*.js"
   },
@@ -37,6 +38,7 @@
   "devDependencies": {
     "chai": "latest",
     "electron-prebuilt": "latest",
+    "jscs": "latest",
     "jshint": "latest",
     "mocha": "latest"
   }

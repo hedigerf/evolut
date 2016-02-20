@@ -9,6 +9,7 @@ const random = new Random(Random.engines.mt19937().autoSeed());
 
 /**
  * Returns a random position vector
+ *
  * @return {Array<Number>}
  */
 function randomPosition() {
@@ -17,6 +18,7 @@ function randomPosition() {
 
 /**
  * Returns a random color
+ *
  * @return {Number}
  */
 function randomColor() {
@@ -25,6 +27,7 @@ function randomColor() {
 
 /**
  * Circle object with randomized position, mass and color
+ *
  * @class
  * @extends {P2Pixi.GameObject}
  */

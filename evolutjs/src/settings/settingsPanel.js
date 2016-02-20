@@ -17,18 +17,18 @@ export default class SettingsPannel {
   * Bind all events on the related HTML elements (Simulation Settings)
   */
   bindEvents() {
-    jQuery("#paused").on("change", () => {
+    jQuery('#paused').on('change', () => {
       logger.debug('pause toggled');
       this.game.pauseToggle();
     });
-    jQuery("#gravityX").on("change", () => {
-      let newGravityX = jQuery("#gravityX").val();
-      logger.debug("new gravity x: " + newGravityX);
+    jQuery('#gravityX').on('change', () => {
+      let newGravityX = jQuery('#gravityX').val();
+      logger.debug('new gravity x: ' + newGravityX);
       this.world.gravity = p2.vec2.fromValues(newGravityX, this.world.gravity[1]);
     });
-    return jQuery("#gravityY").on("change", () => {
-      let newGravityY = jQuery("#gravityY").val();
-      logger.debug("new gravity y: " + newGravityY);
+    return jQuery('#gravityY').on('change', () => {
+      let newGravityY = jQuery('#gravityY').val();
+      logger.debug('new gravity y: ' + newGravityY);
       this.world.gravity = p2.vec2.fromValues(this.world.gravity[0], newGravityY);
     });
   }
