@@ -7,7 +7,7 @@ let mainWindow = null;
 
 app.on('window-all-closed', () =>  {
   if (process.platform !== 'darwin') {
-    return app.quit();
+    app.quit();
   }
 });
 
@@ -21,8 +21,8 @@ app.on('ready', () => {
   mainWindow.loadUrl('file://' + __dirname + '/index.html');
   mainWindow.openDevTools();
 
-  return mainWindow.on('closed', () => {
+  mainWindow.on('closed', () => {
     mainWindow = null;
-    return app.exit(0);
+    app.exit(0);
   });
 });

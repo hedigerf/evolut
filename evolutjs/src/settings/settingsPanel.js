@@ -4,9 +4,9 @@ import jQuery from 'jquery';
 import p2 from 'p2';
 import log4js from 'log4js';
 
-const logger = log4js.getLogger('SettingsPannel');
+const logger = log4js.getLogger('SettingsPanel');
 
-export default class SettingsPannel {
+export default class SettingsPanel {
 
   constructor(game) {
     this.world = game.world;
@@ -26,7 +26,7 @@ export default class SettingsPannel {
       logger.debug('new gravity x: ' + newGravityX);
       this.world.gravity = p2.vec2.fromValues(newGravityX, this.world.gravity[1]);
     });
-    return jQuery('#gravityY').on('change', () => {
+    jQuery('#gravityY').on('change', () => {
       let newGravityY = jQuery('#gravityY').val();
       logger.debug('new gravity y: ' + newGravityY);
       this.world.gravity = p2.vec2.fromValues(this.world.gravity[0], newGravityY);

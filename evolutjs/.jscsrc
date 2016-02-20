@@ -1,19 +1,20 @@
 {
   "preset": "node-style-guide",
-  "fileExtensions": [".js"],
+  "fileExtensions": [
+    ".js"
+  ],
   "esnext": true,
-
   "requireSemicolons": true,
   "requireParenthesesAroundIIFE": true,
   "maximumLineLength": 120,
   "validateLineBreaks": "LF",
   "validateIndentation": 2,
-
   "requireTrailingComma": false,
   "disallowUnusedParams": false,
   "disallowSpacesInsideObjectBrackets": null,
-  "disallowImplicitTypeConversion": ["string"],
-
+  "disallowImplicitTypeConversion": [
+    "string"
+  ],
   "jsDoc": {
     "enforceExistence": false,
     "checkAnnotations": "closurecompiler",
@@ -27,6 +28,5 @@
     "checkRedundantAccess": true,
     "requireNewlineAfterDescription": true
   },
-
   "excludeFiles": []
 }

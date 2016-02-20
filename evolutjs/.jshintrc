@@ -12,7 +12,6 @@
   "unused": true,
   "strict": true,
   "trailing": true,
-
   "asi": false,
   "boss": false,
   "debug": false,
@@ -32,17 +31,14 @@
   "shadow": false,
   "supernew": false,
   "validthis": false,
-
   "maxdepth": 3,
   "maxparams": 3,
   "maxstatements": 20,
   "maxcomplexity": 8,
-
   "browser": true,
   "devel": false,
   "jquery": false,
   "node": true,
-
   "predef": [
     "__dirname",
     "__filename",
