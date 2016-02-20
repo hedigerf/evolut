@@ -6,22 +6,33 @@ import PIXI from 'pixi.js';
 
 import P2Pixi from './../../../lib/p2Pixi';
 
-function cosAmp(x, amp) {
-  return Math.cos(x * amp);
-}
-
+/**
+ * Returns a height for an element in a height field
+ *
+ * @param  {Number} i Height field index
+ * @return {Number}
+ */
 function toHeight(i) {
   const cos = (a) => {
-    return cosAmp(i, a);
+    return Math.cos(i * a);
   };
   return cos(0.2) * cos(0.5) * cos(0.1) * cos(0.05);
 }
 
+/**
+ * Returns the path to a rock texture
+ *
+ * @return {String}
+ */
 function rockTexturePath() {
   return path.join(__dirname, '../../..', 'assets/textures', 'rock.jpg');
 }
 
-// Creates a new height field
+/**
+ * Create new height field with 150px width
+ *
+ * @return {Array<Number>}
+ */
 function createHeightField() {
 
   const heights = [];
@@ -37,8 +48,16 @@ function createHeightField() {
   });
 }
 
+/**
+ * Ground with height field and rocky texture
+ *
+ * @extends {P2Pixi.GameObject}
+ */
 export default class CarGround extends P2Pixi.GameObject {
 
+  /**
+   * @param {P2Pixi.GameObject} game
+   */
   constructor(game) {
     super(game);
 

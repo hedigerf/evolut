@@ -9,7 +9,8 @@
     "test": "npm run style && npm run lint && npm run assert",
     "style": "jscs src test",
     "lint": "jshint src test",
-    "assert": "mocha --compilers js:babel-register test/**/*.js"
+    "assert": "mocha --compilers js:babel-register test/**/*.js",
+    "doc": "jsdoc -d doc -r src"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,7 @@
     "chai": "latest",
     "electron-prebuilt": "latest",
     "jscs": "latest",
+    "jsdoc": "latest",
     "jshint": "latest",
     "mocha": "latest"
   }

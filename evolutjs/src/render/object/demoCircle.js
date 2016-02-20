@@ -28,11 +28,13 @@ function randomColor() {
 /**
  * Circle object with randomized position, mass and color
  *
- * @class
  * @extends {P2Pixi.GameObject}
  */
 export default class Circle extends P2Pixi.GameObject {
 
+  /**
+   * @param {P2Pixi.GameObject} game
+   */
   constructor(game) {
     super(game);
 
