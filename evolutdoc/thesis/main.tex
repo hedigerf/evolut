@@ -26,6 +26,7 @@
       Natürliche Evolution hat kein vordefiniertes Ziel und ist ein sogennanter \grqq{} open-ended \grqq{} Anpassungsprozess. Artifizielle Evolution jedoch ist ein Optimierungsprozess, welcher versucht Lösungen zu vordefinierten Problem zu finden \cite[S.1]{book:bioInspired}. \\
 
     \section{Genotype}
+      (vieleicht nicht nötig so genau auf die biologischen zwecke einzugehen, hat bis jetzt nicht immer zu guten Ergebnissen geführt wenn man sich daran hält)
       The genetic material of an individual is known as the genotype, whereas its manifestation as an organism is known as the phenotype. Cells contain a class of molecules, known as proteins, whose shape,
       concentration, and behavior determine the properties of the cell. For example hair cells and muscle cells are different because they are composed of different proteins. \\
       The definition of specific proteins depends on another molecule, known as DNA (deoxyribonucleic acid), which in turn relies on proteins to become operative and on the mediation of a third type of molecule,
@@ -42,6 +43,7 @@
       \cite[S.5 - 7]{book:bioInspired}.
 
     \section{Gene Expression}
+      (vieleicht nicht nötig so genau auf die biologischen zwecke einzugehen, hat bis jetzt nicht immer zu guten Ergebnissen geführt wenn man sich daran hält)
       The sequence of four nucleotides along the DNA chain determines the properties of the cells and the development of the organism. The four nucleotides are effectively the letters of the genetic alphabet.
       Genes are functionally relevant subsequences of nucleotides in the DNA chain (just like words in a sentence), which can produce proteins.
       Proteins are long molecular chains composed of hundreds of submolecules, known as amino acids.  The properties of a protein are determined mainly by its shape. Each amino acid corresponds to one or
@@ -58,6 +60,36 @@
         \caption[DNA Transcription]{DNA Transcription Prozess}
         \label{pic:dnaTranscription}
       \end{figure}
+
+    \section{Genetic Mutations}
+      Muss mann sicher auch noch erwähnen.
+
+    \section{Artifical Evolution}
+      Schritte eines evolutinären Algorithmus nach \cite[S.16 ff]{book:bioInspired}:
+      \begin{itemize}
+        \item Auswahl einer genetischen Repräsentation
+          \begin{itemize}
+            \item Diskrete Repräsentation [ABCDEF], [0111110]
+            \item Reale Werte Pepräsentation 12.1245
+            \item Baum Repräsentation \Tree [.A [.B [.C eins ] [.D zwei ] ].B [.E {3 und 4} ] ].A
+          \end{itemize}
+        \item Population erstellen
+            \begin{itemize}
+              \item Die Grösse der Population hängt von den Eigenschaften des Suchraums und der Rechenkosten der Evaluation ab
+            \end{itemize}
+        \item Fitnessfunktion definieren
+          \begin{itemize}
+            \item Die Grösse der Population hängt von den Eigenschaften des Suchraums und der Rechenkosten der Evaluation ab
+          \end{itemize}
+        \item Auswahloperation definieren
+        \item Rekombinationsfunktion definieren
+        \item Mutationsfunktion definieren
+        \item Ergebnisse analysieren
+      \end{itemize}
+
+      Genetische Representation: Erbgutdaten, genetic encoding \\
+      Phenotyp: Aussehen des Individum -> Manifestation. In unserem Fall die 6-Beinigen Kreaturen als Pixelgrafik. \\
+
   \chapter{Abstract}
     \lipsum[3]
 
