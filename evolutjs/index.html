@@ -5,8 +5,11 @@
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Sidebar CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
+    <script>
+      // Fix jQuery not being available for bootstrap
+      window.$ = window.jQuery = require('jquery');
+    </script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-		<!--<script src="lib/fix-pixi.js"></script>-->
     <script>
       require('babel-register');
       require('./src/p2-shizzle');

@@ -21,7 +21,11 @@
     "phyiscs",
     "simulation"
   ],
-  "author": "Fabian Hediger <hedigerf@gmail.com>, Florian Tanner <florian.tanner@gmail.com>",
+  "author": "evolut team",
+  "contributors": [
+    "Fabian Hediger <hedigerf@gmail.com>",
+    "Florian Tanner <florian.tanner@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hedigerf/evolut/issues"
@@ -48,5 +52,8 @@
     "jsdoc": "latest",
     "jshint": "latest",
     "mocha": "latest"
+  },
+  "engines": {
+    "node": ">=5.0.0"
   }
 }
