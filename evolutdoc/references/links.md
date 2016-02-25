@@ -3,6 +3,7 @@
 ## LaTex
 
 * [IEEEtran_bst_HOWTO](http://mirror.switch.ch/ftp/mirror/tex/macros/latex/contrib/IEEEtran/bibtex/IEEEtran_bst_HOWTO.pdf)
+* [Todonotes](http://tug.ctan.org/tex-archive/macros/latex/contrib/todonotes/todonotes.pdf)
 
 ## ZHAW
 
