@@ -43,7 +43,8 @@
     "p2": "latest",
     "p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
     "pixi.js": "latest",
-    "random-js": "latest"
+    "random-js": "latest",
+    "immutable-js" : "latest"
   },
   "devDependencies": {
     "chai": "latest",
