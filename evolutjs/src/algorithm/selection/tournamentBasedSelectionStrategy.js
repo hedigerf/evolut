@@ -1,6 +1,6 @@
 import log4js from 'log4js';
 import Immutable from 'immutable';
-import SelectionStrategy from 'selectionStrategy';
+import SelectionStrategy from './selectionStrategy';
 import Random from 'random-js';
 
 
