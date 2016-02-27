@@ -7,14 +7,19 @@ import Random from 'random-js';
 const logger = log4js.getLogger('TournamentBasedSelectionStrategy');
 const random = new Random(Random.engines.mt19937().autoSeed());
 
-
+/**
+ * TournamentBasedSelectionStrategy
+ */
 export class TournamentBasedSelectionStrategy extends SelectionStrategy {
   constructor(population, k) {
     super(population);
     this.k = k;
     logger.info('Torunament-based Selection k = ' + k);
   }
-
+/**
+ * Select next generation
+ * @return {ImmutableList} [A list containing the new Individuals]
+ */
   select() {
     const runs = this.initalPopulation.size;
 
