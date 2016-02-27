@@ -16,10 +16,12 @@ export class TournamentBasedSelectionStrategy extends SelectionStrategy {
     this.k = k;
     logger.info('Torunament-based Selection k = ' + k);
   }
-/**
- * Select next generation
- * @return {ImmutableList} [A list containing the new Individuals]
- */
+
+  /**
+   * Selects the new generation
+   *
+   * @return {ImmutableList} A list containings the new individuals
+   */
   select() {
     const runs = this.initalPopulation.size;
 
@@ -40,7 +42,7 @@ export class TournamentBasedSelectionStrategy extends SelectionStrategy {
       return fittestIndividual;
     };
 
-    Immutable.Range(1, runs).map(selectForRun);
+    return Immutable.Range(1, runs).map(selectForRun);
 
   }
 
