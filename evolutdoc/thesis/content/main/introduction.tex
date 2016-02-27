@@ -12,8 +12,7 @@
   \todo[inline]{Stand der Technik: Bisherige Lösungen des Problems und deren Grenzen}
 
 \section{Zielsetzung}
-  Ziel ist es, in einer virtuellen Umwelt mit Hilfe evolutionärer Algorithmen künstliche Tiere entstehen zu lassen.
-  Evolviert werden die Geometrie und die Steuerung der Tiere, d.h. die Anordnung der Beine und deren Kontrolle.
+  \todo[inline]{Fast ganzer Text muss umgeschrieben in Requirments werden. Erste Säze als Einleitung  der Zielsetzung lassen.}
   Als Mass für die Fitness wird eine Funktion der Zeit, welche das Tier braucht,
   um einen gegebenen Parcours zurückzulegen, verwendet.
   Dabei müssen Individiuen berücksichtigt werden,
@@ -28,3 +27,22 @@
   Damit die Forderung nach einer physikalischen Bewegung erfüllt werden kann,
   wird die Bewegung mit Hilfe einer Physik-Engine simuliert.
   Diese Engine wird von den Studierenden ausgewählt und kann als Blackbox verwendet werden.
+
+  \subsection{Requirements}
+    \subsubsection{Fitness Funktion}
+      Als Mass für die Fitness wird eine Funktion der Zeit, welche das Tier braucht,
+      um einen gegebenen Parcours zurückzulegen, verwendet.
+      Dabei müssen Individiuen berücksichtigt werden,
+      die den Parcour nicht vollständig ablaufen können.
+      Die Fitnessfunktion berücksichtigt in diesem Fall die zurückgelegte Strecke.
+      Wenn eine Sortierung nach dem höchsten Fitnesswert erfolgt,
+      ist ein Individuum mit einer Funktion der Zeit immer höher zu rangieren,
+      als ein Individuum welcher die zurückgelegte Streckte berücksichtigt.
+    \subsubsection{Parcours}
+      Es muss mehr als nur einen Parcour für die Evolution der Individuen geben,
+      ansonsten werden die Individuen nur auf den einen Parour evolviert.
+      Als Start Parcour sollte ein möglichst einfach zu bewältiger Parcour dienen.
+      Es kann auch in späteren Iterationen wieder auf einen früheren Parcour zurückgegriffen werden.
+    \subsubsection{Ober Grenze für die totale aufgewandte Energie}
+      Damit das Problem nicht trivial gelöst werden kann und ein Indiviuum einfach ins unendliche beschleunigt werden kann,
+      wird der Anspruch nach einer Ober Grenze für die total augewandte Energie gestellt. Somit muss die abgebende Leistung beschränkt werden.
