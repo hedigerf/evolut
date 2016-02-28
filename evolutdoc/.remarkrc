@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "lint": {
+      "list-item-spacing": false,
+      "maximum-line-length": 120
+    }
+  }
+}
