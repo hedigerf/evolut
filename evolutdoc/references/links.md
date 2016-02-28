@@ -12,6 +12,7 @@
 ## GA/EP
 
 * [Two-point_crossover](https://en.wikipedia.org/wiki/Crossover_%28genetic_algorithm%29#Two-point_crossover)
+* [Sich nach n Generationen ändernde Fitnessfunktion](https://www.youtube.com/watch?v=GS18h-_h6IM)
 
 ### JS
 
