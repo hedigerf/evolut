@@ -32,7 +32,7 @@
   "supernew": false,
   "validthis": false,
   "maxdepth": 3,
-  "maxparams": 3,
+  "maxparams": 10,
   "maxstatements": 20,
   "maxcomplexity": 8,
   "browser": true,
