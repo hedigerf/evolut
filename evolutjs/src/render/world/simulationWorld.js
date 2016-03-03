@@ -4,7 +4,7 @@ import path from 'path';
 import P2Pixi from './../../../lib/p2Pixi';
 import log4js from 'log4js';
 
-import FlatParcour from '../object/parcour/flatparcour';
+import FlatParcour from '../object/parcour/flatParcour';
 import Circle from '../object/demoCircle';
 
 const logger = log4js.getLogger('simulationWorld');
