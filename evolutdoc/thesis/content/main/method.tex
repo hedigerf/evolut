@@ -14,3 +14,19 @@
   \todo[inline]{Modell}
   \todo[inline]{Tests und Validierung}
   \todo[inline]{Theoretische Herleitung der Lösung}
+
+  \section{Design der Individuen}
+
+    \subsection{Koerper}
+    \label{sub:Koerper}
+      Die erste Frage wechlse sich stellt ist, wie kann der Koerper am besten beschrieben werden? \\
+      Der Koeper setzt sich aus verschiedenen Punkten auseinander. Die mindest Anzahl solcher Punkte wird auf 4 in einem ersten Schritt festgelegt. \\
+      Die Obergrenze bei 8. Dies erlaubt dem Koeper eine polygonartige Figur.
+    \subsection {Beine}
+    \label{sub:Beine}
+      Insgesammt weissen die Individuuen 6 Beine auf. Ein Beinpaar ist symmetrisch. Ein Bein hat jeweils 2 Gelenke, eines welches es mit dem Koerper verbindet,
+      das andere welches Ober- mit Unterschenkel verbindet. Ein Gelenk besitzt 3 Freiheitsgrade, Start- \(a_{j_{1_{1}}}\)  und Endwinkel \(a_{j_{1_{2}}}\),
+      respektive \(a_{j_{2_{1}}}\) \(a_{j_{2_{2}}}\) und eine Hoehe \(h_{j}\).
+      Diese definieren die Bewegungsfreiheit. Das Bein weisst eine Hoehe \(h_{l}\) auf. Die Position des Gelenkes,welches die beiden Beinschenkel verbindet,
+      wird als Abstand zum oberen Ende des Oberschenkel definiert \(h_{t}\), andersrum gesagt ist das die Hoehe des Oberschenkels.
+      Die Hoehe des Unterschenkels wird als \(h_{s}\) bezeichnet. Ein Bein weisst eine Breite auf \(w_{l}\).
