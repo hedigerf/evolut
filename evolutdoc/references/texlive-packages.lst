@@ -1,0 +1,11 @@
+texlive
+texlive-IEEEtran
+texlive-babel-german
+texlive-hyphen-german
+texlive-lipsum
+texlive-qtree
+texlive-titlesec
+texlive-todonotes
+texlive-wallpaper
+texlive-xypic
+latexmk
