@@ -38,11 +38,15 @@
       Wenn eine Sortierung nach dem höchsten Fitnesswert erfolgt,
       ist ein Individuum mit einer Funktion der Zeit immer höher zu rangieren,
       als ein Individuum welcher die zurückgelegte Streckte berücksichtigt.
+      \paragraph{Vereinfachung}
+        Es hat sich herausgestellt, dass eine Vereinfachung der Fitnessfunktion wenig Nachteile mit sich bringt.
+        Darum werden nur die zurueckgelegte Strecke der Tiere nach einer fixen Zeit als Fitnessfunktion beruecksichtigt.
     \subsubsection{Parcours}
       Es muss mehr als nur einen Parcour für die Evolution der Individuen geben,
       ansonsten werden die Individuen nur auf den einen Parcour evolviert.
       Als Start Parcour sollte ein möglichst einfach zu bewältiger Parcour dienen.
-      Es kann auch in späteren Iterationen wieder auf einen früheren Parcour zurückgegriffen werden.
+      Es kann auch in späteren Iterationen wieder auf einen einfacheren Parcour zurückgegriffen werden.
+      Der Parcour sollte moeglichst zuefallig generiert werden.
     \subsubsection{Ober Grenze für die totale aufgewandte Energie}
       Damit das Problem nicht trivial gelöst werden kann und ein Indiviuum einfach ins unendliche beschleunigt werden kann,
       wird der Anspruch nach einer Ober Grenze für die total augewandte Energie gestellt. Somit muss die abgebende Leistung beschränkt werden.
