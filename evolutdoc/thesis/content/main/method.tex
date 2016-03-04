@@ -17,11 +17,16 @@
 
   \section{Design der Individuen}
 
-    \subsection{Koerper}
-    \label{sub:Koerper}
+    \subsection{Körper}
+    \label{sub:Körper}
       Die erste Frage wechlse sich stellt ist, wie kann der Koerper am besten beschrieben werden? \\
       Der Koeper setzt sich aus verschiedenen Punkten auseinander. Die mindest Anzahl solcher Punkte wird auf 4 in einem ersten Schritt festgelegt. \\
       Die Obergrenze bei 8. Dies erlaubt dem Koeper eine polygonartige Figur.
+      \subsubsection{Hyptohese Körperpunkte}
+      \label{subsub:hypoKp}
+      Es wird die Hypothese aufgestellt, dass sich ein Indiviuum mit 8 Körperpunkten schneller durch den Parcour bewegen kann, als ein Individuum mit weniger Körperpunkten.
+      Die Vermutung dabei ist, dass durch die komplexere Form des Indiviuum, es besser die Balance halten kann.
+      Ob dies zutrifft wird in Kapitel \ref{chap:Resulate} diskutiert.
     \subsection {Beine}
     \label{sub:Beine}
       Insgesammt weissen die Individuuen 6 Beine auf. Ein Beinpaar ist symmetrisch. Ein Bein hat jeweils 2 Gelenke, eines welches es mit dem Koerper verbindet,
@@ -34,6 +39,22 @@
     \label{subs:Masse}
       Das ganze Individum weisst eine fixe Masse von 1 auf \(m = 0\). Die Masse wird aber auf die einzelnen Koerpeteile verteilt.
 
+  \section{Auswahl des Evolutinären Algorithmus}
+    Es stehen 4 Typen von Evolutionäre Algorithmen zur Auswahl:
+    \begin{itemize}
+      \item Genetische Programmierung \ref{item:genProg}
+      \item Genetischer Algorithmus \ref{item:genAlgo}
+      \item Evolutiärer Algoritmus \ref{item:evAlgo}
+      \item Evolutinäre Programmierung \ref{item:evProg}
+    \end{itemize}
+    \todo[inline]{Genauer Ausführen warum}
+    Um die Problemstellung zu lösen, wurde entschieden Evolutinäre Programmierung einzusetzten.
+    Warum Evolutinäre Programmierung eingesetzt wird, wird nachfolgend erläutert. Das Austauschen der Genen, Rekombination, macht keinen Sinn wenn man Individuen das Laufen beibringt.
+    Man stelle sich dazu vor, man tausche das Gen welches den Körper definiert, mit dem der Beine. Dies stellt schon den ersten Indikator dafür da,
+    dass Evolutionäre Programmierung eingesetzt werden kann. Ein weiteres Kriterium ist die genetische Repräsentation.
+    Da unser Indiviuum sich aus Punkten im einem Koordinatensystem, verschiedene Winkel und einem Antrieb(Motor) definiert, wird die reale Werte Repräsentation eingesetzt.
+    Eine Baumrepräsenation oder binäre Repräsentation erscheint hier wenig gewinnbringend. Ein Punkt ist nichts anderes als zwei reale Werte, ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
+    Die Problemstellung würde wahrscheinlich anderst bewältigt werden, würde es hier um reale Kreaturen gehen und nicht nur um virtuelle Roboter, welche in einer künstlichen Umgebung(virtuelles Koordinatensystem) das Laufen lernen.
 
       \xymatrix{
         A \ar@{-}[dr]
