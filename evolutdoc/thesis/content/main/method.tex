@@ -56,6 +56,32 @@
     Eine Baumrepräsenation oder binäre Repräsentation erscheint hier wenig gewinnbringend. Ein Punkt ist nichts anderes als zwei reale Werte, ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
     Die Problemstellung würde wahrscheinlich anderst bewältigt werden, würde es hier um reale Kreaturen gehen und nicht nur um virtuelle Roboter, welche in einer künstlichen Umgebung(virtuelles Koordinatensystem) das Laufen lernen.
 
+  \section{Eingesetzte Technologien}
+    Zur Auswahl standen mehrere Programmiersprachen und Physik Engines zur Auswahl. Die Evaluationskriterien dabei waren:
+    \begin{itemize}
+      \item Platform Interoperabilität (Linux, Windows Mac OS X)
+      \item Einfache Handhabung
+      \item Stablität
+      \item Features der Physik Engine
+      \item Ökosystem der Programmiersprache (verfügbare Libraries)
+    \end{itemize}
+
+     Als erstes wurde F# und diverse populäre .NET Physics Engines wie Farseer Physics, Physics 2D und Digital Rune Engine evaluiert.
+     F# ist eine neue funktionale Sprache die mit einer sauberen Synatx und einem der besten Typensystem überhaupt besticht.
+     Jedoch gestaltete sich die Konfiguration und Platform Interoperablität sehr schwierig. Dies lag nich an den Physic Engines selber,
+     sondern an der Open Source Implementiertung Mono Game. Eine plattformübergreifende Konfiguration,
+     damit mit allen oben genannten Betriebssystemen entwickelt werden kann, konnte nicht erstellt werden.\\
+     Als zweite Möglichkeit wurde JavaScript und die Physics Engines Matter.js und p2.js in Betracht gezogen.
+     Die Popularität von JavaScript hat in den letzten Jahren enorm zugenommen.
+     Auch wurde mit dem neuen ECMA6 Standard die Sprache enorm verbessert und viele neue Features eingeführt. Das JavaScript Ökosystem ist eines der grössten überhaupt.
+     Da JavaScript eine Webtechnologie ursprünglich ist und auf allen Plattformen problemlos läuft, wurde das Kriterium der Platform Interoperabilität ohne zusätzliche Konfiguration erfüllt.
+     \todo[inline]{Warum p2.js anstatt Matter.js}
+     \todo[inline]{Darum Node und Electron}
+     \todo[inline]{NPM als Build und Dependcy Managmenent Tool}
+
+
+
+
       \xymatrix{
         A \ar@{-}[dr]
         &{}\save[]+<3cm,0cm>*\txt<8pc>{txt}
