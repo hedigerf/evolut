@@ -4,9 +4,56 @@
 
 % !TEX root = ../main.tex
 
-\xymatrix{
-  A \ar@{-}[dr]
-  &{}\save[]+<3cm,0cm>*\txt<8pc>{txt}
-  \ar[l] \ar[d] \restore \\
-  & B \ar@{-}[r] & C \ar@{-}[r] & D
-}
+\begin{tikzpicture}[scale=0.4]
+
+  %def
+  \tkzInit[xmin=-15,xmax=12,ymin=-6,ymax=12]
+  \tkzDrawXY[noticks]
+  \tkzDefPoints{-6/4/C1, 2/1/C2,0.205/6.548/A,-3/-2/B}
+
+  %drawing
+  \tkzDrawPoints(A,B)
+  \tkzDrawSegments[gray](C1,C2)
+  \tkzDrawSegments[red](C2,A C2,B)
+  \tkzDrawSegments[blue](C1,A C1,B)
+  \tkzDrawCircle(C1,A)
+  \tkzDrawCircle(C2,A)
+  % notation
+  \tkzLabelPoints(C2)
+  \tkzLabelPoints[left](C1)
+  \tkzLabelPoints[above](A)
+  \tkzLabelPoints[below](B)
+  \tkzMarkSegment[color=blue,pos=.5,mark=||](C1,B)
+  \tkzMarkSegment[color=red,pos=.5,mark=|](B,C2)
+  \tkzMarkSegment[color=blue,pos=.5,mark=||](C1,A)
+  \tkzMarkSegment[color=red,pos=.5,mark=|](A,C2)
+  \tkzMarkRightAngle[size=0.7](C1,A,C2)
+  \tkzMarkRightAngle[size=0.7](C1,B,C2)
+  \tkzLabelCircle[above left](C1,A)(180){$K_1$}
+  \tkzLabelCircle[right](C2,A)(-60){$K_2$}
+
+\end{tikzpicture}
+
+\begin{tikzpicture}[scale=0.4]
+
+  \tkzInit[xmin=0,xmax=10,ymin=0,ymax=20]
+  \tkzClip
+
+  \tkzDefPoint(0,0){O}
+  \tkzDefPoint(7,0){A}
+  \tkzDefPoint(0,20){H}
+  \tkzDefPoint(0,6){Hj}
+  \tkzDefPoint(0,1){Hf}
+  \tkzDefPoint(7,1){Hfm}
+  \tkzDefPoint(7,20){J1}
+  \tkzDefPoint(7,11){J2}
+  \tkzDefPoint(10,20){N}
+
+  \tkzDrawPoints(J1,J2)
+  \tkzDefSquare(O,N)
+  \tkzGetPoints{C}{D}
+  \tkzDrawSegments[gray](A,J2)
+  \tkzDrawSegments[gray](J2,J1)
+  \tkzDrawArc[angles](Hfm,A)(180,360)
+
+\end{tikzpicture}

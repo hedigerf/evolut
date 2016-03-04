@@ -5,6 +5,8 @@ texlive-hyphen-german
 texlive-lipsum
 texlive-qtree
 texlive-titlesec
+texlive-tkz-base
+texlive-tkz-euclide
 texlive-todonotes
 texlive-wallpaper
 texlive-xypic
