@@ -65,7 +65,7 @@
       \item Einfache Handhabung
       \item Stablität
       \item Features der Physik Engine
-      \item Ökosystem der Programmiersprache (verfügbare Libraries)
+      \item Ökosystem der Programmiersprache (verfügbare Bibilotheken)
     \end{itemize}
 
      Als erstes wurde F# und diverse populäre .NET Physics Engines wie Farseer Physics, Physics 2D und Digital Rune Engine evaluiert.
@@ -77,6 +77,7 @@
      Die Popularität von JavaScript hat in den letzten Jahren enorm zugenommen.
      Auch wurde mit dem neuen ECMA6 Standard die Sprache enorm verbessert und viele neue Features eingeführt. Das JavaScript Ökosystem ist eines der grössten überhaupt.
      Da JavaScript eine Webtechnologie ursprünglich ist und auf allen Plattformen problemlos läuft, wurde das Kriterium der Platform Interoperabilität ohne zusätzliche Konfiguration erfüllt.
-     \todo[inline]{Warum p2.js anstatt Matter.js}
-     \todo[inline]{Darum Node und Electron}
-     \todo[inline]{NPM als Build und Dependcy Managmenent Tool}
+     Matter.js wirkte noch nicht so ausgereift wie p2.js und wies viele Fehler auf. Um JavaScript und p2.js ohne Browser zu betreiben wird Electron eingesetzt.
+     Electron ist nicht anderes als Node.js und Google Chrome vereint in einer Standalone Anwendung.
+     Mit Hilfe von Node.js lassen sich alle I/0 Zugriffe regeln und es kann auf den Node Package Manager zur Abhänigskeitsverwaltung von anderen Bibliotheken zurück gegriffen werden.
+     Auch lässt sich unter bestimmten Umständen JavaScript schneller ausführen unter Node.js als in einem Browser.
