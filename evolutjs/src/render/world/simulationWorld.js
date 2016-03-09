@@ -5,6 +5,7 @@ import P2Pixi from './../../../lib/p2Pixi';
 import log4js from 'log4js';
 
 import FlatParcour from '../object/parcour/flatParcour';
+import DemoGround from '../object/demoGround';
 import Circle from '../object/demoCircle';
 
 const logger = log4js.getLogger('simulationWorld');
@@ -35,6 +36,8 @@ export default class SimulationWorld extends P2Pixi.Game {
     logger.info('Preparing Simulation for Generation: ' + this.population.generationCount);
     if (this.parcour === 'flat') {
       new FlatParcour(this);
+    }else if (this.parcour === 'demo') {
+      new DemoGround(this);
     }
     const circle = new Circle(this);
 

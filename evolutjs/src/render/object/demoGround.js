@@ -29,6 +29,9 @@ function rockTexturePath() {
 }
 
 /**
+
+/**
+/**
  * Create new height field with 150px width
  *
  * @return {Array<Number>}
@@ -49,7 +52,8 @@ function createHeightField() {
 }
 
 /**
- * Ground with height field and rocky texture
+ * Ground with height field and r
+ texture
  *
  * @extends {P2Pixi.GameObject}
  */
