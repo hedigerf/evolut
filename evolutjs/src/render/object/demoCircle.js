@@ -39,8 +39,8 @@ export default class Circle extends P2Pixi.GameObject {
     super(game);
 
     const bodyOptions = {
-      collisionGroup: random.integer(2, 20),
-      collisionMask: 1
+      collisionGroup: random.integer(4, 20),
+      collisionMask: 3
     };
 
     const body = new p2.Body({

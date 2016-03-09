@@ -42,7 +42,7 @@ export default class SimulationWorld extends P2Pixi.Game {
       new DemoGround(this);
     }else if (this.parcourOptions.mode === 'generator') {
       const parcourGenerator = new ParcourGenerator();
-      const parcour = parcourGenerator.generateParcour(this,this.parcourOptions.maxSlope);
+      const parcour = parcourGenerator.generateParcour(this,this.parcourOptions.maxSlope,this.parcourOptions.highestY);
     }
     const circle = new Circle(this);
 
