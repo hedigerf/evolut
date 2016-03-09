@@ -6,6 +6,8 @@ import log4js from 'log4js';
 
 import FlatParcour from '../object/parcour/flatParcour';
 import DemoGround from '../object/demoGround';
+import ParcourGenerator from '../object/parcour/ParcourGenerator';
+
 import Circle from '../object/demoCircle';
 
 const logger = log4js.getLogger('simulationWorld');
@@ -19,7 +21,7 @@ function rockTexturePath() {
  */
 export default class SimulationWorld extends P2Pixi.Game {
 
-  constructor(parcour,population) {
+  constructor(parcourOptions,population) {
     super({
       pixiOptions: {
         view: document.getElementById('viewport'),
@@ -28,16 +30,19 @@ export default class SimulationWorld extends P2Pixi.Game {
       },
       assetUrls: [rockTexturePath()]
     });
-    this.parcour = parcour;
     this.population = population;
+    this.parcourOptions = parcourOptions;
   }
 
   beforeRun() {
     logger.info('Preparing Simulation for Generation: ' + this.population.generationCount);
-    if (this.parcour === 'flat') {
+    if (this.parcourOptions.mode === 'flat') {
       new FlatParcour(this);
-    }else if (this.parcour === 'demo') {
+    }else if (this.parcourOptions.mode === 'demo') {
       new DemoGround(this);
+    }else if (this.parcourOptions.mode === 'generator') {
+      const parcourGenerator = new ParcourGenerator();
+      const parcour = parcourGenerator.generateParcour(this,this.parcourOptions.maxSlope);
     }
     const circle = new Circle(this);
 
