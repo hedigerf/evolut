@@ -14,6 +14,13 @@ const defaults = {
   window: {
     height: 720,
     width: 1280
+  },
+  algorithm: {
+    populationSize: 100
+  },
+  parcour: {
+    startMaxSlope: 0,
+    startHighestY: 0.5
   }
 };
 

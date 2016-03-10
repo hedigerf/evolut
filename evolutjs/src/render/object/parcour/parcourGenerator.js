@@ -87,7 +87,7 @@ export default class ParcourGenerator {
     const parcour = new P2Pixi.GameObject(world);
     const bodyOptions = {
       collisionGroup: 1,
-      collisionMask: 2 // 1 | 2
+      collisionMask: 99
     };
 
     const rockTexture = PIXI.Texture.fromImage(this.rockTexturePath(), false);
