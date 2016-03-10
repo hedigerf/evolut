@@ -34,6 +34,7 @@
 
 \end{tikzpicture}
 
+\todo[inline]{Draw foot}
 \begin{tikzpicture}[scale=0.4]
 
   \tkzInit[xmin=-1,xmax=11,ymin=-1,ymax=21]
@@ -57,6 +58,6 @@
   % Foot
   \tkzDrawArc[angles](Hfm,A)(180,360) \tkzGetPoints{Hfr}{Hfl}
   \tkzDrawSegments(Hfr,Hfl)
-  \tkzLabelPoints(Hfm)
+  \tkzLabelPoints(Hfm,C,D)
 
 \end{tikzpicture}
