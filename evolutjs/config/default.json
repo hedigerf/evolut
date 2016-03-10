@@ -2,5 +2,12 @@
   "window": {
     "height": 1080,
     "width": 1920
+  },
+  "algorithm": {
+    "populationSize": 100
+  },
+  "parcour": {
+    "startMaxSlope": 0,
+    "startHighestY": 0.5
   }
 }

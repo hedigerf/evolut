@@ -7,11 +7,11 @@ const logger = log4js.getLogger('SelectionStrategy');
 export class SelectionStrategy{
 
   constructor(population) {
-    this.initalPopulation = population;
+    this.population = population;
   }
 
   select() {
-    return this.initalPopulation;
+    return this.population;
   }
 
 }

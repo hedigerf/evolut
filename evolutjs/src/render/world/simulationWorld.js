@@ -51,6 +51,12 @@ export default class SimulationWorld extends P2Pixi.Game {
     }
 
     this.trackedBody = circle.bodies[0];
+    this.world.on('postStep',(event) => {
+      if (logger.isDebugEnabled()) {
+        //  Logger.debug('after step');
+      }
+    });
+
   }
 
 }
