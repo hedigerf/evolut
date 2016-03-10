@@ -6,7 +6,7 @@ import log4js from 'log4js';
 
 import FlatParcour from '../object/parcour/flatParcour';
 import DemoGround from '../object/demoGround';
-import ParcourGenerator from '../object/parcour/ParcourGenerator';
+import ParcourGenerator from '../object/parcour/parcourGenerator';
 
 import Circle from '../object/demoCircle';
 
