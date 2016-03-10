@@ -6,6 +6,7 @@ import PIXI from 'pixi.js';
 import log4js from 'log4js';
 import P2Pixi from './../../../../lib/p2Pixi';
 import Random from 'random-js';
+import Immutable from 'immutable';
 
 
 const random = new Random(Random.engines.mt19937().autoSeed());
@@ -45,41 +46,33 @@ export default class ParcourGenerator {
    * @param  {Number} i Height field index
    * @return {Number}
    */
-   toHeight(i) {
-    const cosValue = random.real(0, 2 * Math.PI,true);
-    const cos = (a) => {
-      return Math.cos(a);
-    };
-    return cos(cosValue);
-  }
+   toHeight(y,maxSlope,highestY) {
+     const positive = random.integer(0, 1);
+     if (positive === 1) {
+       const newY = y + random.real(0, maxSlope,true);
+       // If highestY is reached generate a flat top
+       if (newY > highestY) {
+         return y;
+       }
+       return newY;
+     }
+     const newY = y + random.real(-maxSlope,0);
+     // Same for highest negative Y
+     if (newY < (highestY * -1)) {
+       return y;
+     }
+     return newY;
+   }
 
 
-  createHeightField(maxSlope) {
-
-    const heights = [];
-    let i = 1;
-    let lastX, lastY;
-    while (i <= 500) {
-      const x = i++;
-      let valid = false;
-      let y;
-      while (!valid) {
-        y = this.toHeight(x);
-        const m = Math.abs((lastX - x) / (lastY - y));
-        if (lastX !== undefined && lastY !== undefined) {
-          valid = m <= maxSlope;
-        }else {
-          valid = true;
-        }
-        if (logger.isDebugEnabled() && valid) {
-          logger.debug('Found: ' + x + '/' + y   + ' MaxSlope: ' + maxSlope + ' m: ' + m);
-        }
-      }
-      lastX = x;
-      lastY = y;
-      heights.push(y);
-    }
-
+  createMontains(length,maxSlope,highestY) {
+    const range = Immutable.Range(0, length);
+    const record = {lastY: 0, heights: Immutable.List.of()};
+    const res = range.reduce((result, n) => {
+      const y = this.toHeight(result.lastY,maxSlope,highestY);
+      return {lastY: y, heights: result.heights.push(y)};
+    }, record);
+    const heights = res.heights.toArray();
     return new p2.Heightfield({
       heights,
       elementWidth: this.elementWidth,
@@ -113,7 +106,7 @@ export default class ParcourGenerator {
       parcour.addShape(body, this.createPlane(), [0, 0], 0, bodyOptions, null, rockTexture);
     }else if (maxSlope > 0) {
       parcour.addBody(body);
-      parcour.addShape(body, this.createHeightField(maxSlope), [0, 0], 0, bodyOptions, null, rockTexture);
+      parcour.addShape(body, this.createMontains(500,maxSlope,highestY), [0, 0], 0, bodyOptions, null, rockTexture);
     }
     if (logger.isDebugEnabled()) {
       logger.debug('Parcourgeneration ended.');
