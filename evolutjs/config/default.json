@@ -9,5 +9,8 @@
   "parcour": {
     "startMaxSlope": 0,
     "startHighestY": 0.5
+  },
+  "simulation": {
+    "runDuration": 10
   }
 }

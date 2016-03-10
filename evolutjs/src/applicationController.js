@@ -12,17 +12,28 @@ import InitialPopulationGenerator from './algorithm/population/initialPopulation
 log4js.configure('log4js.json');
 const logger = log4js.getLogger('p2-shizzle');
 
+let game;
+
+function callMe(population) {
+  logger.info('I was called.');
+  game.clear();
+  game.reset();
+  game.drawCircles();
+  game.generateParcour(config('parcour.startMaxSlope'),config('parcour.startHighestY'));
+  game.run();
+}
+
 jQuery(() => {
   logger.info('starting application...');
   const initialPopulationGenerator = new InitialPopulationGenerator(Immutable.Range(4,8),
     config('algorithm.populationSize'));
   const initalPopulation = initialPopulationGenerator.generateInitialPopulation();
-  const game = new SimulationWorld(
+  game = new SimulationWorld(
     {
       mode: 'generator',
       maxSlope: config('parcour.startMaxSlope'),
       highestY: config('parcour.startHighestY')
-    },{generationCount: 1});
+    },{generationCount: 1}, callMe.bind(this));
   // Const game = new CarDemoGame();
   const settings = new SettingsPanel(game);
   settings.bindEvents();

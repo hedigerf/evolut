@@ -7,6 +7,8 @@ import log4js from 'log4js';
 import FlatParcour from '../object/parcour/flatParcour';
 import DemoGround from '../object/demoGround';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
+import config from '../../../config';
+
 
 import Circle from '../object/demoCircle';
 
@@ -21,7 +23,7 @@ function rockTexturePath() {
  */
 export default class SimulationWorld extends P2Pixi.Game {
 
-  constructor(parcourOptions,population) {
+  constructor(parcourOptions,population,cb) {
     super({
       pixiOptions: {
         view: document.getElementById('viewport'),
@@ -32,31 +34,85 @@ export default class SimulationWorld extends P2Pixi.Game {
     });
     this.population = population;
     this.parcourOptions = parcourOptions;
+    this.cb = cb;
+    this.reset();
   }
 
-  beforeRun() {
-    logger.info('Preparing Simulation for Generation: ' + this.population.generationCount);
+  reset() {
+    this.stepTime = 1 / 60;
+    this.runOver = false;
+    this.currentTime = 0;
+  }
+
+  generateParcour(maxSlope,highestY) {
     if (this.parcourOptions.mode === 'flat') {
       new FlatParcour(this);
     }else if (this.parcourOptions.mode === 'demo') {
       new DemoGround(this);
     }else if (this.parcourOptions.mode === 'generator') {
       const parcourGenerator = new ParcourGenerator();
-      const parcour = parcourGenerator.generateParcour(this,this.parcourOptions.maxSlope,this.parcourOptions.highestY);
+      const parcour = parcourGenerator.generateParcour(this,maxSlope,highestY);
     }
-    const circle = new Circle(this);
+  }
 
+  drawCircles() {
+    const circle = new Circle(this);
     for (let i = 0; i < 200; i++) {
       new Circle(this);
     }
-
     this.trackedBody = circle.bodies[0];
+  }
+
+  beforeRun() {
+    logger.info('Preparing Simulation for Generation: ' + this.population.generationCount);
+    this.generateParcour(this.parcourOptions.maxSlope,this.parcourOptions.highestY);
+    this.drawCircles();
+    const runDuration = config('simulation.runDuration');
+    this.currentTime = 0;
     this.world.on('postStep',(event) => {
-      if (logger.isDebugEnabled()) {
-        //  Logger.debug('after step');
+      this.currentTime += this.stepTime;
+      if (runDuration <= this.currentTime) {
+        //  CancelAnimationFrame(this.req);
+        this.runOver = true;
+        if (logger.isInfoEnabled()) {
+          logger.info('Simulation run ended.');
+        }
       }
     });
 
   }
+    /**
+    * Begins the world step / render loop
+    */
+   run() {
+     var self = this;
+     var maxSubSteps = 10;
+
+     self.lastWorldStepTime = self.time();
+
+     function update() {
+       if (!self.runOver) {
+         var timeSinceLastCall;
+
+         if (!self.paused) {
+           timeSinceLastCall = self.time() - self.lastWorldStepTime;
+           self.lastWorldStepTime = self.time();
+           self.world.step(self.stepTime, timeSinceLastCall, maxSubSteps);
+         }
+
+         self.beforeRender();
+         self.render();
+         self.afterRender();
+
+         self.req = requestAnimationFrame(update);
+       }else {
+         cancelAnimationFrame(self.req);
+         self.cb({generationCount: self.population.generationCount + 1});
+       }
+     }
+
+     self.req = requestAnimationFrame(update);
+   }
+
 
 }

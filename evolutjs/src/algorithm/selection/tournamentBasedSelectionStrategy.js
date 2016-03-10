@@ -23,15 +23,15 @@ export default class TournamentBasedSelectionStrategy extends SelectionStrategy 
    * @return {ImmutableList} A list containings the new individuals
    */
   select() {
-    const runs = this.initalPopulation.size;
+    const runs = this.population.size;
 
     const selectForRun = (runNr) => {
 
       const chooseIndividuals = (kCount) => {
-        const randomIndex = random.integer(0, this.initalPopulation.size -
+        const randomIndex = random.integer(0, this.population.size -
           1);
         logger.debug('kCount: ' + kCount + ' randomIndex: ' + randomIndex);
-        return this.initalPopulation.individuals[randomIndex];
+        return this.population.individuals[randomIndex];
       };
 
       logger.debug('RunNr: ' + runNr);
