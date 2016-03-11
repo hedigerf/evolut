@@ -2,7 +2,7 @@
 
 import log4js from 'log4js';
 
-import debug from '../../debug';
+import {debug} from '../../util/logUtil';
 
 const logger = log4js.getLogger('Individual');
 

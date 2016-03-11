@@ -6,45 +6,64 @@
 
 \chapter{Grundlagen}
 
+In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbeitet.
+
 \section{Natural Evoltions vs Artifical}
   Natürliche Evolution hat kein vordefiniertes Ziel und ist ein sogennanter open-ended Anpassungsprozess. Artifizielle Evolution jedoch ist ein Optimierungsprozess, welcher versucht Lösungen zu vordefinierten Problem zu finden \cite[S.1]{book:bioInspired}. \\
   \todo[inline]{intelligent design}
 
 \section{Artifical Evolution}
 
-  \subsection{Evolutionärer Algorithmus erstellen}
-  \label{sub:evAlgoErstellen}
-    Nach \cite[S.16 - 29]{book:bioInspired}:
+  \subsection{Schritte eines Evolutinären Algorithmus}
+  \label{sub:stepsEvAlgo}
+    Nach \cite[S.16 - 29]{book:bioInspired}: \\
+
+    \subsubsection{Genetische Repräsenation}
+    Der erste Schritt bei der Definition eines Evolutionären Alogrithmus ist die Auswahl der genetischen Repräsentation.
+    Nicht alle Arten von Evolutionären Algorithmen harmonieren mit jeder Repräsentation.
+
+      \paragraph{Diskrete Repräsentation}
+      \label{par:diskreteRepräsentation}
+        Bei der diskreten Repräsentation wird das Genom als binären String dargestellt [0111110].
+        Dieser binäre String kann anschliessend zu einem Phenotyp übersetzt werden.
+        Zum Beispiel kann eine Bitsequenz, direkt zu einer Zahl als Phenotyp übersetzt werden [0011] -> 3.
+        Ebenfalls kann eine diskrete Repäsentation eine Folge von beliebigen Zeichen annehmen [ABCDEF].
+        D. Floreano und C. Mattiussi bringen dazu ein gutes Beispiel anhand des Travelling Sales Man Problemes an \cite[S.18]{book:bioInspired}:
+        Jeder Buchstabe in der Sequenz repräsentiert dabei einen Ort, welchen es zu besuchen gilt.
+
+      \paragraph{Reale Werte Repräsentation}
+      \label{par:Reale Werte Repräsentation}
+        Weiter kann die Reale Werte Repräsentation gewählt werden. Das Genom wird hierbei durch reele Zahlen repräsentiert.
+        Beispielsweisse kann die optimale Position eines Zimmers (beste Flächennutzung) in einem Haus durch reale Zahlen dargestellt werden.
+
+      \paragraph{Baum Repräsentationen}
+      \label{par:Reale Werte Repräsentation}
+        Das zu evolvierende Objekt kann durch einen Baum dargestellt werden. \Tree [.A [.B [.C eins ] [.D zwei ] ].B [.E {3 und 4} ] ].A
+        Baum Repräsenationen werden vorallem bei der genetischen Programmierung eingesetzt.
+
+    \subsubsection{Initiale Population}
+      Die Grösse der Population hängt von den Eigenschaften des Suchraums und der Rechenkosten der Evaluation ab.
+      Wichtig bei der Erstellung einer Population dabei ist, möglichst diverse Individuen zu erstellen,
+      damit man sich nicht schon von Anfang an viele mögliche Lösung verspielt.
+
+    \subsubsection{Fitness Funktion}
+      Mit Hilfe der Fintess Funktion lassen sich Individuen beurteilen, wie gut geeiget Ihre Gene sind um die Problemstellung zu bewältigen.
+      In der natürlichen Evolution ist die Fitness des Tieres, wie viele Nachkommen es erzeugen kann. In der technischen Welt jedoch muss der
+      Anwenden sie jeweils selber definieren und nach seiner Problemstellung anpassen.
+
+    \subsubsection{Selektionsoperation}
+      Eine Selektionsoperation hilft einem möglichst gutgeignete Indivduen einer Generation zu selektieren.
+      Die Selektierten bilden die Basis für die nächste Generation. Eine grosse Herausforderung beim Selektieren ist die Erhaltung der Diversität.
+
+      \paragraph{Selection Pressure}
+        Als Selection Pressure wird der Prozensatz der Individuen der aktuellen Generation, welche man verwendet um Nachkommen zu erzeugen, bezeichnet.
+        Dabei werden am nur die fittesten Individuen selektiert. Zum Beispiel bei 10 Individuen werden nur die 4 selektiert, welche den höchsten Fitnesswert aufweisen.
+        Selektion nach Selection Pressure hat den Nachteil, dass die Diversität schnell verloren geht.
+
     \begin{itemize}
-
-      \item Auswahl einer genetischen Repräsentation
-        \begin{itemize}
-          \item Diskrete Repräsentation [ABCDEF], [0111110]
-          \item Reale Werte Pepräsentation 12.1245
-          \item Baum Repräsentation \Tree [.A [.B [.C eins ] [.D zwei ] ].B [.E {3 und 4} ] ].A
-        \end{itemize}
-
-      \item Population erstellen
-          \begin{itemize}
-            \item Die Grösse der Population hängt von den Eigenschaften des Suchraums und der Rechenkosten der Evaluation ab
-            \item Möglich viele unterschiedliche Individuen generieren
-          \end{itemize}
-
-      \item Fitnessfunktion definieren
-        \begin{itemize}
-          \item Auswahl und Kombination der Fitnesskomponenten
-          \item Wie wird die Funktion evaluiert?
-        \end{itemize}
 
       \item Auswahloperation definieren
         \begin{itemize}
-          \item Ziel: Möglichst viele gute Individuen selektieren um Nachkommen der nächsten Generation zu erzeugen
-          \item Selection Pressure
-            \begin{itemize}
-              \item Prozentsatz der Population die verwendet wird um Nachkommen zu reproduzieren, bsp 0.2
-              \item Vorteil: Schnelle Verbesserung der Fitnessfunktion
-              \item Nachteil: Schwierig Diversität zu erhalten
-            \end{itemize}
           \item Proportinate Selection
             \begin{itemize}
               \item Reproduktionsrate proportinal zur Fitnessfunktion
