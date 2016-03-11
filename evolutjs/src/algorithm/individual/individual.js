@@ -1,7 +1,5 @@
 'use strict';
 
-// Import { Seq } from 'immutable';
-import { vec2 as Vector } from 'p2';
 import log4js from 'log4js';
 
 import debug from '../../debug';
@@ -49,11 +47,13 @@ export default class Individual {
   /**
    * Default constructor of an individual.
    *
-   * @param {Seq<Vector>} bodyPoints Describes the body of the Individual
-   * @param {Number} bodyMassFactor The amount of the mass which belongs to the body
-   * @param {Seq<Record<Vector, Leg>>} legsAndPositions A set with Legs and their Position
+   * @param {Genotype} genotype The genotype of the Individual
    */
-  constructor(bodyPoints, bodyMassFactor, legsAndPositions) {
+  constructor(genotype) {
+
+    this.makeBody(genotype);
+    this.makeEngine(genotype);
+    this.makeLegs(genotype);
 
     // The body points form a simple polygon.
     // @link https://en.wikipedia.org/wiki/Simple_polygon
@@ -73,30 +73,13 @@ export default class Individual {
   }
 
   /**
-   * Returns the number of legs.
+   * Create the individual's body.
    *
-   * @return {Number}
+   * @param {Genotype} genotype
    */
-  get countLegs() {
-    return this.legs;
-  }
-
-  /**
-   * Returns the mass of the body.
-   *
-   * @return {Number}
-   */
-  get mass() {
-    return this.mass;
-  }
-
-  /**
-   * Returns the mass of all legs.
-   *
-   * @return {Number}
-   */
-  get massLegs() {
-    return DEFAULT_BODY_MASS - this.mass;
+  makeBody(genotype) {
+    // Mass
+    // polygon
   }
 
 }

@@ -2,6 +2,7 @@
 
 import { List } from 'immutable';
 
+import Foot from './foot';
 import { makeInfo, MassDistribution } from './massDistribution';
 
 /**
@@ -19,25 +20,25 @@ export default class Leg {
    * Default constructor of a Leg.
    *
    * @param {Number} mass The mass of a leg
-   * @param {Number} shankMassFactor Factor of the shank's mass
-   * @param {Number} thighMassFactor Factor of the thigh's mass
+   * @param {Number} massFactorThigh Factor of the thigh's mass
    * @param {Number} height The total height of a leg
    * @param {Number} heightThigh Height of the thigh
-   * @param {Number} heightShank Height of the shank
    */
-  constructor(mass, shankMassFactor, thighMassFactor, height, heightThigh, heightShank) {
+  constructor(mass, massFactorThigh, height, heightThigh) {
 
     this.mass = mass;
     this.massDistribution = new MassDistribution(
       List.of([
-        makeInfo('shank', shankMassFactor),
-        makeInfo('thigh', thighMassFactor)
+        makeInfo('shank', 1 - massFactorThigh),
+        makeInfo('thigh', massFactorThigh)
       ])
     );
 
     this.height = height;
+    this.heightShank = height - heightThigh;
     this.heightThigh = heightThigh;
-    this.heightShank = heightShank;
+
+    this.foot = new Foot();
   }
 
 }
