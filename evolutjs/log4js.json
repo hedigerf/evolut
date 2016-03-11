@@ -19,7 +19,7 @@
     }
   ],
   "levels": {
-        "[all]": "DEBUG"
+        "[all]": "INFO"
     },
   "replaceConsole": true
 }

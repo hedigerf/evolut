@@ -3,11 +3,14 @@
 import path from 'path';
 import P2Pixi from './../../../lib/p2Pixi';
 import log4js from 'log4js';
+import Immutable from 'immutable';
 
 import FlatParcour from '../object/parcour/flatParcour';
 import DemoGround from '../object/demoGround';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
 import config from '../../../config';
+import {debug,info} from '../../util/logUtil';
+
 
 
 import Circle from '../object/demoCircle';
@@ -56,27 +59,24 @@ export default class SimulationWorld extends P2Pixi.Game {
   }
 
   drawCircles() {
-    const circle = new Circle(this);
-    for (let i = 0; i < 200; i++) {
-      new Circle(this);
-    }
-    this.trackedBody = circle.bodies[0];
+    this.population.individuals = Immutable.Range(0,200).map(x => new Circle(this));
+    // Force evaluation of sequence
+    this.population.individuals.cacheResult();
+    this.trackedBody = this.population.individuals.get(0).bodies[0];
   }
 
   beforeRun() {
-    logger.info('Preparing Simulation for Generation: ' + this.population.generationCount);
+    info(logger,'Preparing Simulation for Generation: ' + this.population.generationCount);
     this.generateParcour(this.parcourOptions.maxSlope,this.parcourOptions.highestY);
     this.drawCircles();
     const runDuration = config('simulation.runDuration');
     this.currentTime = 0;
     this.world.on('postStep',(event) => {
+      debug(logger,'' + this.trackedBody.position);
       this.currentTime += this.stepTime;
       if (runDuration <= this.currentTime) {
-        //  CancelAnimationFrame(this.req);
         this.runOver = true;
-        if (logger.isInfoEnabled()) {
-          logger.info('Simulation run ended.');
-        }
+        info(logger,'Simulation run ended.');
       }
     });
 
