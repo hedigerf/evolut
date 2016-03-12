@@ -3,7 +3,7 @@
 import jQuery from 'jquery';
 import log4js from 'log4js';
 import config from '../config';
-import Immutable from 'immutable';
+import {Range} from 'immutable';
 
 import SimulationWorld from './render/world/simulationWorld';
 import SettingsPanel from './settings/settingsPanel';
@@ -32,15 +32,15 @@ function performSimulationPostprocessing(population) {
 
 jQuery(() => {
   info(logger,'starting application...');
-  const initialPopulationGenerator = new InitialPopulationGenerator(Immutable.Range(4,8),
+  const initialPopulationGenerator = new InitialPopulationGenerator(Range(4,9),
     config('algorithm.populationSize'));
-  const initalPopulation = initialPopulationGenerator.generateInitialPopulation();
+  const initialPopulation = initialPopulationGenerator.generateInitialPopulation();
   simulation = new SimulationWorld(
     {
       mode: 'generator',
       maxSlope: config('parcour.startMaxSlope'),
       highestY: config('parcour.startHighestY')
-    },{generationCount: 1, individuals: null}, performSimulationPostprocessing.bind(this));
+    },initialPopulation, performSimulationPostprocessing.bind(this));
   const settings = new SettingsPanel(simulation);
   settings.bindEvents();
 

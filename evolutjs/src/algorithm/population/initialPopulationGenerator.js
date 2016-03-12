@@ -10,6 +10,6 @@ export default class InitialPopulationGenerator{
   }
 
   generateInitialPopulation() {
-    return new Population(undefined);
+    return new Population(undefined,1);
   }
 }

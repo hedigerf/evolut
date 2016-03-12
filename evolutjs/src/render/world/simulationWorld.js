@@ -71,6 +71,11 @@ export default class SimulationWorld extends P2Pixi.Game {
       x.randomPos();
       this.addGameObject(x);
     });
+    this.mapIndividualsToRenderers();
+  }
+
+  mapIndividualsToRenderers() {
+    // TODO create renderers for each indiviual
   }
 
   beforeRun() {
@@ -115,7 +120,8 @@ export default class SimulationWorld extends P2Pixi.Game {
          self.req = requestAnimationFrame(update);
        }else {
          cancelAnimationFrame(self.req);
-         self.cb({generationCount: self.population.generationCount + 1, individuals: self.population.individuals});
+         // TODO update generaton with fitness values, dont pass renderers
+         self.cb({generationCount: self.population.generationCount, individuals: self.population.individuals});
        }
      }
 
