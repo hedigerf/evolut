@@ -65,6 +65,14 @@ export default class SimulationWorld extends P2Pixi.Game {
     this.trackedBody = this.population.individuals.get(0).bodies[0];
   }
 
+  addNewPopulation(population) {
+    this.population = population;
+    this.population.individuals.forEach(x => {
+      x.randomPos();
+      this.addGameObject(x);
+    });
+  }
+
   beforeRun() {
     info(logger,'Preparing Simulation for Generation: ' + this.population.generationCount);
     this.generateParcour(this.parcourOptions.maxSlope,this.parcourOptions.highestY);
@@ -107,7 +115,7 @@ export default class SimulationWorld extends P2Pixi.Game {
          self.req = requestAnimationFrame(update);
        }else {
          cancelAnimationFrame(self.req);
-         self.cb({generationCount: self.population.generationCount + 1});
+         self.cb({generationCount: self.population.generationCount + 1, individuals: self.population.individuals});
        }
      }
 
