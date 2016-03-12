@@ -55,78 +55,71 @@ In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbei
       Eine Selektionsoperation hilft einem möglichst gutgeignete Indivduen einer Generation zu selektieren.
       Die Selektierten bilden die Basis für die nächste Generation. Eine grosse Herausforderung beim Selektieren ist die Erhaltung der Diversität.
 
-      \paragraph{Selection Pressure}
-        Als Selection Pressure wird der Prozensatz der Individuen der aktuellen Generation, welche man verwendet um Nachkommen zu erzeugen, bezeichnet.
+      \paragraph{Selektionsdruck}
+        Als Selektionsdruck wird der Prozensatz der Individuen der aktuellen Generation, welche man verwendet um Nachkommen zu erzeugen, bezeichnet.
         Dabei werden am nur die fittesten Individuen selektiert. Zum Beispiel bei 10 Individuen werden nur die 4 selektiert, welche den höchsten Fitnesswert aufweisen.
-        Selektion nach Selection Pressure hat den Nachteil, dass die Diversität schnell verloren geht.
+        Selektion nach Selektionsdruck hat den Nachteil, dass die Diversität schnell verloren geht.
 
-    \begin{itemize}
+      \paragraph{Proportionle Selektion}
+        Bei der proportionalen Selektion wählt man die Reproduktionsrate proportinal zur Fitness.
+        Proportionale Selektion funktioniert schlecht wenn alle Individuen sehr ähnliche Fitnesswerte aufweisen oder es nur wenige/einen Ausreisser gibt.
 
-      \item Auswahloperation definieren
-        \begin{itemize}
-          \item Proportinate Selection
-            \begin{itemize}
-              \item Reproduktionsrate proportinal zur Fitnessfunktion
-              \item Nachteil: Schlecht wenn alle Indivduen gleiche Fitnesswerte vorweisen oder es nur einen Ausreisser gibt
-            \end{itemize}
-          \item Rank-based Selection
-            \begin{itemize}
-              \item Individuen Rangliste erstellen und Reproduktionswahrscheinlichkeiten proportional zu Rang zu ordnen
-              \item Vorteil: Da die Reproduktionswahrscheinlichkeit proportinal zum Rang ist, kommt es nicht drauf an wie wenig unterschiedlich die Individuen sind.
-            \end{itemize}
-          \item Truncated Rank-based Selection: Nur die besten Individuen der Rangliste zur Reproduktion selektieren. Im Gegensatz zu Rank-based Selection erzeugt jedes Individuum die gleiche Anzahl Nachkommen.
-          \item Tournament-basd Selection
-            \begin{itemize}
-              \item Wähle k zufällige Individuen, das Individuum mit der höchsten Fitness erzeugt Nachkommen
-              \item Vorteil: Gute Balance zwischen Selection-Pressure und genetischer Diversität
-            \end{itemize}
-          \item Generational Replacement
-            \begin{itemize}
-              \item Die ganze Population wird durch Nachkommen ersetzt
-              \item Elitism kann helfen den Prozess zu verbessern in dem immer die n besten Individuen erhalten bleiben
-            \end{itemize}
+      \paragraph{Rang-basierte Selektion}
+        Es wird zuerst eine Rangliste erstellt und dann werden die Reproduktionswahrscheinlichkeiten proporional zum Rang zugeordnet.
+        Diese Selektionsstrategy hat den Vorteil gegenüber der proportionalen Selektion, das es nicht darauf ankommt wie unterschiedlich die Individuen sind.
 
+      \paragraph{Truncated Rang-basierte Selektion}
+        Ähnlich wie die Rang-basierte Seleketion. Es werden jedoch nur die besten Individuen zur Reproduktion selektiert und
+        jedes Individuum produziert die gleiche Anzahl Nachkommen.
 
-        \end{itemize}
+      \paragraph{Turnier-basierte Selektion}
+        Es werden \(k\) zufällig ausgewählte Individuen selektiert, das Individuum mit dem höchsten Fitnesswert erzeugt ein Nachkommen. Dies wird solange wiederholt bis man wieder so viele Nachkommen hat,
+        wie die Ursprüngliche Generation Individuen hatte. Ein grosser Vorteil von Turniert-basierter Seleketion ist die gute Balanace zwischen Selektionsdruck und genetischer Diversität.
 
-      \item Rekombinationsfunktion definieren
-        \begin{itemize}
-          \item Paarweise seletkion der Nachkommen
-          \item Gene der Paare werden rekombiniert (untereinander vertauscht)
-          \item One-Point Crossover
-            \begin{itemize}
-              \item Zufällige Bestimmung eines Cross-Over Punktes an dem die Gene des Paares vertauscht werden.
-              \item Anwendbar auf Diskrete und Reale Werte Repräsentationen
-            \end{itemize}
-          \item Multi-Point Crossover: Gleich wie One-Points, es werden aber mehrere Cross-Over Punkte bestimmt
-          \item Uniform Crossover
-            \begin{itemize}
-              \item Vertauschen von Genen an n zufälligen Positionen
-              \item Anwendbar auf Reale Werte Repräsentationen
-            \end{itemize}
-          \item Arithemtic Crossover
-            \begin{itemize}
-              \item Durchschnitte von Genen an n zufälligen Positionen
-              \item Es wird nur ein Nachkomme generiert
-              \item Anwendbar auf Reale Werte Repräsentationen
-            \end{itemize}
-          \item Sequenzen : Es wird ein neuer Nachkomme gebildet unter Einhalten von Regeln. Alle Einträge dürfen nur Einmal vorkommen etc.... Unique Version von Multi-Point Crossover.
-          \item Rekombinations bei Baum Repräsentationen: Es werden nur zufällige Teile des Baumes unter den Paaren vertauscht.
-        \end{itemize}
+    \subsubsection{Rekombinationsfunktion}
+        Bei der Rekombination werden jeweils Zwei Individuen selektiert und deren Genpaare werden rekombiniert (untereinander vertauscht).
+        Rekombination ist nicht bei jeder Problemstellung hilfreich, es muss von Fall zu Fall neu bewertet werden ob sie eingesetzt wird.
 
-      \item Mutationsfunktion definieren
-        \begin{itemize}
-          \item Mutationen operieren auf Level Indivduum
-          \item Es ist Vorsicht geboten, da gefundene Lösungen durch Mutationen verloren gehen können
-          \item Positionen eine Genomes werden mit einer bestimmten Wahrscheinlichkeit \(p_{m}\) mutiert.
-          \item Binär: Flippen der Bits
-          \item Reale Werte Repräsentation: Addieren eines zufälligen Wertes aus einer Gaus Verteilung \(N(0,\sigma)\)
-          \item Sequenzen: Zufälliges austauschen Zweier Positionen
-          \item Baum: Mutieren von Nodes. Gleiches Alphabet verwenden.
-        \end{itemize}
+        \paragraph{One-Point Crossover}
+          Es wird ein zufälliger Cross-Over Punkt bestimmt an dem die Gene des Paares vertauscht werden.
+          Anwendbar ist diese Strategie bei Diskreten und Reale Werte Repräsentationen.
 
-      \item Ergebniss Analysemethode definieren
-    \end{itemize}
+        \paragraph{Multi-Point Crossover}
+          Im Prinzip gleich wie One-Point Crossover, jedoch werden mehrere Punkte bestimmt und
+          zwischen diesen Punkten werden dann die Gene ausgetauscht.
+
+        \paragraph{Uniform Crossover}
+          Die Gene werden an \(n\) zufälligen Stellen vertauscht, nur Anwendbar auf Reale Werte Repräsentationen.
+
+        \paragraph{Arithmetic Crossiver}
+          Der Durschnitt von den Genen an \(n\) zufälligen Positionen wird gebildet.
+          Aus diesem Durchschnitt wird dann ein Nachkomme erzeugt.
+          Ebenfalls nur anwendbar auf Reale Werte Repräsentationen.
+
+        \paragraph{Sequenzen}
+          Bei Sequenzen gilt es die Regel zu erhalten, dass alle Einträge nur einmal vorkommen dürfen. Wir erinnern uns an das Beispiel vom Travelling Sales Man \ref{par:diskreteRepräsentation}.
+          Es wird sozusagen eine Unique Version von  Multi-Point Crossover angewendet.
+
+        \paragraph{Bäume}
+          Bei Bäumen wird ein zufälliger Teil des Baumes mit einem des anderen Nachkommens vertauscht.
+
+    \subsubsection{Mutationsfunktion}
+      Mutationen operieren direkt auf dem Individuum. Positonen eines Genomes werden mit einer bestimmten Wahrscheinlichkeit \(p_{m}\) mutiert.
+      Es ist jedoch Vorsicht geboten, da gewisse Lösungen durch Mutationen verloren gehen können.
+
+      \paragraph{Binäre Repräsentationen}
+        Wenn die Repräsentation aus binären Werten besteht, werden die Bits geflippt (oder nur bestimmte Segmente).
+
+      \paragraph{Reale Werte Repräsentationen}
+        Es wird ein zufälliger Wert aus einer Gaus Verteilung \(N(0,\sigma)\) addiert.
+
+      \paragraph{Sequenzen}
+        Zwei zufällig ausgewählte Positionen werden miteinander vertauscht.
+
+      \paragraph{Baum}
+        Gewisse Teilabschnitte des Baumes werden mutiert.
+
+      \todo[inline]{Ergebniss Analysemethode definieren}
 
     Genetische Representation: Erbgutdaten, genetic encoding \\
     Phenotyp: Aussehen des Individum -> Manifestation. In unserem Fall die 6-Beinigen Kreaturen als Pixelgrafik. \\
