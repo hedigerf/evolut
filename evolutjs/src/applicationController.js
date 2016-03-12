@@ -8,7 +8,7 @@ import Immutable from 'immutable';
 import SimulationWorld from './render/world/simulationWorld';
 import SettingsPanel from './settings/settingsPanel';
 import InitialPopulationGenerator from './algorithm/population/initialPopulationGenerator';
-import {info} from './util/logUtil';
+import {debug,info} from './util/logUtil';
 import TournamentBasedSelectionStrategy from './algorithm/selection/tournamentBasedSelectionStrategy';
 
 log4js.configure('log4js.json');
@@ -20,7 +20,7 @@ function performSimulationPostprocessing(population) {
   info(logger,'starting postprocessing');
   const selectionStrategy = new TournamentBasedSelectionStrategy(population,10);
   const selected = selectionStrategy.select();
-  debug(logger,'seleceted individuals size: ' + selected.individuals.size);
+  debug(logger,'selected individuals size: ' + selected.individuals.size);
   simulation.clear();
   simulation.reset();
   simulation.drawCircles();
