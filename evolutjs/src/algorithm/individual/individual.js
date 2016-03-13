@@ -2,7 +2,7 @@
 
 import log4js from 'log4js';
 
-import {debug} from '../../util/logUtil';
+import { debug } from '../../util/logUtil';
 
 const logger = log4js.getLogger('Individual');
 
@@ -12,28 +12,6 @@ const logger = log4js.getLogger('Individual');
  * @type {Number}
  */
 const DEFAULT_BODY_MASS = 1;
-
-/**
- * Checks if the specified mass factor is less than 1.
- *
- * @param {Number} bodyMassFactor
- * @throws {Error}
- */
-function checkMassFactor(bodyMassFactor) {
-  if (bodyMassFactor >= 1) {
-    throw new Error('Individual: Mass factor is greater or equal than 1');
-  }
-}
-
-/**
- * Checks if the body points form a valid polygon.
- *
- * @param  {Seq<Vetor>} bodyPoints Describes the bodz of the Individual
- * @throws {Error}
- */
-function checkBodyPoints(bodyPoints) {
-  // TODO check if simple polygon with sweep algorithm
-}
 
 /**
  * Represents an Individual.
@@ -47,39 +25,25 @@ export default class Individual {
   /**
    * Default constructor of an individual.
    *
-   * @param {Genotype} genotype The genotype of the Individual
+   * @param {Number} mass Mass of an indivudual
+   * @param {List<Vector>} bodyPoints Polygon points
+   * @param {List<{oreintation: ORIENTATION, position: Vector}>} legJoints
+   *   Joints between an individuals body and legs.
+   * @param {List<{heightThigh: Number, mass: Number, joint: {orientation: ORIENTATION}}>} legs
+   *   Information about an individuals legs.
+   * @param {Engine} engine Specifies which engine controlls the movement of the legs.
    */
-  constructor(genotype) {
+  constructor(mass, bodyPoints, legJoints, legs, engine) {
 
-    this.makeBody(genotype);
-    this.makeEngine(genotype);
-    this.makeLegs(genotype);
-
-    // The body points form a simple polygon.
-    // @link https://en.wikipedia.org/wiki/Simple_polygon
-    checkBodyPoints(bodyPoints);
+    this.mass = mass;
     this.bodyPoints = bodyPoints;
+    this.joints = legJoints;
+    this.legs = legs;
+    this.engine = engine;
 
-    // The mass of this body is distributed
-    // amongst the leg pairs and the body itself.
-    checkMassFactor(bodyMassFactor);
-    this.mass = DEFAULT_BODY_MASS * bodyMassFactor;
-
-    this.legs = legsAndPositions.size;
-    this.legMassFactor = (1 - bodyMassFactor) / this.legs;
-    this.legsAndPositions = legsAndPositions;
+    // This.makeLegs(legs, legJoints);
 
     debug(logger, 'Individual created');
-  }
-
-  /**
-   * Create the individual's body.
-   *
-   * @param {Genotype} genotype
-   */
-  makeBody(genotype) {
-    // Mass
-    // polygon
   }
 
 }
