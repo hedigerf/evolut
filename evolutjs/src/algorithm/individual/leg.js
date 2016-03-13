@@ -1,9 +1,15 @@
 'use strict';
 
-import { List } from 'immutable';
-
+import { PartialGenotype } from 'genotype';
+import Joint from './joint';
 import Foot from './foot';
-import { makeInfo, MassDistribution } from './massDistribution';
+
+/**
+ * Default height for of a leg.
+ *
+ * @type {Number}
+ */
+const DEFAULT_LEG_HEIGHT = 10;
 
 /**
  * Represents a leg of an indiviual.
@@ -14,29 +20,29 @@ import { makeInfo, MassDistribution } from './massDistribution';
  * The leg maintains knowledge about the thigh, shank, knee joint
  * and the foot.
  */
-export default class Leg {
+export default class Leg extends PartialGenotype {
 
   /**
    * Default constructor of a Leg.
    *
    * @param {Number} mass The mass of a leg
    * @param {Number} massFactorThigh Factor of the thigh's mass
-   * @param {Number} height The total height of a leg
    * @param {Number} heightThigh Height of the thigh
+   * @param {Joint} joint The knee joint
    */
-  constructor(mass, massFactorThigh, height, heightThigh) {
+  constructor(mass, massFactorThigh, heightThigh, joint) {
+
+    super();
 
     this.mass = mass;
-    this.massDistribution = new MassDistribution(
-      List.of([
-        makeInfo('shank', 1 - massFactorThigh),
-        makeInfo('thigh', massFactorThigh)
-      ])
-    );
+    this.massTigh = mass * massFactorThigh;
+    this.massShank = mass - this.massTigh;
 
-    this.height = height;
-    this.heightShank = height - heightThigh;
+    this.height = DEFAULT_LEG_HEIGHT;
+    this.heightShank =   this.height - heightThigh;
     this.heightThigh = heightThigh;
+
+    this.joint = new Joint(joint);
 
     this.foot = new Foot();
   }

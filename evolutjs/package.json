@@ -43,6 +43,7 @@
     "p2": "latest",
     "p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
     "pixi.js": "latest",
+    "ramda": "latest",
     "random-js": "latest",
     "immutable" : "latest"
   },
