@@ -62,4 +62,12 @@ export default class Circle extends P2Pixi.GameObject {
     this.addShape(body, circle, [0, 0], 0, bodyOptions, style);
   }
 
+  randomPos() {
+    this.bodies[0].position = randomPosition();
+  }
+
+  get fitness() {
+    return this.bodies[0].position[0];
+  }
+
 }
