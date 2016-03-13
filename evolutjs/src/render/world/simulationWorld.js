@@ -67,10 +67,12 @@ export default class SimulationWorld extends P2Pixi.Game {
 
   addNewPopulation(population) {
     this.population = population;
-    this.population.individuals.forEach(x => {
+    /*This.population.individuals.forEach(x => {
       x.randomPos();
       this.addGameObject(x);
-    });
+    });*/
+    this.clear();
+    this.reset();
     this.mapIndividualsToRenderers();
   }
 
