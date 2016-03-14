@@ -2,7 +2,8 @@ import {Range} from 'immutable';
 import log4js from 'log4js';
 
 import Population from './population';
-import {Individual,Genotype} from '../individual/genotype';
+import Individual from '../individual/individual';
+import {Genotype} from '../individual/genotype';
 import {info,error} from '../../util/logUtil';
 
 const logger = log4js.getLogger('InitialPopulationGenerator');
@@ -33,9 +34,11 @@ export default class InitialPopulationGenerator{
       // Check if new body point count should be applied
       if (count % individualsPerBp === 0) {
         currentBodyPointsIndex = count / individualsPerBp;
+        info(logger,'Switched to ' + this.bodyPointsRange.get(currentBodyPointsIndex) + ' BodyPoints');
+
       }
       return new Individual(seed);
     });
-    return new Population(individuals,1);
+    return new Population(individuals.cacheResult(),1);
   }
 }
