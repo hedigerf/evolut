@@ -3,7 +3,7 @@ import log4js from 'log4js';
 
 import Population from './population';
 import Individual from '../individual/individual';
-import {info,error} from '../../util/logUtil';
+import {debug,info,error} from '../../util/logUtil';
 
 const logger = log4js.getLogger('InitialPopulationGenerator');
 
@@ -15,7 +15,11 @@ export default class InitialPopulationGenerator{
     this.bodyPointsRange = bodyPointsRange;
     this.populationSize = populationSize;
   }
-
+  /**
+   * Generate an initial population
+   *
+   * @return {Population} the initial population
+   */
   generateInitialPopulation() {
     const individualsPerBp = this.populationSize / this.bodyPointsRange.size;
     if (!Number.isInteger(individualsPerBp)) {
@@ -31,10 +35,9 @@ export default class InitialPopulationGenerator{
       const currentBodyPoints = this.bodyPointsRange.get(currentBodyPointsIndex);
       const seed = Individual.seed(0.6, currentBodyPoints);
       // Check if new body point count should be applied
-      if (count % individualsPerBp === 0) {
+      if (count % individualsPerBp === 0 && this.populationSize !== count) {
         currentBodyPointsIndex = count / individualsPerBp;
-        info(logger,'Switched to ' + this.bodyPointsRange.get(currentBodyPointsIndex) + ' BodyPoints');
-
+        debug(logger,'Switched to ' + this.bodyPointsRange.get(currentBodyPointsIndex) + ' BodyPoints');
       }
       return new Individual(seed);
     });
