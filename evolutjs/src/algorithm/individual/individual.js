@@ -1,5 +1,6 @@
 'use strict';
 
+import { Range } from 'immutable';
 import log4js from 'log4js';
 
 import { debug } from '../../util/logUtil';
@@ -59,7 +60,8 @@ export default class Individual extends Genotype {
    * @param {Number} massFactor
    * @param {Number} numberPoints
    * @param {Number} [numberLegs=DEFAULT_LEG_COUNT]
-   * @return {Individual}
+   * @param {String} [engine='ant']
+   * @return {Object}
    */
   static seed(massFactor, numberPoints, numberLegs = DEFAULT_LEG_COUNT, engine = 'ant') {
 
@@ -71,77 +73,15 @@ export default class Individual extends Genotype {
     };
 
     // jshint -W098
-    const genotype = {
+    return {
       body: {
-        massFactor: massFactor,
+        massFactor,
         bodyPoints: rangePoints.map(_ => randomPoint()),
       },
       joints: rangeLeg.map(_ => HipJoint.seed()),
       legs: rangeLeg.map(_ => Leg.seed()),
-      engine: 'ant'
+      engine
     };
-
-    return new Individual(genotype);
   }
 
-}
-
-/**
- * Generate a random individual.
- *
- * @return {Object}
- */
-export function seed() {
-
-  const randomReal = () => {
-    return random.real(0.1, 0.9);
-  };
-  const randomPoint = () => {
-    return random.integer(0, 10);
-  };
-  const randomPolygon = () => {
-    return [
-      randomPoint(),
-      randomPoint(),
-      randomPoint(),
-      randomPoint()
-    ];
-  };
-  const randomOrientation = () => {
-    return random.integer(1, 2);
-  };
-  const randomJoint = () => {
-    return {
-      orientation: randomOrientation(),
-      position: randomPoint()
-    };
-  };
-  const randomLeg = () => {
-    return {
-      massFactor: randomReal(),
-      massFactorThigh: randomReal(),
-      heightThigh: randomReal(),
-      joint: {
-        orientation: randomOrientation()
-      }
-    };
-  };
-
-  return {
-    body: {
-      massFactor: randomReal(),
-      bodyPoints: randomPolygon(),
-    },
-    joints: [
-      randomJoint(),
-      randomJoint(),
-      randomJoint()
-    ],
-    legs: [
-      randomLeg(),
-      randomLeg(),
-      randomLeg()
-    ],
-    engine: 'ant'
-  };
 }

@@ -27,7 +27,7 @@ export class Genotype {
    * Returns a randomly seeded version of a genotype.
    *
    * @static
-   * @return {Genotype}
+   * @return {Object}
    */
   static seed() {
     return {};
@@ -73,7 +73,7 @@ export class PartialGenotype {
    * Returns a randomly seeded version of a partial genotype.
    *
    * @static
-   * @return {PartialGenotype}
+   * @return {Object}
    */
   static seed() {
     return {};

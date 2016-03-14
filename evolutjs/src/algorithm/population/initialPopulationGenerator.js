@@ -3,7 +3,6 @@ import log4js from 'log4js';
 
 import Population from './population';
 import Individual from '../individual/individual';
-import {Genotype} from '../individual/genotype';
 import {info,error} from '../../util/logUtil';
 
 const logger = log4js.getLogger('InitialPopulationGenerator');
@@ -30,7 +29,7 @@ export default class InitialPopulationGenerator{
       ' different BodyPoints. ' + individualsPerBp + ' Individuals per BodyPoint variation.');
     const individuals = Range(1,this.populationSize + 1).map(count => {
       const currentBodyPoints = this.bodyPointsRange.get(currentBodyPointsIndex);
-      const seed = Genotype.seed(currentBodyPoints);
+      const seed = Individual.seed(0.6, currentBodyPoints);
       // Check if new body point count should be applied
       if (count % individualsPerBp === 0) {
         currentBodyPointsIndex = count / individualsPerBp;

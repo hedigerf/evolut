@@ -58,18 +58,15 @@ export default class Leg extends PartialGenotype {
    *
    * @override
    * @static
-   * @return {Leg}
+   * @return {Object}
    */
   static seed() {
-
-    const genotype = {
+    return {
       mass: 0,
       massFactor: 0.5,
       height: 1,
       heightFactor: 0.6
     };
-
-    return new Leg(genotype);
   }
 
 }
