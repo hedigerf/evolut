@@ -27,3 +27,17 @@ export function info(logger, message) {
     logger.info(message);
   }
 }
+
+/**
+* Only call logger.error() if the logger has error enabled.
+* This should ensure that the built in check in logger.error() is not invoked
+* because this leads to a huge performance hit.
+*
+* @param {Log4js.Logger} logger logger
+* @param {String} message Error message
+*/
+export function error(logger, message) {
+  if (logger && logger.isErrorEnabled()) {
+    logger.error(message);
+  }
+}
