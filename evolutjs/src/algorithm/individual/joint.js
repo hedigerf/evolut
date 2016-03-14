@@ -1,6 +1,6 @@
 'use strict';
 
-import { PartialGenotype } from 'genotype';
+import { PartialGenotype } from './genotype';
 
 /**
  * Enumeration of different joint orientations.

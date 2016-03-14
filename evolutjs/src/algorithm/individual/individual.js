@@ -1,11 +1,3 @@
-/**
- * Individual module.
- *
- * @module algorithm/individual/individual
- * @see module:algorithm/individual/genotype
- */
-
-
 'use strict';
 
 import log4js from 'log4js';

@@ -1,6 +1,6 @@
 'use strict';
 
-import { PartialGenotype } from 'genotype';
+import { PartialGenotype } from './genotype';
 
 /**
  * Represents a foot of a leg of an individual.

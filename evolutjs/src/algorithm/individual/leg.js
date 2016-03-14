@@ -1,6 +1,6 @@
 'use strict';
 
-import { PartialGenotype } from 'genotype';
+import { PartialGenotype } from './genotype';
 import { KneeJoint } from './joint';
 import Foot from './foot';
 
