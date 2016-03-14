@@ -4,7 +4,7 @@ const logger = log4js.getLogger('SelectionStrategy');
 /**
  *Base class for selection strategy
  */
-export class SelectionStrategy{
+export default class SelectionStrategy{
 
   constructor(population) {
     this.population = population;
