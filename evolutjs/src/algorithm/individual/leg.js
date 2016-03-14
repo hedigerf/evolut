@@ -1,7 +1,7 @@
 'use strict';
 
 import { PartialGenotype } from 'genotype';
-import Joint from './joint';
+import { KneeJoint } from './joint';
 import Foot from './foot';
 
 /**
@@ -25,24 +25,21 @@ export default class Leg extends PartialGenotype {
   /**
    * Default constructor of a Leg.
    *
-   * @param {Number} mass The mass of a leg
-   * @param {Number} massFactorThigh Factor of the thigh's mass
-   * @param {Number} heightThigh Height of the thigh
-   * @param {Joint} joint The knee joint
+   * @param {Object}
    */
-  constructor(mass, massFactorThigh, heightThigh, joint) {
+  constructor({ mass, massFactor, height = DEFAULT_LEG_HEIGHT, heightFactor, joint } = {}) {
 
     super();
 
     this.mass = mass;
-    this.massTigh = mass * massFactorThigh;
+    this.massTigh = mass * massFactor;
     this.massShank = mass - this.massTigh;
 
-    this.height = DEFAULT_LEG_HEIGHT;
-    this.heightShank =   this.height - heightThigh;
-    this.heightThigh = heightThigh;
+    this.height = height;
+    this.heightThigh = height * heightFactor;
+    this.heightShank = heightFactor - this.heightShank;
 
-    this.joint = new Joint(joint);
+    this.joint = new KneeJoint(joint);
 
     this.foot = new Foot();
   }
@@ -54,6 +51,25 @@ export default class Leg extends PartialGenotype {
    */
   static get identifier() {
     return 'leg';
+  }
+
+  /**
+   * Returns a randomly seeded version of a leg.
+   *
+   * @override
+   * @static
+   * @return {Leg}
+   */
+  static seed() {
+
+    const genotype = {
+      mass: 0,
+      massFactor: 0.5,
+      height: 1,
+      heightFactor: 0.6
+    };
+
+    return new Leg(genotype);
   }
 
 }

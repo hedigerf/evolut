@@ -1,10 +1,17 @@
+/**
+ * Individual module.
+ *
+ * @module algorithm/individual/individual
+ * @see module:algorithm/individual/genotype
+ */
+
+
 'use strict';
 
-import { zipWith } from 'ramda';
 import log4js from 'log4js';
 
 import { debug } from '../../util/logUtil';
-import { Genotype } from 'genotype';
+import { Genotype } from './genotype';
 import Leg from './leg';
 import { HipJoint } from './joint';
 import Random from 'random-js';
@@ -18,6 +25,13 @@ const random = new Random(Random.engines.mt19937().autoSeed());
  * @type {Number}
  */
 const DEFAULT_BODY_MASS = 1;
+
+/**
+ * Default number of legs.
+ *
+ * @type {Number}
+ */
+const DEFAULT_LEG_COUNT = 3;
 
 /**
  * Represents an Individual.
@@ -45,6 +59,37 @@ export default class Individual extends Genotype {
     this.joints = joints.map(j => new HipJoint(j));
 
     debug(logger, 'Individual created');
+  }
+
+  /**
+   * @override
+   * @static
+   * @param {Number} massFactor
+   * @param {Number} numberPoints
+   * @param {Number} [numberLegs=DEFAULT_LEG_COUNT]
+   * @return {Individual}
+   */
+  static seed(massFactor, numberPoints, numberLegs = DEFAULT_LEG_COUNT, engine = 'ant') {
+
+    const rangeLeg = Range(0, numberLegs);
+    const rangePoints = Range(0, numberPoints);
+
+    const randomPoint = () => {
+      return random.integer(0, 10);
+    };
+
+    // jshint -W098
+    const genotype = {
+      body: {
+        massFactor: massFactor,
+        bodyPoints: rangePoints.map(_ => randomPoint()),
+      },
+      joints: rangeLeg.map(_ => HipJoint.seed()),
+      legs: rangeLeg.map(_ => Leg.seed()),
+      engine: 'ant'
+    };
+
+    return new Individual(genotype);
   }
 
 }

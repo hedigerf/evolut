@@ -23,8 +23,14 @@ export class Genotype {
   // jshint -W098
   constructor(genotype) { }
 
+  /**
+   * Returns a randomly seeded version of a genotype.
+   *
+   * @static
+   * @return {Genotype}
+   */
   static seed() {
-    // Overwrite..
+    return {};
   }
 
 }
@@ -63,8 +69,14 @@ export class PartialGenotype {
     return this.information;
   }
 
-  seed() {
-    // Overwrite..
+  /**
+   * Returns a randomly seeded version of a partial genotype.
+   *
+   * @static
+   * @return {PartialGenotype}
+   */
+  static seed() {
+    return {};
   }
 
 }

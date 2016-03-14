@@ -9,4 +9,22 @@ import { PartialGenotype } from 'genotype';
  */
 export default class Foot extends PartialGenotype {
 
+  /**
+   * Default constructor of a foot.
+   */
+  constructor() {
+    super();
+  }
+
+  /**
+   * Returns a Foot.
+   *
+   * @override
+   * @static
+   * @return {Foot}
+   */
+  static seed() {
+    return new Foot();
+  }
+
 }

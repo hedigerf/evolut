@@ -40,26 +40,75 @@ export default class Joint extends PartialGenotype {
    *
    * @param {Object}
    */
-  constructor({orientation}) {
+  constructor({ orientation = ORIENTATION.BACK } = {}) {
     this.angleMin = DEFAULT_ANGLE_MIN;
     this.angleMax = DEFAULT_ANGLE_MAX;
     this.orientation = orientation;
   }
 
+  /**
+   * Returns a randomly seeded joint.
+   *
+   * @override
+   * @static
+   * @param {ORIENTATION} [orientation=ORIENTATION.BACK]
+   * @return {Joint}
+   */
+  static seed(orientation = ORIENTATION.BACK) {
+    return new Joint({ orientation });
+  }
+
 }
 
+/**
+ * Represents a hip joint of an individual.
+ * A hip joint connects the body to a leg.
+ */
 export class HipJoint extends Joint {
 
-  constructor({orientation, position}) {
-    this.angleMin = DEFAULT_ANGLE_MIN;
-    this.angleMax = DEFAULT_ANGLE_MAX;
-    this.orientation = orientation;
+  /**
+   * Default constructor for a hip joint.
+   *
+   * @param {ORIENTATION} { orientation The orientation of a joint.
+   * @param {Vector} position } The position of the hip joint.
+   */
+  constructor({ orientation, position }) {
+    super({ orientation });
+    this.position = position;
+  }
+
+  /**
+   * Returns a randomly seeded joint.
+   *
+   * @override
+   * @static
+   * @param {ORIENTATION} [orientation=ORIENTATION.BACK] Orientation of the joint.
+   * @param {Vector} position The position of a hip joint.
+   * @return {HipJoint}
+   */
+  static seed(orientation = ORIENTATION.BACK, position) {
+
+    const genotype = {
+      orientation,
+      position
+    };
+
+    return new HipJoint(genotype);
   }
 
 }
 
+/**
+ * Represents a knee joint of an individual.
+ * A knee joint connects the thigh and the shank of a leg.
+ */
 export class KneeJoint extends Joint {
 
+  /**
+   * Default constructor of a knee joint.
+   *
+   * @param {Object} genotype The whole genotype of an individual.
+   */
   constructor(genotype) {
     super(genotype);
   }
