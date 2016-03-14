@@ -138,29 +138,27 @@ In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbei
 
   \subsection{Arten von evolutionären Algorithmen}
   \label{sub:artenEvAlgos}
-    \begin{itemize}
-      \item Genetische Algorithmen
-      \label{item:genAlgo}
-        \begin{itemize}
-          \item Arbeiten mit binären Represäntationen
-          \item Setzen Cross-Over und Mutationen ein
-        \end{itemize}
-      \item Genetische Programmierung
-      \label{item:genProg}
-        \begin{itemize}
-          \item Arbeitet mit Bäumen
-          \item Setzt Cross-Over und Mutationen ein
-        \end{itemize}
-      \item Evolutionäre Programmierung
-      \label{item:evProg}
-        \begin{itemize}
-          \item Arbeitet mit Realen Werte Repräsentationen
-          \item Setzt nur Mutationen ein
-          \item Oft wird Tournament-based Selection eingesetzt
-        \end{itemize}
-      \item Evolutionäre Strategien
-      \item{item:evStrat}
-        \begin{itemize}
-          \item Gleich wie \ref{item:evProg} aber die Varianz der Verteilung die für Mutationen gebraucht werden ist genetische codiert.
-        \end{itemize}
-    \end{itemize}
+    Es gibt insgesammt 4 Arten von evolutionären Algorithmen:
+    Genetische Algorithmen, Genetische Programmierung, Evolutinionäre Programmierung
+    und Evolutionäre Strategien.
+
+    \subsubsection{Genetische Algorithmen}
+    \label{item:genAlgo}
+      Die Genetische Algorithmen arbeiten mit binären Genom Repräsentationen.
+      Es wird sowohl Rekombination als auch Mutation eingesetzt.
+
+    \subsubsection{Genetische Programmierung}
+    \label{item:genProg}
+      Es werden Bäume als Repräsentation des Genoms eingesetzt. Wie bei den Genetischen Algorithmen,
+      wird auch Rekombination und Mutation eingesetzt.
+
+    \subsubsection{Evolutionäre Programmierung}
+    \label{item:evProg}
+      Bei der Evolutinären Programmierung wird ausschliesslich Mutation eingesetzt.
+      Das Genom wird durch reale Werte repräsentiert. Als Selektionsoperator wird
+      oft Turnier-basierte Selektion eingesetzt.
+
+    \subsubsection{Evolutionäre Strategien}
+    \label{item:evStrat}
+        Ähnlich wie Evolutionäre Programmierung, aber die Varianz der Verteilung,
+        welche für die Mutation gebraucht wird ist genetische codiert.

@@ -12,9 +12,9 @@ const random = new Random(Random.engines.mt19937().autoSeed());
 /**
  * TournamentBasedSelectionStrategy
  */
-export default class TournamentBasedSelectionStrategy{
+export default class TournamentBasedSelectionStrategy extends SelectionStrategy{
   constructor(population, k) {
-    // super(population);
+    super(population);
     this.population = population;
     this.k = k;
     info(logger,'Torunament-based Selection k = ' + k);
