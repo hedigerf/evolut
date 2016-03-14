@@ -11,6 +11,23 @@ class GenotypeBuilder {
 }
 
 /**
+ * Provides a seed function which generates a random seed of a genotype.
+ */
+class Seedable {
+
+  /**
+   * Returns a randomly seeded version of a genotype.
+   *
+   * @static
+   * @return {Object}
+   */
+  static seed() {
+    return {};
+  }
+
+}
+
+/**
  * Base class of a genotype.
  */
 export class Genotype {

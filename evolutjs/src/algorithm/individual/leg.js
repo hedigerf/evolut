@@ -1,8 +1,12 @@
 'use strict';
 
+import Random from 'random-js';
+
 import { PartialGenotype } from './genotype';
 import { KneeJoint } from './joint';
 import Foot from './foot';
+
+const random = new Random(Random.engines.mt19937().autoSeed());
 
 /**
  * Default height for of a leg.
@@ -58,14 +62,15 @@ export default class Leg extends PartialGenotype {
    *
    * @override
    * @static
+   * @param {Number} mass The mass of the leg.
    * @return {Object}
    */
-  static seed() {
+  static seed(mass) {
     return {
-      mass: 0,
-      massFactor: 0.5,
-      height: 1,
-      heightFactor: 0.6
+      mass: mass,
+      massFactor: random.real(0.1, 0.9),
+      height: random.integer(1, 10),
+      heightFactor: random.real(0.1, 0.9)
     };
   }
 

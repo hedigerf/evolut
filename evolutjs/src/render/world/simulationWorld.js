@@ -10,6 +10,7 @@ import DemoGround from '../object/demoGround';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
 import config from '../../../config';
 import {debug,info} from '../../util/logUtil';
+import Individual from '../object/individual/individual';
 
 
 
@@ -59,9 +60,12 @@ export default class SimulationWorld extends P2Pixi.Game {
   }
 
   drawCircles() {
-    this.population.individuals = Immutable.Range(0,200).map(x => new Circle(this));
     // Force evaluation of sequence
-    this.population.individuals.cacheResult();
+    // jshint -W098
+    Immutable.Range(0,200).map(x => new Circle(this)).cacheResult();
+    this.population.individuals.map(i => new Individual(this, i)).cacheResult();
+    // Const o = new Individual(this, this.population.individuals.get(0));
+
     this.trackedBody = this.population.individuals.get(0).bodies[0];
   }
 
@@ -87,7 +91,7 @@ export default class SimulationWorld extends P2Pixi.Game {
     const runDuration = config('simulation.runDuration');
     this.currentTime = 0;
     this.world.on('postStep',(event) => {
-      debug(logger,'' + this.trackedBody.position);
+      //Debug(logger,'' + this.trackedBody.position);
       this.currentTime += this.stepTime;
       if (runDuration <= this.currentTime) {
         this.runOver = true;

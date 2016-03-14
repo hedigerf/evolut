@@ -1,7 +1,7 @@
 'use strict';
 
-import { Range } from 'immutable';
 import log4js from 'log4js';
+import { Range } from 'immutable';
 
 import { debug } from '../../util/logUtil';
 import { Genotype } from './genotype';
@@ -69,17 +69,19 @@ export default class Individual extends Genotype {
     const rangePoints = Range(0, numberPoints);
 
     const randomPoint = () => {
-      return random.integer(0, 10);
+      return [random.integer(0, 2), random.integer(0, 2)];
     };
+
+    const massFactorLeg = (DEFAULT_BODY_MASS * massFactor) / numberLegs;
 
     // jshint -W098
     return {
       body: {
         massFactor,
-        bodyPoints: rangePoints.map(_ => randomPoint()),
+        bodyPoints: rangePoints.map(_ => randomPoint()), // Ensure clockwise order
       },
       joints: rangeLeg.map(_ => HipJoint.seed()),
-      legs: rangeLeg.map(_ => Leg.seed()),
+      legs: rangeLeg.map(_ => Leg.seed(massFactorLeg)),
       engine
     };
   }
