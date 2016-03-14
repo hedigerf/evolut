@@ -38,16 +38,30 @@ export default class Joint extends PartialGenotype {
   /**
    * Default constructor of a joint of an individual.
    *
-   * @param {Number} [angleMin=] Minimal angle in rad
-   * @param {Number} [angleMax=] Maximal angle in rad
-   * @param {ORIENTATION} [orientation=ORIENTATION.BACK] The joint's orientation.
+   * @param {Object}
    */
-  constructor(angleMin = DEFAULT_ANGLE_MIN,
-              angleMax = DEFAULT_ANGLE_MAX,
-              orientation = ORIENTATION.BACK) {
-    this.angleMin = angleMin;
-    this.angleMax = angleMax;
+  constructor({orientation}) {
+    this.angleMin = DEFAULT_ANGLE_MIN;
+    this.angleMax = DEFAULT_ANGLE_MAX;
     this.orientation = orientation;
+  }
+
+}
+
+export class HipJoint extends Joint {
+
+  constructor({orientation, position}) {
+    this.angleMin = DEFAULT_ANGLE_MIN;
+    this.angleMax = DEFAULT_ANGLE_MAX;
+    this.orientation = orientation;
+  }
+
+}
+
+export class KneeJoint extends Joint {
+
+  constructor(genotype) {
+    super(genotype);
   }
 
 }

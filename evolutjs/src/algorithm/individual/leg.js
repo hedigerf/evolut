@@ -47,4 +47,13 @@ export default class Leg extends PartialGenotype {
     this.foot = new Foot();
   }
 
+  /**
+   * @override
+   * @static
+   * @return {String}
+   */
+  static get identifier() {
+    return 'leg';
+  }
+
 }
