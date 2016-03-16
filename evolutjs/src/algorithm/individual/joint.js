@@ -1,5 +1,7 @@
 'use strict';
 
+import { assocPath } from 'ramda';
+
 import { PartialGenotype } from './genotype';
 
 /**
@@ -41,7 +43,7 @@ export default class Joint extends PartialGenotype {
    * @param {Object}
    */
   constructor({ orientation = ORIENTATION.BACK } = {}) {
-    super({ orientation });
+    super({});
     this.angleMin = DEFAULT_ANGLE_MIN;
     this.angleMax = DEFAULT_ANGLE_MAX;
     this.orientation = orientation;
@@ -63,12 +65,14 @@ export default class Joint extends PartialGenotype {
    *
    * @override
    * @static
-   * @param {ORIENTATION} [orientation=ORIENTATION.BACK]
+   * @param {Object} options
    * @return {Object}
    */
-  static seed(orientation = ORIENTATION.BACK) {
+  static seed({ orientation = ORIENTATION.BACK } = {}) {
     return {
-      orientation
+      [this.identifier]: {
+        orientation
+      }
     };
   }
 
@@ -83,8 +87,7 @@ export class HipJoint extends Joint {
   /**
    * Default constructor for a hip joint.
    *
-   * @param {ORIENTATION} { orientation The orientation of a joint.
-   * @param {Vector} position } The position of the hip joint.
+   * @param {Object}
    */
   constructor({ orientation, position }) {
     super({ orientation });
@@ -96,15 +99,11 @@ export class HipJoint extends Joint {
    *
    * @override
    * @static
-   * @param {ORIENTATION} [orientation=ORIENTATION.BACK] Orientation of the joint.
-   * @param {Vector} position The position of a hip joint.
+   * @param {Object} options
    * @return {Object}
    */
-  static seed(orientation = ORIENTATION.BACK, position) {
-    return {
-      orientation,
-      position
-    };
+  static seed({ position, orientation } = {}) {
+    return assocPath([this.identifier, 'position'], position, super.seed({ orientation }));
   }
 
 }
@@ -113,4 +112,4 @@ export class HipJoint extends Joint {
  * Represents a knee joint of an individual.
  * A knee joint connects the thigh and the shank of a leg.
  */
-export class KneeJoint extends Joint { }
+export class KneeJoint extends Joint {}

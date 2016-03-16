@@ -16,40 +16,50 @@ function randomColor() {
   return parseInt((random.hex(6)), 16);
 }
 
+/**
+ * Represents the phenotype of an individual.
+ * The phenotype is the graphical representation of  it's corresponding genotype.
+ */
 export default class Individual extends Phenotype {
 
+  /**
+   * Creates this phonetype from a genotype.
+   *
+   * @override
+   * @protected
+   * @param {Genotype} genotype The genotype
+   */
   fromGenotype(genotype) {
 
-
     const bodyOptions = {
-          collisionGroup: random.integer(4, 20),
-          collisionMask: 3
-        };
+      collisionGroup: random.integer(4, 20),
+      collisionMask: 3
+    };
 
     const body = new p2.Body({
-          position: [-50, 0],
-          mass: random.integer(2, 200)
-        });
+      position: [-50, 0],
+      mass: random.integer(2, 200)
+    });
 
     const style = {
-          lineWidth: 1,
-          lineColor: randomColor(),
-          fillColor: randomColor()
-        };
+      lineWidth: 1,
+      lineColor: randomColor(),
+      fillColor: randomColor()
+    };
 
     this.addBody(body);
-    this.addShape(body, this.makeShape(genotype.bodyPoints), [0, 0], 0, bodyOptions, style);
-
+    this.addShape(body, this.makeShape(genotype.instanceParts.body.bodyPoints), [0, 0], 0, bodyOptions, style);
   }
 
+  /**
+   * Returns the shape of the phenotype.
+   *
+   * @protected
+   * @param {Array} bodyPoints
+   * @return {p2.Convex}
+   */
   makeShape(bodyPoints) {
-
-    // Const circle = new p2.Circle({
-    //       radius: 0.25
-    //     });
-    //
-
-    return new p2.Convex({ vertices: bodyPoints.toArray() });
+    return new p2.Convex({ vertices: bodyPoints });
   }
 
 }

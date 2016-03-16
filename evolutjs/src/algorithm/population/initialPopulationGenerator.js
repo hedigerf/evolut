@@ -39,7 +39,9 @@ export default class InitialPopulationGenerator{
         currentBodyPointsIndex = count / individualsPerBp;
         debug(logger,'Switched to ' + this.bodyPointsRange.get(currentBodyPointsIndex) + ' BodyPoints');
       }
-      return new Individual(seed);
+      const i = new Individual(seed);
+      console.log(i.blueprint());
+      return i;
     });
     return new Population(individuals.cacheResult(),1);
   }

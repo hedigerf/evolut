@@ -1,5 +1,6 @@
 'use strict';
 
+import R from 'ramda';
 import Random from 'random-js';
 
 import { PartialGenotype } from './genotype';
@@ -31,21 +32,27 @@ export default class Leg extends PartialGenotype {
    *
    * @param {Object}
    */
-  constructor({ mass, massFactor, height = DEFAULT_LEG_HEIGHT, heightFactor, joint } = {}) {
+  constructor({ massFactor, height = DEFAULT_LEG_HEIGHT, heightFactor } = {}) {
 
-    super();
+    super({});
 
-    this.mass = mass;
-    this.massTigh = mass * massFactor;
-    this.massShank = mass - this.massTigh;
+    this.massTigh = massFactor;
+    this.massShank = 1 - massFactor;
 
     this.height = height;
     this.heightThigh = height * heightFactor;
     this.heightShank = heightFactor - this.heightShank;
+  }
 
-    this.joint = new KneeJoint(joint);
-
-    this.foot = new Foot();
+  /**
+   * Returns the parts of the genotype.
+   *
+   * @override
+   * @static
+   * @return {Array}
+   */
+  static get parts() {
+    return [KneeJoint, Foot];
   }
 
   /**
@@ -62,12 +69,24 @@ export default class Leg extends PartialGenotype {
    *
    * @override
    * @static
-   * @param {Number} mass The mass of the leg.
+   * @param {Object} options Override random values.
    * @return {Object}
    */
-  static seed(mass) {
+  static seed(options) {
     return {
-      mass: mass,
+      [this.identifier]: R.merge(this.randomSeed, super.seed(options))
+    };
+  }
+
+  /**
+   * Get randomized seed options.
+   *
+   * @private
+   * @static
+   * @return {Object}
+   */
+  static get randomSeed() {
+    return {
       massFactor: random.real(0.1, 0.9),
       height: random.integer(1, 10),
       heightFactor: random.real(0.1, 0.9)

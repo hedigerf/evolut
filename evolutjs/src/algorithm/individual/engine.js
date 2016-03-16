@@ -3,11 +3,10 @@
 import { PartialGenotype } from './genotype';
 
 /**
- * Represents a foot of a leg of an individual.
- * A foot is a stump, a half circle, attached to the end of a leg, the shank.
- * There ist no joint between a shank and a foot.
+ * Represents the engine part of an individual.
+ * The engine is responsible for the movement of the legs.
  */
-export default class Foot extends PartialGenotype {
+export default class Engine extends PartialGenotype {
 
   /**
    * Returns the identifier for a partial genotype.
@@ -17,7 +16,7 @@ export default class Foot extends PartialGenotype {
    * @return {String}
    */
   static get identifier() {
-    return 'foot';
+    return 'engine';
   }
 
   /**
@@ -25,11 +24,12 @@ export default class Foot extends PartialGenotype {
    *
    * @override
    * @static
+   * @param {Object} options
    * @return {Object}
    */
-  static seed() {
+  static seed({ type }) {
     return {
-      [this.identifier]: {}
+      [this.identifier]: type || 'ant'
     };
   }
 
