@@ -19,3 +19,7 @@
 *   [eukaryote](https://github.com/coreyferguson/eukaryote)
 *   [genetic-js](https://www.npmjs.com/package/genetic-js)
 *   [geneticalgorithm](https://www.npmjs.com/package/geneticalgorithm)
+
+## p2.js
+
+*   [Selecting broadphase](http://paulsalaets.com/posts/selecting-broadphase-p2/)

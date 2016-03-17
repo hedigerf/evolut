@@ -50,6 +50,11 @@ evolutjs/node_modules
 evolutjs/doc/*
 
 #
+# Generated protocol documents
+#
+evolutdoc/protocol/*.pdf
+
+#
 # Generated Latex Files
 #
 *.aux

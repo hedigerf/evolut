@@ -14,7 +14,7 @@ const random = new Random(Random.engines.mt19937().autoSeed());
  *
  * @type {Number}
  */
-const DEFAULT_LEG_HEIGHT = 10;
+const DEFAULT_LEG_HEIGHT = 1;
 
 /**
  * Represents a leg of an indiviual.
