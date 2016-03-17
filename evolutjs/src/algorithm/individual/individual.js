@@ -2,9 +2,9 @@
 
 import Random from 'random-js';
 
-import Body from './body.js';
+import Body from './body';
 import Engine from './engine';
-import Genotype from './genotype';
+import Genotype from '../genotype/genotype';
 import { HipJoint } from './joint';
 import Leg from './leg';
 

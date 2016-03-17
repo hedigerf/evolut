@@ -1,6 +1,6 @@
 'use strict';
 
-import { PartialGenotype } from './genotype';
+import { PartialGenotype } from '../genotype/genotype';
 
 /**
  * Represents the engine part of an individual.

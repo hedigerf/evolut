@@ -2,7 +2,7 @@
 
 import { assocPath } from 'ramda';
 
-import { PartialGenotype } from './genotype';
+import { PartialGenotype } from '../genotype/genotype';
 
 /**
  * Enumeration of different joint orientations.

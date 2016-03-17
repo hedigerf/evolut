@@ -1,6 +1,8 @@
 'use strict';
 
-import R from 'ramda';
+import {
+  assoc, compose, cond, equals, head, identity, isArrayLike, length, nth, of, pick, prop, T, unless, when
+} from 'ramda';
 
 /**
  * Create an array from an object.
@@ -9,7 +11,7 @@ import R from 'ramda';
  * @param  {*}
  * @return {Array<*>}
  */
-const coerceArray = R.unless(R.isArrayLike, R.of);
+const coerceArray = unless(isArrayLike, of);
 
 /**
  * Predicate checks if an array has length 1.
@@ -17,7 +19,7 @@ const coerceArray = R.unless(R.isArrayLike, R.of);
  * @param {Array}
  * @return {Boolean}
  */
-const hasLength1 = R.compose(R.equals(1), R.length);
+const hasLength1 = compose(equals(1), length);
 
 /**
  * Returns either the only element a list has,
@@ -26,7 +28,7 @@ const hasLength1 = R.compose(R.equals(1), R.length);
  * @param {Array}
  * @return {*|Array}
  */
-const unCoerceArray = R.when(hasLength1, R.head);
+const unCoerceArray = when(hasLength1, head);
 
 /**
  * Returns the specified index of a list of partial genotypes,
@@ -37,9 +39,9 @@ const unCoerceArray = R.when(hasLength1, R.head);
  * @return {PartialGenotype}
  */
 function getByIndexOrSingle(partialGenotypes, index = 0) {
-  return R.cond([
-    [R.isArrayLike, p => R.nth(index, p)],
-    [R.T, R.identity]
+  return cond([
+    [isArrayLike, p => nth(index, p)],
+    [T, identity]
   ])(partialGenotypes);
 }
 
@@ -62,7 +64,7 @@ function getBuildPartialGenotype(genotype) {
   return function buildPartialGenotype(PartialGenotypeType, index) {
 
     const id = PartialGenotypeType.identifier;
-    const partialGenotypes = R.prop(id, genotype);
+    const partialGenotypes = prop(id, genotype);
     const partialGenotype = getByIndexOrSingle(partialGenotypes, index);
 
     // jscs:disable
@@ -86,10 +88,10 @@ function buildGenotype(list, genotype) {
   return list.reduce((acc, type) => {
 
     const types = coerceArray(type);
-    const id = R.head(types).identifier;
+    const id = head(types).identifier;
     const instances = types.map(buildPartial);
 
-    return R.assoc(id, unCoerceArray(instances), acc);
+    return assoc(id, unCoerceArray(instances), acc);
 
   }, {});
 }
@@ -131,11 +133,11 @@ export default class Genotype {
     return this.parts.reduce((acc, part) => {
 
       const parts = coerceArray(part);
-      const id = R.head(parts).identifier;
-      const partialOptions = R.pick([id], options);
-      const seeds = parts.map(p => R.prop(id, p.seed(partialOptions)));
+      const id = head(parts).identifier;
+      const partialOptions = pick([id], options);
+      const seeds = parts.map(p => prop(id, p.seed(partialOptions)));
 
-      return R.assoc(id, unCoerceArray(seeds), acc);
+      return assoc(id, unCoerceArray(seeds), acc);
 
     }, {});
   }

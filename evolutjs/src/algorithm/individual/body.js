@@ -3,7 +3,7 @@
 import Random from 'random-js';
 import { Range } from 'immutable';
 
-import { PartialGenotype } from './genotype';
+import { PartialGenotype } from '../genotype/genotype';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 

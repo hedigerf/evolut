@@ -1,9 +1,9 @@
 'use strict';
 
-import R from 'ramda';
+import { merge } from 'ramda';
 import Random from 'random-js';
 
-import { PartialGenotype } from './genotype';
+import { PartialGenotype } from '../genotype/genotype';
 import { KneeJoint } from './joint';
 import Foot from './foot';
 
@@ -74,7 +74,7 @@ export default class Leg extends PartialGenotype {
    */
   static seed(options) {
     return {
-      [this.identifier]: R.merge(this.randomSeed, super.seed(options))
+      [this.identifier]: merge(this.randomSeed, super.seed(options))
     };
   }
 
