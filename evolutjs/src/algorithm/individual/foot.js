@@ -20,17 +20,4 @@ export default class Foot extends PartialGenotype {
     return 'foot';
   }
 
-  /**
-   * Returns a randomly seeded version of a genotype.
-   *
-   * @override
-   * @static
-   * @return {Object}
-   */
-  static seed() {
-    return {
-      [this.identifier]: {}
-    };
-  }
-
 }

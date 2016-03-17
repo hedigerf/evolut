@@ -3,108 +3,95 @@
 import R from 'ramda';
 
 /**
- * Wrap in an array.
+ * Create an array from an object.
+ * If object is already an array then return the array.
  *
- * @param  {*} object
+ * @param  {*}
  * @return {Array<*>}
  */
-function arrayify(object) {
-  if (!R.isArrayLike(object)) {
-    return [object];
-  }
-  return object;
-}
+const coerceArray = R.unless(R.isArrayLike, R.of);
+
+/**
+ * Predicate checks if an array has length 1.
+ *
+ * @param {Array}
+ * @return {Boolean}
+ */
+const hasLength1 = R.compose(R.equals(1), R.length);
 
 /**
  * Returns either the only element a list has,
  * or the whole list.
  *
- * @param {Array} array
+ * @param {Array}
  * @return {*|Array}
  */
-function singleOrAll(array) {
+const unCoerceArray = R.when(hasLength1, R.head);
+
+/**
+ * Returns the specified index of a list of partial genotypes,
+ * or the object itself.
+ *
+ * @param  {Array<partialGenotype>|PartialGenotype} partialGenotypes
+ * @param  {Number} [index=]
+ * @return {PartialGenotype}
+ */
+function getByIndexOrSingle(partialGenotypes, index = 0) {
   return R.cond([
-    [R.compose(R.equals(1), R.length), R.head],
+    [R.isArrayLike, p => R.nth(index, p)],
     [R.T, R.identity]
-  ])(array);
+  ])(partialGenotypes);
+}
+
+/**
+ * Returns a build function for a partial genotype.
+ *
+ * @param  {Object} genotype
+ * @return {function(PartialGenotype): PartialGenotype}
+ */
+function getBuildPartialGenotype(genotype) {
+
+  /**
+   * Builds a partial genotype with the needed information
+   * extracted from the whole genotype.
+   *
+   * @param {PartialGenotype} PartialGenotypeType
+   * @param {Number} index
+   * @return {PartialGenotype}
+   */
+  return function buildPartialGenotype(PartialGenotypeType, index) {
+
+    const id = PartialGenotypeType.identifier;
+    const partialGenotypes = R.prop(id, genotype);
+    const partialGenotype = getByIndexOrSingle(partialGenotypes, index);
+
+    // jscs:disable
+    return new PartialGenotypeType(partialGenotype);
+  };
 }
 
 /**
  * Responsible for building an genotype with the provided building instructions.
  * A genotype may define it's build order as a (nested) object of partial genotypes.
  * These may then contain a build order itself.
+ *
+ * @param {Array} list
+ * @param {Object} genotype
+ * @return {Object}
  */
-class GenotypeBuilder {
+function buildGenotype(list, genotype) {
 
-  // TODO move into genotype
+  const buildPartial = getBuildPartialGenotype(genotype);
 
-  /**
-   * Default constructor of a genotype builder.
-   *
-   * @param {Array} list The build object.
-   * @param {Object} genotype The seeded genotype information.
-   * @return {Object}
-   */
-  constructor(list, genotype) {
-    return this.build(list, genotype);
-  }
+  return list.reduce((acc, type) => {
 
-  /**
-   * Build the partial genotypes.
-   *
-   * @param {Array} list
-   * @param {Object} genotype
-   * @return {Object}
-   */
-  build(list, genotype) {
+    const types = coerceArray(type);
+    const id = R.head(types).identifier;
+    const instances = types.map(buildPartial);
 
-    const buildPartial = this.getBuildPartialGenotype(genotype);
+    return R.assoc(id, unCoerceArray(instances), acc);
 
-    return list.reduce((acc, type) => {
-
-      const types = arrayify(type);
-      const id = R.head(types).identifier;
-      const instances = types.map(buildPartial);
-
-      return R.assoc(id, singleOrAll(instances), acc);
-
-    }, {});
-  }
-
-  /**
-   * Returns a build function for a partial genotype.
-   *
-   * @param  {Object} genotype
-   * @return {function(PartialGenotype): PartialGenotype}
-   */
-  getBuildPartialGenotype(genotype) {
-
-    const getByIndexOrSingle = (partialGenotypes, index = 0) => {
-      return R.cond([
-        [R.isArrayLike, p => R.nth(index, p)],
-        [R.T, R.identity]
-      ])(partialGenotypes);
-    };
-
-    /**
-     * Builds a partial genotype with the needed information
-     * extracted from the whole genotype.
-     *
-     * @param {PartialGenotype} PartialGenotypeType
-     * @param {Number} index
-     * @return {PartialGenotype}
-     */
-    return function buildPartialGenotype(PartialGenotypeType, index) {
-
-      const id = PartialGenotypeType.identifier;
-      const partialGenotypes = R.prop(id, genotype);
-      const partialGenotype = getByIndexOrSingle(partialGenotypes, index);
-
-      // jscs:disable
-      return new PartialGenotypeType(partialGenotype);
-    };
-  }
-
+  }, {});
 }
 
 /**
@@ -118,7 +105,7 @@ export default class Genotype {
    * @param {Object} genotype The whole genotype as object.
    */
   constructor(genotype) {
-    this.instanceParts = new GenotypeBuilder(this.constructor.parts, genotype);
+    this.instanceParts = buildGenotype(this.constructor.parts, genotype);
   }
 
   /**
@@ -143,12 +130,12 @@ export default class Genotype {
 
     return this.parts.reduce((acc, part) => {
 
-      const parts = arrayify(part);
+      const parts = coerceArray(part);
       const id = R.head(parts).identifier;
       const partialOptions = R.pick([id], options);
       const seeds = parts.map(p => R.prop(id, p.seed(partialOptions)));
 
-      return R.assoc(id, singleOrAll(seeds), acc);
+      return R.assoc(id, unCoerceArray(seeds), acc);
 
     }, {});
   }
@@ -179,6 +166,18 @@ export class PartialGenotype extends Genotype {
    */
   static get identifier() {
     return '';
+  }
+
+  /**
+   * @override
+   * @static
+   * @param {Object} options
+   * @return {Object}
+   */
+  static seed(option) {
+    return {
+      [this.identifier]: option || {}
+    };
   }
 
 }
