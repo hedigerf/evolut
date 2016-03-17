@@ -86,7 +86,7 @@ export default class Body extends PartialGenotype {
 
     rangePoints.map(randomPoint).toArray();
 
-    return [[0,0], [4,0], [4,4], [0, 4]];
+    return [[0,0], [1,0], [1,1], [0, 1]];
   }
 
 }

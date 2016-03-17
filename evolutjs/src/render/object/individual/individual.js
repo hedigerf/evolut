@@ -38,7 +38,7 @@ export default class Individual extends Phenotype {
 
     const body = new p2.Body({
       position: [-30, 0],
-      mass: random.integer(2, 200)
+      mass: random.integer(2, 3)
     });
 
     const style = {
