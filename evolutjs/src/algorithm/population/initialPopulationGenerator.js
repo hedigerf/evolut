@@ -40,7 +40,7 @@ export default class InitialPopulationGenerator{
         debug(logger,'Switched to ' + this.bodyPointsRange.get(currentBodyPointsIndex) + ' BodyPoints');
       }
       const i = new Individual(seed);
-      console.log(i.blueprint());
+      debug(logger, i.blueprint());
       return i;
     });
     return new Population(individuals.cacheResult(),1);
