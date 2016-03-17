@@ -17,48 +17,82 @@
 
   \section{Design der Individuen}
 
-    \subsection{Körper}
-    \label{sub:Körper}
-      Die erste Frage wechlse sich stellt ist, wie kann der Koerper am besten beschrieben werden? \\
-      Der Koeper setzt sich aus verschiedenen Punkten auseinander. Die mindest Anzahl solcher Punkte wird auf 4 in einem ersten Schritt festgelegt. \\
+    \subsection{Körper\label{sub:Körper}}
+
+      Die erste Frage welche sich stellt ist, wie kann der Koerper am besten beschrieben werden? \\
+      Der Koeper setzt sich aus verschiedenen Punkten auseinander.
+      Die mindest Anzahl solcher Punkte wird auf 4 in einem ersten Schritt festgelegt. \\
       Die Obergrenze bei 8. Dies erlaubt dem Koeper eine polygonartige Figur.
-      \subsubsection{Hyptohese Körperpunkte}
-      \label{subsub:hypoKp}
-      Es wird die Hypothese aufgestellt, dass sich ein Indiviuum mit 8 Körperpunkten schneller durch den Parcour bewegen kann, als ein Individuum mit weniger Körperpunkten.
-      Die Vermutung dabei ist, dass durch die komplexere Form des Indiviuum, es besser die Balance halten kann.
-      Ob dies zutrifft wird in Kapitel \ref{chap:Resulate} diskutiert.
-    \subsection {Beine}
-    \label{sub:Beine}
-      Insgesammt weissen die Individuuen 6 Beine auf. Ein Beinpaar ist symmetrisch. Ein Bein hat jeweils 2 Gelenke, eines welches es mit dem Koerper verbindet,
-      das andere welches Ober- mit Unterschenkel verbindet. Als Vereinfachung wird die Hoehe des Gelenkes 0 gesetzt  \(h_{a} = 0\)
+
+      \subsubsection{Hyptohese Körperpunkte\label{subsub:hypoKp}}
+
+        Es wird die Hypothese aufgestellt,
+        dass sich ein Indiviuum mit 8 Körperpunkten schneller durch den Parcour bewegen kann,
+        als ein Individuum mit weniger Körperpunkten.
+        Die Vermutung dabei ist, dass durch die komplexere Form des Indiviuum, es besser die Balance halten kann.
+        Ob dies zutrifft wird in Kapitel~\ref{chap:Resulate} diskutiert.
+
+    \subsection{Beine\label{sub:Beine}}
+
+      Insgesammt weissen die Individuuen 6 Beine auf. Ein Beinpaar ist symmetrisch. Ein Bein hat jeweils 2 Gelenke,
+      eines welches es mit dem Koerper verbindet,
+      das andere welches Ober- mit Unterschenkel verbindet.
+      Als Vereinfachung wird die Hoehe des Gelenkes 0 gesetzt  \(h_{a} = 0\)
       Das Bein weisst eine Hoehe \(h_{l}\) auf. Die Position des Gelenkes,welches die beiden Beinschenkel verbindet,
-      wird als Abstand zum oberen Ende des Oberschenkel definiert \(h_{t}\), andersrum gesagt ist das die Hoehe des Oberschenkels.
+      wird als Abstand zum oberen Ende des Oberschenkel definiert \(h_{t}\),
+      andersrum gesagt ist das die Hoehe des Oberschenkels.
       Die Hoehe des Unterschenkels wird als \(h_{s}\) bezeichnet.
       Ein Bein weisst eine Breite auf \(w_{l}\). Am Ende des Unterschenkels wird ein Stumpf angehaengt.
-    \subsubsection{Masse}
-    \label{subs:Masse}
-      Das ganze Individum weisst eine fixe Masse von 1 auf \(m = 0\). Die Masse wird aber auf die einzelnen Koerpeteile verteilt.
-      \\
-      \input{./graphics/concept-leg}
+
+      \subsubsection{Masse\label{subs:Masse}}
+
+        Das ganze Individum weisst eine fixe Masse von 1 auf \(m = 0\).
+        Die Masse wird aber auf die einzelnen Koerpeteile verteilt.
+        \\
+        \input{./graphics/concept-leg}
+
+    \subsection{Genotyp\label{sub:Genotyp}}
+
+      \subsubsection{Design\label{subsub:GenotypDesign}}
+
+        Der Anspruch an das Design des Genotyps ist möglichst modular und einfach zu sein.
+        Als Grund für ein modulares Design spricht die Erweiterbarkeit und Wiederverwendung der bestehenden Teile.
+
+        Deshalb wurde der Genotyp in Teil-Genotypen unterteilt.
+
+        Ein Teil-Genotyp repräsentiert dabei eine beliebige Eigenschaft des Individuums.
+        Weiter können Teil-Genotypen wiederum in verschiedene weitere Teile aufgespaltet werden.
+
+        Damit entsteht die Möglichkeit Individuen nach einem dynamisch generierten Bauplan zu erstellen
+        und beliebige Kombinationen aus vorhandenen Teil-Genotypen innerhalb eines Genotypes zu bilden,
+        ohne dass die Implementation der seed-Funktion angepasst werden muss.
 
   \section{Auswahl des Evolutinären Algorithmus}
     Es stehen 4 Typen von Evolutionäre Algorithmen zur Auswahl:
     \begin{itemize}
-      \item Genetische Programmierung \ref{item:genProg}
-      \item Genetischer Algorithmus \ref{item:genAlgo}
-      \item Evolutiäre Strategie \ref{item:evStart}
-      \item Evolutinäre Programmierung \ref{item:evProg}
+      \item Genetische Programmierung~\ref{item:genProg}
+      \item Genetischer Algorithmus~\ref{item:genAlgo}
+      \item Evolutiäre Strategie~\ref{item:evStart}
+      \item Evolutinäre Programmierung~\ref{item:evProg}
     \end{itemize}
     \todo[inline]{Genauer Ausführen warum}
     Um die Problemstellung zu lösen, wurde entschieden Evolutinäre Programmierung einzusetzten.
-    Warum Evolutinäre Programmierung eingesetzt wird, wird nachfolgend erläutert. Das Austauschen der Genen, Rekombination, macht keinen Sinn wenn man Individuen das Laufen beibringt.
-    Man stelle sich dazu vor, man tausche das Gen welches den Körper definiert, mit dem der Beine. Dies stellt schon den ersten Indikator dafür da,
+    Warum Evolutinäre Programmierung eingesetzt wird, wird nachfolgend erläutert.
+    Das Austauschen der Genen, Rekombination, macht keinen Sinn wenn man Individuen das Laufen beibringt.
+    Man stelle sich dazu vor, man tausche das Gen welches den Körper definiert, mit dem der Beine.
+    Dies stellt schon den ersten Indikator dafür da,
     dass Evolutionäre Programmierung eingesetzt werden kann. Ein weiteres Kriterium ist die genetische Repräsentation.
-    Da unser Indiviuum sich aus Punkten im einem Koordinatensystem, verschiedene Winkel und einem Antrieb(Motor) definiert, wird die reale Werte Repräsentation eingesetzt.
-    Eine Baumrepräsenation oder binäre Repräsentation erscheint hier wenig gewinnbringend. Ein Punkt ist nichts anderes als zwei reale Werte, ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
-    Die Problemstellung würde wahrscheinlich anderst bewältigt werden, würde es hier um reale Kreaturen gehen und nicht nur um virtuelle Roboter, welche in einer künstlichen Umgebung(virtuelles Koordinatensystem) das Laufen lernen.
+    Da unser Indiviuum sich aus Punkten im einem Koordinatensystem,
+    verschiedene Winkel und einem Antrieb (Motor) definiert, wird die reale Werte Repräsentation eingesetzt.
+    Eine Baumrepräsenation oder binäre Repräsentation erscheint hier wenig gewinnbringend.
+    Ein Punkt ist nichts anderes als zwei reale Werte,
+    ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
+    Die Problemstellung würde wahrscheinlich anderst bewältigt werden,
+    würde es hier um reale Kreaturen gehen und nicht nur um virtuelle Roboter,
+    welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
 
   \section{Eingesetzte Technologien}
+
     Zur Auswahl standen mehrere Programmiersprachen und Physik Engines zur Auswahl. Die Evaluationskriterien dabei waren:
     \begin{itemize}
       \item Platform Interoperabilität (Linux, Windows Mac OS X)
@@ -82,26 +116,26 @@
      Mit Hilfe von Node.js lassen sich alle I/0 Zugriffe regeln und es kann auf den Node Package Manager zur Abhänigskeitsverwaltung von anderen Bibliotheken zurück gegriffen werden.
      Auch lässt sich unter bestimmten Umständen JavaScript schneller ausführen unter Node.js als in einem Browser.
 
-  \section{Initiale Polulation}
-  \label{sec:Initiale Polulation}
+  \section{Initiale Polulation\label{sec:Initiale Polulation}}
 
     Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse wird auf 100 festgelegt,
-    um eine breite Diversität zu erhalten. Es werden jeweils 20 Individuen mit 4,5,6,7 und 8 Körperpunkten
-    \ref{sub:Körper} generiert. Die Verantwortliche Klasse in JavaScript ist der InitialPopulationGenerator.
+    um eine breite Diversität zu erhalten.
+    Es werden jeweils 20 Individuen mit 4,5,6,7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
+    Die Verantwortliche Klasse in JavaScript ist der InitialPopulationGenerator.
 
+  \section{Parcour Generierung\label{sec:Parcour Generierung}}
 
-  \section{Parcour Generierung}
-  \label{sec:Parcour Generierung}
     Der Parcour wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcour generiert.
     Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours, das heisst es werden höhere Steigungen, ein höherer Punkt und XYZ vorkommen.
     Dazu muss eine Klasse erstellt werden (ParcourGenerator), welche mit Hilfe von Obergrenzen von Werten einen Parcour generieren kann.
-  \section{Selektion}
-  \label{sec:Selektion}
+
+  \section{Selektion\label{sec:Selektion}}
 
     Als Seleketionsstrategie wird Tournament-based Selection eingesetzt. Tournamend-based Selection hat den Vorteil,
     dass die Diversität erhalten bleibt, bei gleichzeitig guter Selektion der fittesten Individuen.
-    \subsection{Hypothese Selektionsstratgegie}
-    \label{sub:Hypothese Selektionsstratgegie}
-      Es wird die Hypothese aufgestellt, dass  Tournament-based Selection die besseren Resulate liefert im Vergleich zu den folgenden Selektionsstrategien: X und Y.
+
+    \subsection{Hypothese Selektionsstratgegie\label{sub:Hypothese Selektionsstratgegie}}
+
+      Es wird die Hypothese aufgestellt, dass Tournament-based-Selection die besseren Resulate liefert im Vergleich zu den folgenden Selektionsstrategien: X und Y.
       Um dies zu validieren werden die Selektionsstrategien X und Y implementiert und anschliessend analysiert.
-      Ob dies zutrifft wird in Kapitel \ref{chap:Resulate} diskutiert.
+      Ob dies zutrifft wird in Kapitel~\ref{chap:Resulate} diskutiert.
