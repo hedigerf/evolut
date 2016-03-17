@@ -13,12 +13,22 @@ const random = new Random(Random.engines.mt19937().autoSeed());
 const logger = log4js.getLogger('ParcourGenerator');
 
 /**
+ * Returns a random color
+ *
+ * @return {Number}
+ */
+function randomColor() {
+  return parseInt((random.hex(6)), 16);
+}
+
+/**
  * Is able to generate a parcour
  */
 export default class ParcourGenerator {
   constructor() {
     this.elementWidth = 1;
   }
+
 
   /**
   * Creates the Plane
@@ -102,8 +112,13 @@ export default class ParcourGenerator {
       if (logger.isDebugEnabled()) {
         logger.debug('generating flat parcour');
       }
+      const style = {
+        lineWidth: 1,
+        lineColor: randomColor(),
+        fillColor: randomColor()
+      };
       parcour.addBody(body);
-      parcour.addShape(body, this.createPlane(), [0, 0], 0, bodyOptions, null, rockTexture);
+      parcour.addShape(body, this.createPlane(), [0, 0], 0, bodyOptions, style);
     }else if (maxSlope > 0) {
       parcour.addBody(body);
       parcour.addShape(body, this.createMontains(500,maxSlope,highestY), [0, 0], 0, bodyOptions, null, rockTexture);
