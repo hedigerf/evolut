@@ -66,8 +66,8 @@ export default class CarGround extends P2Pixi.GameObject {
     super(game);
 
     const bodyOptions = {
-      collisionGroup: 1,
-      collisionMask: 2 // 1 | 2
+      collisionGroup: Math.pow(2,0),
+      collisionMask: Math.pow(2,1)
     };
 
     const texture = PIXI.Texture.fromImage(rockTexturePath(), false);

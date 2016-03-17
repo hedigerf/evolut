@@ -43,7 +43,7 @@ export default class SimulationWorld extends P2Pixi.Game {
   }
 
   reset() {
-    this.stepTime = 1 / 60;
+    this.stepTime = 1 / 30;
     this.runOver = false;
     this.currentTime = 0;
   }

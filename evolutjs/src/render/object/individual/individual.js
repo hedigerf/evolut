@@ -32,12 +32,12 @@ export default class Individual extends Phenotype {
   fromGenotype(genotype) {
 
     const bodyOptions = {
-      collisionGroup: random.integer(4, 20),
-      collisionMask: 3
+      collisionGroup: Math.pow(2,1),
+      collisionMask: Math.pow(2,0)
     };
 
     const body = new p2.Body({
-      position: [-50, 0],
+      position: [-30, 0],
       mass: random.integer(2, 200)
     });
 
