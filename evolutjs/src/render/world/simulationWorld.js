@@ -9,7 +9,7 @@ import FlatParcour from '../object/parcour/flatParcour';
 import DemoGround from '../object/demoGround';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
 import config from '../../../config';
-import {debug,info} from '../../util/logUtil';
+import {debug, info} from '../../util/logUtil';
 import Individual from '../object/individual/individual';
 
 
@@ -27,7 +27,7 @@ function rockTexturePath() {
  */
 export default class SimulationWorld extends P2Pixi.Game {
 
-  constructor(parcourOptions,population,cb) {
+  constructor(parcourOptions, population, cb) {
     super({
       pixiOptions: {
         view: document.getElementById('viewport'),
@@ -48,14 +48,14 @@ export default class SimulationWorld extends P2Pixi.Game {
     this.currentTime = 0;
   }
 
-  generateParcour(maxSlope,highestY) {
+  generateParcour(maxSlope, highestY) {
     if (this.parcourOptions.mode === 'flat') {
       new FlatParcour(this);
     }else if (this.parcourOptions.mode === 'demo') {
       new DemoGround(this);
     }else if (this.parcourOptions.mode === 'generator') {
       const parcourGenerator = new ParcourGenerator();
-      const parcour = parcourGenerator.generateParcour(this,maxSlope,highestY);
+      const parcour = parcourGenerator.generateParcour(this, maxSlope, highestY);
     }
   }
 
@@ -83,17 +83,17 @@ export default class SimulationWorld extends P2Pixi.Game {
   }
 
   beforeRun() {
-    info(logger,'Preparing Simulation for Generation: ' + this.population.generationCount);
-    this.generateParcour(this.parcourOptions.maxSlope,this.parcourOptions.highestY);
+    info(logger, 'Preparing Simulation for Generation: ' + this.population.generationCount);
+    this.generateParcour(this.parcourOptions.maxSlope, this.parcourOptions.highestY);
     this.drawCircles();
     const runDuration = config('simulation.runDuration');
     this.currentTime = 0;
-    this.world.on('postStep',(event) => {
+    this.world.on('postStep', (event) => {
       //Debug(logger,'' + this.trackedBody.position);
       this.currentTime += this.stepTime;
       if (runDuration <= this.currentTime) {
         this.runOver = true;
-        info(logger,'Simulation run ended.');
+        info(logger, 'Simulation run ended.');
       }
     });
 
@@ -125,7 +125,7 @@ export default class SimulationWorld extends P2Pixi.Game {
        }else {
          cancelAnimationFrame(self.req);
          // TODO update generaton with fitness values, dont pass renderers
-         self.cb({generationCount: self.population.generationCount, individuals: self.population.individuals});
+         self.cb({ generationCount: self.population.generationCount, individuals: self.population.individuals });
        }
      }
 
