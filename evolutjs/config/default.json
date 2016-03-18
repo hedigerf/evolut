@@ -7,8 +7,8 @@
     "populationSize": 5
   },
   "parcour": {
-    "startMaxSlope": 0.2,
-    "startHighestY": 0.5
+    "startMaxSlope": 0,
+    "startHighestY": 0
   },
   "simulation": {
     "runDuration": 10

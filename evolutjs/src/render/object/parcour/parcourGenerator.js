@@ -75,12 +75,12 @@ export default class ParcourGenerator {
    }
 
 
-  createMontains(length,maxSlope,highestY) {
+  createMontains(length, maxSlope, highestY) {
     const range = Immutable.Range(0, length);
-    const record = {lastY: 0, heights: Immutable.List.of()};
+    const record = { lastY: 0, heights: Immutable.List.of() };
     const res = range.reduce((result, n) => {
-      const y = this.toHeight(result.lastY,maxSlope,highestY);
-      return {lastY: y, heights: result.heights.push(y)};
+      const y = this.toHeight(result.lastY, maxSlope, highestY);
+      return { lastY: y, heights: result.heights.push(y) };
     }, record);
     const heights = res.heights.toArray();
     return new p2.Heightfield({
@@ -90,14 +90,14 @@ export default class ParcourGenerator {
     });
   }
 
-  generateParcour(world,maxSlope,highestY) {
+  generateParcour(world, maxSlope, highestY) {
     if (logger.isDebugEnabled()) {
       logger.debug('ParcourGenerator has started.');
     }
     const parcour = new P2Pixi.GameObject(world);
     const bodyOptions = {
-      collisionGroup: Math.pow(2,0),
-      collisionMask: Math.pow(2,1)
+      collisionGroup: Math.pow(2, 0),
+      collisionMask: Math.pow(2, 1)
     };
 
     const rockTexture = PIXI.Texture.fromImage(this.rockTexturePath(), false);
@@ -108,21 +108,10 @@ export default class ParcourGenerator {
     });
 
 
-    if (maxSlope === 0) {
-      if (logger.isDebugEnabled()) {
-        logger.debug('generating flat parcour');
-      }
-      const style = {
-        lineWidth: 1,
-        lineColor: randomColor(),
-        fillColor: randomColor()
-      };
-      parcour.addBody(body);
-      parcour.addShape(body, this.createPlane(), [0, 0], 0, bodyOptions, style);
-    }else if (maxSlope > 0) {
-      parcour.addBody(body);
-      parcour.addShape(body, this.createMontains(500,maxSlope,highestY), [0, 0], 0, bodyOptions, null, rockTexture);
-    }
+
+    parcour.addBody(body);
+    parcour.addShape(body, this.createMontains(500, maxSlope , highestY), [0, 0], 0, bodyOptions, null, rockTexture);
+
     if (logger.isDebugEnabled()) {
       logger.debug('Parcourgeneration ended.');
     }

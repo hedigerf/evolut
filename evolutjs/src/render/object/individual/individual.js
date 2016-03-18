@@ -2,7 +2,7 @@
 
 import p2 from 'p2';
 import Random from 'random-js';
-import {List} from 'immutable';
+import {List, Map} from 'immutable';
 import log4js from 'log4js';
 
 
@@ -75,7 +75,7 @@ export default class Individual extends Phenotype {
       revoluteHip.enableMotor();
       revoluteHip.setMotorSpeed(speed); // Rotational speed in radians per second
       // revoluteHip.disableMotor();
-      const maxAngle = Math.PI / 4;
+      const maxAngle = 0;
       const minAngle = -1 * maxAngle;
       revoluteHip.setLimits(minAngle, maxAngle);
       this.addConstraint(revoluteHip);
@@ -100,19 +100,43 @@ export default class Individual extends Phenotype {
       return revoluteHip;
     };
     // Const speed = 5;
-    const speed = 2;
-    const hipPivotAxValues = List.of (
-        { aXval: 0.05, speed: speed }, { aXval: 0.05, speed: -speed },
-        { aXval: 0.5, speed: speed }, { aXval: 0.5, speed: -speed },
-        { aXval: 0.95, speed: speed }, { aXval: 0.95, speed: -speed });
-    const revoluteHips = hipPivotAxValues.map(({ aXval, speed }) => {
+    const speed = 0;
+    const toLeg = ({ id, aXval, speed }) => {
+      return (
+        [
+          id,
+          createLeg(
+          {
+            hipPivotA: [aXval, -0.1],
+            hipPivotB: [0, 0],
+            speed: speed
+          })
+        ]);
+    };
+    let hipMap = new Map();
+    const bluePrints = List.of(
+      { id: 'back', aXval: 0.05, speed: speed },
+      { id: 'middle', aXval: 0.5, speed: speed },
+      { id: 'front' , aXval: 0.95, speed: speed }
+    );
+    const leftSide = bluePrints.map(toLeg);
+    const rightSide = bluePrints.map(toLeg);
+    hipMap = hipMap.set('left', new Map(leftSide));
+    hipMap = hipMap.set('right', new Map(rightSide));
+    this.hipMap = hipMap;
+
+    /*const hipPivotAxValues = List.of (
+        { id: 'backLeftLeg', aXval: 0.05, speed: speed }, { id: 'backRightLeg', aXval: 0.05, speed: -speed },
+        { id: 'middleLeftLeg', aXval: 0.5, speed: speed }, { id: 'middleRightLeg', aXval: 0.5, speed: -speed },
+        { id: 'frontLeftLeg' , aXval: 0.95, speed: speed }, { id: 'frontRightLeg', aXval: 0.95, speed: -speed });
+    const revoluteHips = hipPivotAxValues.map(({ id, aXval, speed }) => {
       return createLeg({
         hipPivotA: [aXval, -0.1],
         hipPivotB: [0, 0],
         speed: speed
       });
-    });
-    this.revoluteHips = revoluteHips;
+    });*/
+    //this.revoluteHips = revoluteHips;
 
 
 /*

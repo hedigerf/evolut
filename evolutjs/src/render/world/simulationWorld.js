@@ -97,8 +97,24 @@ export default class SimulationWorld extends P2Pixi.Game {
       }else {
         // Info(logger, this.population.individuals.size);
         // /*
+        // Move back,front on one side and middle from other side
+        this.phenoTypes.forEach((indiviual) => {
 
-        const f = this.phenoTypes.forEach((indiviual) => {
+          if (this.currentTime > 1) {
+            const hipMap = indiviual.hipMap;
+            const leftSide = hipMap.get('left');
+            const rightSide = hipMap.get('right');
+            const leftBack = leftSide.get('back');
+            const leftFront = leftSide.get('front');
+            const middleRight = rightSide.get('middle');
+            leftBack.setLimits(0, Math.PI / 3);
+            leftFront.setLimits(0, Math.PI / 3);
+            middleRight.setLimits(0, Math.PI / 3);
+          }
+
+        });
+      }
+        /*const f = this.phenoTypes.forEach((indiviual) => {
           indiviual.revoluteHips.forEach(revoluteHip => {
             const index = revoluteHip.equations.indexOf(revoluteHip.motorEquation);
             const maxAngle = revoluteHip.upperLimit;
@@ -110,9 +126,9 @@ export default class SimulationWorld extends P2Pixi.Game {
               revoluteHip.setMotorSpeed(-1 * revoluteHip.equations[index].relativeVelocity);
             }
           });
-        });
+        });*/
 
-      }
+
     });
 
   }
