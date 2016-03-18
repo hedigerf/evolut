@@ -56,17 +56,17 @@ export default class ParcourGenerator {
    * @param  {Number} i Height field index
    * @return {Number}
    */
-   toHeight(y,maxSlope,highestY) {
+   toHeight(y, maxSlope, highestY) {
      const positive = random.integer(0, 1);
      if (positive === 1) {
-       const newY = y + random.real(0, maxSlope,true);
+       const newY = y + random.real(0, maxSlope, true);
        // If highestY is reached generate a flat top
        if (newY > highestY) {
          return y;
        }
        return newY;
      }
-     const newY = y + random.real(-maxSlope,0);
+     const newY = y + random.real(-maxSlope, 0);
      // Same for highest negative Y
      if (newY < (highestY * -1)) {
        return y;

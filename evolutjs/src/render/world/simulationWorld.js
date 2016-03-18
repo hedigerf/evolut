@@ -100,33 +100,37 @@ export default class SimulationWorld extends P2Pixi.Game {
         // Move back,front on one side and middle from other side
         this.phenoTypes.forEach((indiviual) => {
 
-          if (this.currentTime > 1) {
+          if (this.currentTime > 0) {
             const hipMap = indiviual.hipMap;
             const leftSide = hipMap.get('left');
             const rightSide = hipMap.get('right');
             const leftBack = leftSide.get('back');
+            const leftMiddle = leftSide.get('middle');
             const leftFront = leftSide.get('front');
-            const middleRight = rightSide.get('middle');
+
             leftBack.setLimits(0, Math.PI / 3);
+            leftBack.setMotorSpeed(-3.0);
             leftFront.setLimits(0, Math.PI / 3);
-            middleRight.setLimits(0, Math.PI / 3);
+            leftFront.setMotorSpeed(-2.0);
+            leftMiddle.setLimits(0, Math.PI / 3);
+            leftMiddle.setMotorSpeed(-2.0);
           }
 
         });
       }
-        /*const f = this.phenoTypes.forEach((indiviual) => {
-          indiviual.revoluteHips.forEach(revoluteHip => {
-            const index = revoluteHip.equations.indexOf(revoluteHip.motorEquation);
-            const maxAngle = revoluteHip.upperLimit;
-            const minAngle = revoluteHip.lowerLimit;
+      /*Const f = this.phenoTypes.forEach((indiviual) => {
+        indiviual.revoluteHips.forEach(revoluteHip => {
+          const index = revoluteHip.equations.indexOf(revoluteHip.motorEquation);
+          const maxAngle = revoluteHip.upperLimit;
+          const minAngle = revoluteHip.lowerLimit;
 
-            if (revoluteHip.angle < minAngle || revoluteHip.angle > maxAngle) {
-              info(logger, 'Velocity: ' + -revoluteHip.equations[index].relativeVelocity +
-               ' Angle: ' + revoluteHip.angle);
-              revoluteHip.setMotorSpeed(-1 * revoluteHip.equations[index].relativeVelocity);
-            }
-          });
-        });*/
+          if (revoluteHip.angle < minAngle || revoluteHip.angle > maxAngle) {
+            info(logger, 'Velocity: ' + -revoluteHip.equations[index].relativeVelocity +
+             ' Angle: ' + revoluteHip.angle);
+            revoluteHip.setMotorSpeed(-1 * revoluteHip.equations[index].relativeVelocity);
+          }
+        });
+      });*/
 
 
     });

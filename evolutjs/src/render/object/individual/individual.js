@@ -8,7 +8,7 @@ import log4js from 'log4js';
 
 import Phenotype from './phenotype';
 import HipConstraint from './constraints/hipConstraint';
-import {debug,info} from '../../../util/logUtil';
+import {debug, info} from '../../../util/logUtil';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
@@ -125,7 +125,7 @@ export default class Individual extends Phenotype {
     hipMap = hipMap.set('right', new Map(rightSide));
     this.hipMap = hipMap;
 
-    /*const hipPivotAxValues = List.of (
+    /*Const hipPivotAxValues = List.of (
         { id: 'backLeftLeg', aXval: 0.05, speed: speed }, { id: 'backRightLeg', aXval: 0.05, speed: -speed },
         { id: 'middleLeftLeg', aXval: 0.5, speed: speed }, { id: 'middleRightLeg', aXval: 0.5, speed: -speed },
         { id: 'frontLeftLeg' , aXval: 0.95, speed: speed }, { id: 'frontRightLeg', aXval: 0.95, speed: -speed });
@@ -136,24 +136,24 @@ export default class Individual extends Phenotype {
         speed: speed
       });
     });*/
-    //this.revoluteHips = revoluteHips;
+    //This.revoluteHips = revoluteHips;
 
 
-/*
-    const jointBody2 = new p2.Body({
-      mass: 1, position: [body.position[0] + 0.5, 0.7]
-    });
-    this.addBody(jointBody2);
-    this.addShape(jointBody2, new p2.Circle({ radius: 0.1 }), [0, 0] , 0, bodyOptions, style);
+    /*
+        Const jointBody2 = new p2.Body({
+          mass: 1, position: [body.position[0] + 0.5, 0.7]
+        });
+        this.addBody(jointBody2);
+        this.addShape(jointBody2, new p2.Circle({ radius: 0.1 }), [0, 0] , 0, bodyOptions, style);
 
-    const revoluteFront = new p2.RevoluteConstraint(body, jointBody2, {
-      localPivotA: [0.95, -0.1], // Where to hinge second wheel on the chassis
-      localPivotB: [0, 0],      // Where the hinge is in the wheel (center)
-      collideConnected: false
-    });
-    revoluteFront.enableMotor();
-    revoluteFront.setMotorSpeed(30);
-    this.addConstraint(revoluteFront);
+        const revoluteFront = new p2.RevoluteConstraint(body, jointBody2, {
+          localPivotA: [0.95, -0.1], // Where to hinge second wheel on the chassis
+          localPivotB: [0, 0],      // Where the hinge is in the wheel (center)
+          collideConnected: false
+        });
+        revoluteFront.enableMotor();
+        revoluteFront.setMotorSpeed(30);
+        this.addConstraint(revoluteFront);
 */
 
 
@@ -161,14 +161,14 @@ export default class Individual extends Phenotype {
 
   }
 
-  /**
-   * Returns the shape of the phenotype.
-   *
-   * @protected
-   * @param {Array} bodyPoints
-   * @return {p2.Convex}
-   */
-  makeShape(bodyPoints) {
+/**
+ * Returns the shape of the phenotype.
+ *
+ * @protected
+ * @param {Array} bodyPoints
+ * @return {p2.Convex}
+ */
+makeShape(bodyPoints) {
     return new p2.Convex({ vertices: bodyPoints });
   }
 
