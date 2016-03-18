@@ -1,4 +1,4 @@
-import {Range} from 'immutable';
+import {List, Range} from 'immutable';
 import log4js from 'log4js';
 
 import Population from './population';
@@ -43,6 +43,6 @@ export default class InitialPopulationGenerator{
       debug(logger, i.blueprint());
       return i;
     });
-    return new Population(individuals.cacheResult(),1);
+    return new Population(new List(individuals), 1);
   }
 }
