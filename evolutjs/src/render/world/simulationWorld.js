@@ -98,6 +98,9 @@ export default class SimulationWorld extends P2Pixi.Game {
         // Info(logger, this.population.individuals.size);
         // /*
         // Move back,front on one side and middle from other side
+        // Simplified in 2D: only necessary to move on one side
+        // Negative motorspeed values -> leg moves in x direction
+        // Positive motorspeed -> leg moves in -x direction
         this.phenoTypes.forEach((indiviual) => {
 
           if (this.currentTime > 0) {
@@ -109,7 +112,7 @@ export default class SimulationWorld extends P2Pixi.Game {
             const leftFront = leftSide.get('front');
 
             leftBack.setLimits(0, Math.PI / 3);
-            leftBack.setMotorSpeed(-3.0);
+            leftBack.setMotorSpeed(-2.0);
             leftFront.setLimits(0, Math.PI / 3);
             leftFront.setMotorSpeed(-2.0);
             leftMiddle.setLimits(0, Math.PI / 3);
