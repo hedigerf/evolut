@@ -111,11 +111,13 @@ export default class SimulationWorld extends P2Pixi.Game {
             const leftBack = leftSide.get('back');
             const leftMiddle = leftSide.get('middle');
             const leftFront = leftSide.get('front');
-            leftBack.setLimits(0, Math.PI / 3);
+            const min = - Math.PI;
+            const max = Math.PI;
+            leftBack.setLimits(min, max);
             leftBack.setMotorSpeed(-2.0);
-            leftFront.setLimits(0, Math.PI / 3);
+            leftFront.setLimits(min, max);
             leftFront.setMotorSpeed(-2.0);
-            leftMiddle.setLimits(0, Math.PI / 3);
+            leftMiddle.setLimits(min, max);
             leftMiddle.setMotorSpeed(-2.0);
           }
 
