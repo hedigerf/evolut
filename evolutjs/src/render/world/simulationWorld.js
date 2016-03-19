@@ -59,12 +59,13 @@ export default class SimulationWorld extends P2Pixi.Game {
     }
   }
 
-  drawCircles() {
+  drawPhenotypes() {
     // Force evaluation of sequence
     // jshint -W098
     this.phenoTypes = this.population.individuals.take(1).map(i => new Individual(this, i));
     const trackedIndividual = this.phenoTypes.get(0);
     this.trackedBody = trackedIndividual.bodies[0];
+
   }
 
   addNewPopulation(population) {
@@ -85,7 +86,7 @@ export default class SimulationWorld extends P2Pixi.Game {
   beforeRun() {
     info(logger, 'Preparing Simulation for Generation: ' + this.population.generationCount);
     this.generateParcour(this.parcourOptions.maxSlope, this.parcourOptions.highestY);
-    this.drawCircles();
+    this.drawPhenotypes();
     const runDuration = config('simulation.runDuration');
     this.currentTime = 0;
     this.world.on('postStep', (event) => {
@@ -110,7 +111,6 @@ export default class SimulationWorld extends P2Pixi.Game {
             const leftBack = leftSide.get('back');
             const leftMiddle = leftSide.get('middle');
             const leftFront = leftSide.get('front');
-
             leftBack.setLimits(0, Math.PI / 3);
             leftBack.setMotorSpeed(-2.0);
             leftFront.setLimits(0, Math.PI / 3);

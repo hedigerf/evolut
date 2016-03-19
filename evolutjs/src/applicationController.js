@@ -23,7 +23,7 @@ function performSimulationPostprocessing(population) {
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
   simulation.clear();
   simulation.reset();
-  simulation.drawCircles();
+  simulation.drawPhenotypes();
   // Graphical objects need to be constructed freshly
   // Simulation.addNewPopulation(selected);
   simulation.generateParcour(config('parcour.startMaxSlope'), config('parcour.startHighestY'));
