@@ -38,14 +38,15 @@
     "babel-register": "latest",
     "config": "latest",
     "electron-canvas-to-buffer": "latest",
+    "immutable" : "latest",
     "jquery": "latest",
     "log4js": "latest",
     "p2": "latest",
     "p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
+    "partial.lenses": "latest",
     "pixi.js": "latest",
     "ramda": "latest",
-    "random-js": "latest",
-    "immutable" : "latest"
+    "random-js": "latest"
   },
   "devDependencies": {
     "chai": "latest",
