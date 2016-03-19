@@ -4,6 +4,7 @@ import p2 from 'p2';
 import Random from 'random-js';
 import {List, Map} from 'immutable';
 import log4js from 'log4js';
+import {curry} from 'ramda';
 
 
 import Phenotype from './phenotype';
@@ -28,6 +29,30 @@ const logger = log4js.getLogger('Individual');
  * The phenotype is the graphical representation of  it's corresponding genotype.
  */
 export default class Individual extends Phenotype {
+
+constructor(world, genotype) {
+  super(world, genotype);
+
+}
+
+
+createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
+  const revoluteHip = new p2.RevoluteConstraint(bodyToConnect, jointBody, {
+    localPivotA: pivotA,
+    localPivotB: pivotB,
+    collideConnected: false
+  });
+
+  revoluteHip.enableMotor();
+  revoluteHip.setMotorSpeed(speed);
+
+  const maxAngle = 0;
+  const minAngle = -1 * maxAngle;
+  // revoluteHip.setLimits(minAngle, maxAngle);
+  this.addConstraint(revoluteHip);
+  return revoluteHip;
+}
+
 
   /**
    * Creates this phonetype from a genotype.
@@ -58,45 +83,75 @@ export default class Individual extends Phenotype {
     this.addShape(body, this.makeShape(genotype.instanceParts.body.bodyPoints), [0, 0], 0, bodyOptions, style);
 
     const createLeg = ({ hipPivotA, hipPivotB, speed }) => {
-      const jointBody = new p2.Body({
+
+      // Hip Body creation
+      const hipJointBody = new p2.Body({
         mass: 1,
         position: [body.position[0] - 0.5, 0.7]
       });
 
-      this.addBody(jointBody);
-      this.addShape(jointBody, new p2.Circle({ radius: 0.1 }), [0, 0] , 0, bodyOptions, style);
+      this.addBody(hipJointBody);
+      const radiusJoint = 0.1;
+      //const jointShape = new p2.Circle({ radius: radiusJoint });
+      //this.addShape(hipJointBody, jointShape, [0, 0] , 0, bodyOptions, style);
 
-      const revoluteHip = new p2.RevoluteConstraint(body, jointBody, {
-        localPivotA: hipPivotA,
-        localPivotB: hipPivotB,
-        collideConnected: false
-      });
+      // Hip Constraint
+      const revoluteHip =  this.createRevoluteConstraint(speed, body, hipJointBody, hipPivotA, hipPivotB);
+      // Upper Leg
 
-      revoluteHip.enableMotor();
-      revoluteHip.setMotorSpeed(speed); // Rotational speed in radians per second
-      // revoluteHip.disableMotor();
-      const maxAngle = 0;
-      const minAngle = -1 * maxAngle;
-      revoluteHip.setLimits(minAngle, maxAngle);
-      this.addConstraint(revoluteHip);
-
-      const styleLeg = {
+      const styleUpperLeg = {
         lineWidth: 1,
         lineColor: randomColor(),
         fillColor: randomColor()
       };
-      const legBody = new p2.Body({
+      const legWidth =  0.1;
+
+      const upperLegShape = new p2.Box({ width: legWidth, height: 0.4 });
+
+      const upperLegBody = new p2.Body({
         mass: 1,
-        position: [jointBody.position[0], jointBody.position[1] - 0.3]
+        position: [hipJointBody.position[0], hipJointBody.position[1] - upperLegShape.height / 2 ]
       });
-      this.addBody(legBody);
-      const legShape = new p2.Box({ width: 0.1, height: 0.4 });
-      this.addShape(legBody, legShape, [0, 0] , 0, bodyOptions, styleLeg);
-      const lockConstraint = new p2.LockConstraint(jointBody, legBody, {
+      this.addBody(upperLegBody);
+      this.addShape(upperLegBody, upperLegShape, [0, 0] , 0, bodyOptions, styleUpperLeg);
+
+      // Lock Constraint Hip to UpperLeg
+      const lockHipUpperLeg = new p2.LockConstraint(hipJointBody, upperLegBody, {
         collideConnected: false
       });
-      this.addConstraint(lockConstraint);
+      // this.addConstraint(lockHipUpperLeg);
 
+      // Knee Body Creation
+      const kneeJointBody = new p2.Body({
+        mass: 1,
+        position: [upperLegBody.position[0], upperLegBody.position[1]]
+      });
+      this.addBody(kneeJointBody);
+      // const kneeShape = new p2.Circle({ radius: radiusJoint });
+
+      // this.addShape(kneeJointBody, kneeShape, [0, 0] , 0, bodyOptions, style);
+      const revoluteKnee = this.createRevoluteConstraint(speed, upperLegBody, kneeJointBody, [0, -upperLegShape.height / 2], [0, 0]);
+
+
+    // Shank
+      const styleShank = {
+        lineWidth: 1,
+        lineColor: randomColor(),
+        fillColor: randomColor()
+      };
+      const shankShape = new p2.Box({ width: legWidth, height: 0.4 });
+
+      const shankBody = new p2.Body({
+        mass: 1,
+        position: [kneeJointBody.position[0], kneeJointBody.position[1] - shankShape.height / 2 ]
+      });
+      this.addBody(shankBody);
+      this.addShape(shankBody, shankShape, [0, 0] , 0, bodyOptions, styleShank);
+      // Lock Constraint Hip to UpperLeg
+      const lockKneeShank = new p2.LockConstraint(kneeJointBody, shankBody, {
+        collideConnected: false
+      });
+    //  this.addConstraint(lockKneeShank);
       return revoluteHip;
     };
     // Const speed = 5;
@@ -109,7 +164,7 @@ export default class Individual extends Phenotype {
           {
             hipPivotA: [aXval, -0.1],
             hipPivotB: [0, 0],
-            speed: speed
+            speed
           })
         ]);
     };
