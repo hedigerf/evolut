@@ -56,17 +56,17 @@ export default class ParcourGenerator {
    * @param  {Number} i Height field index
    * @return {Number}
    */
-   toHeight(y,maxSlope,highestY) {
+   toHeight(y, maxSlope, highestY) {
      const positive = random.integer(0, 1);
      if (positive === 1) {
-       const newY = y + random.real(0, maxSlope,true);
+       const newY = y + random.real(0, maxSlope, true);
        // If highestY is reached generate a flat top
        if (newY > highestY) {
          return y;
        }
        return newY;
      }
-     const newY = y + random.real(-maxSlope,0);
+     const newY = y + random.real(-maxSlope, 0);
      // Same for highest negative Y
      if (newY < (highestY * -1)) {
        return y;
@@ -75,12 +75,12 @@ export default class ParcourGenerator {
    }
 
 
-  createMontains(length,maxSlope,highestY) {
+  createMontains(length, maxSlope, highestY) {
     const range = Immutable.Range(0, length);
-    const record = {lastY: 0, heights: Immutable.List.of()};
+    const record = { lastY: 0, heights: Immutable.List.of() };
     const res = range.reduce((result, n) => {
-      const y = this.toHeight(result.lastY,maxSlope,highestY);
-      return {lastY: y, heights: result.heights.push(y)};
+      const y = this.toHeight(result.lastY, maxSlope, highestY);
+      return { lastY: y, heights: result.heights.push(y) };
     }, record);
     const heights = res.heights.toArray();
     return new p2.Heightfield({
@@ -90,39 +90,28 @@ export default class ParcourGenerator {
     });
   }
 
-  generateParcour(world,maxSlope,highestY) {
+  generateParcour(world, maxSlope, highestY) {
     if (logger.isDebugEnabled()) {
       logger.debug('ParcourGenerator has started.');
     }
     const parcour = new P2Pixi.GameObject(world);
     const bodyOptions = {
-      collisionGroup: Math.pow(2,0),
-      collisionMask: Math.pow(2,1)
+      collisionGroup: Math.pow(2, 0),
+      collisionMask: Math.pow(2, 1)
     };
 
     const rockTexture = PIXI.Texture.fromImage(this.rockTexturePath(), false);
 
     const body = new p2.Body({
-      position: [-75, -10],
+      position: [-75, 0],
       mass: 0
     });
 
 
-    if (maxSlope === 0) {
-      if (logger.isDebugEnabled()) {
-        logger.debug('generating flat parcour');
-      }
-      const style = {
-        lineWidth: 1,
-        lineColor: randomColor(),
-        fillColor: randomColor()
-      };
-      parcour.addBody(body);
-      parcour.addShape(body, this.createPlane(), [0, 0], 0, bodyOptions, style);
-    }else if (maxSlope > 0) {
-      parcour.addBody(body);
-      parcour.addShape(body, this.createMontains(500,maxSlope,highestY), [0, 0], 0, bodyOptions, null, rockTexture);
-    }
+
+    parcour.addBody(body);
+    parcour.addShape(body, this.createMontains(500, maxSlope , highestY), [0, 0], 0, bodyOptions, null, rockTexture);
+
     if (logger.isDebugEnabled()) {
       logger.debug('Parcourgeneration ended.');
     }

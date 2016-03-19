@@ -62,8 +62,8 @@ export default class SimulationWorld extends P2Pixi.Game {
   drawCircles() {
     // Force evaluation of sequence
     // jshint -W098
-    const trackedIndividual = this.population.individuals.map(i => new Individual(this, i)).cacheResult().get(0);
-
+    this.phenoTypes = this.population.individuals.take(1).map(i => new Individual(this, i));
+    const trackedIndividual = this.phenoTypes.get(0);
     this.trackedBody = trackedIndividual.bodies[0];
   }
 
@@ -94,7 +94,48 @@ export default class SimulationWorld extends P2Pixi.Game {
       if (runDuration <= this.currentTime) {
         this.runOver = true;
         info(logger, 'Simulation run ended.');
+      }else {
+        // Info(logger, this.population.individuals.size);
+        // /*
+        // Move back,front on one side and middle from other side
+        // Simplified in 2D: only necessary to move on one side
+        // Negative motorspeed values -> leg moves in x direction
+        // Positive motorspeed -> leg moves in -x direction
+        this.phenoTypes.forEach((indiviual) => {
+
+          if (this.currentTime > 0) {
+            const hipMap = indiviual.hipMap;
+            const leftSide = hipMap.get('left');
+            const rightSide = hipMap.get('right');
+            const leftBack = leftSide.get('back');
+            const leftMiddle = leftSide.get('middle');
+            const leftFront = leftSide.get('front');
+
+            leftBack.setLimits(0, Math.PI / 3);
+            leftBack.setMotorSpeed(-2.0);
+            leftFront.setLimits(0, Math.PI / 3);
+            leftFront.setMotorSpeed(-2.0);
+            leftMiddle.setLimits(0, Math.PI / 3);
+            leftMiddle.setMotorSpeed(-2.0);
+          }
+
+        });
       }
+      /*Const f = this.phenoTypes.forEach((indiviual) => {
+        indiviual.revoluteHips.forEach(revoluteHip => {
+          const index = revoluteHip.equations.indexOf(revoluteHip.motorEquation);
+          const maxAngle = revoluteHip.upperLimit;
+          const minAngle = revoluteHip.lowerLimit;
+
+          if (revoluteHip.angle < minAngle || revoluteHip.angle > maxAngle) {
+            info(logger, 'Velocity: ' + -revoluteHip.equations[index].relativeVelocity +
+             ' Angle: ' + revoluteHip.angle);
+            revoluteHip.setMotorSpeed(-1 * revoluteHip.equations[index].relativeVelocity);
+          }
+        });
+      });*/
+
+
     });
 
   }
@@ -130,6 +171,10 @@ export default class SimulationWorld extends P2Pixi.Game {
      }
 
      self.req = requestAnimationFrame(update);
+   }
+
+   addGameObject(gameObject) {
+     this.gameObjects.push(gameObject);
    }
 
 
