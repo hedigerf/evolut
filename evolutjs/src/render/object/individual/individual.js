@@ -46,9 +46,9 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
   revoluteHip.enableMotor();
   revoluteHip.setMotorSpeed(speed);
 
-  const maxAngle = 0;
-  const minAngle = -1 * maxAngle;
-  // revoluteHip.setLimits(minAngle, maxAngle);
+  const maxAngle = 0; // Math.PI / 6;
+  const minAngle = 0; // -Math.PI / 6;
+  revoluteHip.setLimits(minAngle, maxAngle);
   this.addConstraint(revoluteHip);
   return revoluteHip;
 }
@@ -63,13 +63,16 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
    */
   fromGenotype(genotype) {
 
+    const posX = -30;
+    const posY = 1;
+
     const bodyOptions = {
       collisionGroup: Math.pow(2, 1),
       collisionMask: Math.pow(2, 0)
     };
 
     const body = new p2.Body({
-      position: [-30, 1],
+      position: [posX, posY ],
       mass: 1
     });
 
@@ -82,97 +85,63 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
     this.addBody(body);
     this.addShape(body, this.makeShape(genotype.instanceParts.body.bodyPoints), [0, 0], 0, bodyOptions, style);
 
-    const createLeg = ({ hipPivotA, hipPivotB, speed }) => {
+    const createLeg = ({ pos, hipPivotA, hipPivotB, speed }) => {
 
-      // Hip Body creation
-      const hipJointBody = new p2.Body({
-        mass: 1,
-        position: [body.position[0] - 0.5, 0.7]
-      });
-
-      this.addBody(hipJointBody);
-      const radiusJoint = 0.1;
-      //const jointShape = new p2.Circle({ radius: radiusJoint });
-      //this.addShape(hipJointBody, jointShape, [0, 0] , 0, bodyOptions, style);
-
-      // Hip Constraint
-      const revoluteHip =  this.createRevoluteConstraint(speed, body, hipJointBody, hipPivotA, hipPivotB);
-      // Upper Leg
-
-      const styleUpperLeg = {
+      const styleLeg = {
         lineWidth: 1,
         lineColor: randomColor(),
         fillColor: randomColor()
       };
       const legWidth =  0.1;
+      const legHeight = 0.4;
 
-      const upperLegShape = new p2.Box({ width: legWidth, height: 0.4 });
-
+      const upperLegShape = new p2.Box({ width: legWidth, height: legHeight });
       const upperLegBody = new p2.Body({
         mass: 1,
-        position: [hipJointBody.position[0], hipJointBody.position[1] - upperLegShape.height / 2 ]
+        position: [ posX + (0.5 * (pos - 1)), posY ]
       });
       this.addBody(upperLegBody);
-      this.addShape(upperLegBody, upperLegShape, [0, 0] , 0, bodyOptions, styleUpperLeg);
+      this.addShape(upperLegBody, upperLegShape, [0, 0] , 0, bodyOptions, styleLeg);
 
-      // Lock Constraint Hip to UpperLeg
-      const lockHipUpperLeg = new p2.LockConstraint(hipJointBody, upperLegBody, {
-        collideConnected: false
-      });
-      // this.addConstraint(lockHipUpperLeg);
-
-      // Knee Body Creation
-      const kneeJointBody = new p2.Body({
+      // Shank
+      const lowerLegShape = new p2.Box({ width: legWidth, height: legHeight });
+      const lowerLegBody = new p2.Body({
         mass: 1,
-        position: [upperLegBody.position[0], upperLegBody.position[1]]
+        position: [ posX + (0.5 * (pos - 1)), posY + legHeight ]
       });
-      this.addBody(kneeJointBody);
-      // const kneeShape = new p2.Circle({ radius: radiusJoint });
+      this.addBody(lowerLegBody);
+      this.addShape(lowerLegBody, lowerLegShape, [0, 0] , 0, bodyOptions, styleLeg);
 
-      // this.addShape(kneeJointBody, kneeShape, [0, 0] , 0, bodyOptions, style);
-      const revoluteKnee = this.createRevoluteConstraint(speed, upperLegBody, kneeJointBody, [0, -upperLegShape.height / 2], [0, 0]);
+      const revoluteHip = this.createRevoluteConstraint(speed, upperLegBody, body,
+        [0, legHeight / 2],
+        [(0.5 * (pos - 1)), 0]
+      );
+      this.createRevoluteConstraint(speed, upperLegBody, lowerLegBody,
+        [0, -legHeight / 2],
+        [0, legHeight / 2]);
 
-
-    // Shank
-      const styleShank = {
-        lineWidth: 1,
-        lineColor: randomColor(),
-        fillColor: randomColor()
-      };
-      const shankShape = new p2.Box({ width: legWidth, height: 0.4 });
-
-      const shankBody = new p2.Body({
-        mass: 1,
-        position: [kneeJointBody.position[0], kneeJointBody.position[1] - shankShape.height / 2 ]
-      });
-      this.addBody(shankBody);
-      this.addShape(shankBody, shankShape, [0, 0] , 0, bodyOptions, styleShank);
-      // Lock Constraint Hip to UpperLeg
-      const lockKneeShank = new p2.LockConstraint(kneeJointBody, shankBody, {
-        collideConnected: false
-      });
-    //  this.addConstraint(lockKneeShank);
       return revoluteHip;
     };
     // Const speed = 5;
     const speed = 0;
-    const toLeg = ({ id, aXval, speed }) => {
+    const toLeg = ({ pos, id, aXval, speed }) => {
       return (
         [
           id,
           createLeg(
           {
-            hipPivotA: [aXval, -0.1],
-            hipPivotB: [0, 0],
+            pos,
+            hipPivotA: [0, 0.4 / 2],
+            hipPivotB: [0, -0.4 / 2],
             speed
           })
         ]);
     };
     let hipMap = new Map();
     const bluePrints = List.of(
-      { id: 'back', aXval: 0.05, speed: speed },
-      { id: 'middle', aXval: 0.5, speed: speed },
-      { id: 'front' , aXval: 0.95, speed: speed }
+      { id: 'back', aXval: 0.05, speed, pos: 1 },
+      { id: 'middle', aXval: 0.5, speed, pos: 2 },
+      { id: 'front' , aXval: 0.95, speed, pos: 3 }
     );
     const leftSide = bluePrints.map(toLeg);
     const rightSide = bluePrints.map(toLeg);
