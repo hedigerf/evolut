@@ -1,6 +1,6 @@
 'use strict';
 
-import Random from 'random-js';
+import { repeat } from 'ramda';
 
 import Body from './body';
 import Engine from './engine';
@@ -8,7 +8,12 @@ import Genotype from '../genotype/genotype';
 import { HipJoint } from './joint';
 import Leg from './leg';
 
-const random = new Random(Random.engines.mt19937().autoSeed());
+/**
+ * Default number of legs an individual posesses.
+ *
+ * @type {Number}
+ */
+const DEFUALT_LEG_COUNT = 6;
 
 /**
  * Represents an Individual.
@@ -27,26 +32,7 @@ export default class Individual extends Genotype {
    * @return {Array}
    */
   static get parts() {
-    return [Body, [HipJoint, HipJoint, HipJoint], [Leg, Leg, Leg], Engine];
-  }
-
-  /**
-   * @override
-   * @static
-   * @param {Number} massFactor
-   * @param {Number} bodyPoints
-   * @return {Object}
-   */
-  static seed(massFactor, bodyPoints) {
-
-    massFactor = massFactor || random.real(0.1, 0.9);
-
-    return super.seed({
-      [Body.identifier]: {
-        massFactor,
-        bodyPoints
-      }
-    });
+    return [Body, repeat([HipJoint, Leg], DEFUALT_LEG_COUNT), Engine];
   }
 
 }

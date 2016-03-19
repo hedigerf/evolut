@@ -1,8 +1,11 @@
 'use strict';
 
+import L from 'partial.lenses';
+import { compose, view } from 'ramda';
 import Random from 'random-js';
 import { Range } from 'immutable';
 
+import { lensPartialGenotypeOption } from '../../util/lens';
 import { PartialGenotype } from '../genotype/genotype';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
@@ -13,13 +16,6 @@ const random = new Random(Random.engines.mt19937().autoSeed());
  * @type {Number}
  */
 const DEFAULT_BODY_MASS = 1;
-
-/**
- * Default amount of polygon point of an individual's body.
- *
- * @type {Number}
- */
-const DEFAULT_BODY_POINTS = 4;
 
 /**
  * Represents the body of an individual's genotype.
@@ -55,26 +51,31 @@ export default class Body extends PartialGenotype {
    *
    * @override
    * @static
-   * @param {Object=}
-   * @return {Object}
+   * @param {Array} options
+   * @return {Array}
    */
-  static seed({ massFactor, bodyPoints = DEFAULT_BODY_POINTS } = {}) {
+  static seed(options) {
 
-    massFactor = massFactor || random.real(0.1, 0.9);
+    const lensBody = lensPartialGenotypeOption(Body.identifier);
+    const lensMassFactor = compose(lensBody, L.prop('massFactor'));
+    const lensBodyPoints = compose(lensBody, L.prop('bodyPoints'));
 
-    return {
+    const massFactor = view(lensMassFactor, options) || random.real(0.1, 0.9);
+    const bodyPoints = view(lensBodyPoints, options) || random.integer(4, 8);
+
+    return super.seed([{
       [this.identifier]: {
-        bodyPoints: this.seedCWPolygonPoints(bodyPoints),
-        massFactor
+        massFactor,
+        bodyPoints: this.seedCWPolygonPoints(bodyPoints)
       }
-    };
+    }]);
   }
 
   /**
    * Generate a list of polygon points and ensure that
    * they are in clockwise order, and form a simple polygon.
    *
-   * @param  {Number} points Number of points.
+   * @param {Number} points Number of points.
    * @return {Array}
    */
   static seedCWPolygonPoints(points) {
@@ -86,7 +87,7 @@ export default class Body extends PartialGenotype {
 
     rangePoints.map(randomPoint).toArray();
 
-    return [[0,0], [1,0], [1,1], [0, 1]];
+    return [[0, 0], [1, 0], [1, 1], [0, 1]];
   }
 
 }
