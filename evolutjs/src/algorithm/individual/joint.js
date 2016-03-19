@@ -1,9 +1,7 @@
 'use strict';
 
 import L from 'partial.lenses';
-import { compose, view } from 'ramda';
-
-import { lensPartialGenotypeOption } from '../../util/lens';
+import { compose, set, view } from 'ramda';
 
 import { PartialGenotype } from '../genotype/genotype';
 
@@ -68,21 +66,15 @@ export default class Joint extends PartialGenotype {
    *
    * @override
    * @static
-   * @param {Array} options
+   * @param {Object} options
    * @return {Object}
    */
   static seed(options) {
 
-    const lensJoint = lensPartialGenotypeOption(this.identifier);
-    const lensOrientation = compose(lensJoint, L.prop('orientation'));
-
+    const lensOrientation = compose(L.prop(this.identifier), L.prop('orientation'));
     const orientation = view(lensOrientation, options) || ORIENTATION.BACK;
 
-    return super.seed([{
-      [this.identifier]: {
-        orientation
-      }
-    }]);
+    return super.seed(set(lensOrientation, orientation, options));
   }
 
 }
@@ -108,21 +100,15 @@ export class HipJoint extends Joint {
    *
    * @override
    * @static
-   * @param {Array} options
-   * @return {Array}
+   * @param {Object} options
+   * @return {Object}
    */
   static seed(options) {
 
-    const lensJoint = lensPartialGenotypeOption(this.identifier);
-    const lensPosition = compose(lensJoint, L.prop('position'));
-
+    const lensPosition = compose(L.prop(this.identifier), L.prop('position'));
     const position = view(lensPosition, options) || [1, 2];
 
-    return super.seed([{
-      [this.identifier]: {
-        position
-      }
-    }]);
+    return super.seed(set(lensPosition, position, options));
   }
 
 }

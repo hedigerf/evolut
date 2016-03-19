@@ -1,12 +1,11 @@
 'use strict';
 
 import L from 'partial.lenses';
-import { compose, view } from 'ramda';
+import { compose, set, view } from 'ramda';
 import Random from 'random-js';
 
 import Foot from './foot';
 import { KneeJoint } from './joint';
-import { lensPartialGenotypeOption } from '../../util/lens';
 import { PartialGenotype } from '../genotype/genotype';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
@@ -51,10 +50,13 @@ export default class Leg extends PartialGenotype {
    *
    * @override
    * @static
-   * @return {Array}
+   * @return {Object}
    */
   static get parts() {
-    return [KneeJoint, Foot];
+    return {
+      [KneeJoint.identifier]: KneeJoint,
+      [Foot.identifier]: Foot
+    };
   }
 
   /**
@@ -71,12 +73,12 @@ export default class Leg extends PartialGenotype {
    *
    * @override
    * @static
-   * @param {Array} options Override random values.
-   * @return {Array}
+   * @param {Object} options Override random values.
+   * @return {Object}
    */
   static seed(options) {
 
-    const lensLeg = lensPartialGenotypeOption(this.identifier);
+    const lensLeg = compose(L.prop('legs'), L.prop(this.identifier));
     const lensMassfactor = compose(lensLeg, L.prop('massFactor'));
     const lensHeight = compose(lensLeg, L.prop('height'));
     const lensHeightFactor = compose(lensLeg, L.prop('heightFactor'));
@@ -85,13 +87,13 @@ export default class Leg extends PartialGenotype {
     const height = view(lensHeight, options) || random.real(0.1, 1);
     const heightFactor = view(lensHeightFactor, options) || random.real(0.1, 0.9);
 
-    return super.seed([{
-      [this.identifier]: {
-        massFactor,
-        height,
-        heightFactor
-      }
-    }]);
+    const setter = compose(
+      set(lensMassfactor, massFactor),
+      set(lensHeight, height),
+      set(lensHeightFactor, heightFactor)
+    );
+
+    return super.seed(setter(options));
   }
 
 }

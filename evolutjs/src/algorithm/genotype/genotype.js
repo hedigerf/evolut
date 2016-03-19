@@ -1,8 +1,9 @@
 'use strict';
 
-import { append, concat, ifElse, isArrayLike, reduce, view } from 'ramda';
+import { compose, ifElse, isArrayLike, map, merge, objOf, of, reduce, toPairs, view } from 'ramda';
 
-import { lensByIdentifierRecursive } from '../../util/lens';
+const first = pair => pair[0];
+const second = pair => pair[1];
 
 /**
  * Returns a build function for a partial genotype.
@@ -17,17 +18,16 @@ function getBuildPartialGenotype(genotype) {
    * extracted from the whole genotype.
    *
    * @param {PartialGenotype} PartialGenotypeType
-   * @param {Number} index
    * @return {PartialGenotype}
    */
-  return function buildPartialGenotype(PartialGenotypeType, index) {
+  return function buildPartialGenotype(PartialGenotypeType) {
 
     // TODO
-    const lensType = lensByIdentifierRecursive(PartialGenotypeType.identifier);
-    const partialGenotype = view(lensType, genotype);
+    // const lensType = lensByIdentifierRecursive(PartialGenotypeType.identifier);
+    // const partialGenotype = view(lensType, genotype);
 
     // jscs:disable
-    return new PartialGenotypeType(partialGenotype);
+    return new PartialGenotypeType({});
   };
 }
 
@@ -49,10 +49,10 @@ export default class Genotype {
    * Returns a (nested) object containing the build order of a genotype.
    *
    * @static
-   * @return {Array}
+   * @return {Object}
    */
   static get parts() {
-    return [];
+    return {};
   }
 
   /**
@@ -60,16 +60,17 @@ export default class Genotype {
    *
    * @protected
    * @static
-   * @param {Array} options
-   * @return {Array}
+   * @param {function} partialTypeOperation
+   * @return {Object}
    */
   static processParts(partialTypeOperation) {
 
     let helper;
-    const reducer = (accumulator, type) => append(helper(type), accumulator);
-    helper = ifElse(isArrayLike, reduce(reducer, []), partialTypeOperation);
+    const makeObject = pair => objOf(first(pair), helper(second(pair)));
+    const processPairs = (accumulator, pair) => merge(makeObject(pair), accumulator);
+    helper = ifElse(isArrayLike, reduce(processPairs, {}), partialTypeOperation);
 
-    return reduce(reducer, [], this.parts);
+    return reduce(processPairs, {}, toPairs(this.parts));
   }
 
   /**
@@ -78,8 +79,8 @@ export default class Genotype {
    * These may then contain a build order itself.
    *
    * @static
-   * @param {Array} options
-   * @return {Array}
+   * @param {Object} options
+   * @return {Object}
    */
   static build(options) {
     const buildPartial = getBuildPartialGenotype(options);
@@ -92,8 +93,8 @@ export default class Genotype {
    * [ {body: {}}, [ [{joint: {}}, {leg: {}}] ] ]
    *
    * @static
-   * @param {Array} options
-   * @return {Array}
+   * @param {Object} options
+   * @return {Object}
    */
   static seed(options) {
     // g => g.seed(options)
@@ -131,11 +132,13 @@ export class PartialGenotype extends Genotype {
   /**
    * @override
    * @static
-   * @param {Array} options
-   * @return {Array}
+   * @param {Object} options
+   * @return {Object}
    */
   static seed(options) {
+
     // TODO parts
+
     return options || [];
   }
 

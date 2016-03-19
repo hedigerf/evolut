@@ -16,6 +16,13 @@ import Leg from './leg';
 const DEFUALT_LEG_COUNT = 6;
 
 /**
+ * Identifier for legs.
+ *
+ * @type {String}
+ */
+const IDENTIFIER_LEGS = 'legs';
+
+/**
  * Represents an Individual.
  * This is the genotype of an inidividual.
  * An individual consists of multiple leg pairs.
@@ -29,10 +36,19 @@ export default class Individual extends Genotype {
    *
    * @override
    * @static
-   * @return {Array}
+   * @return {Object}
    */
   static get parts() {
-    return [Body, repeat([HipJoint, Leg], DEFUALT_LEG_COUNT), Engine];
+    return {
+      [Body.indentifier]: Body,
+      [Engine.identifier]: Engine,
+      [IDENTIFIER_LEGS]: [
+        repeat({
+          [HipJoint.identifier]: HipJoint,
+          [Leg.identifier]: Leg
+        }, DEFUALT_LEG_COUNT)
+      ]
+    };
   }
 
 }

@@ -1,11 +1,10 @@
 'use strict';
 
 import L from 'partial.lenses';
-import { compose, view } from 'ramda';
+import { compose, set, view } from 'ramda';
 import Random from 'random-js';
 import { Range } from 'immutable';
 
-import { lensPartialGenotypeOption } from '../../util/lens';
 import { PartialGenotype } from '../genotype/genotype';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
@@ -51,24 +50,25 @@ export default class Body extends PartialGenotype {
    *
    * @override
    * @static
-   * @param {Array} options
-   * @return {Array}
+   * @param {Object} options
+   * @return {Object}
    */
   static seed(options) {
 
-    const lensBody = lensPartialGenotypeOption(Body.identifier);
+    const lensBody = L.prop(this.identifier);
     const lensMassFactor = compose(lensBody, L.prop('massFactor'));
     const lensBodyPoints = compose(lensBody, L.prop('bodyPoints'));
 
     const massFactor = view(lensMassFactor, options) || random.real(0.1, 0.9);
-    const bodyPoints = view(lensBodyPoints, options) || random.integer(4, 8);
+    const bodyPoints = view(lensBodyPoints, options) ||
+      this.seedCWPolygonPoints(random.integer(4, 8));
 
-    return super.seed([{
-      [this.identifier]: {
-        massFactor,
-        bodyPoints: this.seedCWPolygonPoints(bodyPoints)
-      }
-    }]);
+    const setter = compose(
+      set(lensBodyPoints, bodyPoints),
+      set(lensMassFactor, massFactor)
+    );
+
+    return super.seed(setter(options));
   }
 
   /**
@@ -86,6 +86,8 @@ export default class Body extends PartialGenotype {
     };
 
     rangePoints.map(randomPoint).toArray();
+
+    // TODO
 
     return [[0, 0], [1, 0], [1, 1], [0, 1]];
   }

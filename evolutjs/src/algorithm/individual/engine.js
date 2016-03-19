@@ -1,9 +1,8 @@
 'use strict';
 
 import L from 'partial.lenses';
-import { compose, view } from 'ramda';
+import { compose, set, view } from 'ramda';
 
-import { lensPartialGenotypeOption } from '../../util/lens';
 import { PartialGenotype } from '../genotype/genotype';
 
 /**
@@ -28,19 +27,15 @@ export default class Engine extends PartialGenotype {
    *
    * @override
    * @static
-   * @param {Array} options
-   * @return {Array}
+   * @param {Object} options
+   * @return {Object}
    */
   static seed(options) {
 
-    const lensEngine = lensPartialGenotypeOption(this.identifier);
-    const lensType = compose(lensEngine, L.prop('type'));
-
+    const lensType = compose(L.prop(this.identifier), L.prop('type'));
     const type = view(lensType, options) || 'ant';
 
-    return super.seed([{
-      [this.identifier]: type
-    }]);
+    return super.seed(set(lensType, type, options));
   }
 
 }

@@ -46,10 +46,6 @@ export default class InitialPopulationGenerator{
       debug(logger, i.blueprint());
       return i;
     });
-<<<<<<< HEAD
-    return new Population(individuals.cacheResult(), 1);
-=======
     return new Population(new List(individuals), 1);
->>>>>>> db070050d95399d9a411d0c1bfa9a9f41493ade0
   }
 }
