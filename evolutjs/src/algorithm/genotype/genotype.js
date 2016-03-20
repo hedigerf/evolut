@@ -1,12 +1,45 @@
 'use strict';
 
 import L from 'partial.lenses';
-import { always, either, isArrayLike, map, mapObjIndexed, merge, view } from 'ramda';
+import { always, curry, either, isArrayLike, map, mapObjIndexed, merge, view } from 'ramda';
 
 const extractOption = T => either(
   view(L.prop(T.identifier)),
   always({})
 );
+
+const buildType = (T, option) => new T(option);
+const seedType = (T, option) => T.seed(option);
+
+/**
+ * @param {function(PartialGenotype, Object): Object} operation
+ * @param {Object} options
+ * @param {PartialGenotype|Array} genotype
+ * @param {String} key
+ * @return {Object}
+ */
+const process = curry((operation, options, genotype, key) => {
+
+  if (isArrayLike(genotype)) {
+    return map(mapObjIndexed(process(operation, options[key])), genotype);
+  }
+
+  const option = extractOption(genotype)(options);
+  return operation(genotype, option);
+});
+
+/**
+ * Maps a part object with a given function.
+ * A part object is a nested object containing partial genotypes.
+ *
+ * @param {function(PartialGenotype, Object): Object} operation
+ * @param {Object} options
+ * @param {Object} parts
+ * @return {Object}
+ */
+const processParts = curry((operation, options, parts) => {
+  return mapObjIndexed(process(operation, options), parts);
+});
 
 /**
  * Base class of a genotype.
@@ -33,34 +66,6 @@ export default class Genotype {
   }
 
   /**
-   * Maps a part object with a given function.
-   * A part object is a nested object containing partial genotypes.
-   *
-   * @protected
-   * @static
-   * @param {function(PartialGenotype, Object): Object} operation
-   * @param {Object} options
-   * @param {Object} parts
-   * @return {Object}
-   */
-  static processParts(operation, options, parts) {
-
-    function process(currOptions, genotype, key) {
-      // -return ifElse(isArrayLike, map(map(process)), operation)(genotype);
-
-      if (isArrayLike(genotype)) {
-        const boundProcess = process.bind(this, currOptions[key]);
-        return map(mapObjIndexed(boundProcess), genotype);
-      }
-
-      const option = extractOption(genotype)(currOptions);
-      return operation(genotype, option);
-    }
-
-    return mapObjIndexed(process.bind(this, options), parts);
-  }
-
-  /**
    * Responsible for building an genotype with the provided building instructions.
    * A genotype may define it's build order as a (nested) object of partial genotypes.
    * These may then contain a build order itself.
@@ -70,8 +75,7 @@ export default class Genotype {
    * @return {Object}
    */
   static build(options) {
-    const buildType = (T, option) => new T({});
-    return this.processParts(buildType, options, this.parts);
+    return processParts(buildType, options, this.parts);
   }
 
   /**
@@ -82,8 +86,7 @@ export default class Genotype {
    * @return {Object}
    */
   static seed(options) {
-    const seedType = (T, option) => T.seed(option);
-    return this.processParts(seedType, options, this.parts);
+    return processParts(seedType, options, this.parts);
   }
 
   /**
