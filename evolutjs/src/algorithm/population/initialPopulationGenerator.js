@@ -33,10 +33,16 @@ export default class InitialPopulationGenerator{
       ' different BodyPoints. ' + individualsPerBp + ' Individuals per BodyPoint variation.');
     const individuals = Range(1, this.populationSize + 1).map(count => {
       const currentBodyPoints = this.bodyPointsRange.get(currentBodyPointsIndex);
-      const seed = Individual.seed([{ body: { massFactor: 0.6, bodyPoints: currentBodyPoints } }]);
+
+      const seed = Individual.seed({
+        body: { massFactor: 0.6, bodyPoints: currentBodyPoints },
+        engine: { type: 'test' },
+        legs: [
+          { leg: { massFactor: 666 } }
+        ]
+      });
 
       console.log(JSON.stringify(seed));
-
       // Check if new body point count should be applied
       if (count % individualsPerBp === 0 && this.populationSize !== count) {
         currentBodyPointsIndex = count / individualsPerBp;

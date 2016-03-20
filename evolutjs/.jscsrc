@@ -11,6 +11,7 @@
   "requirePaddingNewLinesAfterUseStrict": true,
   "requireParenthesesAroundIIFE": true,
   "requireSemicolons": true,
+  "requireSpaceAfterBinaryOperators": true,
   "requireSpaceAfterComma": true,
   "requireSpaceBetweenArguments": true,
   "requireSpacesInsideObjectBrackets": "all",

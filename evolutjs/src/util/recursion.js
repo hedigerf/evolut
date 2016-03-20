@@ -1,6 +1,6 @@
 'use strict';
 
 // Recursion combinator
-const rec = f => (...args) => f((...args) => rec(f)(...args), ...args);
+const Y = f => (...args) => f((...args) => Y(f)(...args), ...args);
 
-export default rec;
+export default Y;

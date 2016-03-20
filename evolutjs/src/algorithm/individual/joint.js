@@ -1,7 +1,7 @@
 'use strict';
 
 import L from 'partial.lenses';
-import { compose, set, view } from 'ramda';
+import { set, view } from 'ramda';
 
 import { PartialGenotype } from '../genotype/genotype';
 
@@ -71,7 +71,7 @@ export default class Joint extends PartialGenotype {
    */
   static seed(options) {
 
-    const lensOrientation = compose(L.prop(this.identifier), L.prop('orientation'));
+    const lensOrientation = L.prop('orientation');
     const orientation = view(lensOrientation, options) || ORIENTATION.BACK;
 
     return super.seed(set(lensOrientation, orientation, options));
@@ -105,7 +105,7 @@ export class HipJoint extends Joint {
    */
   static seed(options) {
 
-    const lensPosition = compose(L.prop(this.identifier), L.prop('position'));
+    const lensPosition = L.prop('position');
     const position = view(lensPosition, options) || [1, 2];
 
     return super.seed(set(lensPosition, position, options));

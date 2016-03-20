@@ -1,35 +1,12 @@
 'use strict';
 
-import { compose, ifElse, isArrayLike, map, merge, objOf, of, reduce, toPairs, view } from 'ramda';
+import L from 'partial.lenses';
+import { always, either, isArrayLike, map, mapObjIndexed, merge, view } from 'ramda';
 
-const first = pair => pair[0];
-const second = pair => pair[1];
-
-/**
- * Returns a build function for a partial genotype.
- *
- * @param  {Array} genotype
- * @return {function(PartialGenotype): PartialGenotype}
- */
-function getBuildPartialGenotype(genotype) {
-
-  /**
-   * Builds a partial genotype with the needed information
-   * extracted from the whole genotype.
-   *
-   * @param {PartialGenotype} PartialGenotypeType
-   * @return {PartialGenotype}
-   */
-  return function buildPartialGenotype(PartialGenotypeType) {
-
-    // TODO
-    // const lensType = lensByIdentifierRecursive(PartialGenotypeType.identifier);
-    // const partialGenotype = view(lensType, genotype);
-
-    // jscs:disable
-    return new PartialGenotypeType({});
-  };
-}
+const extractOption = T => either(
+  view(L.prop(T.identifier)),
+  always({})
+);
 
 /**
  * Base class of a genotype.
@@ -56,21 +33,31 @@ export default class Genotype {
   }
 
   /**
-   * [ {body: {}}, [ [{joint: {}}, {leg: {}}] ] ]
+   * Maps a part object with a given function.
+   * A part object is a nested object containing partial genotypes.
    *
    * @protected
    * @static
-   * @param {function} partialTypeOperation
+   * @param {function(PartialGenotype, Object): Object} operation
+   * @param {Object} options
+   * @param {Object} parts
    * @return {Object}
    */
-  static processParts(partialTypeOperation) {
+  static processParts(operation, options, parts) {
 
-    let helper;
-    const makeObject = pair => objOf(first(pair), helper(second(pair)));
-    const processPairs = (accumulator, pair) => merge(makeObject(pair), accumulator);
-    helper = ifElse(isArrayLike, reduce(processPairs, {}), partialTypeOperation);
+    function process(currOptions, genotype, key) {
+      // -return ifElse(isArrayLike, map(map(process)), operation)(genotype);
 
-    return reduce(processPairs, {}, toPairs(this.parts));
+      if (isArrayLike(genotype)) {
+        const boundProcess = process.bind(this, currOptions[key]);
+        return map(mapObjIndexed(boundProcess), genotype);
+      }
+
+      const option = extractOption(genotype)(currOptions);
+      return operation(genotype, option);
+    }
+
+    return mapObjIndexed(process.bind(this, options), parts);
   }
 
   /**
@@ -83,22 +70,20 @@ export default class Genotype {
    * @return {Object}
    */
   static build(options) {
-    const buildPartial = getBuildPartialGenotype(options);
-    return this.processParts(buildPartial);
+    const buildType = (T, option) => new T({});
+    return this.processParts(buildType, options, this.parts);
   }
 
   /**
    * Returns a randomly seeded version of a genotype.
-   *
-   * [ {body: {}}, [ [{joint: {}}, {leg: {}}] ] ]
    *
    * @static
    * @param {Object} options
    * @return {Object}
    */
   static seed(options) {
-    // g => g.seed(options)
-    return this.processParts(g => g.seed(options));
+    const seedType = (T, option) => T.seed(option);
+    return this.processParts(seedType, options, this.parts);
   }
 
   /**
@@ -136,10 +121,7 @@ export class PartialGenotype extends Genotype {
    * @return {Object}
    */
   static seed(options) {
-
-    // TODO parts
-
-    return options || [];
+    return merge(super.seed(options), options);
   }
 
 }

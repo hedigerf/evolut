@@ -1,5 +1,7 @@
 'use strict';
 
+process.env.NODE_CONFIG_STRICT_MODE = false;
+
 import config from 'config';
 
 /**

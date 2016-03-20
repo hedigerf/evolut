@@ -50,6 +50,8 @@
   },
   "devDependencies": {
     "chai": "latest",
+    "chai-fuzzy": "latest",
+    "chai-immutable": "latest",
     "electron-prebuilt": "latest",
     "jscs": "latest",
     "jsdoc": "latest",

@@ -20,7 +20,7 @@ const DEFUALT_LEG_COUNT = 6;
  *
  * @type {String}
  */
-const IDENTIFIER_LEGS = 'legs';
+export const IDENTIFIER_LEGS = 'legs';
 
 /**
  * Represents an Individual.
@@ -40,14 +40,12 @@ export default class Individual extends Genotype {
    */
   static get parts() {
     return {
-      [Body.indentifier]: Body,
+      [Body.identifier]: Body,
       [Engine.identifier]: Engine,
-      [IDENTIFIER_LEGS]: [
-        repeat({
-          [HipJoint.identifier]: HipJoint,
-          [Leg.identifier]: Leg
-        }, DEFUALT_LEG_COUNT)
-      ]
+      [IDENTIFIER_LEGS]: repeat({
+        [HipJoint.identifier]: HipJoint,
+        [Leg.identifier]: Leg
+      }, DEFUALT_LEG_COUNT)
     };
   }
 

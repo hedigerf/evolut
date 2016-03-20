@@ -26,7 +26,7 @@ export default class Body extends PartialGenotype {
    *
    * @param {Object} genotype
    */
-  constructor({ massFactor, bodyPoints }) {
+  constructor({ massFactor, bodyPoints } = {}) {
 
     super({});
 
@@ -55,13 +55,13 @@ export default class Body extends PartialGenotype {
    */
   static seed(options) {
 
-    const lensBody = L.prop(this.identifier);
-    const lensMassFactor = compose(lensBody, L.prop('massFactor'));
-    const lensBodyPoints = compose(lensBody, L.prop('bodyPoints'));
+    const lensMassFactor = L.prop('massFactor');
+    const lensBodyPoints = L.prop('bodyPoints');
 
     const massFactor = view(lensMassFactor, options) || random.real(0.1, 0.9);
-    const bodyPoints = view(lensBodyPoints, options) ||
-      this.seedCWPolygonPoints(random.integer(4, 8));
+    const bodyPoints = this.seedCWPolygonPoints(
+      view(lensBodyPoints, options) || random.integer(4, 8)
+    );
 
     const setter = compose(
       set(lensBodyPoints, bodyPoints),

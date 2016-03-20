@@ -78,10 +78,9 @@ export default class Leg extends PartialGenotype {
    */
   static seed(options) {
 
-    const lensLeg = compose(L.prop('legs'), L.prop(this.identifier));
-    const lensMassfactor = compose(lensLeg, L.prop('massFactor'));
-    const lensHeight = compose(lensLeg, L.prop('height'));
-    const lensHeightFactor = compose(lensLeg, L.prop('heightFactor'));
+    const lensMassfactor = L.prop('massFactor');
+    const lensHeight = L.prop('height');
+    const lensHeightFactor = L.prop('heightFactor');
 
     const massFactor = view(lensMassfactor, options) || random.real(0.1, 0.9);
     const height = view(lensHeight, options) || random.real(0.1, 1);
