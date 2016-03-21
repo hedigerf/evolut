@@ -14,6 +14,7 @@ import Individual from '../object/individual/individual';
 
 const logger = log4js.getLogger('simulationWorld');
 
+const friction = config('simulation.friction');
 const render = config('simulation.render');
 const solo = config('simulation.solo');
 const stepTime = config('simulation.stepTime');
@@ -35,6 +36,7 @@ export default class SimulationWorld extends P2Pixi.Game {
       },
       assetUrls: [rockTexturePath()]
     });
+    this.world.defaultContactMaterial.friction = friction;
     this.population = population;
     this.parcourOptions = parcourOptions;
     this.cb = cb;

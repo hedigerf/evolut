@@ -20,14 +20,14 @@ export const ORIENTATION = {
  *
  * @type {Number}
  */
-export const ANGLE_MIN = -Math.PI / 2;
+export const ANGLE_MIN = -Math.PI / 3;
 
 /**
  * Maximal angle in rad.
  *
  * @type {Number}
  */
-export const ANGLE_MAX = Math.PI / 6;
+export const ANGLE_MAX = Math.PI / 2;
 
 const lensOrientation = L.prop('orientation');
 const lensPosition = L.prop('position');

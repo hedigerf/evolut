@@ -9,6 +9,25 @@ import { ANGLE_MAX, ANGLE_MIN } from '../algorithm/individual/joint';
 const logger = log4js.getLogger('Engine');
 
 /**
+ * @param {RevoluteConstraint} constraint
+ * @param {Number} [min=ANGLE_MIN]
+ * @param {Number} [max=ANGLE_MAX]
+ */
+function setAngle(constraint, min = ANGLE_MIN, max = ANGLE_MAX) {
+  constraint.setLimits(-max, -min);
+}
+
+const blurFactor = Math.PI / 10;
+
+function isMaxAngle(constraint, angle) {
+  return constraint.lowerLimit + blurFactor >= angle;
+}
+
+function isMinAngle(constraint, angle) {
+  return constraint.upperLimit - blurFactor <= angle;
+}
+
+/**
  * Represents an abstract class for an engine.
  * It's responsibility is moving an phenotype's legs.
  */
@@ -31,13 +50,33 @@ export default class Engine {
       const leftMiddle = side.get('middle').hip;
       const leftFront = side.get('front').hip;
 
-      leftBack.setLimits(ANGLE_MIN, ANGLE_MAX);
-      leftFront.setLimits(ANGLE_MIN, ANGLE_MAX);
-      leftMiddle.setLimits(ANGLE_MIN, ANGLE_MAX);
+      setAngle(leftBack);
+      setAngle(leftFront);
+      setAngle(leftMiddle);
     };
 
+    const setLimits0 = (side) => {
+
+      const leftBack = side.get('back').hip;
+      const leftMiddle = side.get('middle').hip;
+      const leftFront = side.get('front').hip;
+
+      setAngle(leftBack, 0, 0);
+      setAngle(leftFront, 0, 0);
+      setAngle(leftMiddle, 0, 0);
+    };
+
+    const setSpeed = (side) => {
+
+      side.get('back').hip.setMotorSpeed(2);
+      side.get('middle').hip.setMotorSpeed(2);
+      side.get('front').hip.setMotorSpeed(2);
+
+    };
+
+    setLimits0(rightSide);
     setLimits(leftSide);
-    setLimits(rightSide);
+    setSpeed(leftSide);
   }
 
   /**
@@ -59,22 +98,6 @@ export default class Engine {
     this.stepForward(phenotype, leftSide);
     this.stepHaul(phenotype, rightSide);
 
-
-    const speed = 2;
-
-    const setSpeed = (side) => {
-
-      const leftBack = side.get('back').hip;
-      const leftMiddle = side.get('middle').hip;
-      const leftFront = side.get('front').hip;
-
-      leftBack.setMotorSpeed(speed);
-      leftFront.setMotorSpeed(speed);
-      leftMiddle.setMotorSpeed(speed);
-    };
-
-    setSpeed(leftSide);
-
     // Find joints
     // check joint position
     // redirect movement
@@ -89,13 +112,27 @@ export default class Engine {
     const hipMiddle = joints.get('middle').hip;
     const hipFront = joints.get('front').hip;
 
-    const moveForwardUntilUpperLimit = hip => {
+    const _speed = 3;
 
-      if (hip.angle < hip.upperLimit) {
+    const moveForwardUntil = hip => {
 
+      const angle = hip.angle;
+      const index = hip.equations.indexOf(hip.motorEquation);
+      const speed = hip.equations[index].relativeVelocity;
+
+      if (isMaxAngle(hip, angle) && speed > 0) {
+        hip.setMotorSpeed(-_speed);
+      } else if (isMinAngle(hip, angle) && speed < 0) {
+        hip.setMotorSpeed(_speed / 2);
       }
 
+      debug(logger, speed);
+
     };
+
+    moveForwardUntil(hipBack);
+    moveForwardUntil(hipMiddle);
+    moveForwardUntil(hipFront);
 
   }
 
