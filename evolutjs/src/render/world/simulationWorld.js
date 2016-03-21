@@ -18,6 +18,8 @@ import Circle from '../object/demoCircle';
 
 const logger = log4js.getLogger('simulationWorld');
 
+const render = config('simulation.render');
+const solo = config('simulation.solo');
 
 function rockTexturePath() {
   return path.join(__dirname, '../../..', 'assets/textures', 'rock.jpg');
@@ -62,7 +64,13 @@ export default class SimulationWorld extends P2Pixi.Game {
   drawPhenotypes() {
     // Force evaluation of sequence
     // jshint -W098
-    this.phenoTypes = this.population.individuals.take(1).map(i => new Individual(this, i));
+    let takeN;
+    if (solo) {
+      takeN = 1;
+    }else {
+      takeN = this.population.individuals.size;
+    }
+    this.phenoTypes = this.population.individuals.take(takeN).map(i => new Individual(this, i));
     info(logger, 'drawn ' + this.phenoTypes.size + ' phenoTypes');
     const trackedIndividual = this.phenoTypes.get(0);
     this.trackedBody = trackedIndividual.bodies[0];
@@ -147,9 +155,12 @@ export default class SimulationWorld extends P2Pixi.Game {
            self.world.step(self.stepTime, timeSinceLastCall, maxSubSteps);
          }
 
-         self.beforeRender();
-         self.render();
-         self.afterRender();
+         if (render) {
+           self.beforeRender();
+           self.render();
+           self.afterRender();
+         }
+
 
          self.req = requestAnimationFrame(update);
        }else {
