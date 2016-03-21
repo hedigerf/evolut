@@ -11,6 +11,8 @@
     "startHighestY": 0
   },
   "simulation": {
-    "runDuration": 10
+    "runDuration": 10,
+    "render": true,
+    "solo": true
   }
 }
