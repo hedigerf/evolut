@@ -5,6 +5,7 @@ import P2Pixi from './../../../lib/p2Pixi';
 import log4js from 'log4js';
 import Immutable from 'immutable';
 
+import Engine from '../../engine/engine';
 import FlatParcour from '../object/parcour/flatParcour';
 import DemoGround from '../object/demoGround';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
@@ -105,20 +106,7 @@ export default class SimulationWorld extends P2Pixi.Game {
         this.phenoTypes.forEach((indiviual) => {
 
           if (this.currentTime > 0) {
-            const hipMap = indiviual.hipMap;
-            const leftSide = hipMap.get('left');
-            const rightSide = hipMap.get('right');
-            const leftBack = leftSide.get('back');
-            const leftMiddle = leftSide.get('middle');
-            const leftFront = leftSide.get('front');
-            const min = - Math.PI;
-            const max = Math.PI;
-            leftBack.setLimits(min, max);
-            leftBack.setMotorSpeed(-2.0);
-            leftFront.setLimits(min, max);
-            leftFront.setMotorSpeed(-2.0);
-            leftMiddle.setLimits(min, max);
-            leftMiddle.setMotorSpeed(-2.0);
+            Engine.step(indiviual);
           }
 
         });
