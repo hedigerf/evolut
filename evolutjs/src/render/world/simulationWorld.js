@@ -63,9 +63,9 @@ export default class SimulationWorld extends P2Pixi.Game {
     // Force evaluation of sequence
     // jshint -W098
     this.phenoTypes = this.population.individuals.take(1).map(i => new Individual(this, i));
+    info(logger, 'drawn ' + this.phenoTypes.size + ' phenoTypes');
     const trackedIndividual = this.phenoTypes.get(0);
     this.trackedBody = trackedIndividual.bodies[0];
-
   }
 
   addNewPopulation(population) {
@@ -105,13 +105,13 @@ export default class SimulationWorld extends P2Pixi.Game {
         this.phenoTypes.forEach((indiviual) => {
 
           if (this.currentTime > 0) {
-            const hipMap = indiviual.hipMap;
-            const leftSide = hipMap.get('left');
-            const rightSide = hipMap.get('right');
-            const leftBack = leftSide.get('back');
-            const leftMiddle = leftSide.get('middle');
-            const leftFront = leftSide.get('front');
-            const min = - Math.PI;
+            const jointsMap = indiviual.jointsMap;
+            const leftSide = jointsMap.get('left');
+            const rightSide = jointsMap.get('right');
+            const leftBack = leftSide.get('back').hip;
+            const leftMiddle = leftSide.get('middle').hip;
+            const leftFront = leftSide.get('front').hip;
+            const min = -Math.PI;
             const max = Math.PI;
             leftBack.setLimits(min, max);
             leftBack.setMotorSpeed(-2.0);

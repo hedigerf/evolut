@@ -63,7 +63,7 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
    */
   fromGenotype(genotype) {
 
-    const posX = -30;
+    const posX = random.real(-30, -27);
     const posY = 1;
 
     const bodyOptions = {
@@ -116,11 +116,11 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
         [0, legHeight / 2],
         [(0.5 * (pos - 1)), 0]
       );
-      this.createRevoluteConstraint(speed, upperLegBody, lowerLegBody,
+      const revoltuteKnee = this.createRevoluteConstraint(speed, upperLegBody, lowerLegBody,
         [0, -legHeight / 2],
         [0, legHeight / 2]);
 
-      return revoluteHip;
+      return { hip: revoluteHip, knee: revoltuteKnee };
     };
     // Const speed = 5;
     const speed = 0;
@@ -137,7 +137,7 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
           })
         ]);
     };
-    let hipMap = new Map();
+    let jointsMap = Map();
     const bluePrints = List.of(
       { id: 'back', aXval: 0.05, speed, pos: 1 },
       { id: 'middle', aXval: 0.5, speed, pos: 2 },
@@ -145,9 +145,9 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
     );
     const leftSide = bluePrints.map(toLeg);
     const rightSide = bluePrints.map(toLeg);
-    hipMap = hipMap.set('left', new Map(leftSide));
-    hipMap = hipMap.set('right', new Map(rightSide));
-    this.hipMap = hipMap;
+    jointsMap = jointsMap.set('left', new Map(leftSide));
+    jointsMap = jointsMap.set('right', new Map(rightSide));
+    this.jointsMap = jointsMap;
 
     /*Const hipPivotAxValues = List.of (
         { id: 'backLeftLeg', aXval: 0.05, speed: speed }, { id: 'backRightLeg', aXval: 0.05, speed: -speed },
