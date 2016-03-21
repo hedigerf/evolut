@@ -1,6 +1,6 @@
 {
   "name": "evolut",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Design of artificial animals with evolutionary algorithms",
   "private": true,
   "main": "main.js",
@@ -38,17 +38,20 @@
     "babel-register": "latest",
     "config": "latest",
     "electron-canvas-to-buffer": "latest",
+    "immutable" : "latest",
     "jquery": "latest",
     "log4js": "latest",
     "p2": "latest",
     "p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
+    "partial.lenses": "latest",
     "pixi.js": "latest",
     "ramda": "latest",
-    "random-js": "latest",
-    "immutable" : "latest"
+    "random-js": "latest"
   },
   "devDependencies": {
     "chai": "latest",
+    "chai-fuzzy": "latest",
+    "chai-immutable": "latest",
     "electron-prebuilt": "latest",
     "jscs": "latest",
     "jsdoc": "latest",

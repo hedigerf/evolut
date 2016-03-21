@@ -1,6 +1,7 @@
 'use strict';
 
-import { assocPath } from 'ramda';
+import L from 'partial.lenses';
+import { set, view } from 'ramda';
 
 import { PartialGenotype } from '../genotype/genotype';
 
@@ -31,6 +32,9 @@ const DEFAULT_ANGLE_MIN = 3 / 2 * Math.PI;
  */
 const DEFAULT_ANGLE_MAX = 5 / 6 * Math.PI;
 
+const lensOrientation = L.prop('orientation');
+const lensPosition = L.prop('position');
+
 /**
  * Represents a joint of a leg of an indiviual.
  * A joint connects two parts of a body of an individual.
@@ -40,13 +44,15 @@ export default class Joint extends PartialGenotype {
   /**
    * Default constructor of a joint of an individual.
    *
-   * @param {Object}
+   * @param {Object} options
    */
-  constructor({ orientation = ORIENTATION.BACK } = {}) {
-    super({});
+  constructor(options) {
+
+    super(options);
+
     this.angleMin = DEFAULT_ANGLE_MIN;
     this.angleMax = DEFAULT_ANGLE_MAX;
-    this.orientation = orientation;
+    this.orientation = view(lensOrientation, options);
   }
 
   /**
@@ -68,12 +74,9 @@ export default class Joint extends PartialGenotype {
    * @param {Object} options
    * @return {Object}
    */
-  static seed({ orientation = ORIENTATION.BACK } = {}) {
-    return {
-      [this.identifier]: {
-        orientation
-      }
-    };
+  static seed(options) {
+    const orientation = view(lensOrientation, options) || ORIENTATION.BACK;
+    return super.seed(set(lensOrientation, orientation, options));
   }
 
 }
@@ -87,11 +90,13 @@ export class HipJoint extends Joint {
   /**
    * Default constructor for a hip joint.
    *
-   * @param {Object}
+   * @param {Object} options
    */
-  constructor({ orientation, position }) {
-    super({ orientation });
-    this.position = position;
+  constructor(options) {
+
+    super(options);
+
+    this.position = view(lensPosition, options);
   }
 
   /**
@@ -102,8 +107,9 @@ export class HipJoint extends Joint {
    * @param {Object} options
    * @return {Object}
    */
-  static seed({ position, orientation } = {}) {
-    return assocPath([this.identifier, 'position'], position, super.seed({ orientation }));
+  static seed(options) {
+    const position = view(lensPosition, options) || [1, 2];
+    return super.seed(set(lensPosition, position, options));
   }
 
 }

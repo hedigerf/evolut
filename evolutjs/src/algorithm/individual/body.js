@@ -1,5 +1,7 @@
 'use strict';
 
+import L from 'partial.lenses';
+import { compose, set, view } from 'ramda';
 import Random from 'random-js';
 import { Range } from 'immutable';
 
@@ -14,12 +16,8 @@ const random = new Random(Random.engines.mt19937().autoSeed());
  */
 const DEFAULT_BODY_MASS = 1;
 
-/**
- * Default amount of polygon point of an individual's body.
- *
- * @type {Number}
- */
-const DEFAULT_BODY_POINTS = 4;
+const lensMassFactor = L.prop('massFactor');
+const lensBodyPoints = L.prop('bodyPoints');
 
 /**
  * Represents the body of an individual's genotype.
@@ -29,14 +27,14 @@ export default class Body extends PartialGenotype {
   /**
    * Default constructor of an individual.
    *
-   * @param {Object} genotype
+   * @param {Object} options
    */
-  constructor({ massFactor, bodyPoints }) {
+  constructor(options) {
 
-    super({});
+    super(options);
 
-    this.mass = DEFAULT_BODY_MASS * massFactor;
-    this.bodyPoints = bodyPoints;
+    this.mass = DEFAULT_BODY_MASS * view(lensMassFactor, options);
+    this.bodyPoints = view(lensBodyPoints, options);
   }
 
   /**
@@ -55,26 +53,29 @@ export default class Body extends PartialGenotype {
    *
    * @override
    * @static
-   * @param {Object=}
+   * @param {Object} options
    * @return {Object}
    */
-  static seed({ massFactor, bodyPoints = DEFAULT_BODY_POINTS } = {}) {
+  static seed(options) {
 
-    massFactor = massFactor || random.real(0.1, 0.9);
+    const massFactor = view(lensMassFactor, options) || random.real(0.1, 0.9);
+    const bodyPoints = this.seedCWPolygonPoints(
+      view(lensBodyPoints, options) || random.integer(4, 8)
+    );
 
-    return {
-      [this.identifier]: {
-        bodyPoints: this.seedCWPolygonPoints(bodyPoints),
-        massFactor
-      }
-    };
+    const setter = compose(
+      set(lensBodyPoints, bodyPoints),
+      set(lensMassFactor, massFactor)
+    );
+
+    return super.seed(setter(options));
   }
 
   /**
    * Generate a list of polygon points and ensure that
    * they are in clockwise order, and form a simple polygon.
    *
-   * @param  {Number} points Number of points.
+   * @param {Number} points Number of points.
    * @return {Array}
    */
   static seedCWPolygonPoints(points) {
@@ -86,7 +87,9 @@ export default class Body extends PartialGenotype {
 
     rangePoints.map(randomPoint).toArray();
 
-    return [[0,0], [1,0], [1,1], [0, 1]];
+    // TODO
+
+    return [[0, 0], [1, 0], [1, 1], [0, 1]];
   }
 
 }

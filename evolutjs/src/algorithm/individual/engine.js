@@ -1,12 +1,29 @@
 'use strict';
 
+import L from 'partial.lenses';
+import { set, view } from 'ramda';
+
 import { PartialGenotype } from '../genotype/genotype';
+
+const lensType = L.prop('type');
 
 /**
  * Represents the engine part of an individual.
  * The engine is responsible for the movement of the legs.
  */
 export default class Engine extends PartialGenotype {
+
+  /**
+   * Default constructor for an engine.
+   *
+   * @param {Object} options
+   */
+  constructor(options) {
+
+    super(options);
+
+    this.type = view(lensType, options);
+  }
 
   /**
    * Returns the identifier for a partial genotype.
@@ -27,10 +44,12 @@ export default class Engine extends PartialGenotype {
    * @param {Object} options
    * @return {Object}
    */
-  static seed({ type }) {
-    return {
-      [this.identifier]: type || 'ant'
-    };
+  static seed(options) {
+
+
+    const type = view(lensType, options) || 'ant';
+
+    return super.seed(set(lensType, type, options));
   }
 
 }
