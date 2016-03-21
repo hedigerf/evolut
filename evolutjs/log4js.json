@@ -15,11 +15,14 @@
       }
     },
     {
-      "type": "console"
+      "type": "console",
+      "layout": {
+        "type": "basic"
+      }
     }
   ],
   "levels": {
-        "[all]": "INFO"
-    },
+    "[all]": "INFO"
+  },
   "replaceConsole": true
 }

@@ -10,6 +10,10 @@ import { PartialGenotype } from '../genotype/genotype';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
+const lensMassfactor = L.prop('massFactor');
+const lensHeight = L.prop('height');
+const lensHeightFactor = L.prop('heightFactor');
+
 /**
  * Default height for of a leg.
  *
@@ -31,11 +35,15 @@ export default class Leg extends PartialGenotype {
   /**
    * Default constructor of a Leg.
    *
-   * @param {Object}
+   * @param {Object} options
    */
-  constructor({ massFactor, height = DEFAULT_LEG_HEIGHT, heightFactor } = {}) {
+  constructor(options) {
 
-    super({});
+    super(options);
+
+    const massFactor = view(lensMassfactor, options);
+    const height = view(lensHeight, options) || DEFAULT_LEG_HEIGHT;
+    const heightFactor = view(lensHeightFactor, options);
 
     this.massTigh = massFactor;
     this.massShank = 1 - massFactor;
@@ -77,10 +85,6 @@ export default class Leg extends PartialGenotype {
    * @return {Object}
    */
   static seed(options) {
-
-    const lensMassfactor = L.prop('massFactor');
-    const lensHeight = L.prop('height');
-    const lensHeightFactor = L.prop('heightFactor');
 
     const massFactor = view(lensMassfactor, options) || random.real(0.1, 0.9);
     const height = view(lensHeight, options) || random.real(0.1, 1);

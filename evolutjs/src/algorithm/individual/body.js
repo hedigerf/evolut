@@ -16,6 +16,9 @@ const random = new Random(Random.engines.mt19937().autoSeed());
  */
 const DEFAULT_BODY_MASS = 1;
 
+const lensMassFactor = L.prop('massFactor');
+const lensBodyPoints = L.prop('bodyPoints');
+
 /**
  * Represents the body of an individual's genotype.
  */
@@ -24,14 +27,14 @@ export default class Body extends PartialGenotype {
   /**
    * Default constructor of an individual.
    *
-   * @param {Object} genotype
+   * @param {Object} options
    */
-  constructor({ massFactor, bodyPoints } = {}) {
+  constructor(options) {
 
-    super({});
+    super(options);
 
-    this.mass = DEFAULT_BODY_MASS * massFactor;
-    this.bodyPoints = bodyPoints;
+    this.mass = DEFAULT_BODY_MASS * view(lensMassFactor, options);
+    this.bodyPoints = view(lensBodyPoints, options);
   }
 
   /**
@@ -54,9 +57,6 @@ export default class Body extends PartialGenotype {
    * @return {Object}
    */
   static seed(options) {
-
-    const lensMassFactor = L.prop('massFactor');
-    const lensBodyPoints = L.prop('bodyPoints');
 
     const massFactor = view(lensMassFactor, options) || random.real(0.1, 0.9);
     const bodyPoints = this.seedCWPolygonPoints(

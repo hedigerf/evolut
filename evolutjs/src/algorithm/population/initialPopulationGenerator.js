@@ -42,15 +42,12 @@ export default class InitialPopulationGenerator{
         ]
       });
 
-      console.log(JSON.stringify(seed));
       // Check if new body point count should be applied
       if (count % individualsPerBp === 0 && this.populationSize !== count) {
         currentBodyPointsIndex = count / individualsPerBp;
         debug(logger, 'Switched to ' + this.bodyPointsRange.get(currentBodyPointsIndex) + ' BodyPoints');
       }
-      const i = new Individual(seed);
-      debug(logger, i.blueprint());
-      return i;
+      return new Individual(seed);
     });
     return new Population(new List(individuals), 1);
   }
