@@ -11,15 +11,23 @@
   "requirePaddingNewLinesAfterUseStrict": true,
   "requireParenthesesAroundIIFE": true,
   "requireSemicolons": true,
+  "requireSpaceAfterBinaryOperators": true,
   "requireSpaceAfterComma": true,
   "requireSpaceBetweenArguments": true,
   "requireSpacesInsideObjectBrackets": "all",
+  "requireSpacesInFunction": {
+    "beforeOpeningCurlyBrace": true
+  },
+  "requireSpacesInNamedFunctionExpression": {
+    "beforeOpeningCurlyBrace": true
+  },
   "requireTrailingComma": false,
   "disallowUnusedParams": false,
   "disallowSpacesInsideObjectBrackets": null,
   "disallowImplicitTypeConversion": [
     "string"
   ],
+  "disallowTrailingWhitespace": true,
   "jsDoc": {
     "enforceExistence": false,
     "checkAnnotations": "closurecompiler",

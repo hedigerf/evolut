@@ -1,100 +1,50 @@
 'use strict';
 
-import {
-  assoc, compose, cond, equals, head, identity, isArrayLike, length, nth, of, pick, prop, T, unless, when
-} from 'ramda';
+import L from 'partial.lenses';
+import { always, curry, either, ifElse, mapObjIndexed, merge, view } from 'ramda';
+
+const extractOption = key => either(
+  view(L.prop(key)),
+  always({})
+);
+
+const buildType = (T, option) => new T(option);
+const seedType = (T, option) => T.seed(option);
+
+// jshint -W003
+const isPartialGenotype = T => PartialGenotype.prototype.isPrototypeOf(T.prototype);
 
 /**
- * Create an array from an object.
- * If object is already an array then return the array.
+ * Processes a genotype or maps an array or object.
  *
- * @param  {*}
- * @return {Array<*>}
- */
-const coerceArray = unless(isArrayLike, of);
-
-/**
- * Predicate checks if an array has length 1.
- *
- * @param {Array}
- * @return {Boolean}
- */
-const hasLength1 = compose(equals(1), length);
-
-/**
- * Returns either the only element a list has,
- * or the whole list.
- *
- * @param {Array}
- * @return {*|Array}
- */
-const unCoerceArray = when(hasLength1, head);
-
-/**
- * Returns the specified index of a list of partial genotypes,
- * or the object itself.
- *
- * @param  {Array<partialGenotype>|PartialGenotype} partialGenotypes
- * @param  {Number} [index=]
- * @return {PartialGenotype}
- */
-function getByIndexOrSingle(partialGenotypes, index = 0) {
-  return cond([
-    [isArrayLike, p => nth(index, p)],
-    [T, identity]
-  ])(partialGenotypes);
-}
-
-/**
- * Returns a build function for a partial genotype.
- *
- * @param  {Object} genotype
- * @return {function(PartialGenotype): PartialGenotype}
- */
-function getBuildPartialGenotype(genotype) {
-
-  /**
-   * Builds a partial genotype with the needed information
-   * extracted from the whole genotype.
-   *
-   * @param {PartialGenotype} PartialGenotypeType
-   * @param {Number} index
-   * @return {PartialGenotype}
-   */
-  return function buildPartialGenotype(PartialGenotypeType, index) {
-
-    const id = PartialGenotypeType.identifier;
-    const partialGenotypes = prop(id, genotype);
-    const partialGenotype = getByIndexOrSingle(partialGenotypes, index);
-
-    // jscs:disable
-    return new PartialGenotypeType(partialGenotype);
-  };
-}
-
-/**
- * Responsible for building an genotype with the provided building instructions.
- * A genotype may define it's build order as a (nested) object of partial genotypes.
- * These may then contain a build order itself.
- *
- * @param {Array} list
- * @param {Object} genotype
+ * @param {function(PartialGenotype, Object): Object} operation
+ * @param {Object} options
+ * @param {PartialGenotype|Array|Object} type
+ * @param {String} key
  * @return {Object}
  */
-function buildGenotype(list, genotype) {
+const processPartialGenotype = curry((operation, options, type, key) => {
 
-  const buildPartial = getBuildPartialGenotype(genotype);
+  const partialOptions = extractOption(key)(options);
+  const applyOperation = ifElse(isPartialGenotype,
+    T => operation(T, partialOptions),
+    mapObjIndexed(processPartialGenotype(operation, partialOptions)) // Process nested object
+  );
 
-  return list.reduce((acc, type) => {
+  return applyOperation(type);
+});
 
-    const types = coerceArray(type);
-    const id = head(types).identifier;
-    const instances = types.map(buildPartial);
-
-    return assoc(id, unCoerceArray(instances), acc);
-
-  }, {});
-}
+/**
+ * Maps a part object with a given function.
+ * A part object is a nested object containing partial genotypes.
+ *
+ * @param {function(PartialGenotype, Object): Object} operation
+ * @param {Object} options
+ * @param {Object} parts
+ */
+const processGenotypeParts = curry(
+  (operation, options, parts) => mapObjIndexed(processPartialGenotype(operation, options), parts)
+);
 
 /**
  * Base class of a genotype.
@@ -107,39 +57,41 @@ export default class Genotype {
    * @param {Object} genotype The whole genotype as object.
    */
   constructor(genotype) {
-    this.instanceParts = buildGenotype(this.constructor.parts, genotype);
+    this.instanceParts = this.constructor.build(genotype);
   }
 
   /**
    * Returns a (nested) object containing the build order of a genotype.
    *
    * @static
-   * @return {Array}
+   * @return {Object}
    */
   static get parts() {
-    return [];
+    return {};
+  }
+
+  /**
+   * Responsible for building an genotype with the provided building instructions.
+   * A genotype may define it's build order as a (nested) object of partial genotypes.
+   * These may then contain a build order itself.
+   *
+   * @static
+   * @param {Object} options
+   * @return {Object}
+   */
+  static build(options) {
+    return processGenotypeParts(buildType, options, this.parts);
   }
 
   /**
    * Returns a randomly seeded version of a genotype.
    *
    * @static
-   * @param {Object} options Provides values for specific parts of a genotypes
-   *                         instead of a random value.
+   * @param {Object} options
    * @return {Object}
    */
   static seed(options) {
-
-    return this.parts.reduce((acc, part) => {
-
-      const parts = coerceArray(part);
-      const id = head(parts).identifier;
-      const partialOptions = pick([id], options);
-      const seeds = parts.map(p => prop(id, p.seed(partialOptions)));
-
-      return assoc(id, unCoerceArray(seeds), acc);
-
-    }, {});
+    return processGenotypeParts(seedType, options, this.parts);
   }
 
   /**
@@ -176,10 +128,8 @@ export class PartialGenotype extends Genotype {
    * @param {Object} options
    * @return {Object}
    */
-  static seed(option) {
-    return {
-      [this.identifier]: option || {}
-    };
+  static seed(options) {
+    return merge(super.seed(options), options);
   }
 
 }
