@@ -1,10 +1,9 @@
 'use strict';
 
-import L from 'partial.lenses';
-import { compose, set, view } from 'ramda';
-import Random from 'random-js';
 import { Range } from 'immutable';
-
+import L  from 'partial.lenses';
+import { compose, set, view } from 'ramda';
+import Random  from 'random-js';
 import { PartialGenotype } from '../genotype/genotype';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
@@ -28,6 +27,8 @@ export default class Body extends PartialGenotype {
    * Default constructor of an individual.
    *
    * @param {Object} options
+   * @param {Number} options.mass
+   * @param {Seq<Point>} options.bodyPoints
    */
   constructor(options) {
 
@@ -54,6 +55,8 @@ export default class Body extends PartialGenotype {
    * @override
    * @static
    * @param {Object} options
+   * @param {Number} options.mass
+   * @param {Number} options.bodyPoints
    * @return {Object}
    */
   static seed(options) {

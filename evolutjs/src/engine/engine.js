@@ -1,7 +1,7 @@
 'use strict';
 
-import {} from 'ramda';
 import log4js from 'log4js';
+import {  } from 'ramda';
 
 import { debug } from '../util/logUtil';
 
@@ -14,6 +14,12 @@ const logger = log4js.getLogger('Engine');
 export default class Engine {
 
   /**
+   * @static
+   * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype.
+   */
+  static initialStep(phenotype) {  }
+
+  /**
    * Executes a single step of the engine.
    *
    * @static
@@ -21,24 +27,31 @@ export default class Engine {
    */
   static step(phenotype) {
 
-    // Find joints
-    // check joint position
-    // redirect movement
-
     const jointsMap = phenotype.jointsMap;
+
     const leftSide = jointsMap.get('left');
-    const rightSide = jointsMap.get('right');
+    // -const rightSide = jointsMap.get('right');
     const leftBack = leftSide.get('back').hip;
     const leftMiddle = leftSide.get('middle').hip;
     const leftFront = leftSide.get('front').hip;
-    const min = -Math.PI;
-    const max = Math.PI;
+
+    const min = -2 * Math.PI;
+    const max = 2 * Math.PI;
+
     leftBack.setLimits(min, max);
-    leftBack.setMotorSpeed(-2.0);
     leftFront.setLimits(min, max);
-    leftFront.setMotorSpeed(-2.0);
     leftMiddle.setLimits(min, max);
-    leftMiddle.setMotorSpeed(-2.0);
+
+    const speed = -2;
+
+    leftBack.setMotorSpeed(speed);
+    leftFront.setMotorSpeed(speed);
+    leftMiddle.setMotorSpeed(speed);
+
+
+    // Find joints
+    // check joint position
+    // redirect movement
 
     debug(logger, 'engine step');
   }

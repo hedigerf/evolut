@@ -1,12 +1,11 @@
 'use strict';
 
 import { repeat } from 'ramda';
-
-import Body from './body';
-import Engine from './engine';
-import Genotype from '../genotype/genotype';
+import Genotype  from '../genotype/genotype';
+import Body  from './body';
+import Engine  from './engine';
 import { HipJoint } from './joint';
-import Leg from './leg';
+import Leg  from './leg';
 
 /**
  * Default number of legs an individual posesses.

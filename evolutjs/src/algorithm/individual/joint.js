@@ -1,8 +1,7 @@
 'use strict';
 
-import L from 'partial.lenses';
+import L  from 'partial.lenses';
 import { set, view } from 'ramda';
-
 import { PartialGenotype } from '../genotype/genotype';
 
 /**
@@ -45,11 +44,10 @@ export default class Joint extends PartialGenotype {
    * Default constructor of a joint of an individual.
    *
    * @param {Object} options
+   * @param {ORIENTATION} options.orientation
    */
   constructor(options) {
-
     super(options);
-
     this.angleMin = DEFAULT_ANGLE_MIN;
     this.angleMax = DEFAULT_ANGLE_MAX;
     this.orientation = view(lensOrientation, options);
@@ -72,6 +70,7 @@ export default class Joint extends PartialGenotype {
    * @override
    * @static
    * @param {Object} options
+   * @param {ORIENTATION} options.orientation
    * @return {Object}
    */
   static seed(options) {
@@ -91,11 +90,11 @@ export class HipJoint extends Joint {
    * Default constructor for a hip joint.
    *
    * @param {Object} options
+   * @param {ORIENTATION} options.orientation
+   * @param {Point} options.position
    */
   constructor(options) {
-
     super(options);
-
     this.position = view(lensPosition, options);
   }
 
@@ -105,6 +104,8 @@ export class HipJoint extends Joint {
    * @override
    * @static
    * @param {Object} options
+   * @param {ORIENTATION} options.orientation
+   * @param {Point} options.position
    * @return {Object}
    */
   static seed(options) {

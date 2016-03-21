@@ -3,7 +3,6 @@
 import path from 'path';
 import P2Pixi from './../../../lib/p2Pixi';
 import log4js from 'log4js';
-import Immutable from 'immutable';
 
 import Engine from '../../engine/engine';
 import FlatParcour from '../object/parcour/flatParcour';
@@ -103,10 +102,10 @@ export default class SimulationWorld extends P2Pixi.Game {
         // Simplified in 2D: only necessary to move on one side
         // Negative motorspeed values -> leg moves in x direction
         // Positive motorspeed -> leg moves in -x direction
-        this.phenoTypes.forEach((indiviual) => {
+        this.phenoTypes.forEach((individual) => {
 
           if (this.currentTime > 0) {
-            Engine.step(indiviual);
+            Engine.step(individual);
           }
 
         });

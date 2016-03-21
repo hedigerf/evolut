@@ -1,12 +1,11 @@
 'use strict';
 
-import L from 'partial.lenses';
+import L  from 'partial.lenses';
 import { compose, set, view } from 'ramda';
-import Random from 'random-js';
-
-import Foot from './foot';
-import { KneeJoint } from './joint';
+import Random  from 'random-js';
 import { PartialGenotype } from '../genotype/genotype';
+import Foot  from './foot';
+import { KneeJoint } from './joint';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
@@ -36,6 +35,9 @@ export default class Leg extends PartialGenotype {
    * Default constructor of a Leg.
    *
    * @param {Object} options
+   * @param {Number} options.massFactor
+   * @param {Number} options.height
+   * @param {Number} options.heightFactor
    */
   constructor(options) {
 
@@ -81,7 +83,10 @@ export default class Leg extends PartialGenotype {
    *
    * @override
    * @static
-   * @param {Object} options Override random values.
+   * @param {Object} options
+   * @param {Number} options.massFactor
+   * @param {Number} options.height
+   * @param {Number} options.heightFactor
    * @return {Object}
    */
   static seed(options) {
