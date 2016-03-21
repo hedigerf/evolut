@@ -64,7 +64,7 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
   fromGenotype(genotype) {
 
     const posX = random.real(-30, -27);
-    const posY = 1;
+    const posY = 0.4;
 
     const bodyOptions = {
       collisionGroup: Math.pow(2, 1),
@@ -73,7 +73,7 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
 
     const body = new p2.Body({
       position: [posX, posY ],
-      mass: 1
+      mass: 2
     });
 
     const style = {

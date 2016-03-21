@@ -10,26 +10,24 @@ import { PartialGenotype } from '../genotype/genotype';
  *
  * @enum {Number}
  */
-const ORIENTATION = {
+export const ORIENTATION = {
   BACK: 1,
   FORTH: 2
 };
 
 /**
- * Default minimal angle in rad.
- * Equals to 270 degree.
+ * Minimal angle in rad.
  *
  * @type {Number}
  */
-const DEFAULT_ANGLE_MIN = 3 / 2 * Math.PI;
+export const ANGLE_MIN = -Math.PI / 2;
 
 /**
- * Default maximal angle in rad.
- * Equals to 150 degree.
+ * Maximal angle in rad.
  *
  * @type {Number}
  */
-const DEFAULT_ANGLE_MAX = 5 / 6 * Math.PI;
+export const ANGLE_MAX = Math.PI / 6;
 
 const lensOrientation = L.prop('orientation');
 const lensPosition = L.prop('position');
@@ -48,8 +46,8 @@ export default class Joint extends PartialGenotype {
    */
   constructor(options) {
     super(options);
-    this.angleMin = DEFAULT_ANGLE_MIN;
-    this.angleMax = DEFAULT_ANGLE_MAX;
+    this.angleMin = ANGLE_MIN;
+    this.angleMax = ANGLE_MAX;
     this.orientation = view(lensOrientation, options);
   }
 

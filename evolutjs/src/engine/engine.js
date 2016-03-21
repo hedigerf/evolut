@@ -4,6 +4,7 @@ import log4js from 'log4js';
 import {  } from 'ramda';
 
 import { debug } from '../util/logUtil';
+import { ANGLE_MAX, ANGLE_MIN } from '../algorithm/individual/joint';
 
 const logger = log4js.getLogger('Engine');
 
@@ -17,7 +18,27 @@ export default class Engine {
    * @static
    * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype.
    */
-  static initialStep(phenotype) {  }
+  static initialStep(phenotype) {
+
+    const jointsMap = phenotype.jointsMap;
+
+    const leftSide = jointsMap.get('left');
+    const rightSide = jointsMap.get('right');
+
+    const setLimits = (side) => {
+
+      const leftBack = side.get('back').hip;
+      const leftMiddle = side.get('middle').hip;
+      const leftFront = side.get('front').hip;
+
+      leftBack.setLimits(ANGLE_MIN, ANGLE_MAX);
+      leftFront.setLimits(ANGLE_MIN, ANGLE_MAX);
+      leftMiddle.setLimits(ANGLE_MIN, ANGLE_MAX);
+    };
+
+    setLimits(leftSide);
+    setLimits(rightSide);
+  }
 
   /**
    * Executes a single step of the engine.
@@ -27,33 +48,59 @@ export default class Engine {
    */
   static step(phenotype) {
 
+    // Linke Seite bewegt immer nach vorne.
+    // Rechte Seite holt immer nach hinten aus.
+
     const jointsMap = phenotype.jointsMap;
 
     const leftSide = jointsMap.get('left');
-    // -const rightSide = jointsMap.get('right');
-    const leftBack = leftSide.get('back').hip;
-    const leftMiddle = leftSide.get('middle').hip;
-    const leftFront = leftSide.get('front').hip;
+    const rightSide = jointsMap.get('right');
 
-    const min = -2 * Math.PI;
-    const max = 2 * Math.PI;
+    this.stepForward(phenotype, leftSide);
+    this.stepHaul(phenotype, rightSide);
 
-    leftBack.setLimits(min, max);
-    leftFront.setLimits(min, max);
-    leftMiddle.setLimits(min, max);
 
-    const speed = -2;
+    const speed = 2;
 
-    leftBack.setMotorSpeed(speed);
-    leftFront.setMotorSpeed(speed);
-    leftMiddle.setMotorSpeed(speed);
+    const setSpeed = (side) => {
 
+      const leftBack = side.get('back').hip;
+      const leftMiddle = side.get('middle').hip;
+      const leftFront = side.get('front').hip;
+
+      leftBack.setMotorSpeed(speed);
+      leftFront.setMotorSpeed(speed);
+      leftMiddle.setMotorSpeed(speed);
+    };
+
+    setSpeed(leftSide);
 
     // Find joints
     // check joint position
     // redirect movement
 
     debug(logger, 'engine step');
+  }
+
+
+  static stepForward(pheotype, joints) {
+
+    const hipBack = joints.get('back').hip;
+    const hipMiddle = joints.get('middle').hip;
+    const hipFront = joints.get('front').hip;
+
+    const moveForwardUntilUpperLimit = hip => {
+
+      if (hip.angle < hip.upperLimit) {
+
+      }
+
+    };
+
+  }
+
+  static stepHaul(pheotype, joints) {
+    //
   }
 
 }

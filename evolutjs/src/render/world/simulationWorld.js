@@ -12,14 +12,11 @@ import config from '../../../config';
 import {debug, info} from '../../util/logUtil';
 import Individual from '../object/individual/individual';
 
-
-
-import Circle from '../object/demoCircle';
-
 const logger = log4js.getLogger('simulationWorld');
 
 const render = config('simulation.render');
 const solo = config('simulation.solo');
+const stepTime = config('simulation.stepTime');
 
 function rockTexturePath() {
   return path.join(__dirname, '../../..', 'assets/textures', 'rock.jpg');
@@ -45,7 +42,7 @@ export default class SimulationWorld extends P2Pixi.Game {
   }
 
   reset() {
-    this.stepTime = 1 / 30;
+    this.stepTime = stepTime;
     this.runOver = false;
     this.currentTime = 0;
   }
@@ -112,8 +109,10 @@ export default class SimulationWorld extends P2Pixi.Game {
         // Positive motorspeed -> leg moves in -x direction
         this.phenoTypes.forEach((individual) => {
 
-          if (this.currentTime > 0) {
+          if (this.currentTime > 2) {
             Engine.step(individual);
+          } else if (this.currentTime > 1) {
+            Engine.initialStep(individual);
           }
 
         });

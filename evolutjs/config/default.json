@@ -13,6 +13,7 @@
   "simulation": {
     "runDuration": 10,
     "render": true,
-    "solo": true
+    "solo": true,
+    "stepTime": 0.016
   }
 }

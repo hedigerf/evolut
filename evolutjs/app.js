@@ -29,6 +29,7 @@ app.on('ready', () => {
   });
 });
 
+// Main menu
 const template = [
   {
     label: 'Evolut',
