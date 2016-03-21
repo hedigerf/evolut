@@ -38,7 +38,7 @@ export default class InitialPopulationGenerator{
         body: { massFactor: 0.6, bodyPoints: currentBodyPoints },
         engine: { type: 'test' },
         legs: [
-          { leg: { massFactor: 666 } }
+          { leg: { massFactor: 666, joint: { orientation: 3333333333 } } }
         ]
       });
 

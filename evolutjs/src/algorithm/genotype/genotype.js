@@ -1,31 +1,37 @@
 'use strict';
 
 import L from 'partial.lenses';
-import { always, curry, either, isArrayLike, map, mapObjIndexed, merge, view } from 'ramda';
+import { always, curry, either, ifElse, mapObjIndexed, merge, view } from 'ramda';
 
-const extractOption = T => either(
-  view(L.prop(T.identifier)),
+const extractOption = key => either(
+  view(L.prop(key)),
   always({})
 );
 
 const buildType = (T, option) => new T(option);
 const seedType = (T, option) => T.seed(option);
 
+// jshint -W003
+const isGenotype = T => Genotype.prototype.isPrototypeOf(T.prototype);
+
 /**
+ * Processes a genotype or maps an array or object.
+ *
  * @param {function(PartialGenotype, Object): Object} operation
  * @param {Object} options
- * @param {PartialGenotype|Array} genotype
+ * @param {PartialGenotype|Array|Object} genotype
  * @param {String} key
  * @return {Object}
  */
 const process = curry((operation, options, genotype, key) => {
 
-  if (isArrayLike(genotype)) {
-    return map(mapObjIndexed(process(operation, options[key])), genotype);
-  }
+  const partialOptions = extractOption(key)(options);
+  const processPartial = ifElse(isGenotype,
+    T => operation(T, partialOptions),
+    mapObjIndexed(process(operation, partialOptions)) // Process nested object
+  );
 
-  const option = extractOption(genotype)(options);
-  return operation(genotype, option);
+  return processPartial(genotype);
 });
 
 /**
