@@ -64,9 +64,9 @@ export default class SimulationWorld extends P2Pixi.Game {
     // Force evaluation of sequence
     // jshint -W098
     this.phenoTypes = this.population.individuals.take(1).map(i => new Individual(this, i));
+    info(logger, 'drawn ' + this.phenoTypes.size + ' phenoTypes');
     const trackedIndividual = this.phenoTypes.get(0);
     this.trackedBody = trackedIndividual.bodies[0];
-
   }
 
   addNewPopulation(population) {

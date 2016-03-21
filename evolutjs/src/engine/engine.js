@@ -21,20 +21,16 @@ export default class Engine {
    */
   static step(phenotype) {
 
-    // Hips
-    const map = phenotype.jointsMap;
-
     // Find joints
     // check joint position
     // redirect movement
 
-    const leftSide = map.get('left');
-    const rightSide = map.get('right');
-
+    const jointsMap = phenotype.jointsMap;
+    const leftSide = jointsMap.get('left');
+    const rightSide = jointsMap.get('right');
     const leftBack = leftSide.get('back').hip;
-    const leftMiddle = leftSide.get('middle');
-
-    const leftFront = leftSide.get('front');
+    const leftMiddle = leftSide.get('middle').hip;
+    const leftFront = leftSide.get('front').hip;
     const min = -Math.PI;
     const max = Math.PI;
     leftBack.setLimits(min, max);
@@ -44,7 +40,7 @@ export default class Engine {
     leftMiddle.setLimits(min, max);
     leftMiddle.setMotorSpeed(-2.0);
 
-    debug(logger, JSON.stringify(map));
+    debug(logger, 'engine step');
   }
 
 }
