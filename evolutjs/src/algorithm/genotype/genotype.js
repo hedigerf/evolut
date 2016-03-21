@@ -12,26 +12,26 @@ const buildType = (T, option) => new T(option);
 const seedType = (T, option) => T.seed(option);
 
 // jshint -W003
-const isGenotype = T => Genotype.prototype.isPrototypeOf(T.prototype);
+const isPartialGenotype = T => PartialGenotype.prototype.isPrototypeOf(T.prototype);
 
 /**
  * Processes a genotype or maps an array or object.
  *
  * @param {function(PartialGenotype, Object): Object} operation
  * @param {Object} options
- * @param {PartialGenotype|Array|Object} genotype
+ * @param {PartialGenotype|Array|Object} type
  * @param {String} key
  * @return {Object}
  */
-const process = curry((operation, options, genotype, key) => {
+const processPartialGenotype = curry((operation, options, type, key) => {
 
   const partialOptions = extractOption(key)(options);
-  const processPartial = ifElse(isGenotype,
+  const applyOperation = ifElse(isPartialGenotype,
     T => operation(T, partialOptions),
-    mapObjIndexed(process(operation, partialOptions)) // Process nested object
+    mapObjIndexed(processPartialGenotype(operation, partialOptions)) // Process nested object
   );
 
-  return processPartial(genotype);
+  return applyOperation(type);
 });
 
 /**
@@ -41,11 +41,10 @@ const process = curry((operation, options, genotype, key) => {
  * @param {function(PartialGenotype, Object): Object} operation
  * @param {Object} options
  * @param {Object} parts
- * @return {Object}
  */
-const processParts = curry((operation, options, parts) => {
-  return mapObjIndexed(process(operation, options), parts);
-});
+const processGenotypeParts = curry(
+  (operation, options, parts) => mapObjIndexed(processPartialGenotype(operation, options), parts)
+);
 
 /**
  * Base class of a genotype.
@@ -81,7 +80,7 @@ export default class Genotype {
    * @return {Object}
    */
   static build(options) {
-    return processParts(buildType, options, this.parts);
+    return processGenotypeParts(buildType, options, this.parts);
   }
 
   /**
@@ -92,7 +91,7 @@ export default class Genotype {
    * @return {Object}
    */
   static seed(options) {
-    return processParts(seedType, options, this.parts);
+    return processGenotypeParts(seedType, options, this.parts);
   }
 
   /**
