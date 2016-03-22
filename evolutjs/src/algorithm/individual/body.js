@@ -4,16 +4,10 @@ import { Range } from 'immutable';
 import L  from 'partial.lenses';
 import { compose, set, view } from 'ramda';
 import Random  from 'random-js';
+
 import { PartialGenotype } from '../genotype/genotype';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
-
-/**
- * Default mass of an individual's body.
- *
- * @type {Number}
- */
-const DEFAULT_BODY_MASS = 1;
 
 const lensMassFactor = L.prop('massFactor');
 const lensBodyPoints = L.prop('bodyPoints');
@@ -34,7 +28,8 @@ export default class Body extends PartialGenotype {
 
     super(options);
 
-    this.mass = DEFAULT_BODY_MASS * view(lensMassFactor, options);
+    this.mass = 0;
+    this.massFactor = view(lensMassFactor, options);
     this.bodyPoints = view(lensBodyPoints, options);
   }
 

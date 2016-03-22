@@ -45,7 +45,9 @@ export default class Joint extends PartialGenotype {
    * @param {ORIENTATION} options.orientation
    */
   constructor(options) {
+
     super(options);
+
     this.angleMin = ANGLE_MIN;
     this.angleMax = ANGLE_MAX;
     this.orientation = view(lensOrientation, options);
@@ -92,7 +94,9 @@ export class HipJoint extends Joint {
    * @param {Point} options.position
    */
   constructor(options) {
+
     super(options);
+
     this.position = view(lensPosition, options);
   }
 

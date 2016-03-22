@@ -19,7 +19,9 @@ export default class Engine extends PartialGenotype {
    * @param {String} options.type
    */
   constructor(options) {
+
     super(options);
+
     this.type = view(lensType, options);
   }
 

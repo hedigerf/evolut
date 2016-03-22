@@ -1,9 +1,11 @@
 'use strict';
 
 import { repeat } from 'ramda';
-import Genotype  from '../genotype/genotype';
+
 import Body  from './body';
+import distribute from '../genotype/massDistribution';
 import Engine  from './engine';
+import Genotype  from '../genotype/genotype';
 import { HipJoint } from './joint';
 import Leg  from './leg';
 
@@ -29,6 +31,13 @@ export const IDENTIFIER_LEGS = 'legs';
  * Including the joints which connect the legs to the body.
  */
 export default class Individual extends Genotype {
+
+  constructor(genotype) {
+
+    super(genotype);
+
+    this.instanceParts = distribute(this.instanceParts);
+  }
 
   /**
    * Returns the parts of the genotype.
