@@ -1,6 +1,8 @@
 'use strict';
 
-import { always, assoc, curry, either, mapObjIndexed, multiply, prop } from 'ramda';
+import { assoc, curry, head, last, mapObjIndexed, merge, multiply, prop } from 'ramda';
+
+import { partition, reduce } from '../../util/object';
 
 /**
  * Default mass of an individual's body.
@@ -10,7 +12,7 @@ import { always, assoc, curry, either, mapObjIndexed, multiply, prop } from 'ram
 const DEFAULT_BODY_MASS = 1;
 
 
-const getFactor = either(prop('massFactor'), always(0));
+const getFactor = prop('massFactor');
 const getMass = curry(
   (mass, part) => multiply(mass, getFactor(part))
 );
@@ -28,8 +30,17 @@ const setMass = curry(
  * @throws {Error}
  */
 export default function distribute(parts, mass = DEFAULT_BODY_MASS) {
-
-  const masses = mapObjIndexed(setMass(mass), parts);
-
   return parts;
+
+  // Const masses = mapObjIndexed(setMass(mass), parts);
+
+  const partitioned = partition(getFactor, parts);
+  const partsWithMass = mapObjIndexed(setMass(mass), head(partitioned));
+  const remainingMass = mass - reduce((acc, part) => acc + prop('mass', part), 0, partsWithMass);
+
+  if (remainingMass <= 0) {
+    throw new Error('no mass');
+  }
+
+  const o = distribute(last(partitioned), remainingMass);
 }

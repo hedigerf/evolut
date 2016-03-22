@@ -14,6 +14,8 @@
   "requireSpaceAfterBinaryOperators": true,
   "requireSpaceAfterComma": true,
   "requireSpaceBetweenArguments": true,
+  "requireSpaceBeforeBlockStatements": true,
+  "requireSpaceBeforeObjectValues": true,
   "requireSpacesInsideObjectBrackets": "all",
   "requireSpacesInFunction": {
     "beforeOpeningCurlyBrace": true
