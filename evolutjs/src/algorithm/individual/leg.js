@@ -1,4 +1,9 @@
-'use strict';
+/**
+ * Partial genotype leg module.
+ *
+ * @module algorithm/genotype/individual/leg
+ * @see module:algorithm/genotype/genotype
+ */
 
 import L  from 'partial.lenses';
 import { compose, isNil, over, unless, view } from 'ramda';
@@ -29,6 +34,8 @@ const DEFAULT_LEG_HEIGHT = 1;
  * by another joint.
  * The leg maintains knowledge about the thigh, shank, knee joint
  * and the foot.
+ *
+ * @extends {PartialGenotype}
  */
 export default class Leg extends PartialGenotype {
 
@@ -53,8 +60,6 @@ export default class Leg extends PartialGenotype {
   /**
    * Returns the parts of the genotype.
    *
-   * @override
-   * @static
    * @return {Object}
    */
   static get parts() {
@@ -65,8 +70,6 @@ export default class Leg extends PartialGenotype {
   }
 
   /**
-   * @override
-   * @static
    * @return {String}
    */
   static get identifier() {
@@ -76,8 +79,6 @@ export default class Leg extends PartialGenotype {
   /**
    * Returns a randomly seeded version of a leg.
    *
-   * @override
-   * @static
    * @param {Object} options
    * @param {Number} options.massFactor
    * @param {Number} options.height
@@ -86,7 +87,7 @@ export default class Leg extends PartialGenotype {
    */
   static seed(options) {
 
-    const orRandom = unless(isNil, _ => random.real(0.1, 0.9));
+    const orRandom = unless(isNil, () => random.real(0.1, 0.9));
 
     const setter = compose(
       over(lensMassfactor, orRandom),

@@ -1,10 +1,28 @@
-'use strict';
+/**
+ * Defines the main application menu.
+ *
+ * @module app
+ */
 
 import { app, BrowserWindow } from 'electron';
-import config from './config';
-import Menu from 'menu';
 
-// Main application window
+import config from './config';
+import './src/app/menu';
+
+/**
+ * Start page.
+ *
+ * @private
+ * @type {String}
+ */
+const index = 'file://' + __dirname + '/index.html';
+
+/**
+ * Main application handle.
+ *
+ * @private
+ * @type {BrowserWindow}
+ */
 let mainWindow = null;
 
 app.on('window-all-closed', () =>  {
@@ -20,7 +38,7 @@ app.on('ready', () => {
     height: config('window.height')
   });
 
-  mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.loadUrl(index);
   mainWindow.openDevTools();
 
   mainWindow.on('closed', () => {
@@ -28,34 +46,3 @@ app.on('ready', () => {
     app.exit(0);
   });
 });
-
-// Main menu
-const template = [
-  {
-    label: 'Evolut',
-    submenu: [
-      {
-        label: 'Quit',
-        accelerator: 'Command+Q',
-        click: () => app.quit()
-      },
-    ]
-  },
-  {
-    label: 'View',
-    submenu: [
-      {
-        label: 'Reload',
-        accelerator: 'Command+R',
-        click: () => BrowserWindow.getFocusedWindow().reloadIgnoringCache()
-      },
-      {
-        label: 'Toggle DevTools',
-        accelerator: 'Command+I',
-        click: () => BrowserWindow.getFocusedWindow().toggleDevTools()
-      }
-    ]
-  }
-];
-
-Menu.setApplicationMenu(Menu.buildFromTemplate(template));

@@ -1,6 +1,10 @@
-'use strict';
+/**
+ * Mass distribution module.
+ *
+ * @module algorithm/genotype/mass
+ */
 
-import { assoc, curry, head, last, mapObjIndexed, merge, multiply, prop } from 'ramda';
+import { assoc, curry, head, last, mapObjIndexed, multiply, prop } from 'ramda';
 
 import { partition, reduce } from '../../util/object';
 
@@ -16,7 +20,6 @@ const getFactor = prop('massFactor');
 const getMass = curry(
   (mass, part) => multiply(mass, getFactor(part))
 );
-
 const setMass = curry(
   (mass, part) => assoc('mass', getMass(mass, part), part)
 );
@@ -27,10 +30,10 @@ const setMass = curry(
  *
  * @param {Object} parts Parts object of a genotype.
  * @param {Number} [mass=DEFAULT_BODY_MASS]
+ * @return {Object}
  * @throws {Error}
  */
 export default function distribute(parts, mass = DEFAULT_BODY_MASS) {
-  return parts;
 
   // Const masses = mapObjIndexed(setMass(mass), parts);
 
@@ -38,9 +41,8 @@ export default function distribute(parts, mass = DEFAULT_BODY_MASS) {
   const partsWithMass = mapObjIndexed(setMass(mass), head(partitioned));
   const remainingMass = mass - reduce((acc, part) => acc + prop('mass', part), 0, partsWithMass);
 
-  if (remainingMass <= 0) {
-    throw new Error('no mass');
-  }
-
   const o = distribute(last(partitioned), remainingMass);
+  console.log(JSON.stringify(o));
+
+  return parts;
 }

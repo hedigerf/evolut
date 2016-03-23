@@ -1,4 +1,8 @@
-'use strict';
+/**
+ * Genotyp module.
+ *
+ * @module algorithm/genotype/genotype
+ */
 
 import L from 'partial.lenses';
 import { always, curry, either, ifElse, mapObjIndexed, merge, view } from 'ramda';
@@ -11,7 +15,12 @@ const extractOption = key => either(
 const buildType = (T, option) => new T(option);
 const seedType = (T, option) => T.seed(option);
 
-// jshint -W003
+/**
+ * Check if a part of the part object is a constructor derived from PartialGenotype.
+ *
+ * @param {*} T
+ * @return {Boolean}
+ */
 const isPartialGenotype = T => PartialGenotype.prototype.isPrototypeOf(T.prototype);
 
 /**
@@ -63,7 +72,6 @@ export default class Genotype {
   /**
    * Returns a (nested) object containing the build order of a genotype.
    *
-   * @static
    * @return {Object}
    */
   static get parts() {
@@ -75,7 +83,6 @@ export default class Genotype {
    * A genotype may define it's build order as a (nested) object of partial genotypes.
    * These may then contain a build order itself.
    *
-   * @static
    * @param {Object} options
    * @return {Object}
    */
@@ -86,7 +93,6 @@ export default class Genotype {
   /**
    * Returns a randomly seeded version of a genotype.
    *
-   * @static
    * @param {Object} options
    * @return {Object}
    */
@@ -109,13 +115,15 @@ export default class Genotype {
  * Represents a part of a genotype.
  * A part needs an identifiert to extract the specific part
  * from the whole genotype.
+ *
+ * @class
+ * @extends {Genotype}
  */
 export class PartialGenotype extends Genotype {
 
   /**
    * Returns the identifier for a partial genotype.
    *
-   * @static
    * @return {String}
    */
   static get identifier() {
@@ -123,8 +131,6 @@ export class PartialGenotype extends Genotype {
   }
 
   /**
-   * @override
-   * @static
    * @param {Object} options
    * @return {Object}
    */

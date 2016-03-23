@@ -1,4 +1,9 @@
-'use strict';
+/**
+ * Partial genotype joint module.
+ *
+ * @module algorithm/genotype/individual/joint
+ * @see module:algorithm/genotype/genotype
+ */
 
 import L  from 'partial.lenses';
 import { set, view } from 'ramda';
@@ -35,6 +40,8 @@ const lensPosition = L.prop('position');
 /**
  * Represents a joint of a leg of an indiviual.
  * A joint connects two parts of a body of an individual.
+ *
+ * @extends {PartialGenotype}
  */
 export default class Joint extends PartialGenotype {
 
@@ -56,8 +63,6 @@ export default class Joint extends PartialGenotype {
   /**
    * Returns the identifier for a joint.
    *
-   * @override
-   * @static
    * @return {String}
    */
   static get identifier() {
@@ -67,8 +72,6 @@ export default class Joint extends PartialGenotype {
   /**
    * Returns a randomly seeded joint.
    *
-   * @override
-   * @static
    * @param {Object} options
    * @param {ORIENTATION} options.orientation
    * @return {Object}
@@ -83,6 +86,8 @@ export default class Joint extends PartialGenotype {
 /**
  * Represents a hip joint of an individual.
  * A hip joint connects the body to a leg.
+ *
+ * @extends {Joint}
  */
 export class HipJoint extends Joint {
 
@@ -103,8 +108,6 @@ export class HipJoint extends Joint {
   /**
    * Returns a randomly seeded joint.
    *
-   * @override
-   * @static
    * @param {Object} options
    * @param {ORIENTATION} options.orientation
    * @param {Point} options.position
@@ -120,5 +123,7 @@ export class HipJoint extends Joint {
 /**
  * Represents a knee joint of an individual.
  * A knee joint connects the thigh and the shank of a leg.
+ *
+ * @extends {Joint}
  */
 export class KneeJoint extends Joint {}

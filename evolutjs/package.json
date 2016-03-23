@@ -6,11 +6,11 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "npm run style && npm run lint && npm run assert",
-    "style": "jscs src test",
-    "lint": "jshint src test",
-    "assert": "mocha --compilers js:babel-register test/**/*.js",
-    "doc": "jsdoc -d doc -r src"
+    "test": "npm run lint && npm run assert",
+    "lint": "eslint src/**/*.js test/**/*.js",
+    "assert": "mocha test/**/*.js",
+    "doc": "jsdoc -d doc -r src",
+    "esdoc": "esdoc -c .esdocrc"
   },
   "repository": {
     "type": "git",
@@ -53,6 +53,8 @@
     "chai-fuzzy": "latest",
     "chai-immutable": "latest",
     "electron-prebuilt": "latest",
+    "esdoc": "latest",
+    "eslint": "latest",
     "jscs": "latest",
     "jsdoc": "latest",
     "jshint": "latest",
