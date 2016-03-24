@@ -35,10 +35,28 @@ export default class InitialPopulationGenerator{
       const currentBodyPoints = this.bodyPointsRange.get(currentBodyPointsIndex);
 
       const seed = Individual.seed({
-        body: { massFactor: 0.6, bodyPoints: currentBodyPoints },
+        body: { massFactor: 1, bodyPoints: currentBodyPoints },
         engine: { type: 'test' },
-        legs: [
-          { leg: { massFactor: 666, joint: { orientation: 3333333333 } } }
+        legs:
+        [
+          {
+            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }
+          },
+          {
+            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }
+          },
+          {
+            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }
+          },
+          {
+            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }
+          },
+          {
+            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }
+          },
+          {
+            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }
+          }
         ]
       });
 
