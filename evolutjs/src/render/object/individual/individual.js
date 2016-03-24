@@ -1,4 +1,9 @@
-'use strict';
+/**
+ * Indivudual phenotyp module.
+ *
+ * @module render/object/individual/individual
+ * @see mdoule:render/object/individual/phenotype
+ */
 
 import p2 from 'p2';
 import Random from 'random-js';
