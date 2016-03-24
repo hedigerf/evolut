@@ -1,9 +1,14 @@
-'use strict';
+/**
+ * Genotype individual module.
+ *
+ * @module algorithm/genotype/individual/individual
+ * @see module:algorithm/genotype/genotype
+ */
 
 import { repeat } from 'ramda';
 
 import Body  from './body';
-import distribute from '../genotype/massDistribution';
+import distribute from '../genotype/mass';
 import Engine  from './engine';
 import Genotype  from '../genotype/genotype';
 import { HipJoint } from './joint';
@@ -29,21 +34,18 @@ export const IDENTIFIER_LEGS = 'legs';
  * An individual consists of multiple leg pairs.
  * The Individual class maintains knowledge of it's body and all legs.
  * Including the joints which connect the legs to the body.
+ *
+ * @extends {Genotype}
  */
 export default class Individual extends Genotype {
 
   constructor(genotype) {
-
-    super(genotype);
-
-    this.instanceParts = distribute(this.instanceParts);
+    super(distribute(genotype));
   }
 
   /**
    * Returns the parts of the genotype.
    *
-   * @override
-   * @static
    * @return {Object}
    */
   static get parts() {

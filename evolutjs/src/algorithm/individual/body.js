@@ -1,4 +1,9 @@
-'use strict';
+/**
+ * Partial genotype body module.
+ *
+ * @module algorithm/genotype/individual/body
+ * @see module:algorithm/genotype/genotype
+ */
 
 import { Range } from 'immutable';
 import L  from 'partial.lenses';
@@ -9,11 +14,14 @@ import { PartialGenotype } from '../genotype/genotype';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
+const lensMass = L.prop('mass');
 const lensMassFactor = L.prop('massFactor');
 const lensBodyPoints = L.prop('bodyPoints');
 
 /**
  * Represents the body of an individual's genotype.
+ *
+ * @extends {PartialGenotype}
  */
 export default class Body extends PartialGenotype {
 
@@ -28,7 +36,7 @@ export default class Body extends PartialGenotype {
 
     super(options);
 
-    this.mass = 0;
+    this.mass = view(lensMass, options);
     this.massFactor = view(lensMassFactor, options);
     this.bodyPoints = view(lensBodyPoints, options);
   }
@@ -36,8 +44,6 @@ export default class Body extends PartialGenotype {
   /**
    * Returns the identifier of a body.
    *
-   * @override
-   * @static
    * @return {String}
    */
   static get identifier() {
@@ -47,8 +53,6 @@ export default class Body extends PartialGenotype {
   /**
    * Returns a randomly seeded version of a genotype.
    *
-   * @override
-   * @static
    * @param {Object} options
    * @param {Number} options.mass
    * @param {Number} options.bodyPoints

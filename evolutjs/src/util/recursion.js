@@ -1,6 +1,16 @@
-'use strict';
+/**
+ * Recursion combinator for arrow functions.
+ * Also known as Y-combinator.
+ *
+ * @module util/recursion
+ */
 
-// Recursion combinator
+/**
+ * Y-combinator.
+ *
+ * @param {function(f, ...*): *} f
+ * @return {function(...*)}
+ */
 const Y = f => (...args) => f((...args) => Y(f)(...args), ...args);
 
 export default Y;

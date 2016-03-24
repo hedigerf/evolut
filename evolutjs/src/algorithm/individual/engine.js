@@ -1,4 +1,9 @@
-'use strict';
+/**
+ * Partial genotype engine module.
+ *
+ * @module algorithm/genotype/individual/engine
+ * @see module:algorithm/genotype/genotype
+ */
 
 import L  from 'partial.lenses';
 import { set, view } from 'ramda';
@@ -9,6 +14,8 @@ const lensType = L.prop('type');
 /**
  * Represents the engine part of an individual.
  * The engine is responsible for the movement of the legs.
+ *
+ * @extends {PartialGenotype}
  */
 export default class Engine extends PartialGenotype {
 
@@ -28,8 +35,6 @@ export default class Engine extends PartialGenotype {
   /**
    * Returns the identifier for a partial genotype.
    *
-   * @override
-   * @static
    * @return {String}
    */
   static get identifier() {
@@ -39,8 +44,6 @@ export default class Engine extends PartialGenotype {
   /**
    * Returns a randomly seeded version of a genotype.
    *
-   * @override
-   * @static
    * @param {Object} options
    * @param {String} options.type
    * @return {Object}

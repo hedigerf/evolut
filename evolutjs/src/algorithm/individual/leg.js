@@ -1,7 +1,12 @@
-'use strict';
+/**
+ * Partial genotype leg module.
+ *
+ * @module algorithm/genotype/individual/leg
+ * @see module:algorithm/genotype/genotype
+ */
 
 import L  from 'partial.lenses';
-import { compose, isNil, over, unless, view } from 'ramda';
+import { compose, isNil, over, view, when } from 'ramda';
 import Random  from 'random-js';
 
 import { PartialGenotype } from '../genotype/genotype';
@@ -10,6 +15,7 @@ import { KneeJoint } from './joint';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
+const lensMass = L.prop('mass');
 const lensMassfactor = L.prop('massFactor');
 const lensHeight = L.prop('height');
 const lensHeightFactor = L.prop('heightFactor');
@@ -29,6 +35,8 @@ const DEFAULT_LEG_HEIGHT = 1;
  * by another joint.
  * The leg maintains knowledge about the thigh, shank, knee joint
  * and the foot.
+ *
+ * @extends {PartialGenotype}
  */
 export default class Leg extends PartialGenotype {
 
@@ -44,7 +52,7 @@ export default class Leg extends PartialGenotype {
 
     super(options);
 
-    this.mass = 0;
+    this.mass = view(lensMass, options);
     this.massFactor = view(lensMassfactor, options);
     this.height = view(lensHeight, options) || DEFAULT_LEG_HEIGHT;
     this.heightFactor = view(lensHeightFactor, options);
@@ -53,8 +61,6 @@ export default class Leg extends PartialGenotype {
   /**
    * Returns the parts of the genotype.
    *
-   * @override
-   * @static
    * @return {Object}
    */
   static get parts() {
@@ -65,8 +71,6 @@ export default class Leg extends PartialGenotype {
   }
 
   /**
-   * @override
-   * @static
    * @return {String}
    */
   static get identifier() {
@@ -76,8 +80,6 @@ export default class Leg extends PartialGenotype {
   /**
    * Returns a randomly seeded version of a leg.
    *
-   * @override
-   * @static
    * @param {Object} options
    * @param {Number} options.massFactor
    * @param {Number} options.height
@@ -86,7 +88,7 @@ export default class Leg extends PartialGenotype {
    */
   static seed(options) {
 
-    const orRandom = unless(isNil, _ => random.real(0.1, 0.9));
+    const orRandom = when(isNil, () => random.real(0.1, 0.9));
 
     const setter = compose(
       over(lensMassfactor, orRandom),

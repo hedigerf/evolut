@@ -1,4 +1,8 @@
-'use strict';
+/**
+ * Movement engine module.
+ *
+ * @module engine/engine
+ */
 
 import log4js from 'log4js';
 import {  } from 'ramda';
