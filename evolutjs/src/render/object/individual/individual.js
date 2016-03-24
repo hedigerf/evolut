@@ -101,7 +101,6 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
       const lowerLegMass = leg.heightFactor * leg.mass;
 
       const legWidth =  0.1;
-      const legHeight = 0.4;
 
       const upperLegShape = new p2.Box({ width: legWidth, height: upperLegHeight });
       const upperLegBody = new p2.Body({
