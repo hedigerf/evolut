@@ -6,7 +6,7 @@
 
 import { compose, curry, equals, keys, not } from 'ramda';
 
-import { } from '../../util/object';
+import { reduce } from '../../util/object';
 
 /**
  * Default mass of an individual's body.
@@ -36,26 +36,30 @@ const calcMass = curry(
 const isNotMass = compose(not, equals('mass'));
 
 /**
+ * Accumulates all encountered mass factors.
+ *
+ * @param {Number} sum The mass factor accumulator.
+ * @param {*} value The value of a property.
+ * @param {String} key The key of a property.
+ * @return {Number} The sum of the mass factors.
+ */
+function accumulateMassFactor(sum, value, key) {
+  if (key === 'massFactor') {
+    return sum + value;
+  } else if (typeof value === 'object' && value !== null) {
+    return reduce(accumulateMassFactor, sum, value);
+  }
+  return sum;
+}
+
+/**
  * Sums up all mass factors of a nested part object.
  *
- * @param  {Object} obj The part object.
+ * @param {Object} obj The part object.
  * @return {Number} The sum of all mass factors.
  */
 function sumMassFactor(obj) {
-
-  let factor = 0;
-  const propNames = keys(obj).filter(isNotMass);
-
-  propNames.forEach(name => {
-    const prop = obj[name];
-    if (name === 'massFactor') {
-      factor += prop;
-    } else if (typeof prop === 'object' && prop !== null) {
-      factor += sumMassFactor(prop);
-    }
-  });
-
-  return factor;
+  return reduce(accumulateMassFactor, 0, obj);
 }
 
 /**
@@ -66,9 +70,7 @@ function sumMassFactor(obj) {
  */
 function setMassFactor(obj, calcMass) {
 
-  const propNames = keys(obj).filter(isNotMass);
-
-  propNames.forEach(name => {
+  keys(obj).filter(isNotMass).forEach(name => {
     const prop = obj[name];
     if (name === 'massFactor') {
       obj.mass = calcMass(prop || 0);
