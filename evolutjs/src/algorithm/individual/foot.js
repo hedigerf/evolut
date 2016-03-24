@@ -14,7 +14,7 @@ import { PartialGenotype } from '../genotype/genotype';
  *
  * @extends {PartialGenotype}
  */
-export class Foot extends PartialGenotype {
+export default class Foot extends PartialGenotype {
 
   /**
    * Returns the identifier for a partial genotype.

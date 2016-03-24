@@ -116,7 +116,6 @@ export default class Genotype {
  * A part needs an identifiert to extract the specific part
  * from the whole genotype.
  *
- * @class
  * @extends {Genotype}
  */
 export class PartialGenotype extends Genotype {

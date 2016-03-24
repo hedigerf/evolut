@@ -6,7 +6,7 @@
  */
 
 import L  from 'partial.lenses';
-import { compose, isNil, over, unless, view } from 'ramda';
+import { compose, isNil, over, view, when } from 'ramda';
 import Random  from 'random-js';
 
 import { PartialGenotype } from '../genotype/genotype';
@@ -87,7 +87,7 @@ export default class Leg extends PartialGenotype {
    */
   static seed(options) {
 
-    const orRandom = unless(isNil, () => random.real(0.1, 0.9));
+    const orRandom = when(isNil, () => random.real(0.1, 0.9));
 
     const setter = compose(
       over(lensMassfactor, orRandom),

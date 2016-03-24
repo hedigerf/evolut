@@ -38,7 +38,7 @@ app.on('ready', () => {
     height: config('window.height')
   });
 
-  mainWindow.loadUrl(index);
+  mainWindow.loadURL(index);
   mainWindow.openDevTools();
 
   mainWindow.on('closed', () => {

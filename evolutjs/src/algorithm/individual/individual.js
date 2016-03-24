@@ -40,10 +40,7 @@ export const IDENTIFIER_LEGS = 'legs';
 export default class Individual extends Genotype {
 
   constructor(genotype) {
-
-    super(genotype);
-
-    this.instanceParts = distribute(this.instanceParts);
+    super(distribute(genotype));
   }
 
   /**

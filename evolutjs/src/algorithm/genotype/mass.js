@@ -4,9 +4,9 @@
  * @module algorithm/genotype/mass
  */
 
-import { assoc, curry, head, last, mapObjIndexed, multiply, prop } from 'ramda';
+import { compose, curry, equals, keys, not } from 'ramda';
 
-import { partition, reduce } from '../../util/object';
+import { } from '../../util/object';
 
 /**
  * Default mass of an individual's body.
@@ -15,14 +15,68 @@ import { partition, reduce } from '../../util/object';
  */
 const DEFAULT_BODY_MASS = 1;
 
+/**
+ * Calculates the mass for a single part object.
+ *
+ * @param {Number} mass The total mass to be distributed.
+ * @param {Number} sumFactors The sum of all factors.
+ * @param {Number} factor  The current factor.
+ * @return {Number} The mass for this part object.
+ */
+const calcMass = curry(
+  (mass, sumFactors, factor) => mass * factor / sumFactors
+);
 
-const getFactor = prop('massFactor');
-const getMass = curry(
-  (mass, part) => multiply(mass, getFactor(part))
-);
-const setMass = curry(
-  (mass, part) => assoc('mass', getMass(mass, part), part)
-);
+/**
+ * Tests a property name if it's not equal 'mass'.
+ *
+ * @param {String} propertyName The name of a property.
+ * @return {Boolean}
+ */
+const isNotMass = compose(not, equals('mass'));
+
+/**
+ * Sums up all mass factors of a nested part object.
+ *
+ * @param  {Object} obj The part object.
+ * @return {Number} The sum of all mass factors.
+ */
+function sumMassFactor(obj) {
+
+  let factor = 0;
+  const propNames = keys(obj).filter(isNotMass);
+
+  propNames.forEach(name => {
+    const prop = obj[name];
+    if (name === 'massFactor') {
+      factor += prop;
+    } else if (typeof prop === 'object' && prop !== null) {
+      factor += sumMassFactor(prop);
+    }
+  });
+
+  return factor;
+}
+
+/**
+ * Sets for a nested part object all mass properties.
+ *
+ * @param {Object} obj The part object.
+ * @param {function(Number): Number} calcMass Calculates the mass.
+ */
+function setMassFactor(obj, calcMass) {
+
+  const propNames = keys(obj).filter(isNotMass);
+
+  propNames.forEach(name => {
+    const prop = obj[name];
+    if (name === 'massFactor') {
+      obj.mass = calcMass(prop || 0);
+    } else if (typeof prop === 'object' && prop !== null) {
+      setMassFactor(prop, calcMass);
+    }
+  });
+}
 
 /**
  * Distribute a mass by the nested part object.
@@ -31,18 +85,13 @@ const setMass = curry(
  * @param {Object} parts Parts object of a genotype.
  * @param {Number} [mass=DEFAULT_BODY_MASS]
  * @return {Object}
- * @throws {Error}
  */
 export default function distribute(parts, mass = DEFAULT_BODY_MASS) {
 
-  // Const masses = mapObjIndexed(setMass(mass), parts);
+  const sumFactors = sumMassFactor(parts);
+  const calc = calcMass(mass, sumFactors);
 
-  const partitioned = partition(getFactor, parts);
-  const partsWithMass = mapObjIndexed(setMass(mass), head(partitioned));
-  const remainingMass = mass - reduce((acc, part) => acc + prop('mass', part), 0, partsWithMass);
-
-  const o = distribute(last(partitioned), remainingMass);
-  console.log(JSON.stringify(o));
+  setMassFactor(parts, calc);
 
   return parts;
 }
