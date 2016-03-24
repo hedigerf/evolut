@@ -4,7 +4,7 @@
  * @module algorithm/genotype/mass
  */
 
-import { compose, curry, equals, keys, not } from 'ramda';
+import { compose, curry, equals, keys, mapObjIndexed, not } from 'ramda';
 
 import { reduce } from '../../util/object';
 

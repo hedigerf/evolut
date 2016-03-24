@@ -15,6 +15,7 @@ import { KneeJoint } from './joint';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
+const lensMass = L.prop('mass');
 const lensMassfactor = L.prop('massFactor');
 const lensHeight = L.prop('height');
 const lensHeightFactor = L.prop('heightFactor');
@@ -51,7 +52,7 @@ export default class Leg extends PartialGenotype {
 
     super(options);
 
-    this.mass = 0;
+    this.mass = view(lensMass, options);
     this.massFactor = view(lensMassfactor, options);
     this.height = view(lensHeight, options) || DEFAULT_LEG_HEIGHT;
     this.heightFactor = view(lensHeightFactor, options);

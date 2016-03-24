@@ -14,6 +14,7 @@ import { PartialGenotype } from '../genotype/genotype';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
+const lensMass = L.prop('mass');
 const lensMassFactor = L.prop('massFactor');
 const lensBodyPoints = L.prop('bodyPoints');
 
@@ -35,7 +36,7 @@ export default class Body extends PartialGenotype {
 
     super(options);
 
-    this.mass = 0;
+    this.mass = view(lensMass, options);
     this.massFactor = view(lensMassFactor, options);
     this.bodyPoints = view(lensBodyPoints, options);
   }
