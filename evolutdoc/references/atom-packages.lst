@@ -1,4 +1,5 @@
 docblockr
+editorconfig
 file-icons
 git-plus
 language-latex
@@ -7,8 +8,7 @@ latex
 latexer
 linter
 linter-chktex
-linter-jscs
-linter-jshint
+linter-eslint
 linter-markdown
 minimap-linter
 mocha-test-runner
