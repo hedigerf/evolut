@@ -4,6 +4,9 @@
     "mocha": true
   },
   "globals": {
+    "cancelAnimationFrame": true,
+    "document": true,
+    "requestAnimationFrame": true
   },
   "parserOptions": {
     "ecmaVersion": 6,
@@ -84,7 +87,12 @@
     "no-eq-null": 0,
     "no-extra-semi": 2,
     "no-eval": 2,
-    "no-magic-numbers": 2,
+    "no-magic-numbers": [
+      2,
+      {
+        "ignoreArrayIndexes": true
+      }
+    ],
     "no-mixed-spaces-and-tabs": 2,
     "no-multi-str": 2,
     "no-multiple-empty-lines": [

@@ -1,4 +1,8 @@
-'use strict';
+/**
+ * Application controller module.
+ *
+ * @module applicationController
+ */
 
 import jQuery from 'jquery';
 import log4js from 'log4js';

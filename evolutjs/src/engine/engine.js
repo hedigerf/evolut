@@ -17,6 +17,7 @@ import CyclicalStateMachine, { CyclicalState } from './cyclicalStateMachine';
  * An engine's operations should be chainable.
  * Therefore each operation must return the input it received.
  *
+ * @abstract
  * @extends {CyclicalStateMachine}
  */
 export default class Engine extends CyclicalStateMachine {

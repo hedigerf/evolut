@@ -19,6 +19,8 @@ const PHASE_STEP = 1;
 
 /**
  * Represents a state of a state machine.
+ *
+ * @abstract
  */
 export class CyclicalState {
 
@@ -46,6 +48,8 @@ export class CyclicalState {
 /**
  * Represents a simple state machine.
  * It will cycle through the available states.
+ *
+ * @abstract
  */
 export default class CyclicalStateMachine {
 

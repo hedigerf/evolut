@@ -8,7 +8,7 @@
 import L  from 'partial.lenses';
 import { always, set, view } from 'ramda';
 
-import AntEngine from '../../engine/ant/engine';
+import AntEngine from '../../engine/ant/antEngine';
 import { PartialGenotype } from '../genotype/genotype';
 
 /**

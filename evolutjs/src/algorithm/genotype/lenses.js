@@ -146,7 +146,7 @@ export const lensLastLeg = L.compose(lensLastLegPair, lensLeg);
  * @param {Number} index
  * @return {function(Object): Object}
  */
-export const lensLastHipJoint = L.compose(lensLastLegPair, lensLastHipJoint);
+export const lensLastHipJoint = L.compose(lensLastLegPair, lensJoint);
 
 /**
  * Lens for last knee joint (first leg's joint) information.

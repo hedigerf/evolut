@@ -7,14 +7,9 @@
 
 import p2 from 'p2';
 import Random from 'random-js';
-import {List, Map} from 'immutable';
-import log4js from 'log4js';
-import {curry} from 'ramda';
-
+import { List, Map } from 'immutable';
 
 import Phenotype from './phenotype';
-import HipConstraint from './constraints/hipConstraint';
-import {debug, info} from '../../../util/logUtil';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
@@ -26,37 +21,31 @@ const random = new Random(Random.engines.mt19937().autoSeed());
 function randomColor() {
   return parseInt((random.hex(6)), 16);
 }
-const logger = log4js.getLogger('Individual');
-
 
 /**
  * Represents the phenotype of an individual.
  * The phenotype is the graphical representation of  it's corresponding genotype.
+ *
+ * @extends {Phenotype}
  */
 export default class Individual extends Phenotype {
 
-constructor(world, genotype) {
-  super(world, genotype);
+  createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
+    const revoluteHip = new p2.RevoluteConstraint(bodyToConnect, jointBody, {
+      localPivotA: pivotA,
+      localPivotB: pivotB,
+      collideConnected: false
+    });
 
-}
+    revoluteHip.enableMotor();
+    revoluteHip.setMotorSpeed(speed);
 
-
-createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
-  const revoluteHip = new p2.RevoluteConstraint(bodyToConnect, jointBody, {
-    localPivotA: pivotA,
-    localPivotB: pivotB,
-    collideConnected: false
-  });
-
-  revoluteHip.enableMotor();
-  revoluteHip.setMotorSpeed(speed);
-
-  const maxAngle = 0; // Math.PI / 6;
-  const minAngle = 0; // -Math.PI / 6;
-  revoluteHip.setLimits(minAngle, maxAngle);
-  this.addConstraint(revoluteHip);
-  return revoluteHip;
-}
+    const maxAngle = 0; // Math.PI / 6;
+    const minAngle = 0; // -Math.PI / 6;
+    revoluteHip.setLimits(minAngle, maxAngle);
+    this.addConstraint(revoluteHip);
+    return revoluteHip;
+  }
 
 
   /**
@@ -127,7 +116,7 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
 
       return { hip: revoluteHip, knee: revoltuteKnee };
     };
-    // Const speed = 5;
+
     const speed = 0;
     const toLeg = ({ pos, id, aXval, speed }) => {
       return (
@@ -154,50 +143,17 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
     jointsMap = jointsMap.set('right', new Map(rightSide));
     this.jointsMap = jointsMap;
 
-    /*Const hipPivotAxValues = List.of (
-        { id: 'backLeftLeg', aXval: 0.05, speed: speed }, { id: 'backRightLeg', aXval: 0.05, speed: -speed },
-        { id: 'middleLeftLeg', aXval: 0.5, speed: speed }, { id: 'middleRightLeg', aXval: 0.5, speed: -speed },
-        { id: 'frontLeftLeg' , aXval: 0.95, speed: speed }, { id: 'frontRightLeg', aXval: 0.95, speed: -speed });
-    const revoluteHips = hipPivotAxValues.map(({ id, aXval, speed }) => {
-      return createLeg({
-        hipPivotA: [aXval, -0.1],
-        hipPivotB: [0, 0],
-        speed: speed
-      });
-    });*/
-    //This.revoluteHips = revoluteHips;
-
-
-    /*
-        Const jointBody2 = new p2.Body({
-          mass: 1, position: [body.position[0] + 0.5, 0.7]
-        });
-        this.addBody(jointBody2);
-        this.addShape(jointBody2, new p2.Circle({ radius: 0.1 }), [0, 0] , 0, bodyOptions, style);
-
-        const revoluteFront = new p2.RevoluteConstraint(body, jointBody2, {
-          localPivotA: [0.95, -0.1], // Where to hinge second wheel on the chassis
-          localPivotB: [0, 0],      // Where the hinge is in the wheel (center)
-          collideConnected: false
-        });
-        revoluteFront.enableMotor();
-        revoluteFront.setMotorSpeed(30);
-        this.addConstraint(revoluteFront);
-*/
-
-
-
-
+    this.engine = genotype.instanceParts.engine.type;
   }
 
-/**
- * Returns the shape of the phenotype.
- *
- * @protected
- * @param {Array} bodyPoints
- * @return {p2.Convex}
- */
-makeShape(bodyPoints) {
+  /**
+  * Returns the shape of the phenotype.
+  *
+  * @protected
+  * @param {Array} bodyPoints
+  * @return {p2.Convex}
+  */
+  makeShape(bodyPoints) {
     return new p2.Convex({ vertices: bodyPoints });
   }
 
