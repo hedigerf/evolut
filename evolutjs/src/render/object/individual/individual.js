@@ -130,10 +130,10 @@ createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
 
       const lowerLegFootLock = new p2.LockConstraint({ localOffsetB: [0, 0] });
       this.addConstraint(lowerLegFootLock);*/
-
+      const hipJoint = legDescriptor.joint;
       const revoluteHip = this.createRevoluteConstraint(speed, upperLegBody, body,
         [0, upperLegHeight / 2],
-        [(0.5 * (pos - 1)), 0]
+        hipJoint.position
       );
       const revoltuteKnee = this.createRevoluteConstraint(speed, upperLegBody, lowerLegBody,
         [0, -lowerLegHeight / 2],

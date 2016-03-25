@@ -5,7 +5,7 @@
  * @see module:algorithm/genotype/genotype
  */
 
-import { Range } from 'immutable';
+import { List, Range } from 'immutable';
 import L  from 'partial.lenses';
 import { compose, set, view } from 'ramda';
 import Random  from 'random-js';
@@ -13,6 +13,7 @@ import Random  from 'random-js';
 import { PartialGenotype } from '../genotype/genotype';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
+const RADIUS = 1.5;
 
 const lensMass = L.prop('mass');
 const lensMassFactor = L.prop('massFactor');
@@ -82,16 +83,26 @@ export default class Body extends PartialGenotype {
    */
   static seedCWPolygonPoints(points) {
 
-    const rangePoints = Range(0, points);
-    const randomPoint = () => {
-      return [random.integer(0, 2), random.integer(0, 2)];
-    };
-
-    rangePoints.map(randomPoint).toArray();
-
-    // TODO
+    const sectorAngle = Math.PI * 2 / points;
+    const startAngle = 0;
+    const endAngle = startAngle + sectorAngle;
+    const rangePoints = this.generateRandomPolygonPoint(startAngle , endAngle, sectorAngle, List());
+    const array = rangePoints.toArray();
+    // return array;
 
     return [[0, 0], [1, 0], [1, 1], [0, 1]];
+  }
+
+  static generateRandomPolygonPoint(startAngle, endAngle, sectorAngle, acc) {
+    const r = random.real(RADIUS / 2, RADIUS);
+    const angle = random.real(startAngle, endAngle);
+    const x = r * Math.cos(angle);
+    const y = r * Math.sin(angle);
+    const coords = [x, y];
+    if (endAngle >= Math.PI * 2 - 0.0001) {
+      return acc.push(coords);
+    }
+    return this.generateRandomPolygonPoint(endAngle, endAngle + sectorAngle, sectorAngle, acc.push(coords));
   }
 
 }
