@@ -21,12 +21,12 @@ const ll = L.compose(L.prop('instanceParts'), GL.lensFirstHipJoint);
 export default class AntEngine extends Engine {
 
   /**
-   * Returns all phases of this movement.
+   * Returns all states of this movement.
    *
    * @protected
    * @return {Array<MovementPhase>}
    */
-  static get phases() {
+  static get states() {
     return [Phase0];
   }
 

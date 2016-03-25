@@ -127,7 +127,7 @@ export default class SimulationWorld extends P2Pixi.Game {
 
           const engine = individual.engine;
 
-          if (this.currentTime === WORLD_START_TIME) {
+          if (this.currentTime === WORLD_START_TIME + stepTime) {
             engine.initialStep(individual);
           } else {
             engine.step(individual);
@@ -136,7 +136,6 @@ export default class SimulationWorld extends P2Pixi.Game {
         });
       }
     });
-
   }
 
   /**

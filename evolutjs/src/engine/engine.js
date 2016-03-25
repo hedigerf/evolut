@@ -53,13 +53,11 @@ export default class Engine extends CyclicalStateMachine {
    * @return {Phenotype}
    */
   static transition(phenotype) {
-
-    const state = phenotype.state;
-
+    const stateIndex = phenotype.state;
+    const state = nth(stateIndex, this.states);
     if (state.isComplete(phenotype)) {
-      phenotype.state = this.next(phenotype);
+      phenotype.state = this.nextState(stateIndex);
     }
-
     return phenotype;
   }
 

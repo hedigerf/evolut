@@ -4,7 +4,7 @@
  * @module engine/cyclicalStateMachine
  */
 
-import { allPass, head, nth } from 'ramda';
+import { allPass, always, head } from 'ramda';
 
 /**
  * @typedef {{state: Number}} CyclicalStateObject
@@ -30,7 +30,7 @@ export class CyclicalState {
    * @return {Array<function(*): Boolean>}
    */
   static get predicates() {
-    return [];
+    return [always(true)];
   }
 
   /**
@@ -73,17 +73,6 @@ export default class CyclicalStateMachine {
    */
   static nextState(stateIndex) {
     return (stateIndex + PHASE_STEP) % this.states.length;
-  }
-
-  /**
-   * Returns the next state.
-   *
-   * @protected
-   * @param {CyclicalStateObject} object
-   * @return {CyclicalState} The next phase.
-   */
-  static next(object) {
-    return nth(this.nextState(object.state), this.states);
   }
 
   /**
