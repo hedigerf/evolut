@@ -9,8 +9,6 @@ import Genotype, { PartialGenotype } from '../../../src/algorithm/genotype/genot
 chai.use(chaiFuzzy);
 chai.use(chaiImmutable);
 
-// jshint -W030
-
 describe('Genotype', () => {
   describe('seed', () => {
     it('should have no parts', () => {

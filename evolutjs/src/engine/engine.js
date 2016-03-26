@@ -4,144 +4,134 @@
  * @module engine/engine
  */
 
-import log4js from 'log4js';
-import {  } from 'ramda';
+import { nth } from 'ramda';
 
-import { debug } from '../util/logUtil';
-import { ANGLE_MAX, ANGLE_MIN } from '../algorithm/individual/joint';
-
-const logger = log4js.getLogger('Engine');
+import CyclicStateMachine, { CyclicState } from './cyclicStateMachine';
 
 /**
- * @param {RevoluteConstraint} constraint
- * @param {Number} [min=ANGLE_MIN]
- * @param {Number} [max=ANGLE_MAX]
+ * Offset for advancing a movement index.
+ *
+ * @type {Number}
  */
-function setAngle(constraint, min = ANGLE_MIN, max = ANGLE_MAX) {
-  constraint.setLimits(-max, -min);
+const MOVEMENT_OFFSET = 1;
+
+/**
+ * Represents a single movement of a phonotype.
+ * A movement could be locking the angle of a joint.
+ * Or setting the speed of joint's motor.
+ */
+export class Movement {
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
+   */
+  static move(phenotype, time) { // eslint-disable-line no-unused-vars
+    return true;
+  }
+
 }
 
-const blurFactor = Math.PI / 10;
+/**
+ * Represents a phase of a whole movement.
+ * A movement phase resebles a state in a state machine.
+ * The phase is complete once all predicates are fulfilled.
+ *
+ * @extends {CyclicalState}
+ */
+export class MovementPhase extends CyclicState {
 
-function isMaxAngle(constraint, angle) {
-  return constraint.lowerLimit + blurFactor >= angle;
-}
+  /**
+   * Returns all movements of this phase.
+   *
+   * @protected
+   * @return {Array<Movement>}
+   */
+  static get movements() {
+    return [];
+  }
 
-function isMinAngle(constraint, angle) {
-  return constraint.upperLimit - blurFactor <= angle;
+  /**
+   * Progresses the movement phase of a phenotype.
+   *
+   * @param {Phenotype} phenotype
+   * @param {Number} time The current world time
+   * @return {Phenotype}
+   */
+  static progress(phenotype, time) {
+    const movementIndex = phenotype.movement;
+    const movement = nth(movementIndex, this.movements);
+    if (movement(phenotype, time)) {
+      phenotype.movement = movementIndex + MOVEMENT_OFFSET;
+    }
+    return phenotype;
+  }
+
+  /**
+   * Tests the predicates of the current state.
+   *
+   * @param {*} object
+   * @return {Boolean}
+   */
+  static isComplete(object) {
+    return object.movement >= this.movements.length - MOVEMENT_OFFSET;
+  }
+
 }
 
 /**
  * Represents an abstract class for an engine.
  * It's responsibility is moving an phenotype's legs.
+ * An engine consists of multiple movement phases.
+ * A phase itself may consist of multiple movements.
+ *
+ * An engine's operations should be chainable.
+ * Therefore each operation must return the input it received.
+ *
+ * @abstract
+ * @extends {CyclicStateMachine}
  */
-export default class Engine {
+export default class Engine extends CyclicStateMachine {
 
   /**
-   * @static
+   * Applies the initial step of an engine.
+   * This most often comes down to initialize the movement,
+   * angles and velocitities of constraints, and the position of bodies.
+   *
    * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype.
    */
-  static initialStep(phenotype) {
-
-    const jointsMap = phenotype.jointsMap;
-
-    const leftSide = jointsMap.get('left');
-    const rightSide = jointsMap.get('right');
-
-    const setLimits = (side) => {
-
-      const leftBack = side.get('back').hip;
-      const leftMiddle = side.get('middle').hip;
-      const leftFront = side.get('front').hip;
-
-      setAngle(leftBack);
-      setAngle(leftFront);
-      setAngle(leftMiddle);
-    };
-
-    const setLimits0 = (side) => {
-
-      const leftBack = side.get('back').hip;
-      const leftMiddle = side.get('middle').hip;
-      const leftFront = side.get('front').hip;
-
-      setAngle(leftBack, 0, 0);
-      setAngle(leftFront, 0, 0);
-      setAngle(leftMiddle, 0, 0);
-    };
-
-    const setSpeed = (side) => {
-
-      side.get('back').hip.setMotorSpeed(2);
-      side.get('middle').hip.setMotorSpeed(2);
-      side.get('front').hip.setMotorSpeed(2);
-
-    };
-
-    setLimits0(rightSide);
-    setLimits(leftSide);
-    setSpeed(leftSide);
-  }
+  static initialStep(phenotype) {} // eslint-disable-line no-unused-vars
 
   /**
    * Executes a single step of the engine.
    *
-   * @static
-   * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype.
+   * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype
+   * @param {Number} time The current world time
+   * @return {Phenotype}
    */
-  static step(phenotype) {
-
-    // Linke Seite bewegt immer nach vorne.
-    // Rechte Seite holt immer nach hinten aus.
-
-    const jointsMap = phenotype.jointsMap;
-
-    const leftSide = jointsMap.get('left');
-    const rightSide = jointsMap.get('right');
-
-    this.stepForward(phenotype, leftSide);
-    this.stepHaul(phenotype, rightSide);
-
-    // Find joints
-    // check joint position
-    // redirect movement
-
-    debug(logger, 'engine step');
+  static step(phenotype, time) {
+    const state = nth(phenotype.state, this.states);
+    return this.transition(state.progress(phenotype, time));
   }
 
-
-  static stepForward(pheotype, joints) {
-
-    const hipBack = joints.get('back').hip;
-    const hipMiddle = joints.get('middle').hip;
-    const hipFront = joints.get('front').hip;
-
-    const _speed = 3;
-
-    const moveForwardUntil = hip => {
-
-      const angle = hip.angle;
-      const index = hip.equations.indexOf(hip.motorEquation);
-      const speed = hip.equations[index].relativeVelocity;
-
-      if (isMaxAngle(hip, angle) && speed > 0) {
-        hip.setMotorSpeed(-_speed);
-      } else if (isMinAngle(hip, angle) && speed < 0) {
-        hip.setMotorSpeed(_speed / 2);
-      }
-
-      debug(logger, speed);
-
-    };
-
-    moveForwardUntil(hipBack);
-    moveForwardUntil(hipMiddle);
-    moveForwardUntil(hipFront);
-
-  }
-
-  static stepHaul(pheotype, joints) {
-    //
+  /**
+   * Transition to the next phase.
+   *
+   * @protected
+   * @param {Phenotype} phenotype
+   * @return {Phenotype}
+   */
+  static transition(phenotype) {
+    const stateIndex = phenotype.state;
+    const state = nth(stateIndex, this.states);
+    if (state.isComplete(phenotype)) {
+      phenotype.state = this.nextState(stateIndex);
+      phenotype.movement = 0;
+    }
+    return phenotype;
   }
 
 }
