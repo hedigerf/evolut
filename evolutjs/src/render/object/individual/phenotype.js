@@ -6,6 +6,11 @@
 
 import P2Pixi from '../../../../lib/p2Pixi';
 
+/**
+ * Represents a phenotype.
+ *
+ * @extends {P2Pixi.GameObject}
+ */
 export default class Phenotype extends P2Pixi.GameObject {
 
   /**

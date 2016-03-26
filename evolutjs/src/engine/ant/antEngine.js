@@ -1,17 +1,38 @@
 /**
  * Ant movement engine module.
  *
- * @module engine/ant/engine
+ * @module engine/ant/antEngine
  * @see module:engine/engine
  */
 
 import L from 'partial.lenses';
+import { lens } from 'ramda';
 
-import * as GL from '../../algorithm/genotype/lenses';
 import Engine, { MovementPhase } from '../engine';
 import * as M from '../movement';
+import { ANGLE_MAX, ANGLE_MIN } from '../../algorithm/individual/joint';
 
-const ll = L.compose(L.prop('instanceParts'), GL.lensFirstHipJoint);
+
+const immLens = key => lens(x => x.get(key), (val, x) => x.set(key, val));
+
+const lensJointsMap = L.prop('jointsMap');
+
+const lensFront = immLens('front');
+const lensMiddle = immLens('middle');
+const lensBack = immLens('back');
+
+const lensHip = L.prop('hip');
+
+const lensLeftJoints = L.compose(lensJointsMap, immLens('left'));
+const lensLeftFrontJoint = L.compose(lensLeftJoints, lensFront);
+const lensLeftMiddleJoint = L.compose(lensLeftJoints, lensMiddle);
+const lensLeftBackJoint = L.compose(lensLeftJoints, lensBack);
+
+const lensRightJoints = L.compose(lensJointsMap, immLens('right'));
+const lensRightFrontJoint = L.compose(lensRightJoints, lensFront);
+const lensRightMiddleJoint = L.compose(lensRightJoints, lensMiddle);
+const lensRightBackJoint = L.compose(lensRightJoints, lensBack);
+
 
 /**
  * Represents an abstracted version of the movement of an ant.
@@ -21,7 +42,7 @@ const ll = L.compose(L.prop('instanceParts'), GL.lensFirstHipJoint);
 export default class AntEngine extends Engine {
 
   /**
-   * Returns all states of this movement.
+   * Returns all states of this machine.
    *
    * @protected
    * @return {Array<MovementPhase>}
@@ -35,50 +56,26 @@ export default class AntEngine extends Engine {
    *
    * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype.
    * @param {Number} time The current world time.
-   * @return {Phenotype}
    */
   static initialStep(phenotype) {
 
-    const jointsMap = phenotype.jointsMap;
+    const initialSpeed = 0;
 
-    const leftSide = jointsMap.get('left');
-    const rightSide = jointsMap.get('right');
+    const lensLFHip = L.compose(lensLeftFrontJoint, lensHip);
+    const lensLMHip = L.compose(lensLeftMiddleJoint, lensHip);
+    const lensLBHip = L.compose(lensLeftBackJoint, lensHip);
 
-    const setLimits = (side) => {
-
-      const leftBack = side.get('back').hip;
-      const leftMiddle = side.get('middle').hip;
-      const leftFront = side.get('front').hip;
-
-      M.setAngle(leftBack);
-      M.setAngle(leftFront);
-      M.setAngle(leftMiddle);
-    };
-
-    const setLimits0 = (side) => {
-
-      const leftBack = side.get('back').hip;
-      const leftMiddle = side.get('middle').hip;
-      const leftFront = side.get('front').hip;
-
-      M.setAngle(leftBack, 0, 0);
-      M.setAngle(leftFront, 0, 0);
-      M.setAngle(leftMiddle, 0, 0);
-    };
-
-    const setSpeed = (side) => {
-
-      side.get('back').hip.setMotorSpeed(2);
-      side.get('middle').hip.setMotorSpeed(2);
-      side.get('front').hip.setMotorSpeed(2);
-
-    };
-
-    setLimits0(rightSide);
-    setLimits(leftSide);
-    setSpeed(leftSide);
-
-    return phenotype;
+    M.chain(
+      M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLFHip),
+      M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLMHip),
+      M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLBHip),
+      M.lockAngleToZero(L.compose(lensRightFrontJoint, lensHip)),
+      M.lockAngleToZero(L.compose(lensRightMiddleJoint, lensHip)),
+      M.lockAngleToZero(L.compose(lensRightBackJoint, lensHip)),
+      M.setSpeed(initialSpeed, lensLFHip),
+      M.setSpeed(initialSpeed, lensLMHip),
+      M.setSpeed(initialSpeed, lensLBHip)
+    )(phenotype);
   }
 
 }
@@ -97,49 +94,36 @@ class Phase0 extends MovementPhase {
    * @return {Array<Movement>}
    */
   static get movements() {
-    return [M.lockAngleTo(Math.PI / 2, ll)]; // eslint-disable-line no-magic-numbers
-  }
-
-  /**
-   * Progresses the movement phase of a phenotype.
-   *
-   * @param {Phenotype} phenotype
-   * @param {Number} time The current world time.
-   * @return {Phenotype}
-   */
-  static step(phenotype, time) { // eslint-disable-line no-unused-vars
-
-    const leftSide = phenotype.jointsMap.get('left');
-
-    this.stepForward(phenotype, leftSide);
-
-    return phenotype;
-  }
-
-  static stepForward(phenotype, joints) {
-
-    const hipBack = joints.get('back').hip;
-    const hipMiddle = joints.get('middle').hip;
-    const hipFront = joints.get('front').hip;
-
-    const _speed = 3;
-
-    const moveForwardUntil = hip => {
-
-      const angle = hip.angle;
-      const index = hip.equations.indexOf(hip.motorEquation);
-      const speed = hip.equations[index].relativeVelocity;
-
-      if (M.isMaxAngle(hip, angle) && speed > 0) {
-        hip.setMotorSpeed(-_speed);
-      } else if (M.isMinAngle(hip, angle) && speed < 0) {
-        hip.setMotorSpeed(_speed / 2);
-      }
-    };
-
-    moveForwardUntil(hipBack);
-    moveForwardUntil(hipMiddle);
-    moveForwardUntil(hipFront);
+    return antPhase0Movements;
   }
 
 }
+
+const SPEED = 2;
+const antPhase0Movements = [
+  M.chain(
+    M.setSpeed(SPEED, L.compose(lensLeftFrontJoint, lensHip)),
+    M.setSpeed(SPEED, L.compose(lensLeftMiddleJoint, lensHip)),
+    M.setSpeed(SPEED, L.compose(lensLeftBackJoint, lensHip))
+  ),
+  M.chain(
+    M.until(M.isMaxAngle, L.compose(lensLeftFrontJoint, lensHip)),
+    M.until(M.isMaxAngle, L.compose(lensLeftMiddleJoint, lensHip)),
+    M.until(M.isMaxAngle, L.compose(lensLeftBackJoint, lensHip))
+  ),
+  M.chain(
+    M.setSpeed(-SPEED, L.compose(lensLeftFrontJoint, lensHip)),
+    M.setSpeed(-SPEED, L.compose(lensLeftMiddleJoint, lensHip)),
+    M.setSpeed(-SPEED, L.compose(lensLeftBackJoint, lensHip))
+  ),
+  M.chain(
+    M.until(M.isMinAngle, L.compose(lensLeftFrontJoint, lensHip)),
+    M.until(M.isMinAngle, L.compose(lensLeftMiddleJoint, lensHip)),
+    M.until(M.isMinAngle, L.compose(lensLeftBackJoint, lensHip))
+  ),
+  M.chain(
+    M.setSpeed(SPEED, L.compose(lensLeftFrontJoint, lensHip)),
+    M.setSpeed(SPEED, L.compose(lensLeftMiddleJoint, lensHip)),
+    M.setSpeed(SPEED, L.compose(lensLeftBackJoint, lensHip))
+  )
+];

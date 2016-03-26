@@ -4,8 +4,6 @@
  * @module engine/cyclicalStateMachine
  */
 
-import { allPass, always, head } from 'ramda';
-
 /**
  * @typedef {{state: Number}} CyclicalStateObject
  */
@@ -25,22 +23,13 @@ const PHASE_STEP = 1;
 export class CyclicalState {
 
   /**
-   * Returns the list of all predicates for this state.
-   *
-   * @return {Array<function(*): Boolean>}
-   */
-  static get predicates() {
-    return [always(true)];
-  }
-
-  /**
    * Tests the predicates of the current state.
    *
    * @param {*} object
    * @return {Boolean}
    */
-  static isComplete(object) {
-    return allPass(this.predicates)(object);
+  static isComplete(object) { // eslint-disable-line no-unused-vars
+    return true;
   }
 
 }
@@ -57,7 +46,7 @@ export default class CyclicalStateMachine {
    * Returns all states of this machine.
    *
    * @protected
-   * @return {Array<MovementPhase>}
+   * @return {Array<CyclicalState>}
    */
   static get states() {
     return [];
@@ -83,7 +72,7 @@ export default class CyclicalStateMachine {
    * @return {CyclicalStateObject}
    */
   static reset(object) {
-    object.state = head(this.phases);
+    object.state = 0;
     return object;
   }
 

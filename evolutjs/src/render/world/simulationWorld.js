@@ -130,7 +130,7 @@ export default class SimulationWorld extends P2Pixi.Game {
           if (this.currentTime === WORLD_START_TIME + stepTime) {
             engine.initialStep(individual);
           } else {
-            engine.step(individual);
+            engine.step(individual, this.currentTime);
           }
 
         });
