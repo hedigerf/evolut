@@ -6,7 +6,7 @@
 
 import { nth } from 'ramda';
 
-import CyclicalStateMachine, { CyclicalState } from './cyclicalStateMachine';
+import CyclicStateMachine, { CyclicState } from './cyclicStateMachine';
 
 /**
  * Offset for advancing a movement index.
@@ -16,55 +16,21 @@ import CyclicalStateMachine, { CyclicalState } from './cyclicalStateMachine';
 const MOVEMENT_OFFSET = 1;
 
 /**
- * Represents an abstract class for an engine.
- * It's responsibility is moving an phenotype's legs.
- * An engine consists of multiple movement phases.
- * A phase itself may consist of multiple movements.
- *
- * An engine's operations should be chainable.
- * Therefore each operation must return the input it received.
- *
- * @abstract
- * @extends {CyclicalStateMachine}
+ * Represents a single movement of a phonotype.
+ * A movement could be locking the angle of a joint.
+ * Or setting the speed of joint's motor.
  */
-export default class Engine extends CyclicalStateMachine {
+export class Movement {
 
   /**
-   * Applies the initial step of an engine.
-   * This most often comes down to initialize the movement,
-   * angles and velocitities of constraints, and the position of bodies.
+   * Apply the movemement to a phenotype.
    *
-   * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype.
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
    */
-  static initialStep(phenotype) {} // eslint-disable-line no-unused-vars
-
-  /**
-   * Executes a single step of the engine.
-   *
-   * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype
-   * @param {Number} time The current world time
-   * @return {Phenotype}
-   */
-  static step(phenotype, time) {
-    const state = nth(phenotype.state, this.states);
-    return this.transition(state.progress(phenotype, time));
-  }
-
-  /**
-   * Transition to the next phase.
-   *
-   * @protected
-   * @param {Phenotype} phenotype
-   * @return {Phenotype}
-   */
-  static transition(phenotype) {
-    const stateIndex = phenotype.state;
-    const state = nth(stateIndex, this.states);
-    if (state.isComplete(phenotype)) {
-      phenotype.state = this.nextState(stateIndex);
-      phenotype.movement = 0;
-    }
-    return phenotype;
+  static move(phenotype, time) { // eslint-disable-line no-unused-vars
+    return true;
   }
 
 }
@@ -76,7 +42,7 @@ export default class Engine extends CyclicalStateMachine {
  *
  * @extends {CyclicalState}
  */
-export class MovementPhase extends CyclicalState {
+export class MovementPhase extends CyclicState {
 
   /**
    * Returns all movements of this phase.
@@ -117,21 +83,55 @@ export class MovementPhase extends CyclicalState {
 }
 
 /**
- * Represents a single movement of a phonotype.
- * A movement could be locking the angle of a joint.
- * Or setting the speed of joint's motor.
+ * Represents an abstract class for an engine.
+ * It's responsibility is moving an phenotype's legs.
+ * An engine consists of multiple movement phases.
+ * A phase itself may consist of multiple movements.
+ *
+ * An engine's operations should be chainable.
+ * Therefore each operation must return the input it received.
+ *
+ * @abstract
+ * @extends {CyclicStateMachine}
  */
-export class Movement {
+export default class Engine extends CyclicStateMachine {
 
   /**
-   * Apply the movemement to a phenotype.
+   * Applies the initial step of an engine.
+   * This most often comes down to initialize the movement,
+   * angles and velocitities of constraints, and the position of bodies.
    *
-   * @param {Phenotype} phenotype The target phenotype
-   * @param {Number} time The world time
-   * @return {Boolean}
+   * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype.
    */
-  static move(phenotype, time) { // eslint-disable-line no-unused-vars
-    return true;
+  static initialStep(phenotype) {} // eslint-disable-line no-unused-vars
+
+  /**
+   * Executes a single step of the engine.
+   *
+   * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype
+   * @param {Number} time The current world time
+   * @return {Phenotype}
+   */
+  static step(phenotype, time) {
+    const state = nth(phenotype.state, this.states);
+    return this.transition(state.progress(phenotype, time));
+  }
+
+  /**
+   * Transition to the next phase.
+   *
+   * @protected
+   * @param {Phenotype} phenotype
+   * @return {Phenotype}
+   */
+  static transition(phenotype) {
+    const stateIndex = phenotype.state;
+    const state = nth(stateIndex, this.states);
+    if (state.isComplete(phenotype)) {
+      phenotype.state = this.nextState(stateIndex);
+      phenotype.movement = 0;
+    }
+    return phenotype;
   }
 
 }

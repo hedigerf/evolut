@@ -6,7 +6,8 @@
   "globals": {
     "cancelAnimationFrame": true,
     "document": true,
-    "requestAnimationFrame": true
+    "requestAnimationFrame": true,
+    "WeakMap": true
   },
   "parserOptions": {
     "ecmaVersion": 6,

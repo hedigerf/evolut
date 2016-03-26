@@ -11,9 +11,30 @@ import { ANGLE_MAX, ANGLE_MIN } from '../../algorithm/individual/joint';
 import Engine, { MovementPhase } from '../engine';
 import * as M from '../movement';
 import * as CL from '../constraintLenses';
+import { decorateAccessorStatic, memoize } from '../../util/decorate';
 
+/**
+ * Lens to the left front hip.
+ *
+ * @function
+ * @return {Lens}
+ */
 const lensLFHip = L.compose(CL.lensLeftFrontJoint, CL.lensHip);
+
+/**
+ * Lens to the left middle hip.
+ *
+ * @function
+ * @return {Lens}
+ */
 const lensLMHip = L.compose(CL.lensLeftMiddleJoint, CL.lensHip);
+
+/**
+ * Lens to the left back hip.
+ *
+ * @function
+ * @return {Lens}
+ */
 const lensLBHip = L.compose(CL.lensLeftBackJoint, CL.lensHip);
 
 /**
@@ -72,12 +93,12 @@ class Phase0 extends MovementPhase {
    * @return {Array<Movement>}
    */
   static get movements() {
-    const speedPhase = 2;
+    const speedPhase0 = 2;
     return [
       M.chain(
-        M.setSpeed(speedPhase, lensLFHip),
-        M.setSpeed(speedPhase, lensLMHip),
-        M.setSpeed(speedPhase, lensLBHip)
+        M.setSpeed(speedPhase0, lensLFHip),
+        M.setSpeed(speedPhase0, lensLMHip),
+        M.setSpeed(speedPhase0, lensLBHip)
       ),
       M.chain(
         M.until(M.isMaxAngle, lensLFHip),
@@ -85,9 +106,9 @@ class Phase0 extends MovementPhase {
         M.until(M.isMaxAngle, lensLBHip)
       ),
       M.chain(
-        M.setSpeed(-speedPhase, lensLFHip),
-        M.setSpeed(-speedPhase, lensLMHip),
-        M.setSpeed(-speedPhase, lensLBHip)
+        M.setSpeed(-speedPhase0, lensLFHip),
+        M.setSpeed(-speedPhase0, lensLMHip),
+        M.setSpeed(-speedPhase0, lensLBHip)
       ),
       M.chain(
         M.until(M.isMinAngle, lensLFHip),
@@ -95,9 +116,9 @@ class Phase0 extends MovementPhase {
         M.until(M.isMinAngle, lensLBHip)
       ),
       M.chain(
-        M.setSpeed(speedPhase, lensLFHip),
-        M.setSpeed(speedPhase, lensLMHip),
-        M.setSpeed(speedPhase, lensLBHip)
+        M.setSpeed(speedPhase0, lensLFHip),
+        M.setSpeed(speedPhase0, lensLMHip),
+        M.setSpeed(speedPhase0, lensLBHip)
       )
     ];
   }
@@ -118,12 +139,12 @@ class Phase1 extends MovementPhase {
    * @return {Array<Movement>}
    */
   static get movements() {
-    const speedPhase = 1;
+    const speedPhase1 = 1;
     return [
       M.chain(
-        M.setSpeed(speedPhase, lensLFHip),
-        M.setSpeed(speedPhase, lensLMHip),
-        M.setSpeed(speedPhase, lensLBHip)
+        M.setSpeed(speedPhase1, lensLFHip),
+        M.setSpeed(speedPhase1, lensLMHip),
+        M.setSpeed(speedPhase1, lensLBHip)
       ),
       M.chain(
         M.until(M.isMaxAngle, lensLFHip),
@@ -131,9 +152,9 @@ class Phase1 extends MovementPhase {
         M.until(M.isMaxAngle, lensLBHip)
       ),
       M.chain(
-        M.setSpeed(-speedPhase, lensLFHip),
-        M.setSpeed(-speedPhase, lensLMHip),
-        M.setSpeed(-speedPhase, lensLBHip)
+        M.setSpeed(-speedPhase1, lensLFHip),
+        M.setSpeed(-speedPhase1, lensLMHip),
+        M.setSpeed(-speedPhase1, lensLBHip)
       ),
       M.chain(
         M.until(M.isMinAngle, lensLFHip),
@@ -141,11 +162,14 @@ class Phase1 extends MovementPhase {
         M.until(M.isMinAngle, lensLBHip)
       ),
       M.chain(
-        M.setSpeed(speedPhase, lensLFHip),
-        M.setSpeed(speedPhase, lensLMHip),
-        M.setSpeed(speedPhase, lensLBHip)
+        M.setSpeed(speedPhase1, lensLFHip),
+        M.setSpeed(speedPhase1, lensLMHip),
+        M.setSpeed(speedPhase1, lensLBHip)
       )
     ];
   }
 
 }
+
+decorateAccessorStatic(memoize, 'movements', Phase0);
+decorateAccessorStatic(memoize, 'movements', Phase1);

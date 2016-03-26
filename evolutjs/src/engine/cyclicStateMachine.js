@@ -1,11 +1,11 @@
 /**
  * Cyclical state machine.
  *
- * @module engine/cyclicalStateMachine
+ * @module engine/cyclicStateMachine
  */
 
 /**
- * @typedef {{state: Number}} CyclicalStateObject
+ * @typedef {{state: Number}} CyclicStateObject
  */
 
 /**
@@ -20,7 +20,7 @@ const PHASE_STEP = 1;
  *
  * @abstract
  */
-export class CyclicalState {
+export class CyclicState {
 
   /**
    * Tests the predicates of the current state.
@@ -40,13 +40,13 @@ export class CyclicalState {
  *
  * @abstract
  */
-export default class CyclicalStateMachine {
+export default class CyclicStateMachine {
 
   /**
    * Returns all states of this machine.
    *
    * @protected
-   * @return {Array<CyclicalState>}
+   * @return {Array<CyclicState>}
    */
   static get states() {
     return [];
@@ -68,8 +68,8 @@ export default class CyclicalStateMachine {
    * Resets the machine.
    * Sets the state to the first of this machine.
    *
-   * @param {CyclicalStateObject} object
-   * @return {CyclicalStateObject}
+   * @param {CyclicStateObject} object
+   * @return {CyclicStateObject}
    */
   static reset(object) {
     object.state = 0;
