@@ -6,33 +6,15 @@
  */
 
 import L from 'partial.lenses';
-import { lens } from 'ramda';
 
+import { ANGLE_MAX, ANGLE_MIN } from '../../algorithm/individual/joint';
 import Engine, { MovementPhase } from '../engine';
 import * as M from '../movement';
-import { ANGLE_MAX, ANGLE_MIN } from '../../algorithm/individual/joint';
+import * as CL from '../constraintLenses';
 
-
-const immLens = key => lens(x => x.get(key), (val, x) => x.set(key, val));
-
-const lensJointsMap = L.prop('jointsMap');
-
-const lensFront = immLens('front');
-const lensMiddle = immLens('middle');
-const lensBack = immLens('back');
-
-const lensHip = L.prop('hip');
-
-const lensLeftJoints = L.compose(lensJointsMap, immLens('left'));
-const lensLeftFrontJoint = L.compose(lensLeftJoints, lensFront);
-const lensLeftMiddleJoint = L.compose(lensLeftJoints, lensMiddle);
-const lensLeftBackJoint = L.compose(lensLeftJoints, lensBack);
-
-const lensRightJoints = L.compose(lensJointsMap, immLens('right'));
-const lensRightFrontJoint = L.compose(lensRightJoints, lensFront);
-const lensRightMiddleJoint = L.compose(lensRightJoints, lensMiddle);
-const lensRightBackJoint = L.compose(lensRightJoints, lensBack);
-
+const lensLFHip = L.compose(CL.lensLeftFrontJoint, CL.lensHip);
+const lensLMHip = L.compose(CL.lensLeftMiddleJoint, CL.lensHip);
+const lensLBHip = L.compose(CL.lensLeftBackJoint, CL.lensHip);
 
 /**
  * Represents an abstracted version of the movement of an ant.
@@ -61,17 +43,13 @@ export default class AntEngine extends Engine {
 
     const initialSpeed = 0;
 
-    const lensLFHip = L.compose(lensLeftFrontJoint, lensHip);
-    const lensLMHip = L.compose(lensLeftMiddleJoint, lensHip);
-    const lensLBHip = L.compose(lensLeftBackJoint, lensHip);
-
     M.chain(
       M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLFHip),
       M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLMHip),
       M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLBHip),
-      M.lockAngleToZero(L.compose(lensRightFrontJoint, lensHip)),
-      M.lockAngleToZero(L.compose(lensRightMiddleJoint, lensHip)),
-      M.lockAngleToZero(L.compose(lensRightBackJoint, lensHip)),
+      M.lockAngleToZero(L.compose(CL.lensRightFrontJoint, CL.lensHip)),
+      M.lockAngleToZero(L.compose(CL.lensRightMiddleJoint, CL.lensHip)),
+      M.lockAngleToZero(L.compose(CL.lensRightBackJoint, CL.lensHip)),
       M.setSpeed(initialSpeed, lensLFHip),
       M.setSpeed(initialSpeed, lensLMHip),
       M.setSpeed(initialSpeed, lensLBHip)
@@ -94,7 +72,34 @@ class Phase0 extends MovementPhase {
    * @return {Array<Movement>}
    */
   static get movements() {
-    return antPhase0Movements;
+    const speedPhase = 2;
+    return [
+      M.chain(
+        M.setSpeed(speedPhase, lensLFHip),
+        M.setSpeed(speedPhase, lensLMHip),
+        M.setSpeed(speedPhase, lensLBHip)
+      ),
+      M.chain(
+        M.until(M.isMaxAngle, lensLFHip),
+        M.until(M.isMaxAngle, lensLMHip),
+        M.until(M.isMaxAngle, lensLBHip)
+      ),
+      M.chain(
+        M.setSpeed(-speedPhase, lensLFHip),
+        M.setSpeed(-speedPhase, lensLMHip),
+        M.setSpeed(-speedPhase, lensLBHip)
+      ),
+      M.chain(
+        M.until(M.isMinAngle, lensLFHip),
+        M.until(M.isMinAngle, lensLMHip),
+        M.until(M.isMinAngle, lensLBHip)
+      ),
+      M.chain(
+        M.setSpeed(speedPhase, lensLFHip),
+        M.setSpeed(speedPhase, lensLMHip),
+        M.setSpeed(speedPhase, lensLBHip)
+      )
+    ];
   }
 
 }
@@ -113,65 +118,34 @@ class Phase1 extends MovementPhase {
    * @return {Array<Movement>}
    */
   static get movements() {
-    return antPhase1Movements;
+    const speedPhase = 1;
+    return [
+      M.chain(
+        M.setSpeed(speedPhase, lensLFHip),
+        M.setSpeed(speedPhase, lensLMHip),
+        M.setSpeed(speedPhase, lensLBHip)
+      ),
+      M.chain(
+        M.until(M.isMaxAngle, lensLFHip),
+        M.until(M.isMaxAngle, lensLMHip),
+        M.until(M.isMaxAngle, lensLBHip)
+      ),
+      M.chain(
+        M.setSpeed(-speedPhase, lensLFHip),
+        M.setSpeed(-speedPhase, lensLMHip),
+        M.setSpeed(-speedPhase, lensLBHip)
+      ),
+      M.chain(
+        M.until(M.isMinAngle, lensLFHip),
+        M.until(M.isMinAngle, lensLMHip),
+        M.until(M.isMinAngle, lensLBHip)
+      ),
+      M.chain(
+        M.setSpeed(speedPhase, lensLFHip),
+        M.setSpeed(speedPhase, lensLMHip),
+        M.setSpeed(speedPhase, lensLBHip)
+      )
+    ];
   }
 
 }
-
-const SPEED = 2;
-const antPhase0Movements = [
-  M.chain(
-    M.setSpeed(SPEED, L.compose(lensLeftFrontJoint, lensHip)),
-    M.setSpeed(SPEED, L.compose(lensLeftMiddleJoint, lensHip)),
-    M.setSpeed(SPEED, L.compose(lensLeftBackJoint, lensHip))
-  ),
-  M.chain(
-    M.until(M.isMaxAngle, L.compose(lensLeftFrontJoint, lensHip)),
-    M.until(M.isMaxAngle, L.compose(lensLeftMiddleJoint, lensHip)),
-    M.until(M.isMaxAngle, L.compose(lensLeftBackJoint, lensHip))
-  ),
-  M.chain(
-    M.setSpeed(-SPEED, L.compose(lensLeftFrontJoint, lensHip)),
-    M.setSpeed(-SPEED, L.compose(lensLeftMiddleJoint, lensHip)),
-    M.setSpeed(-SPEED, L.compose(lensLeftBackJoint, lensHip))
-  ),
-  M.chain(
-    M.until(M.isMinAngle, L.compose(lensLeftFrontJoint, lensHip)),
-    M.until(M.isMinAngle, L.compose(lensLeftMiddleJoint, lensHip)),
-    M.until(M.isMinAngle, L.compose(lensLeftBackJoint, lensHip))
-  ),
-  M.chain(
-    M.setSpeed(SPEED, L.compose(lensLeftFrontJoint, lensHip)),
-    M.setSpeed(SPEED, L.compose(lensLeftMiddleJoint, lensHip)),
-    M.setSpeed(SPEED, L.compose(lensLeftBackJoint, lensHip))
-  )
-];
-
-const SPEED2 = 1;
-const antPhase1Movements = [
-  M.chain(
-    M.setSpeed(SPEED2, L.compose(lensLeftFrontJoint, lensHip)),
-    M.setSpeed(SPEED2, L.compose(lensLeftMiddleJoint, lensHip)),
-    M.setSpeed(SPEED2, L.compose(lensLeftBackJoint, lensHip))
-  ),
-  M.chain(
-    M.until(M.isMaxAngle, L.compose(lensLeftFrontJoint, lensHip)),
-    M.until(M.isMaxAngle, L.compose(lensLeftMiddleJoint, lensHip)),
-    M.until(M.isMaxAngle, L.compose(lensLeftBackJoint, lensHip))
-  ),
-  M.chain(
-    M.setSpeed(-SPEED2, L.compose(lensLeftFrontJoint, lensHip)),
-    M.setSpeed(-SPEED2, L.compose(lensLeftMiddleJoint, lensHip)),
-    M.setSpeed(-SPEED2, L.compose(lensLeftBackJoint, lensHip))
-  ),
-  M.chain(
-    M.until(M.isMinAngle, L.compose(lensLeftFrontJoint, lensHip)),
-    M.until(M.isMinAngle, L.compose(lensLeftMiddleJoint, lensHip)),
-    M.until(M.isMinAngle, L.compose(lensLeftBackJoint, lensHip))
-  ),
-  M.chain(
-    M.setSpeed(SPEED2, L.compose(lensLeftFrontJoint, lensHip)),
-    M.setSpeed(SPEED2, L.compose(lensLeftMiddleJoint, lensHip)),
-    M.setSpeed(SPEED2, L.compose(lensLeftBackJoint, lensHip))
-  )
-];
