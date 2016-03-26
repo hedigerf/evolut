@@ -48,7 +48,7 @@ export default class AntEngine extends Engine {
    * @return {Array<MovementPhase>}
    */
   static get states() {
-    return [Phase0];
+    return [Phase0, Phase1];
   }
 
   /**
@@ -99,6 +99,25 @@ class Phase0 extends MovementPhase {
 
 }
 
+/**
+ * Represents the first phase of an ant engine's movement.
+ *
+ * @extends {MovementPhase}
+ */
+class Phase1 extends MovementPhase {
+
+  /**
+   * Returns all movements of this phase.
+   *
+   * @protected
+   * @return {Array<Movement>}
+   */
+  static get movements() {
+    return antPhase1Movements;
+  }
+
+}
+
 const SPEED = 2;
 const antPhase0Movements = [
   M.chain(
@@ -125,5 +144,34 @@ const antPhase0Movements = [
     M.setSpeed(SPEED, L.compose(lensLeftFrontJoint, lensHip)),
     M.setSpeed(SPEED, L.compose(lensLeftMiddleJoint, lensHip)),
     M.setSpeed(SPEED, L.compose(lensLeftBackJoint, lensHip))
+  )
+];
+
+const SPEED2 = 1;
+const antPhase1Movements = [
+  M.chain(
+    M.setSpeed(SPEED2, L.compose(lensLeftFrontJoint, lensHip)),
+    M.setSpeed(SPEED2, L.compose(lensLeftMiddleJoint, lensHip)),
+    M.setSpeed(SPEED2, L.compose(lensLeftBackJoint, lensHip))
+  ),
+  M.chain(
+    M.until(M.isMaxAngle, L.compose(lensLeftFrontJoint, lensHip)),
+    M.until(M.isMaxAngle, L.compose(lensLeftMiddleJoint, lensHip)),
+    M.until(M.isMaxAngle, L.compose(lensLeftBackJoint, lensHip))
+  ),
+  M.chain(
+    M.setSpeed(-SPEED2, L.compose(lensLeftFrontJoint, lensHip)),
+    M.setSpeed(-SPEED2, L.compose(lensLeftMiddleJoint, lensHip)),
+    M.setSpeed(-SPEED2, L.compose(lensLeftBackJoint, lensHip))
+  ),
+  M.chain(
+    M.until(M.isMinAngle, L.compose(lensLeftFrontJoint, lensHip)),
+    M.until(M.isMinAngle, L.compose(lensLeftMiddleJoint, lensHip)),
+    M.until(M.isMinAngle, L.compose(lensLeftBackJoint, lensHip))
+  ),
+  M.chain(
+    M.setSpeed(SPEED2, L.compose(lensLeftFrontJoint, lensHip)),
+    M.setSpeed(SPEED2, L.compose(lensLeftMiddleJoint, lensHip)),
+    M.setSpeed(SPEED2, L.compose(lensLeftBackJoint, lensHip))
   )
 ];
