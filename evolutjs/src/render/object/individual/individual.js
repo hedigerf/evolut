@@ -56,7 +56,7 @@ export default class Individual extends Phenotype {
    * @param {Genotype} genotype The genotype
    */
   fromGenotype(genotype) {
-
+    const bodyDescriptor = genotype.instanceParts.body;
     const posX = random.real(-30, -27);
     const posY = 0.4;
 
@@ -67,7 +67,7 @@ export default class Individual extends Phenotype {
 
     const body = new p2.Body({
       position: [posX, posY ],
-      mass: 2
+      mass: bodyDescriptor.mass
     });
 
     const style = {
@@ -79,64 +79,92 @@ export default class Individual extends Phenotype {
     this.addBody(body);
     this.addShape(body, this.makeShape(genotype.instanceParts.body.bodyPoints), [0, 0], 0, bodyOptions, style);
 
-    const createLeg = ({ pos, hipPivotA, hipPivotB, speed }) => {
+    const createLeg = ({ pos, speed, legDescriptor }) => {
 
       const styleLeg = {
         lineWidth: 1,
         lineColor: randomColor(),
         fillColor: randomColor()
       };
-      const legWidth =  0.1;
-      const legHeight = 0.4;
+      const leg = legDescriptor.leg;
+      // Leg-parts heights
+      const upperLegHeight = (1 - leg.heightFactor) * leg.height;
+      const lowerLegHeight = leg.heightFactor * leg.height;
+      // Leg-parts masses
+      const upperLegMass = (1 - leg.heightFactor) * leg.mass;
+      const lowerLegMass = leg.heightFactor * leg.mass;
 
-      const upperLegShape = new p2.Box({ width: legWidth, height: legHeight });
+      const legWidth =  0.1;
+
+      const upperLegShape = new p2.Box({ width: legWidth, height: upperLegHeight });
       const upperLegBody = new p2.Body({
-        mass: 1,
+        mass: upperLegMass,
         position: [ posX + (0.5 * (pos - 1)), posY ]
       });
       this.addBody(upperLegBody);
       this.addShape(upperLegBody, upperLegShape, [0, 0] , 0, bodyOptions, styleLeg);
 
       // Shank
-      const lowerLegShape = new p2.Box({ width: legWidth, height: legHeight });
+      const lowerLegShape = new p2.Box({ width: legWidth, height: lowerLegHeight });
       const lowerLegBody = new p2.Body({
-        mass: 1,
-        position: [ posX + (0.5 * (pos - 1)), posY + legHeight ]
+        mass: lowerLegMass,
+        position: [ posX + (0.5 * (pos - 1)), posY + upperLegHeight ]
       });
       this.addBody(lowerLegBody);
       this.addShape(lowerLegBody, lowerLegShape, [0, 0] , 0, bodyOptions, styleLeg);
 
+      // Foot
+      /*Const footShape = new p2.Circle({ radius: 0.2 });
+      const footBody = new p2.Body({
+        mass: 1,
+        position: [lowerLegBody.position[0], lowerLegBody.position[1]]
+      });
+      this.addBody(footBody);
+      this.addShape(footBody, footShape, [0, 0], bodyOptions, styleLeg);
+
+      const lowerLegFootLock = new p2.LockConstraint({ localOffsetB: [0, 0] });
+      this.addConstraint(lowerLegFootLock);*/
+      const hipJoint = legDescriptor.joint;
       const revoluteHip = this.createRevoluteConstraint(speed, upperLegBody, body,
-        [0, legHeight / 2],
-        [(0.5 * (pos - 1)), 0]
+        [0, upperLegHeight / 2],
+        hipJoint.position
       );
       const revoltuteKnee = this.createRevoluteConstraint(speed, upperLegBody, lowerLegBody,
-        [0, -legHeight / 2],
-        [0, legHeight / 2]);
+        [0, -lowerLegHeight / 2],
+        [0, lowerLegHeight / 2]);
 
       return { hip: revoluteHip, knee: revoltuteKnee };
     };
 
     const speed = 0;
-    const toLeg = ({ pos, id, aXval, speed }) => {
+    const toLeg = ({ pos, id, speed, legDescriptor }) => {
       return (
         [
           id,
           createLeg(
           {
             pos,
-            hipPivotA: [0, 0.4 / 2],
-            hipPivotB: [0, -0.4 / 2],
-            speed
+            speed,
+            legDescriptor
           })
         ]);
     };
-    let jointsMap = Map();
-    const bluePrints = List.of(
-      { id: 'back', aXval: 0.05, speed, pos: 1 },
-      { id: 'middle', aXval: 0.5, speed, pos: 2 },
-      { id: 'front' , aXval: 0.95, speed, pos: 3 }
+
+    // Only take 3 legs because one side is symertrical to the other.
+    // It would be bettter if legs isn array insted of object
+    const legs = List.of(
+      genotype.instanceParts.legs['0'],
+      genotype.instanceParts.legs['1'],
+      genotype.instanceParts.legs['2']
     );
+    // Const sortedByXposition = legs.sort((a, b) => a.legRelPos[0] < b.legRelPos[0]);
+    const sortedByXpos = legs;
+    const bluePrints = List.of(
+      { id: 'back',   speed, pos: 1, legDescriptor: sortedByXpos.get(0) },
+      { id: 'middle', speed, pos: 2, legDescriptor: sortedByXpos.get(1) },
+      { id: 'front' , speed, pos: 3, legDescriptor: sortedByXpos.get(2) }
+    );
+    let jointsMap = Map();
     const leftSide = bluePrints.map(toLeg);
     const rightSide = bluePrints.map(toLeg);
     jointsMap = jointsMap.set('left', new Map(leftSide));
