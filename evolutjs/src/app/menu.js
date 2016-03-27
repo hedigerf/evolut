@@ -7,7 +7,11 @@
 import { app } from 'electron';
 import Menu from 'menu';
 
-// Main menu
+/**
+ * Menu configuration.
+ *
+ * @type {Array<Object>}
+ */
 const template = [
   {
     label: 'Evolut',

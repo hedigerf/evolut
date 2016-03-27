@@ -6,10 +6,26 @@
  */
 
 import L  from 'partial.lenses';
-import { set, view } from 'ramda';
+import { always, set, view } from 'ramda';
+
+import AntEngine from '../../engine/ant/antEngine';
 import { PartialGenotype } from '../genotype/genotype';
 
+/**
+ * Lens for the engine type.
+ *
+ * @param {Object} The option object.
+ * @return {String} The engine type.
+ */
 const lensType = L.prop('type');
+
+/**
+ * Returns the constructor for an engine.
+ *
+ * @param {String} type The engine type.
+ * @return {Engine} The engine.
+ */
+const getEngine = always(AntEngine);
 
 /**
  * Represents the engine part of an individual.
@@ -29,7 +45,7 @@ export default class Engine extends PartialGenotype {
 
     super(options);
 
-    this.type = view(lensType, options);
+    this.type = getEngine(view(lensType, options));
   }
 
   /**

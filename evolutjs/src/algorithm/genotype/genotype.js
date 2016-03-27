@@ -7,12 +7,35 @@
 import L from 'partial.lenses';
 import { always, curry, either, ifElse, mapObjIndexed, merge, view } from 'ramda';
 
+/**
+ * Extract the options for a certain key.
+ * This is needed while processing the seed because the constructors
+ * of partial genotypes only accept their options at the top level of an object.
+ *
+ * @param {String} key The property name
+ * @return {function(Object): Object} The option object
+ */
 const extractOption = key => either(
   view(L.prop(key)),
   always({})
 );
 
+/**
+ * Build a partial genotype.
+ *
+ * @param {PartialGenotype} T The constructor of a partial genotype.
+ * @param {Object} option The build options.
+ * @return {PartialGenotype} The instance of a partial genotype.
+ */
 const buildType = (T, option) => new T(option);
+
+/**
+ * Seed a partial genotype.
+ *
+ * @param {PartialGenotype} T The partial genotype.
+ * @param {Object} option The build options.
+ * @return {Object} The seed object.
+ */
 const seedType = (T, option) => T.seed(option);
 
 /**
