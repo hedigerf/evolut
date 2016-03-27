@@ -82,28 +82,6 @@ class Delay extends Movement {
 }
 
 /**
- * Locks a revolute constraint to a certain angle.
- *
- * @extends {Movement}
- */
-class LockAngleTo extends Movement {
-
-  /**
-   * Apply the movemement to a phenotype.
-   *
-   * @param {Number} angle The angle a constraint should be locked to
-   * @param {Lens} lens The lens to a contraint
-   * @param {Phenotype} phenotype The target phenotype
-   * @return {Boolean}
-   */
-  static move(angle, lens, phenotype) {
-    view(lens, phenotype).setLimits(angle, angle);
-    return true;
-  }
-
-}
-
-/**
  * Locks a revolute constraint to certain angles.
  *
  * @extends {Movement}
@@ -188,7 +166,7 @@ class Until extends Movement {
  * @return {Boolean}
  */
 export const lockAngleTo = curry(
-  (angle, lens, phenotype) => LockAngleTo.move(angle, lens, phenotype)
+  (angle, lens, phenotype) => SetAnglesTo.move(angle, angle, lens, phenotype)
 );
 
 /**
@@ -200,7 +178,7 @@ export const lockAngleTo = curry(
  * @return {Boolean}
  */
 export const lockAngleToZero = curry(
-  (lens, phenotype) => LockAngleTo.move(ANGLE_ZERO, lens, phenotype)
+  (lens, phenotype) => SetAnglesTo.move(ANGLE_ZERO, ANGLE_ZERO, lens, phenotype)
 );
 
 /**

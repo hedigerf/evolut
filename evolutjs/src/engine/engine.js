@@ -65,6 +65,7 @@ export class MovementPhase extends CyclicState {
     const movementIndex = phenotype.movement;
     const movement = nth(movementIndex, this.movements);
     if (movement(phenotype, time)) {
+      console.log('movement ' + movementIndex + ' -> ' + (movementIndex + MOVEMENT_OFFSET));
       phenotype.movement = movementIndex + MOVEMENT_OFFSET;
     }
     return phenotype;
@@ -128,6 +129,7 @@ export default class Engine extends CyclicStateMachine {
     const stateIndex = phenotype.state;
     const state = nth(stateIndex, this.states);
     if (state.isComplete(phenotype)) {
+      console.log('transition ' + stateIndex + ' -> ' + this.nextState(stateIndex));
       phenotype.state = this.nextState(stateIndex);
       phenotype.movement = 0;
     }
