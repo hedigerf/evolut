@@ -43,7 +43,8 @@ export default class AntEngine extends Engine {
    * @return {Array<MovementPhase>}
    */
   static get states() {
-    return [Phase0, Phase1, Phase2, Phase3, Phasexx];
+    // return [Phase_1, Phase_2];
+    return [Phase0, Phase1, Phase2, Phase3];
   }
 
   /**
@@ -72,7 +73,8 @@ export default class AntEngine extends Engine {
 }
 
 /**
- * Represents the first phase of an ant engine's movement.
+ * First phase of an ants movement engine.
+ * Initializes the angles to zero.s
  *
  * @extends {MovementPhase}
  */
@@ -100,7 +102,10 @@ class Phase0 extends MovementPhase {
 }
 
 /**
- * Represents a phase of an ant engine's movement.
+ * Represents the second phase.
+ * - Unlocks the hip and knee joints
+ * - Sets the hip joint motor speed
+ * - Waits until the hip joints are fully deflecteds
  *
  * @extends {MovementPhase}
  */
@@ -113,7 +118,7 @@ class Phase1 extends MovementPhase {
    * @return {Array<Movement>}
    */
   static get movements() {
-    const speedPhase1 = 2;
+    const speedPhase1 = 1;
     return [
       M.chain(
         M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLFKnee),
@@ -126,7 +131,10 @@ class Phase1 extends MovementPhase {
       M.chain(
         M.setSpeed(speedPhase1, lensLFHip),
         M.setSpeed(speedPhase1, lensLMHip),
-        M.setSpeed(speedPhase1, lensLBHip)
+        M.setSpeed(speedPhase1, lensLBHip),
+        M.setSpeed(speedPhase1, lensLFKnee),
+        M.setSpeed(speedPhase1, lensLMKnee),
+        M.setSpeed(speedPhase1, lensLBKnee)
       ),
       M.chain(
         M.until(M.isMaxAngle, lensLFHip),
@@ -139,7 +147,10 @@ class Phase1 extends MovementPhase {
 }
 
 /**
- * Represents a phase of an ant engine's movement.
+ * Represents the second phase.
+ * - Unlocks the hip and knee joints
+ * - Sets the hip joint motor speed
+ * - Waits until the hip joints are fully deflecteds
  *
  * @extends {MovementPhase}
  */
@@ -152,7 +163,7 @@ class Phase2 extends MovementPhase {
    * @return {Array<Movement>}
    */
   static get movements() {
-    const speedPhase1 = 1;
+    const speedPhase1 = -2;
     return [
       M.chain(
         M.setSpeed(speedPhase1, lensRFHip),
@@ -200,53 +211,7 @@ class Phase3 extends MovementPhase {
 
 }
 
-/**
- * Represents the first phase of an ant engine's movement.
- *
- * @extends {MovementPhase}
- */
-class Phasexx extends MovementPhase {
-
-  /**
-   * Returns all movements of this phase.
-   *
-   * @protected
-   * @return {Array<Movement>}
-   */
-  static get movements() {
-    const speedPhase1 = 1;
-    return [
-      M.chain(
-        M.setSpeed(speedPhase1, lensLFHip),
-        M.setSpeed(speedPhase1, lensLMHip),
-        M.setSpeed(speedPhase1, lensLBHip)
-      ),
-      M.chain(
-        M.until(M.isMaxAngle, lensLFHip),
-        M.until(M.isMaxAngle, lensLMHip),
-        M.until(M.isMaxAngle, lensLBHip)
-      ),
-      M.chain(
-        M.setSpeed(-speedPhase1, lensLFHip),
-        M.setSpeed(-speedPhase1, lensLMHip),
-        M.setSpeed(-speedPhase1, lensLBHip)
-      ),
-      M.chain(
-        M.until(M.isMinAngle, lensLFHip),
-        M.until(M.isMinAngle, lensLMHip),
-        M.until(M.isMinAngle, lensLBHip)
-      ),
-      M.chain(
-        M.setSpeed(speedPhase1, lensLFHip),
-        M.setSpeed(speedPhase1, lensLMHip),
-        M.setSpeed(speedPhase1, lensLBHip)
-      )
-    ];
-  }
-
-}
-
-decorateAccessorStatic(memoize, 'movements', Phase0);
-decorateAccessorStatic(memoize, 'movements', Phase1);
-decorateAccessorStatic(memoize, 'movements', Phase2);
-decorateAccessorStatic(memoize, 'movements', Phase3);
+// Decorate the static accessors (or the property) 'movements'
+// The goal is to memoize this accessor and store it's result.
+// Every consecutive call to this accessor will return the stored result.
+AntEngine.states.forEach(decorateAccessorStatic(memoize, 'movements'));

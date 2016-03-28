@@ -4,7 +4,7 @@
  * @module engine/movement
  */
 
-import { curry, view } from 'ramda';
+import { always, curry, view } from 'ramda';
 
 import { Movement } from './engine';
 
@@ -113,6 +113,56 @@ class SetAnglesTo extends Movement {
 }
 
 /**
+ * Locks a revolute constraint to certain angles.
+ *
+ * @extends {Movement}
+ */
+class SetAnglesToCurrent extends Movement {
+
+  /**
+   * @param {Lens} lens The lens to a contraint
+   * @param {Phenotype} phenotype The target phenotype
+   * @return {Boolean}
+   */
+  static move(lens, phenotype) {
+    const constraint = view(lens, phenotype);
+    const angle = constraint.bodyA.angle;
+    constraint.setLimits(angle, angle);
+    return true;
+  }
+
+}
+
+/**
+ * Sets the motor of a revolute constraint.
+ *
+ * @extends {Movement}
+ */
+class SetMotor extends Movement {
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @param {Boolean} state The state of a motor
+   * @param {Lens} lens The lens to a contraint
+   * @param {Phenotype} phenotype The target phenotype
+   * @return {Boolean}
+   */
+  static move(state, lens, phenotype) {
+    const constraint = view(lens, phenotype);
+
+    if (state) {
+      constraint.enableMotor();
+    } else {
+      constraint.disableMotor();
+    }
+
+    return true;
+  }
+
+}
+
+/**
  * Sets the speed of a revolute constraint.
  *
  * @extends {Movement}
@@ -170,6 +220,18 @@ export const lockAngleTo = curry(
 );
 
 /**
+ * Locks an angle to the current angle of a constraint.
+ *
+ * @function
+ * @param {Lens} lens The lens to a contraint
+ * @param {Boolean} phenotype The target phenotype
+ * @return {Boolean}
+ */
+export const lockAngleToCurrent = curry(
+  (lens, phenotype) => SetAnglesToCurrent.move(lens, phenotype)
+);
+
+/**
  * Locks an angle to 0 of a constraint.
  *
  * @function
@@ -224,4 +286,25 @@ export const until = curry(
 
 export const delay = curry(
   (start, timeout, phenotype, time) => Delay.move(start, timeout, phenotype, time)
+);
+
+/**
+ * Stops the engine.
+ *
+ * @function
+ * @return {Boolean} Always false
+ */
+export const stop = always(false);
+
+/**
+ * Sets the state of a constraint motor.
+ *
+ * @function
+ * @param {Boolean} state
+ * @param {Lens} lens The lens to a contraint
+ * @param {Phenotype} phenotype The target phenotype
+ * @return {Boolean}
+ */
+export const setMotor = curry(
+  (state, lens, phenotype) => SetMotor.move(state, lens, phenotype)
 );

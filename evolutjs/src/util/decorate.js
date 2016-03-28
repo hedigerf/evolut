@@ -4,6 +4,8 @@
  * @module util/decorate
  */
 
+import { curry } from 'ramda';
+
 /**
  * The cache of all with memoized decorated properties.
  * A weak map is used because references can still be collected
@@ -58,16 +60,18 @@ function memoizationFor(obj) {
 /**
  * Wraps a static getter in a decorator.
  *
+ * @function
  * @param {function(Object, String, Object)} decorator The decorator function
  * @param {String} property The property name
  * @param {Object} O The target
  */
-export function decorateAccessorStatic(decorator, property, O) {
+export const decorateAccessorStatic = curry(
+  (decorator, property, object) => {
+    let _temp = decorator(object.prototype, property,
+      _temp = Object.getOwnPropertyDescriptor(object.prototype.constructor, property)) || _temp;
 
-  let _temp = decorator(O.prototype, property,
-    _temp = Object.getOwnPropertyDescriptor(O.prototype.constructor, property)) || _temp;
-
-  if (_temp) {
-    Object.defineProperty(O.prototype.constructor, property, _temp);
+    if (_temp) {
+      Object.defineProperty(object.prototype.constructor, property, _temp);
+    }
   }
-}
+);
