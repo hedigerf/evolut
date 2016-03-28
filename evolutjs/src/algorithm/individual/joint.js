@@ -32,7 +32,7 @@ export const ANGLE_MIN = -Math.PI / 3;
  *
  * @type {Number}
  */
-export const ANGLE_MAX = Math.PI / 2;
+export const ANGLE_MAX = Math.PI / 3;
 
 const lensOrientation = L.prop('orientation');
 const lensPosition = L.prop('position');

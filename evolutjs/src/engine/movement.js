@@ -4,16 +4,9 @@
  * @module engine/movement
  */
 
-import { always, curry, view } from 'ramda';
+import R, { always, curry, view } from 'ramda';
 
 import { Movement } from './engine';
-
-/**
- * Default angle.
- *
- * @type {Number}
- */
-export const ANGLE_ZERO = 0;
 
 /**
  * Divisor for tolerated margin of an angle.
@@ -30,14 +23,45 @@ const BLUR_FACTOR_DIVISOR = 10;
 const BLUR_FACTOR = Math.PI / BLUR_FACTOR_DIVISOR;
 
 /**
- * Chains movements to gether
+ * Chains movements to gether.
  *
- * @param  {...function(Phenotype, Number)} movements A list of movements
+ * @param {...function(Phenotype, Number)} movements A list of movements
  * @return {function(Phenotype, Number): Boolean}
  */
 export function chain(...movements) {
   return (phenotype, time) => movements.reduce((st, m) => m(phenotype, time) && st, true);
 }
+
+/**
+ * Tests if all movements were completed.
+ *
+ * @function
+ * @param {...function(Phenotype, Number)} movements A list of movements
+ * @return {function(Phenotype, Number): Boolean}
+ */
+export const allPass = (...movements) => R.allPass(movements);
+
+/**
+ * Tests if at least one movement was completed.
+ *
+ * @function
+ * @param {...function(Phenotype, Number): Boolean} movements
+ * @return {function(Phenotype, Number): Boolean}
+ */
+export const anyPass = (...movements) => R.anyPass(movements);
+
+/**
+ * @function
+ * @param {Number} angle
+ * @param {RevoluteConstraint} constraint
+ * @return {Boolean}
+ */
+export const isAngle = curry(
+  (angle, constraint) => {
+    const currentAngle = constraint.angle;
+    return currentAngle - BLUR_FACTOR >= angle || angle <= currentAngle + BLUR_FACTOR;
+  }
+);
 
 /**
  * Tests a revolute constraint if it's angle is at it's maximum angle.
@@ -240,7 +264,7 @@ export const lockAngleToCurrent = curry(
  * @return {Boolean}
  */
 export const lockAngleToZero = curry(
-  (lens, phenotype) => SetAnglesTo.move(ANGLE_ZERO, ANGLE_ZERO, lens, phenotype)
+  (lens, phenotype) => SetAnglesTo.move(0, 0, lens, phenotype)
 );
 
 /**
