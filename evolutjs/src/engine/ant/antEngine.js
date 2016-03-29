@@ -25,10 +25,6 @@ const lensRFHip = L.compose(CL.lensRightFrontJoint, CL.lensHip);
 const lensRMHip = L.compose(CL.lensRightMiddleJoint, CL.lensHip);
 const lensRBHip = L.compose(CL.lensRightBackJoint, CL.lensHip);
 
-const lensRFKnee = L.compose(CL.lensRightFrontJoint, CL.lensKnee);
-const lensRMKnee = L.compose(CL.lensRightMiddleJoint, CL.lensKnee);
-const lensRBKnee = L.compose(CL.lensRightBackJoint, CL.lensKnee);
-
 /**
  * Represents an abstracted version of the movement of an ant.
  *
@@ -53,7 +49,7 @@ export default class AntEngine extends Engine {
    * @param {Number} time The current world time.
    */
   static initialStep(phenotype) {
-    M.chain(
+    M.allPass(
       M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLFHip),
       M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLMHip),
       M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLBHip),
@@ -90,7 +86,7 @@ class Phase1 extends MovementPhase {
   static get movements() {
     const speedPhase1 = 1;
     return [
-      M.chain( // Set angles
+      M.allPass( // Set angles
         M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLFHip),
         M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLMHip),
         M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLBHip),
@@ -98,7 +94,7 @@ class Phase1 extends MovementPhase {
         M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLMKnee),
         M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLBKnee)
       ),
-      M.chain( // Move left hips, knees
+      M.allPass( // Move left hips, knees
         M.setSpeed(speedPhase1, lensLFHip),
         M.setSpeed(speedPhase1, lensLMHip),
         M.setSpeed(speedPhase1, lensLBHip),
@@ -106,7 +102,7 @@ class Phase1 extends MovementPhase {
         M.setSpeed(speedPhase1, lensLMKnee),
         M.setSpeed(speedPhase1, lensLBKnee)
       ),
-      M.chain( // Wait until joints fully deflected
+      M.allPass( // Wait until joints fully deflected
         M.until(M.isMaxAngle, lensLFHip),
         M.until(M.isMaxAngle, lensLMHip),
         M.until(M.isMaxAngle, lensLBHip)
@@ -134,12 +130,12 @@ class Phase2 extends MovementPhase {
    */
   static get movements() {
     return [
-      M.chain(
+      M.allPass(
         M.setAngles(ANGLE_MIN, ANGLE_MAX, lensRFHip),
         M.setAngles(ANGLE_MIN, ANGLE_MAX, lensRMHip),
         M.setAngles(ANGLE_MIN, ANGLE_MAX, lensRBHip)
       ),
-      M.chain( // Halt hip, knee joint motors
+      M.allPass( // Halt hip, knee joint motors
         M.setSpeed(0, lensLFHip),
         M.setSpeed(0, lensLMHip),
         M.setSpeed(0, lensLBHip),
@@ -147,12 +143,12 @@ class Phase2 extends MovementPhase {
         M.setSpeed(0, lensLMKnee),
         M.setSpeed(0, lensLBKnee)
       ),
-      M.chain(
+      M.allPass(
         M.setSpeed(-1, lensRFHip),
         M.setSpeed(-1, lensRMHip),
         M.setSpeed(-1, lensRBHip)
       ),
-      M.chain(
+      M.allPass(
         M.until(M.isMinAngle, lensRFHip),
         M.until(M.isMinAngle, lensRMHip),
         M.until(M.isMinAngle, lensRBHip)
@@ -177,12 +173,12 @@ class Phase3 extends MovementPhase {
    */
   static get movements() {
     return [
-      M.chain(
+      M.allPass(
         M.setSpeed(0, lensRFHip),
         M.setSpeed(0, lensRMHip),
         M.setSpeed(0, lensRBHip)
       ),
-      M.chain(
+      M.allPass(
         M.setAngles(0, ANGLE_MAX, lensLFHip),
         M.setAngles(0, ANGLE_MAX, lensLMHip),
         M.setAngles(0, ANGLE_MAX, lensLBHip),
@@ -190,7 +186,7 @@ class Phase3 extends MovementPhase {
         M.setAngles(0, ANGLE_MAX, lensLMKnee),
         M.setAngles(0, ANGLE_MAX, lensLBKnee)
       ),
-      M.chain(
+      M.allPass(
         M.setSpeed(-1, lensLFHip),
         M.setSpeed(-1, lensLMHip),
         M.setSpeed(-1, lensLBHip),

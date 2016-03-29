@@ -23,16 +23,6 @@ const BLUR_FACTOR_DIVISOR = 10;
 const BLUR_FACTOR = Math.PI / BLUR_FACTOR_DIVISOR;
 
 /**
- * Chains movements to gether.
- *
- * @param {...function(Phenotype, Number)} movements A list of movements
- * @return {function(Phenotype, Number): Boolean}
- */
-export function chain(...movements) {
-  return (phenotype, time) => movements.reduce((st, m) => m(phenotype, time) && st, true);
-}
-
-/**
  * Tests if all movements were completed.
  *
  * @function

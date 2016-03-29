@@ -9,7 +9,8 @@
     "test": "npm run lint && npm run assert",
     "lint": "eslint src/**/*.js test/**/*.js",
     "assert": "mocha test/**/*.js",
-    "doc": "jsdoc -d doc -r src"
+    "doc": "jsdoc -d doc -r src",
+    "esdoc": "esdoc -c esdoc.json"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,7 @@
     "chai-fuzzy": "latest",
     "chai-immutable": "latest",
     "electron-prebuilt": "latest",
+    "esdoc": "latest",
     "eslint": "latest",
     "jscs": "latest",
     "jsdoc": "latest",
