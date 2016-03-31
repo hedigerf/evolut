@@ -91,6 +91,11 @@
     "no-magic-numbers": [
       2,
       {
+        "ignore": [
+          -1,
+          0,
+          1
+        ],
         "ignoreArrayIndexes": true
       }
     ],

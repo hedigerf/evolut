@@ -59,25 +59,29 @@ export class MovementPhase extends CyclicState {
    *
    * @param {Phenotype} phenotype
    * @param {Number} time The current world time
-   * @return {Phenotype}
+   * @return {Boolean}
    */
   static progress(phenotype, time) {
-    const movementIndex = phenotype.movement;
-    const movement = nth(movementIndex, this.movements);
-    if (movement(phenotype, time)) {
-      phenotype.movement = movementIndex + MOVEMENT_OFFSET;
+
+    const movement = nth(phenotype.movement, this.movements);
+    const moved = movement(phenotype, time);
+
+    if (moved) {
+      phenotype.movement += MOVEMENT_OFFSET;
     }
-    return phenotype;
+
+    return moved;
   }
 
   /**
    * Tests the predicates of the current state.
    *
-   * @param {*} object
+   * @param {Phenotype} phenotype The phenotype
+   * @param {Number} time The world time
    * @return {Boolean}
    */
-  static isComplete(object) {
-    return object.movement >= this.movements.length - MOVEMENT_OFFSET;
+  static isComplete(phenotype, time) { // eslint-disable-line no-unused-vars
+    return phenotype.movement > this.movements.length - MOVEMENT_OFFSET;
   }
 
 }
@@ -113,8 +117,14 @@ export default class Engine extends CyclicStateMachine {
    * @return {Phenotype}
    */
   static step(phenotype, time) {
+
     const state = nth(phenotype.state, this.states);
-    return this.transition(state.progress(phenotype, time));
+    const progressed = state.progress(phenotype, time);
+
+    if (progressed && state.isComplete(phenotype, time)) {
+      return this.transition(phenotype);
+    }
+    return phenotype;
   }
 
   /**
@@ -125,12 +135,12 @@ export default class Engine extends CyclicStateMachine {
    * @return {Phenotype}
    */
   static transition(phenotype) {
+
     const stateIndex = phenotype.state;
-    const state = nth(stateIndex, this.states);
-    if (state.isComplete(phenotype)) {
-      phenotype.state = this.nextState(stateIndex);
-      phenotype.movement = 0;
-    }
+
+    phenotype.state = this.nextState(stateIndex);
+    phenotype.movement = 0;
+
     return phenotype;
   }
 
