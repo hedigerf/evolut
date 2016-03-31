@@ -7,10 +7,15 @@
 
 import p2 from 'p2';
 import Random from 'random-js';
-import { List, Map } from 'immutable';
+
+import {List, Map} from 'immutable';
+import log4js from 'log4js';
+import { curry } from 'ramda';
 
 import Phenotype from './phenotype';
+import { debug, info } from '../../../util/logUtil';
 
+const logger = log4js.getLogger('individual pheno');
 const random = new Random(Random.engines.mt19937().autoSeed());
 
 /**
@@ -78,9 +83,30 @@ export default class Individual extends Phenotype {
 
     this.addBody(body);
     this.addShape(body, this.makeShape(genotype.instanceParts.body.bodyPoints), [0, 0], 0, bodyOptions, style);
-
-    const createLeg = ({ pos, speed, legDescriptor }) => {
-
+    // Mid
+    const styleMid = {
+      lineWidth: 1,
+      lineColor: randomColor(),
+      fillColor: randomColor()
+    };
+    const midShape = new p2.Circle({ radius: 0.05 });
+    const midBody = new p2.Body({
+      mass: 0.0001,
+      position: [body.position[0], body.position[1]]
+    });
+    const midConstraint = new p2.RevoluteConstraint(midBody, body, {
+      localPivotA: [0, 0],
+      localPivotB: [0, 0],
+      collideConnected: false
+    });
+    this.addBody(midBody);
+    this.addShape(midBody, midShape, [0, 0] , 0, bodyOptions, styleMid);
+    this.addConstraint(midConstraint);
+    let counter = 0;
+    const centerOfMassBody =  body.shapes[0].centerOfMass;
+    info(logger, 'Center of Mass: ' + centerOfMassBody);
+    const createLeg = ({ pos, speed, legDescriptor, hipJointPosition }) => {
+      counter++;
       const styleLeg = {
         lineWidth: 1,
         lineColor: randomColor(),
@@ -113,6 +139,7 @@ export default class Individual extends Phenotype {
       this.addBody(lowerLegBody);
       this.addShape(lowerLegBody, lowerLegShape, [0, 0] , 0, bodyOptions, styleLeg);
 
+
       // Foot
       /*Const footShape = new p2.Circle({ radius: 0.2 });
       const footBody = new p2.Body({
@@ -124,10 +151,12 @@ export default class Individual extends Phenotype {
 
       const lowerLegFootLock = new p2.LockConstraint({ localOffsetB: [0, 0] });
       this.addConstraint(lowerLegFootLock);*/
-      const hipJoint = legDescriptor.joint;
+
+      const calcX = hipJointPosition[0]; // - centerOfMassBody[0];
+      const calcY = hipJointPosition[1]; // - centerOfMassBody[1];
       const revoluteHip = this.createRevoluteConstraint(speed, upperLegBody, body,
         [0, upperLegHeight / 2],
-        hipJoint.position
+        [calcX, calcY]
       );
       const revoltuteKnee = this.createRevoluteConstraint(speed, upperLegBody, lowerLegBody,
         [0, -lowerLegHeight / 2],
@@ -137,7 +166,7 @@ export default class Individual extends Phenotype {
     };
 
     const speed = 0;
-    const toLeg = ({ pos, id, speed, legDescriptor }) => {
+    const toLeg = ({ pos, id, speed, legDescriptor, hipJointPosition }) => {
       return (
         [
           id,
@@ -145,7 +174,8 @@ export default class Individual extends Phenotype {
           {
             pos,
             speed,
-            legDescriptor
+            legDescriptor,
+            hipJointPosition
           })
         ]);
     };
@@ -160,9 +190,15 @@ export default class Individual extends Phenotype {
     // Const sortedByXposition = legs.sort((a, b) => a.legRelPos[0] < b.legRelPos[0]);
     const sortedByXpos = legs;
     const bluePrints = List.of(
-      { id: 'back',   speed, pos: 1, legDescriptor: sortedByXpos.get(0) },
-      { id: 'middle', speed, pos: 2, legDescriptor: sortedByXpos.get(1) },
-      { id: 'front' , speed, pos: 3, legDescriptor: sortedByXpos.get(2) }
+      { id: 'back',   speed, pos: 1, legDescriptor: sortedByXpos.get(0),
+        hipJointPosition: genotype.instanceParts.body.hipJointPositions[0]
+      } ,
+      { id: 'middle', speed, pos: 2, legDescriptor: sortedByXpos.get(1),
+        hipJointPosition: genotype.instanceParts.body.hipJointPositions[1]
+      } ,
+      { id: 'front' , speed, pos: 3, legDescriptor: sortedByXpos.get(2),
+        hipJointPosition: genotype.instanceParts.body.hipJointPositions[2]
+      }
     );
     let jointsMap = Map();
     const leftSide = bluePrints.map(toLeg);

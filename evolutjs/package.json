@@ -46,7 +46,8 @@
     "partial.lenses": "latest",
     "pixi.js": "latest",
     "ramda": "latest",
-    "random-js": "latest"
+    "random-js": "latest",
+    "point-in-polygon": "latest"
   },
   "devDependencies": {
     "chai": "latest",
