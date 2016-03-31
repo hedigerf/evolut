@@ -4,7 +4,7 @@
  * @module engine/movement
  */
 
-import R, { always, curry, view } from 'ramda';
+import R, { curry, view } from 'ramda';
 
 import { Movement } from './engine';
 
@@ -71,28 +71,6 @@ export function isMaxAngle(constraint) {
  */
 export function isMinAngle(constraint) {
   return constraint.upperLimit - BLUR_FACTOR <= constraint.angle;
-}
-
-/**
- * Waits for a certain amount of time.
- *
- * @extends {Movement}
- */
-class Delay extends Movement {
-
-  /**
-   * Apply the movemement to a phenotype.
-   *
-   * @param {Number} start The start time
-   * @param {Number} timeout The timeout in miliseconds
-   * @param {Phenotype} phenotype The target phenotype
-   * @param {Number} time The world time
-   * @return {Boolean}
-   */
-  static move(start, timeout, phenotype, time) {
-    return start + timeout <= time;
-  }
-
 }
 
 /**
@@ -221,6 +199,37 @@ class Until extends Movement {
 }
 
 /**
+ * Test a predicate on a revolute constraint and
+ * calls a function if fulfilled.
+ *
+ * @extends {Movement}
+ */
+class When extends Movement {
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @param {function(*, Number): Boolean} pred
+   * @param {function(Lens, *, Number)} onTrue
+   * @param {Lens} lens The lens to a contraint
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
+   */
+  static move(pred, onTrue, lens, phenotype, time) {
+
+    const fulfilled = pred(view(lens, phenotype), time);
+
+    if (fulfilled) {
+      onTrue(lens, phenotype, time);
+    }
+
+    return fulfilled;
+  }
+
+}
+
+/**
  * Locks an angle of a constraint.
  *
  * @function
@@ -285,6 +294,27 @@ export const setSpeed = curry(
 );
 
 /**
+ * Sets the state of a constraint motor.
+ *
+ * @function
+ * @param {Boolean} state
+ * @param {Lens} lens The lens to a contraint
+ * @param {Phenotype} phenotype The target phenotype
+ * @return {Boolean}
+ */
+export const setMotor = curry(
+  (state, lens, phenotype) => SetMotor.move(state, lens, phenotype)
+);
+
+/**
+ * Stops the engine.
+ *
+ * @function
+ * @return {Boolean} Always false
+ */
+export const stop = R.always(false);
+
+/**
  * Waits until pred is true for a constraint.
  *
  * @function
@@ -298,27 +328,13 @@ export const until = curry(
   (pred, lens, phenotype, time) => Until.move(pred, lens, phenotype, time)
 );
 
-export const delay = curry(
-  (start, timeout, phenotype, time) => Delay.move(start, timeout, phenotype, time)
-);
-
 /**
- * Stops the engine.
- *
- * @function
- * @return {Boolean} Always false
- */
-export const stop = always(false);
-
-/**
- * Sets the state of a constraint motor.
- *
- * @function
- * @param {Boolean} state
+ * @param {function(*, Number): Boolean} pred
+ * @param {function(Lens, *, Number)} onTrue
  * @param {Lens} lens The lens to a contraint
  * @param {Phenotype} phenotype The target phenotype
- * @return {Boolean}
+ * @param {Number} time The world time
  */
-export const setMotor = curry(
-  (state, lens, phenotype) => SetMotor.move(state, lens, phenotype)
+export const when = curry(
+  (pred, onTrue, lens, phenotype, time) => When.move(pred, onTrue, lens, phenotype, time)
 );
