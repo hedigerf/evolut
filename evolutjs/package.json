@@ -1,6 +1,6 @@
 {
   "name": "evolut",
-  "version": "0.0.4",
+  "version": "0.1.1",
   "description": "Design of artificial animals with evolutionary algorithms",
   "private": true,
   "main": "main.js",
@@ -45,9 +45,9 @@
     "p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
     "partial.lenses": "latest",
     "pixi.js": "latest",
+    "point-in-polygon": "latest",
     "ramda": "latest",
-    "random-js": "latest",
-    "point-in-polygon": "latest"
+    "random-js": "latest"
   },
   "devDependencies": {
     "chai": "latest",

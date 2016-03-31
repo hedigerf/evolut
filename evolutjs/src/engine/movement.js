@@ -81,6 +81,16 @@ export function isMinAngle(constraint) {
 class SetAnglesTo extends Movement {
 
   /**
+   * Returns the identifier of this movement.
+   *
+   * @override
+   * @return {String}
+   */
+  static get identifier() {
+    return 'setAnglesTo';
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * 0 is always seed as the default angle.

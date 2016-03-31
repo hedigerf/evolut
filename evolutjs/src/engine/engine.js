@@ -7,6 +7,7 @@
 import { nth } from 'ramda';
 
 import CyclicStateMachine, { CyclicState } from './cyclicStateMachine';
+import Identifiable from '../types/identifiable';
 
 /**
  * Offset for advancing a movement index.
@@ -19,8 +20,10 @@ const MOVEMENT_OFFSET = 1;
  * Represents a single movement of a phonotype.
  * A movement could be locking the angle of a joint.
  * Or setting the speed of joint's motor.
+ *
+ * @extends {Identifiable}
  */
-export class Movement {
+export class Movement extends Identifiable() {
 
   /**
    * Apply the movemement to a phenotype.

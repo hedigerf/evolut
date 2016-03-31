@@ -19,7 +19,7 @@ const template = [
       {
         label: 'Reload',
         accelerator: 'CmdOrCtrl+R',
-        click: (item, focusedWindow) => focusedWindow.reloadIgnoringCache()
+        click: (item, focusedWindow) => focusedWindow.webContents.reloadIgnoringCache()
       },
       {
         label: 'Toggle DevTools',

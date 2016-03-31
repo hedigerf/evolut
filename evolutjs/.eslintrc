@@ -7,6 +7,8 @@
     "cancelAnimationFrame": true,
     "document": true,
     "requestAnimationFrame": true,
+    "Reflect": true,
+    "Symbol": true,
     "WeakMap": true
   },
   "parserOptions": {

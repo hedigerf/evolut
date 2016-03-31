@@ -15,9 +15,17 @@ import { PartialGenotype } from '../genotype/genotype';
  * Lens for the engine type.
  *
  * @param {Object} The option object.
- * @return {String} The engine type.
+ * @return {Lens} The engine type.
  */
 const lensType = L.prop('type');
+
+/**
+ * Lens for the movement description.
+ *
+ * @param {Object} The option object.
+ * @return {Lens} The engine type.
+ */
+const lensMovement = L.prop('movement');
 
 /**
  * Returns the constructor for an engine.
@@ -45,6 +53,18 @@ export default class Engine extends PartialGenotype {
 
     super(options);
 
+    this.movement = [
+      [
+        ['id', [1]],
+        ['blub', [2, 3]]
+      ]
+    ];
+
+    /**
+     * @member
+     * @type {Array<Array<String|Array<*>>>}
+     */
+    this.movement = view(lensMovement, options);
     this.type = getEngine(view(lensType, options));
   }
 
