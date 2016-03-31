@@ -91,7 +91,7 @@ export default class Individual extends Phenotype {
     };
     const midShape = new p2.Circle({ radius: 0.05 });
     const midBody = new p2.Body({
-      mass: 1,
+      mass: 0.0001,
       position: [body.position[0], body.position[1]]
     });
     const midConstraint = new p2.RevoluteConstraint(midBody, body, {
