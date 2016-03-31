@@ -9,7 +9,6 @@ import { List, Range } from 'immutable';
 import L  from 'partial.lenses';
 import { compose, set, view } from 'ramda';
 import Random  from 'random-js';
-import classifyPoint from 'robust-point-in-polygon';
 import inside from 'point-in-polygon';
 
 import { PartialGenotype } from '../genotype/genotype';
@@ -98,18 +97,20 @@ export default class Body extends PartialGenotype {
     const polygonArray = polygon.toArray();
     return polygonArray;
   }
-
+  /**
+   * [Generates all positions of the hip joints]
+   *
+   * @param  {Array<Number>} polygonArray [Array containing all points of the polygon]
+   * @return {Array<Number>}              [hip joint positions]
+   */
   static seedHipJointPositions(polygonArray) {
 
     const generateP = (minX, maxX, minY, maxY) => {
       let p = [random.real(minX, maxX), random.real(minY, maxY)];
-      // Let condition = (1 === classifyPoint(polygonArray, p));
       let condition = inside(p, polygonArray);
       while (!condition) {
         p = [random.real(minX, maxX), random.real(minY, maxY)];
-        // Const classified = classifyPoint(polygonArray, p);
         condition = inside(p, polygonArray);
-        // Condition = (1 === classified);
       }
       return p;
     };
@@ -129,7 +130,15 @@ export default class Body extends PartialGenotype {
 
     return hipJointPositions.toArray();
   }
-
+  /**
+   * [Generates a random polygon]
+   *
+   * @param  {Number} startAngle  [the start angle]
+   * @param  {Number} endAngle    [the end angle]
+   * @param  {Number} sectorAngle [angle of one sector]
+   * @param  {list<Number>} acc         [accumulator]
+   * @return {list<Number>}             [list of polygon points]
+   */
   static generateRandomPolygon(startAngle, endAngle, sectorAngle, acc) {
     const r = random.real(RADIUS / 2, RADIUS);
     const angle = random.real(startAngle, endAngle);

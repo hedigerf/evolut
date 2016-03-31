@@ -46,7 +46,6 @@
     "pixi.js": "latest",
     "ramda": "latest",
     "random-js": "latest",
-    "robust-point-in-polygon": "latest",
     "point-in-polygon": "latest"
   },
   "devDependencies": {
