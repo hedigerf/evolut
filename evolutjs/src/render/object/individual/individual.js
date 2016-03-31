@@ -13,7 +13,9 @@ import log4js from 'log4js';
 import { curry } from 'ramda';
 
 import Phenotype from './phenotype';
+import { debug, info } from '../../../util/logUtil';
 
+const logger = log4js.getLogger('individual pheno');
 const random = new Random(Random.engines.mt19937().autoSeed());
 
 /**
@@ -102,6 +104,7 @@ export default class Individual extends Phenotype {
     this.addConstraint(midConstraint);
     let counter = 0;
     const centerOfMassBody =  body.shapes[0].centerOfMass;
+    info(logger, 'Center of Mass: ' + centerOfMassBody);
     const createLeg = ({ pos, speed, legDescriptor, hipJointPosition }) => {
       counter++;
       const styleLeg = {
@@ -148,48 +151,9 @@ export default class Individual extends Phenotype {
 
       const lowerLegFootLock = new p2.LockConstraint({ localOffsetB: [0, 0] });
       this.addConstraint(lowerLegFootLock);*/
-      let calcX;
-      info(logger, 'XHip' + counter);
-      if (hipJointPosition[0] > 0) {
-        if (centerOfMassBody[0] > 0) {
-          calcX = hipJointPosition[0] - centerOfMassBody[0];
-          info(logger, '00');
-        }else {
-          calcX = hipJointPosition[0] + centerOfMassBody[0];
-          info(logger, '01');
 
-        }
-      }else {
-        if (centerOfMassBody[0] > 0) {
-          info(logger, '10');
-          calcX = hipJointPosition[0] + centerOfMassBody[0];
-        }else {
-          calcX = hipJointPosition[0] - centerOfMassBody[0];
-          info(logger, '11');
-        }
-      }
-      let calcY;
-      info(logger, 'YHip' + counter);
-      if (hipJointPosition[1] > 0) {
-        if (centerOfMassBody[1] > 0) {
-          calcY = hipJointPosition[1] - centerOfMassBody[1];
-          info(logger, '00');
-        }else {
-          calcY = hipJointPosition[1] + centerOfMassBody[1];
-          info(logger, '01');
-        }
-      }else {
-        if (centerOfMassBody[1] > 0) {
-          calcY = hipJointPosition[1] + centerOfMassBody[1];
-          info(logger, '10');
-        }else {
-          calcY = hipJointPosition[1] - centerOfMassBody[1];
-          info(logger, '11');
-        }
-      }
-
-    //  const calcX = hipJointPosition[0] - centerOfMassBody[0];
-    //  const calcY = hipJointPosition[1] - centerOfMassBody[1];
+      const calcX = hipJointPosition[0]; // - centerOfMassBody[0];
+      const calcY = hipJointPosition[1]; // - centerOfMassBody[1];
       const revoluteHip = this.createRevoluteConstraint(speed, upperLegBody, body,
         [0, upperLegHeight / 2],
         [calcX, calcY]
