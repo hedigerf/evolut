@@ -90,6 +90,12 @@ export default class Genotype {
    */
   constructor(genotype) {
     this.instanceParts = this.constructor.build(genotype);
+
+
+    const built = this.constructor.build(genotype);
+    for (const property in built) {
+      this[property] = built[property];
+    }
   }
 
   /**

@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import Random from 'random-js';
 
 import SelectionStrategy from './selectionStrategy';
-import {debug,info} from '../../util/logUtil';
+import {debug, info} from '../../util/logUtil';
 import Population from '../population/population';
 
 const logger = log4js.getLogger('TournamentBasedSelectionStrategy');
@@ -17,7 +17,7 @@ export default class TournamentBasedSelectionStrategy extends SelectionStrategy{
     super(population);
     this.population = population;
     this.k = k;
-    info(logger,'Torunament-based Selection k = ' + k);
+    info(logger, 'Torunament-based Selection k = ' + k);
   }
 
   /**
@@ -32,23 +32,23 @@ export default class TournamentBasedSelectionStrategy extends SelectionStrategy{
 
       const chooseIndividuals = (kCount) => {
         const randomIndex = random.integer(0, this.population.individuals.size - 1);
-        debug(logger,'kCount: ' + kCount + ' randomIndex: ' + randomIndex);
+        debug(logger, 'kCount: ' + kCount + ' randomIndex: ' + randomIndex);
         const chosenOne = this.population.individuals.get(randomIndex);
         if (chosenOne === undefined) {
-          info(logger,'undefined at ' + randomIndex);
+          info(logger, 'undefined at ' + randomIndex);
         }
         return chosenOne;
       };
 
-      debug(logger,'RunNr: ' + runNr);
+      debug(logger, 'RunNr: ' + runNr);
       const selectedIndividuals = Immutable.Range(1, this.k + 1).map(
         chooseIndividuals);
       const fittestIndividual = selectedIndividuals.max((individualA,
         individualB) => individualA.fitness > individualB.fitness);
       return fittestIndividual;
     };
-
-    return new Population(Immutable.Range(0, runs).map(selectForRun),this.population.generationCount + 1);
+    const individuals = Immutable.Range(0, runs).map(selectForRun);
+    return new Population(Immutable.List(individuals), this.population.generationCount + 1);
 
   }
 

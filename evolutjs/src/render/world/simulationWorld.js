@@ -35,6 +35,8 @@ const stepTime = config('simulation.stepTime');
 const evaluateAfterTickCount = config('simulation.evaluateAfterTickCount');
 const timeOut = config('simulation.timeOut');
 const mustMovement = config('simulation.mustMovement');
+const runDuration = config('simulation.runDuration');
+
 
 const lensBodyXpos = L.compose(L.prop('bodies'), L.index(0), L.prop('position'), L.index(0));
 
@@ -75,6 +77,7 @@ export default class SimulationWorld extends P2Pixi.Game {
     this.currentTime = 0;
     this.tickCount = 0;
     this.positionLastEvaluation = Map();
+    this.phenotypeToGenotype = Map();
 
   }
 
@@ -98,9 +101,10 @@ export default class SimulationWorld extends P2Pixi.Game {
     } else {
       takeN = this.population.individuals.size;
     }
-    this.phenoTypes = this.population.individuals.take(takeN).map(i => {
-      const individual = new Individual(this, i);
+    this.phenoTypes = this.population.individuals.take(takeN).map(genotype => {
+      const individual = new Individual(this, genotype);
       this.positionLastEvaluation = this.positionLastEvaluation.set(individual, view(lensBodyXpos, individual));
+      this.phenotypeToGenotype = this.phenotypeToGenotype.set(individual, genotype);
       return individual;
     });
     info(logger, 'drawn ' + this.phenoTypes.size + ' phenoTypes');
@@ -121,6 +125,7 @@ export default class SimulationWorld extends P2Pixi.Game {
       const posCurEvaluation = view(lensBodyXpos, individual);
       const delta = posCurEvaluation - posLastEvaluation;
       if (timeOut && mustMovement >= delta) {
+        // Remove Individuals which are stuck from simulation
         removeElements = removeElements.push(individual);
         this.removeGameObject(individual);
       }else {
@@ -128,14 +133,24 @@ export default class SimulationWorld extends P2Pixi.Game {
       }
     });
     this.phenoTypes = this.phenoTypes.filterNot(individual => removeElements.includes(individual));
+    this.recordFitness(removeElements);
     if (this.phenoTypes.size === 0) {
+      // If there are no more individuals remaining in the simulation, end the run
       this.runOver = true;
     }else {
+      // Track always the individual which is leading
       const trackedIndividual = this.phenoTypes.maxBy(individual => view(lensBodyXpos, individual));
       this.trackedBody = trackedIndividual.bodies[0];
 
     }
 
+  }
+
+  recordFitness(phenotypes) {
+    phenotypes.forEach((individual) => {
+      const genotype = this.phenotypeToGenotype.get(individual);
+      genotype.fitness = view(lensBodyXpos, individual);
+    });
   }
 
   /**
@@ -148,11 +163,11 @@ export default class SimulationWorld extends P2Pixi.Game {
     info(logger, 'Preparing Simulation for Generation: ' + this.population.generationCount);
     this.generateParcour(this.parcourOptions.maxSlope, this.parcourOptions.highestY);
     this.drawPhenotypes();
-    const runDuration = config('simulation.runDuration');
     this.currentTime = 0;
     this.world.on('postStep', (event) => { // eslint-disable-line no-unused-vars
       this.tickCount++;
       if (this.tickCount % evaluateAfterTickCount === 0) {
+        // Perform Evulation after tickCount is reached
         this.evaluate();
       }
       this.currentTime += this.stepTime;
@@ -204,6 +219,7 @@ export default class SimulationWorld extends P2Pixi.Game {
 
         self.req = requestAnimationFrame(update);
       } else {
+        self.recordFitness(self.phenoTypes);
         cancelAnimationFrame(self.req);
         // TODO update generaton with fitness values, dont pass renderers
         self.cb({ generationCount: self.population.generationCount, individuals: self.population.individuals });

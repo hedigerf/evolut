@@ -25,11 +25,8 @@ function performSimulationPostprocessing(population) {
   const selectionStrategy = new TournamentBasedSelectionStrategy(population, 10);
   const selected = selectionStrategy.select();
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
-  simulation.clear();
-  simulation.reset();
+  simulation.addNewPopulation(population);
   simulation.drawPhenotypes();
-  // Graphical objects need to be constructed freshly
-  // Simulation.addNewPopulation(selected);
   simulation.generateParcour(config('parcour.startMaxSlope'), config('parcour.startHighestY'));
   simulation.run();
 }
