@@ -16,7 +16,7 @@
     "render": true,
     "solo": false,
     "stepTime": 0.016,
-    "evaluateAfterTickCount": 120,
+    "evaluateAfterTickCount": 240,
     "timeOut": true,
     "mustMovement": 0.05
   }

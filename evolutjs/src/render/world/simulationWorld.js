@@ -121,13 +121,20 @@ export default class SimulationWorld extends P2Pixi.Game {
       const posCurEvaluation = view(lensBodyXpos, individual);
       const delta = posCurEvaluation - posLastEvaluation;
       if (timeOut && mustMovement >= delta) {
-        removeElements.push(individual);
+        removeElements = removeElements.push(individual);
         this.removeGameObject(individual);
       }else {
         this.positionLastEvaluation = this.positionLastEvaluation.set(individual, posCurEvaluation);
       }
     });
     this.phenoTypes = this.phenoTypes.filterNot(individual => removeElements.includes(individual));
+    if (this.phenoTypes.size === 0) {
+      this.runOver = true;
+    }else {
+      const trackedIndividual = this.phenoTypes.maxBy(individual => view(lensBodyXpos, individual));
+      this.trackedBody = trackedIndividual.bodies[0];
+
+    }
 
   }
 

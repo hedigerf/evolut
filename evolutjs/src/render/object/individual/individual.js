@@ -62,7 +62,7 @@ export default class Individual extends Phenotype {
    */
   fromGenotype(genotype) {
     const bodyDescriptor = genotype.instanceParts.body;
-    const posX = random.real(-30, -27);
+    const posX = 0;
     const posY = 0.4;
 
     const bodyOptions = {
