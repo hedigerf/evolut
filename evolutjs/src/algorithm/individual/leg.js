@@ -41,7 +41,7 @@ const DEFAULT_LEG_HEIGHT = 1;
 export default class Leg extends PartialGenotype {
 
   /**
-   * Default constructor of a Leg.
+   * Constructor of a Leg.
    *
    * @param {Object} options
    * @param {Number} options.massFactor
@@ -52,9 +52,33 @@ export default class Leg extends PartialGenotype {
 
     super(options);
 
+    /**
+     * Mass of this leg.
+     *
+     * @type {Number}
+     */
     this.mass = view(lensMass, options);
+
+    /**
+     * Mass factor of this leg.
+     *
+     * @type {Number}
+     */
     this.massFactor = view(lensMassfactor, options);
+
+    /**
+     * Height of this leg.
+     *
+     * @type {Number}
+     */
     this.height = view(lensHeight, options) || DEFAULT_LEG_HEIGHT;
+
+    /**
+     * Height factor of this leg.
+     * Determines the size of the thigh and shank.
+     *
+     * @type {Number}
+     */
     this.heightFactor = view(lensHeightFactor, options);
   }
 

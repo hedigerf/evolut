@@ -39,6 +39,11 @@ export const IDENTIFIER_LEGS = 'legs';
  */
 export default class Individual extends Genotype {
 
+  /**
+   * Constructor of an individual.
+   *
+   * @param {Object} genotype A seeded genotype information object
+   */
   constructor(genotype) {
     super(distribute(genotype));
   }

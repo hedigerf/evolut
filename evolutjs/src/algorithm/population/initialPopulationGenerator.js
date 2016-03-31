@@ -10,7 +10,7 @@ const logger = log4js.getLogger('InitialPopulationGenerator');
 /**
  * Responsible for generation the initial Population of the Simulation
  */
-export default class InitialPopulationGenerator{
+export default class InitialPopulationGenerator {
   constructor(bodyPointsRange, populationSize) {
     this.bodyPointsRange = bodyPointsRange;
     this.populationSize = populationSize;
@@ -36,21 +36,21 @@ export default class InitialPopulationGenerator{
 
       const seed = Individual.seed({
         body: { massFactor: 1, bodyPointsCount: currentBodyPoints, bodyPoints: [[0, 0], [1, 0], [1, 1], [0, 1]],
-          hipJointPositions: [[(0.5 * (1 - 1)), 0], [(0.5 * (2 - 1)), 0], [(0.5 * (3 - 1)), 0] ] },
-        engine: { type: 'test' },
+          hipJointPositions: [[(0.5 * (1 - 1)), 0], [(0.5 * (2 - 1)), 0], [(0.5 * (3 - 1)), 0]] },
+        engine: { movement: [] },
         legs:
         [
           {
             leg: { height: 0.8, heightFactor: 0.5, massFactor: 1 },
-            joint: { position: [(0.5 * (1 - 1)), 0], orientation: 1 }
+            joint: { orientation: 1 }
           },
           {
             leg: { height: 0.8, heightFactor: 0.5, massFactor: 1 },
-            joint: { position: [(0.5 * (2 - 1)), 0] , orientation: 1 }
+            joint: { orientation: 1 }
           },
           {
             leg: { height: 0.8, heightFactor: 0.5, massFactor: 1 },
-            joint: { position: [(0.5 * (3 - 1)), 0], orientation: 1 }
+            joint: { orientation: 1 }
           },
           {
             leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }

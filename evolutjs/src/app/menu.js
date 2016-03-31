@@ -35,6 +35,21 @@ const template = [
         click: () => app.quit()
       }
     ]
+  },
+  {
+    label: 'Simulation',
+    submenu: [
+      {
+        label: 'Pause',
+        accelerator: 'CmdOrCtrl+P',
+        click: (item, focusedWindow) => {} // eslint-disable-line no-unused-vars
+      },
+      {
+        label: 'Rendering',
+        accelerator: 'CmdOrCtrl+F',
+        click: (item, focusedWindow) => {} // eslint-disable-line no-unused-vars
+      }
+    ]
   }
 ];
 

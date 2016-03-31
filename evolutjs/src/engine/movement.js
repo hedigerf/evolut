@@ -339,6 +339,10 @@ export const until = curry(
 );
 
 /**
+ * Waits until a predicate is true for a constraint
+ * and then executes a callback.
+ *
+ * @function
  * @param {function(*, Number): Boolean} pred
  * @param {function(Lens, *, Number)} onTrue
  * @param {Lens} lens The lens to a contraint
