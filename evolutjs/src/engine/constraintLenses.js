@@ -62,7 +62,7 @@ export const lensHip = L.prop('hip');
  * @function
  * @return {Lens}
  */
-export const lensKnee = L.prop('Knee');
+export const lensKnee = L.prop('knee');
 
 /**
  * Lens left revolute constraints information.

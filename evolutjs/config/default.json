@@ -11,7 +11,7 @@
     "startHighestY": 0
   },
   "simulation": {
-    "friction": 0.1,
+    "friction": 1000,
     "runDuration": 100,
     "render": true,
     "solo": true,
