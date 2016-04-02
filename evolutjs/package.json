@@ -10,7 +10,7 @@
     "lint": "eslint src/**/*.js test/**/*.js",
     "assert": "mocha test/**/*.js",
     "doc": "jsdoc -d doc -r src",
-    "esdoc": "esdoc -c esdoc.json"
+    "esdoc": "esdoc -c .esdocrc"
   },
   "repository": {
     "type": "git",

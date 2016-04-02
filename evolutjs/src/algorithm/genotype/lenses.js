@@ -112,7 +112,7 @@ export const lensFirstKneeJoint = lensNthKneeJoint(FIRST);
 /**
  * Chooses the property with the highest index.
  *
- * @param {Object}
+ * @param {Object} [legs={}] All leg pairs
  * @return {Lens}
  */
 const lensChooseLast = L.choose(

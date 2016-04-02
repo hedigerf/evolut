@@ -83,11 +83,10 @@ class SetAnglesTo extends Movement {
   /**
    * Returns the identifier of this movement.
    *
-   * @override
    * @return {String}
    */
   static get identifier() {
-    return 'setAnglesTo';
+    return '144ae59d-d0d3-4de1-8644-a79ea406358c';
   }
 
   /**
@@ -122,6 +121,15 @@ class SetAnglesTo extends Movement {
 class SetAnglesToCurrent extends Movement {
 
   /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return '0130da45-8f18-441e-824a-726baa7e384d';
+  }
+
+  /**
    * @param {Lens} lens The lens to a contraint
    * @param {Phenotype} phenotype The target phenotype
    * @return {Boolean}
@@ -141,6 +149,15 @@ class SetAnglesToCurrent extends Movement {
  * @extends {Movement}
  */
 class SetMotor extends Movement {
+
+  /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return '96e58dbc-a11d-4f84-a2f6-a3456b0c0e16';
+  }
 
   /**
    * Apply the movemement to a phenotype.
@@ -172,6 +189,15 @@ class SetMotor extends Movement {
 class SetSpeedTo extends Movement {
 
   /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'a485a6a1-d027-4f06-b5e1-7b6a7f195cc6';
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Number} speed The speed of a constraint
@@ -192,6 +218,15 @@ class SetSpeedTo extends Movement {
  * @extends {Movement}
  */
 class Until extends Movement {
+
+  /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return '6f1c0cb1-1df4-4347-9029-cc7747c97c16';
+  }
 
   /**
    * Apply the movemement to a phenotype.
@@ -215,6 +250,15 @@ class Until extends Movement {
  * @extends {Movement}
  */
 class When extends Movement {
+
+  /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'bd309204-174a-4818-8061-f3d370e163ba';
+  }
 
   /**
    * Apply the movemement to a phenotype.

@@ -10,10 +10,9 @@ import Random from 'random-js';
 
 import {List, Map} from 'immutable';
 import log4js from 'log4js';
-import { curry } from 'ramda';
 
 import Phenotype from './phenotype';
-import { debug, info } from '../../../util/logUtil';
+import { info } from '../../../util/logUtil';
 
 const logger = log4js.getLogger('individual pheno');
 const random = new Random(Random.engines.mt19937().autoSeed());

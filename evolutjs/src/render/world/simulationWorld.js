@@ -9,11 +9,15 @@ import P2Pixi from './../../../lib/p2Pixi';
 import log4js from 'log4js';
 
 import FlatParcour from '../object/parcour/flatParcour';
-import DemoGround from '../object/demoGround';
+import Engine from '../../engine/engine';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
 import config from '../../../config';
 import { info } from '../../util/logUtil';
 import Individual from '../object/individual/individual';
+
+import AntEngine from '../../engine/ant/antEngine';
+
+console.log(AntEngine.serialize());
 
 /**
  * World start time.
@@ -69,8 +73,6 @@ export default class SimulationWorld extends P2Pixi.Game {
   generateParcour(maxSlope, highestY) {
     if (this.parcourOptions.mode === 'flat') {
       new FlatParcour(this);
-    } else if (this.parcourOptions.mode === 'demo') {
-      new DemoGround(this);
     } else if (this.parcourOptions.mode === 'generator') {
       const parcourGenerator = new ParcourGenerator();
       parcourGenerator.generateParcour(this, maxSlope, highestY);
@@ -125,12 +127,10 @@ export default class SimulationWorld extends P2Pixi.Game {
 
         this.phenoTypes.forEach((individual) => {
 
-          const engine = individual.engine;
-
           if (this.currentTime === WORLD_START_TIME + stepTime) {
-            engine.initialStep(individual);
+            Engine.initialStep(individual);
           } else {
-            engine.step(individual, this.currentTime);
+            Engine.step(individual, this.currentTime);
           }
 
         });
