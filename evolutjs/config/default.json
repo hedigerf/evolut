@@ -18,6 +18,7 @@
     "stepTime": 0.016,
     "evaluateAfterTickCount": 240,
     "timeOut": true,
-    "mustMovement": 0.05
+    "mustMovement": 0.05,
+    "trackY": false
   }
 }

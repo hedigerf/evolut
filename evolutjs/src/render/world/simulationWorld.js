@@ -36,6 +36,8 @@ const evaluateAfterTickCount = config('simulation.evaluateAfterTickCount');
 const timeOut = config('simulation.timeOut');
 const mustMovement = config('simulation.mustMovement');
 const runDuration = config('simulation.runDuration');
+const trackY = config('simulation.trackY');
+
 
 
 const lensBodyXpos = L.compose(L.prop('bodies'), L.index(0), L.prop('position'), L.index(0));
@@ -244,6 +246,30 @@ export default class SimulationWorld extends P2Pixi.Game {
     }
 
     self.req = requestAnimationFrame(update);
+  }
+  /**
+   * P2Pixi beforeRender function, modified so it only tracks x position and not y position
+   */
+  beforeRender() {
+    const trackedBody = this.trackedBody;
+
+    // Focus tracked body, if set
+    if (trackedBody !== null) {
+      const pixiAdapter = this.pixiAdapter;
+      const renderer = pixiAdapter.renderer;
+      const ppu = pixiAdapter.pixelsPerLengthUnit;
+      const containerPosition = pixiAdapter.container.position;
+      const trackedBodyPosition = trackedBody.position;
+      const trackedBodyOffset = this.options.trackedBodyOffset;
+      const deviceScale = pixiAdapter.deviceScale;
+
+      containerPosition.x = ((trackedBodyOffset[0] + 1) * renderer.width * 0.5) - (trackedBodyPosition[0] * ppu * deviceScale);
+      if (trackY) {
+        containerPosition.y = ((trackedBodyOffset[1] + 1) * renderer.height * 0.5) + (trackedBodyPosition[1] * ppu * deviceScale);
+      }else {
+        containerPosition.y = ((0 + 1) * renderer.height * 0.5) + (0 * ppu * deviceScale);
+      }
+    }
   }
 
   addGameObject(gameObject) {
