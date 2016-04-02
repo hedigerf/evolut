@@ -240,7 +240,6 @@ export default class SimulationWorld extends P2Pixi.Game {
       } else {
         self.recordFitness(self.phenoTypes);
         cancelAnimationFrame(self.req);
-        // TODO update generaton with fitness values, dont pass renderers
         self.cb({ generationCount: self.population.generationCount, individuals: self.population.individuals });
       }
     }
