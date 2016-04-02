@@ -135,12 +135,12 @@ export const antEngineMovements = [
       M.setAngles(ANGLE_MIN, ANGLE_MAX, lensRBKnee)
     ),
     M.allPass( // Move right hips, knees
-      M.setSpeed(-1, lensRFHip),
-      M.setSpeed(-1, lensRMHip),
-      M.setSpeed(-1, lensRBHip),
-      M.setSpeed(-1, lensRFKnee),
-      M.setSpeed(-1, lensRMKnee),
-      M.setSpeed(-1, lensRBKnee)
+      M.setSpeed(1, lensRFHip),
+      M.setSpeed(1, lensRMHip),
+      M.setSpeed(1, lensRBHip),
+      M.setSpeed(1, lensRFKnee),
+      M.setSpeed(1, lensRMKnee),
+      M.setSpeed(1, lensRBKnee)
     ),
     M.allPass( // Wait until joints fully deflected
       M.until(M.isMaxAngle, lensRFHip),

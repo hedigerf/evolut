@@ -39,8 +39,6 @@ export default class Engine extends PartialGenotype {
 
     super(options);
 
-    console.log(view(lensMovement, options));
-
     /**
      * Describes the movemement phases and every movement of each phase.
      *
