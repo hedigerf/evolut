@@ -60,6 +60,9 @@ export default class Individual extends Phenotype {
    * @param {Genotype} genotype The genotype
    */
   fromGenotype(genotype) {
+
+    this.engine = genotype.engine.movementEngine;
+
     const bodyDescriptor = genotype.body;
     const posX = 0;
     const posY = 0.4;

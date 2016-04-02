@@ -6,8 +6,11 @@
  */
 
 import L  from 'partial.lenses';
-import { set, view } from 'ramda';
+import { apply, head, set, tail, view } from 'ramda';
 
+import { antEngineMovements } from '../../engine/ant/antEngine';
+import MovementEngine, { MovementPhase } from '../../engine/engine';
+import * as M from '../../engine/movement';
 import { PartialGenotype } from '../genotype/genotype';
 
 /**
@@ -36,12 +39,42 @@ export default class Engine extends PartialGenotype {
 
     super(options);
 
+    console.log(view(lensMovement, options));
+
     /**
      * Describes the movemement phases and every movement of each phase.
      *
-     * @type {Array<Array<String|Array<*>>>}
+     * @type {Engine}
      */
-    this.movement = view(lensMovement, options);
+    this.movementEngine = this.translateMovementsIntoEngine(antEngineMovements);
+  }
+
+  /**
+   * @param {Array<Array<String|Array<*>>>} movements
+   * @return {Engine}
+   */
+  translateMovementsIntoEngine(movements) {
+
+    const initialStep = apply(M.allPass, head(movements));
+    const states = tail(movements).map(m => class extends MovementPhase {
+
+      static get movements() {
+        return m;
+      }
+
+    });
+
+    return class extends MovementEngine {
+
+      static get states() {
+        return states;
+      }
+
+      static initialStep(phenotype) {
+        initialStep(phenotype);
+      }
+
+    };
   }
 
   /**

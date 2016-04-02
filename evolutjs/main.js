@@ -1,10 +1,10 @@
-const crashReporter = require('electron').crashReporter;
-crashReporter.start({
-  productName: 'evolut',
-  companyName: 'evolut',
-  submitURL: 'https://github.com/hedigerf/evolut/issues',
-  autoSubmit: false
-});
+/**
+ * This is the application entry point.
+ * Ensures that all es2015 sources are transpiled.
+ * And then starts the application.
+ *
+ * @module main
+ */
 
 require('babel-register');
-require('./app.js');
+require('./src/app/app.js');

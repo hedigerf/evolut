@@ -40,14 +40,19 @@ const template = [
     label: 'Simulation',
     submenu: [
       {
-        label: 'Pause',
-        accelerator: 'CmdOrCtrl+P',
-        click: (item, focusedWindow) => {} // eslint-disable-line no-unused-vars
+        label: 'Next Generation',
+        accelerator: 'CmdOrCtrl+F',
+        click: (item, focusedWindow) => focusedWindow.webContents.send('world-next-generation')
       },
       {
-        label: 'Rendering',
-        accelerator: 'CmdOrCtrl+F',
-        click: (item, focusedWindow) => {} // eslint-disable-line no-unused-vars
+        label: 'Pause / Resume',
+        accelerator: 'CmdOrCtrl+P',
+        click: (item, focusedWindow) => focusedWindow.webContents.send('world-toggle-pause')
+      },
+      {
+        label: 'Toggle Rendering',
+        accelerator: 'CmdOrCtrl+V',
+        click: (item, focusedWindow) => focusedWindow.webContents.send('world-toggle-rendering')
       }
     ]
   }

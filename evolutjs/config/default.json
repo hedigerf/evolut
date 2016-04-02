@@ -11,13 +11,8 @@
     "startHighestY": 0
   },
   "simulation": {
-    "friction": 1000,
-    "runDuration": 100,
-    "render": true,
-    "solo": false,
-    "stepTime": 0.016,
     "evaluateAfterTickCount": 240,
-    "timeOut": true,
-    "mustMovement": 0.05
+    "mustMovement": 0.05,
+    "timeOut": true
   }
 }

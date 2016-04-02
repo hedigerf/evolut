@@ -1,13 +1,13 @@
 /**
  * Defines the main application menu.
  *
- * @module app
+ * @module app/app
  */
 
 import { app, BrowserWindow } from 'electron';
 
 import config from './config';
-import './src/app/menu';
+import './menu';
 
 /**
  * Start page.
@@ -15,10 +15,10 @@ import './src/app/menu';
  * @private
  * @type {String}
  */
-const index = 'file://' + __dirname + '/index.html';
+const index = 'file://' + __dirname + '/../../index.html';
 
 /**
- * Main application handle.
+ * Main window application handle.
  *
  * @private
  * @type {BrowserWindow}
@@ -45,4 +45,5 @@ app.on('ready', () => {
     mainWindow = null;
     app.exit(0);
   });
+
 });

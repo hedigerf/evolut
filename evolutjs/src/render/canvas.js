@@ -9,9 +9,10 @@ import path from 'path';
 import canvasBuffer from 'electron-canvas-to-buffer';
 
 /**
- * Returns the path of an output image
+ * Returns the path of an output image.
+ * Images are stored under assets/images/.
  *
- * @param {String} name
+ * @param {String} name The file name.
  * @return {String}
 */
 function imagePath(name) {
@@ -19,7 +20,7 @@ function imagePath(name) {
 }
 
 /**
- * Writes a canvas dom element to a picture
+ * Writes a canvas dom element to a picture.
  *
  * @param {Node} canvas
  * @param {String} imageName

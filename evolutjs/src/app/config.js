@@ -3,10 +3,17 @@
  * Takes care of deafault values for necessary configurations.
  * Exports getter for retrieving values.
  *
- * @module config
+ * @module app/config
  */
 
 import config from 'config';
+
+/**
+ * Average acceleration on earth.
+ *
+ * @type {Number}
+ */
+const EARTH_GRAVITY = -9.81;
 
 /**
  * Default configuration
@@ -23,15 +30,16 @@ const defaults = {
   },
   simulation: {
     friction: 1000,
-    runDuration: 60,
+    gravity: [0, EARTH_GRAVITY],
     render: true,
+    runDuration: 60,
     solo: false,
     stepTime: 0.016
   }
 };
 
 // Mixin configs from configuration file, and make those the defaults
-config.util.extendDeep(defaults, config);
+config.util.extendDeep(config, config.util.extendDeep(defaults, config));
 
 /**
  * Returns the value for a configuration key
