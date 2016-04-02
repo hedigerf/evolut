@@ -35,7 +35,7 @@ export default class InitialPopulationGenerator{
       const currentBodyPoints = this.bodyPointsRange.get(currentBodyPointsIndex);
 
       const seed = Individual.seed({
-        body: { massFactor: 1, bodyPointsCount: 4, bodyPoints: [[0, 0], [1, 0], [1, 1], [0, 1]] },
+        body: { massFactor: 1 },
         engine: { type: 'test' },
         legs:
         [

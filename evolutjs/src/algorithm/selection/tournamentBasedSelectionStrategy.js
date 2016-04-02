@@ -48,7 +48,7 @@ export default class TournamentBasedSelectionStrategy extends SelectionStrategy{
       return fittestIndividual;
     };
     const individuals = Immutable.Range(0, runs).map(selectForRun);
-    return new Population(Immutable.List(individuals), this.population.generationCount + 1);
+    return new Population(Immutable.List(individuals), this.population.generationCount);
 
   }
 
