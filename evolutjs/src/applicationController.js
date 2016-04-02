@@ -31,6 +31,7 @@ function performSimulationPostprocessing(population) {
   simulation.addNewPopulation(mutated);
   simulation.drawPhenotypes();
   simulation.generateParcour(config('parcour.startMaxSlope'), config('parcour.startHighestY'));
+  info(logger, 'starting simulation for generation: ' + mutated.generationCount);
   simulation.run();
 }
 

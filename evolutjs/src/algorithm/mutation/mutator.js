@@ -18,12 +18,15 @@ from '../individual/body';
 const random = new Random(Random.engines.mt19937().autoSeed());
 
 // Probabilities
-const PROBABILITY_BODY_POINT = 1;
-const PROBABILITY_HIP_JOINT = 0.5;
-const PROBABILITY_LEG_HEIGHT = 0.5;
+const PROBABILITY_BODY_POINT = 0.1;
+const PROBABILITY_HIP_JOINT = 0.1;
+const PROBABILITY_LEG_HEIGHT = 0.1;
+const PROBABILITY_LEG_HEIGHT_FACTOR = 0.1;
+
 
 // Mutation steps
 const MUTATION_STEP_LEG_HEIGHT = 0.05;
+const MUTATION_STEP_LEG_HEIGHT_FACTOR = 0.05;
 
 
 export default class Mutator {
@@ -90,7 +93,10 @@ export default class Mutator {
     const oldLegList = List.of(oldLegs['0'], oldLegs['1'], oldLegs['2'], oldLegs['3'], oldLegs['4'], oldLegs['5']);
     const legs = oldLegList.map(legDescriptor => {
       const leg = legDescriptor.leg;
-      const legHeight = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT), this.mutateLegHeight(leg.height), leg.height);
+      const legHeight = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT),
+        this.mutateRealValue(leg.height, MUTATION_STEP_LEG_HEIGHT), leg.height);
+      const legHeightFactor = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT_FACTOR),
+        this.mutateRealValue(leg.heightFactor, MUTATION_STEP_LEG_HEIGHT_FACTOR), leg.heightFactor);
       return (
         {
           leg: new Leg(
@@ -98,7 +104,7 @@ export default class Mutator {
               mass: leg.mass,
               massFactor: leg.massFactor,
               height: legHeight,
-              heightFactor: leg.heightFactor
+              heightFactor: legHeightFactor
             }
           ),
           joint: legDescriptor.hipJoint
@@ -108,9 +114,9 @@ export default class Mutator {
     return { 0: legs.get(0), 1: legs.get(1), 2: legs.get(2), 3: legs.get(3), 4: legs.get(4), 5: legs.get(5) };
   }
 
-  mutateLegHeight(legHeight) {
-    const mutationStep = random.real(-MUTATION_STEP_LEG_HEIGHT, MUTATION_STEP_LEG_HEIGHT);
-    return legHeight + mutationStep;
+  mutateRealValue(realValue, mutationStep) {
+    const step = random.real(-mutationStep, mutationStep);
+    return realValue + step;
   }
 
   mutateHipJoint(minX, maxX , minY , maxY, bodyPoints, index) {
