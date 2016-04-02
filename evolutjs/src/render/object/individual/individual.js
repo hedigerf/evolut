@@ -186,8 +186,8 @@ export default class Individual extends Phenotype {
     // It would be bettter if legs isn array insted of object
     const legs = List.of(
       genotype.legs['0'],
-      genotype.legs['1'],
-      genotype.legs['2']
+      genotype.legs['2'],
+      genotype.legs['4']
     );
     // Const sortedByXposition = legs.sort((a, b) => a.legRelPos[0] < b.legRelPos[0]);
     const sortedByXpos = legs;

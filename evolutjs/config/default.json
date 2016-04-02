@@ -13,6 +13,7 @@
   "simulation": {
     "evaluateAfterTickCount": 240,
     "mustMovement": 0.05,
-    "timeOut": true
+    "timeOut": true,
+    "trackY": false
   }
 }

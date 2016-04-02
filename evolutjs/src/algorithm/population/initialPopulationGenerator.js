@@ -34,7 +34,7 @@ export default class InitialPopulationGenerator {
     const individuals = Range(1, this.populationSize + 1).map(count => {
 
       const seed = Individual.seed({
-        body: { massFactor: 1, bodyPointsCount: 4, bodyPoints: [[0, 0], [1, 0], [1, 1], [0, 1]] },
+        body: { massFactor: 1 },
         engine: { movement: [] },
         legs:
         [
