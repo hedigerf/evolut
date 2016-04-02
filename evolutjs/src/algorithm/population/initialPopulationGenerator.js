@@ -32,11 +32,9 @@ export default class InitialPopulationGenerator {
     info(logger, 'Genearting initial population with ' + this.bodyPointsRange.size +
       ' different BodyPoints. ' + individualsPerBp + ' Individuals per BodyPoint variation.');
     const individuals = Range(1, this.populationSize + 1).map(count => {
-      const currentBodyPoints = this.bodyPointsRange.get(currentBodyPointsIndex);
 
       const seed = Individual.seed({
-        body: { massFactor: 1, bodyPointsCount: currentBodyPoints, bodyPoints: [[0, 0], [1, 0], [1, 1], [0, 1]],
-          hipJointPositions: [[(0.5 * (1 - 1)), 0], [(0.5 * (2 - 1)), 0], [(0.5 * (3 - 1)), 0]] },
+        body: { massFactor: 1, bodyPointsCount: 4, bodyPoints: [[0, 0], [1, 0], [1, 1], [0, 1]] },
         engine: { movement: [] },
         legs:
         [

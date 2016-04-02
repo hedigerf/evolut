@@ -91,7 +91,10 @@ export default class Genotype {
    * @param {Object} genotype The whole genotype as object.
    */
   constructor(genotype) {
-    this.instanceParts = this.constructor.build(genotype);
+    const built = this.constructor.build(genotype);
+    for (const property in built) {
+      this[property] = built[property];
+    }
   }
 
   /**
@@ -131,7 +134,7 @@ export default class Genotype {
    * @return {Object}
    */
   blueprint() {
-    return JSON.stringify(this.instanceParts);
+    return JSON.stringify(this);
   }
 
 }

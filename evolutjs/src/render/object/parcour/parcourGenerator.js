@@ -103,7 +103,7 @@ export default class ParcourGenerator {
     const rockTexture = PIXI.Texture.fromImage(this.rockTexturePath(), false);
 
     const body = new p2.Body({
-      position: [-75, 0],
+      position: [-10, 0],
       mass: 0
     });
 

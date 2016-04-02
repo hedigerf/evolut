@@ -60,8 +60,8 @@ export default class Individual extends Phenotype {
    * @param {Genotype} genotype The genotype
    */
   fromGenotype(genotype) {
-    const bodyDescriptor = genotype.instanceParts.body;
-    const posX = random.real(-30, -27);
+    const bodyDescriptor = genotype.body;
+    const posX = 0;
     const posY = 0.4;
 
     const bodyOptions = {
@@ -81,7 +81,7 @@ export default class Individual extends Phenotype {
     };
 
     this.addBody(body);
-    this.addShape(body, this.makeShape(genotype.instanceParts.body.bodyPoints), [0, 0], 0, bodyOptions, style);
+    this.addShape(body, this.makeShape(genotype.body.bodyPoints), [0, 0], 0, bodyOptions, style);
     // Mid
     const styleMid = {
       lineWidth: 1,
@@ -182,21 +182,21 @@ export default class Individual extends Phenotype {
     // Only take 3 legs because one side is symertrical to the other.
     // It would be bettter if legs isn array insted of object
     const legs = List.of(
-      genotype.instanceParts.legs['0'],
-      genotype.instanceParts.legs['1'],
-      genotype.instanceParts.legs['2']
+      genotype.legs['0'],
+      genotype.legs['1'],
+      genotype.legs['2']
     );
     // Const sortedByXposition = legs.sort((a, b) => a.legRelPos[0] < b.legRelPos[0]);
     const sortedByXpos = legs;
     const bluePrints = List.of(
       { id: 'back',   speed, pos: 1, legDescriptor: sortedByXpos.get(0),
-        hipJointPosition: genotype.instanceParts.body.hipJointPositions[0]
+        hipJointPosition: genotype.body.hipJointPositions[0]
       } ,
       { id: 'middle', speed, pos: 2, legDescriptor: sortedByXpos.get(1),
-        hipJointPosition: genotype.instanceParts.body.hipJointPositions[1]
+        hipJointPosition: genotype.body.hipJointPositions[1]
       } ,
       { id: 'front' , speed, pos: 3, legDescriptor: sortedByXpos.get(2),
-        hipJointPosition: genotype.instanceParts.body.hipJointPositions[2]
+        hipJointPosition: genotype.body.hipJointPositions[2]
       }
     );
     let jointsMap = Map();
@@ -205,8 +205,6 @@ export default class Individual extends Phenotype {
     jointsMap = jointsMap.set('left', new Map(leftSide));
     jointsMap = jointsMap.set('right', new Map(rightSide));
     this.jointsMap = jointsMap;
-
-    this.engine = genotype.instanceParts.engine.type;
   }
 
   /**

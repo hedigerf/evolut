@@ -12,6 +12,7 @@ import {Range} from 'immutable';
 import SimulationWorld from './render/world/simulationWorld';
 import SettingsPanel from './settings/settingsPanel';
 import InitialPopulationGenerator from './algorithm/population/initialPopulationGenerator';
+import Mutator from './algorithm/mutation/mutator';
 import {debug, info} from './util/logUtil';
 import TournamentBasedSelectionStrategy from './algorithm/selection/tournamentBasedSelectionStrategy';
 
@@ -24,12 +25,11 @@ function performSimulationPostprocessing(population) {
   info(logger, 'starting postprocessing');
   const selectionStrategy = new TournamentBasedSelectionStrategy(population, 10);
   const selected = selectionStrategy.select();
+  const mutator = new Mutator();
+  const mutated = mutator.mutate(selected);
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
-  simulation.clear();
-  simulation.reset();
+  simulation.addNewPopulation(mutated);
   simulation.drawPhenotypes();
-  // Graphical objects need to be constructed freshly
-  // Simulation.addNewPopulation(selected);
   simulation.generateParcour(config('parcour.startMaxSlope'), config('parcour.startHighestY'));
   simulation.run();
 }
