@@ -7,14 +7,10 @@
 
 import p2 from 'p2';
 import Random from 'random-js';
-
-import {List, Map} from 'immutable';
-import log4js from 'log4js';
+import { List, Map } from 'immutable';
 
 import Phenotype from './phenotype';
-import { info } from '../../../util/logUtil';
 
-const logger = log4js.getLogger('individual pheno');
 const random = new Random(Random.engines.mt19937().autoSeed());
 
 /**
@@ -105,8 +101,6 @@ export default class Individual extends Phenotype {
     this.addShape(midBody, midShape, [0, 0] , 0, bodyOptions, styleMid);
     this.addConstraint(midConstraint);
     let counter = 0;
-    const centerOfMassBody =  body.shapes[0].centerOfMass;
-    info(logger, 'Center of Mass: ' + centerOfMassBody);
     const createLeg = ({ pos, speed, legDescriptor, hipJointPosition }) => {
       counter++;
       const styleLeg = {
@@ -127,7 +121,7 @@ export default class Individual extends Phenotype {
       const upperLegShape = new p2.Box({ width: legWidth, height: upperLegHeight });
       const upperLegBody = new p2.Body({
         mass: upperLegMass,
-        position: [ posX + (0.5 * (pos - 1)), posY ]
+        position: [posX + (0.5 * (pos - 1)), posY]
       });
       this.addBody(upperLegBody);
       this.addShape(upperLegBody, upperLegShape, [0, 0] , 0, bodyOptions, styleLeg);
@@ -136,7 +130,7 @@ export default class Individual extends Phenotype {
       const lowerLegShape = new p2.Box({ width: legWidth, height: lowerLegHeight });
       const lowerLegBody = new p2.Body({
         mass: lowerLegMass,
-        position: [ posX + (0.5 * (pos - 1)), posY + upperLegHeight ]
+        position: [posX + (0.5 * (pos - 1)), posY + upperLegHeight]
       });
       this.addBody(lowerLegBody);
       this.addShape(lowerLegBody, lowerLegShape, [0, 0] , 0, bodyOptions, styleLeg);

@@ -4,9 +4,10 @@
  * @module render/world/simulationWorld
  */
 
+import L from 'partial.lenses';
+import log4js from 'log4js';
 import path from 'path';
 import P2Pixi from './../../../lib/p2Pixi';
-import log4js from 'log4js';
 
 import FlatParcour from '../object/parcour/flatParcour';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
@@ -200,7 +201,7 @@ export default class SimulationWorld extends P2Pixi.Game {
       containerPosition.x = ((trackedBodyOffset[0] + 1) * renderer.width * 0.5) - (trackedBodyPosition[0] * ppu * deviceScale);
       if (trackY) {
         containerPosition.y = ((trackedBodyOffset[1] + 1) * renderer.height * 0.5) + (trackedBodyPosition[1] * ppu * deviceScale);
-      }else {
+      } else {
         containerPosition.y = ((0 + 1) * renderer.height * 0.5) + (0 * ppu * deviceScale);
       }
     }
