@@ -7,6 +7,7 @@
 import { ipcRenderer } from 'electron';
 import jQuery from 'jquery';
 import log4js from 'log4js';
+import path from 'path';
 import { Range } from 'immutable';
 
 import config from './app/config';
@@ -17,7 +18,8 @@ import Mutator from './algorithm/mutation/mutator';
 import {debug, info} from './util/logUtil';
 import TournamentBasedSelectionStrategy from './algorithm/selection/tournamentBasedSelectionStrategy';
 
-log4js.configure('config/log4js.json');
+const logConfigurationPath = path.join(__dirname, '../config/log4js.json');
+log4js.configure(logConfigurationPath);
 const logger = log4js.getLogger('applicationController');
 
 let simulation;

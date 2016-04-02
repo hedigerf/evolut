@@ -45,6 +45,11 @@ Thumbs.db
 evolutjs/node_modules
 
 #
+# Generated builds
+#
+evolutjs/build/evolut*
+
+#
 # Generated API Documentation
 #
 evolutjs/doc/*

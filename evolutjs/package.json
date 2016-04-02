@@ -1,23 +1,26 @@
 {
   "name": "evolut",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Design of artificial animals with evolutionary algorithms",
   "private": true,
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "test": "npm run lint && npm run assert",
-    "lint": "eslint src/**/*.js test/**/*.js",
     "assert": "mocha test/**/*.js",
+    "build": "electron-packager ./ --platform=all --arch=x64 --asar=true --ignore='node_modules/*' --out=./build",
     "doc": "jsdoc -d doc -r src",
-    "esdoc": "esdoc -c .esdocrc"
+    "lint": "eslint src/**/*.js test/**/*.js",
+    "esdoc": "esdoc -c .esdocrc",
+    "start": "electron .",
+    "test": "npm run lint && npm run assert"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hedigerf/evolut.git"
   },
   "keywords": [
+    "algorithms",
     "evolution",
+    "evolutionary algorithms",
     "phyiscs",
     "simulation"
   ],
@@ -41,6 +44,7 @@
     "immutable" : "latest",
     "jquery": "latest",
     "log4js": "latest",
+    "nconf": "latest",
     "p2": "latest",
     "p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
     "partial.lenses": "latest",
@@ -53,12 +57,11 @@
     "chai": "latest",
     "chai-fuzzy": "latest",
     "chai-immutable": "latest",
+    "electron-packager": "latest",
     "electron-prebuilt": "latest",
     "esdoc": "latest",
     "eslint": "latest",
-    "jscs": "latest",
     "jsdoc": "latest",
-    "jshint": "latest",
     "mocha": "latest"
   },
   "engines": {
