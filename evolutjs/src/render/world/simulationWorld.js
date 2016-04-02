@@ -80,7 +80,12 @@ export default class SimulationWorld extends P2Pixi.Game {
     this.phenotypeToGenotype = Map();
 
   }
-
+  /**
+   * Triggers the parcour generation
+   *
+   * @param  {Number} maxSlope max. slope
+   * @param  {Number} highestY highest possible position
+   */
   generateParcour(maxSlope, highestY) {
     if (this.parcourOptions.mode === 'flat') {
       new FlatParcour(this);
@@ -91,7 +96,9 @@ export default class SimulationWorld extends P2Pixi.Game {
       parcourGenerator.generateParcour(this, maxSlope, highestY);
     }
   }
-
+  /**
+   * Draws all phenotypes and creates the pheno- to genotype mapping
+   */
   drawPhenotypes() {
     // Force evaluation of sequence
     // jshint -W098
@@ -111,13 +118,19 @@ export default class SimulationWorld extends P2Pixi.Game {
     const trackedIndividual = this.phenoTypes.get(0);
     this.trackedBody = trackedIndividual.bodies[0];
   }
-
+  /**
+   * Add a new population to the simulation
+   *
+   * @param {Population} population the population
+   */
   addNewPopulation(population) {
     this.population = population;
     this.clear();
     this.reset();
   }
-
+  /**
+   * Evaluates the current state of the simulation. Timeout all stuck individuals and record information.
+   */
   evaluate() {
     let removeElements = List();
     this.phenoTypes.forEach((individual) => {
@@ -145,7 +158,11 @@ export default class SimulationWorld extends P2Pixi.Game {
     }
 
   }
-
+  /**
+   * Record fitenss of the the given phenotypes
+   *
+   * @param  {List<Phenotype>} phenotypes to be recorded.
+   */
   recordFitness(phenotypes) {
     phenotypes.forEach((individual) => {
       const genotype = this.phenotypeToGenotype.get(individual);
