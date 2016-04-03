@@ -6,6 +6,7 @@
  * @module app/config
  */
 
+import { path as appRoot } from 'app-root-path';
 import nconf from 'nconf';
 import path from 'path';
 
@@ -51,7 +52,7 @@ const defaults = {
  *
  * @type {String}
  */
-const configPath = path.join(__dirname, '../../config/default.json');
+const configPath = path.join(appRoot, 'config/default.json');
 
 // Load the configurations in the following order:
 // 1. Environment variables

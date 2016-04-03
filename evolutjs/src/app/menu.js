@@ -55,6 +55,14 @@ const template = [
         label: 'Toggle Rendering',
         accelerator: 'CmdOrCtrl+V',
         click: (item, focusedWindow) => focusedWindow.webContents.send(World.ToggleRendering)
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Save Screen',
+        accelerator: 'CmdOrCtrl+S',
+        click: (item, focusedWindow) => focusedWindow.webContents.send(World.SaveScreen)
       }
     ]
   }

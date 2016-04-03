@@ -6,6 +6,7 @@
  * @module app/app
  */
 
+import { path as appRoot } from 'app-root-path';
 import { app, BrowserWindow } from 'electron';
 
 import config from './config';
@@ -17,7 +18,7 @@ import './menu';
  * @private
  * @type {String}
  */
-const index = 'file://' + __dirname + '/../../index.html';
+const index = 'file://' + appRoot + '/index.html';
 
 /**
  * Main window application handle.
@@ -36,8 +37,8 @@ app.on('window-all-closed', () =>  {
 app.on('ready', () => {
 
   mainWindow = new BrowserWindow({
-    width: config('window.width'),
-    height: config('window.height')
+    width: config('window:width'),
+    height: config('window:height')
   });
 
   mainWindow.loadURL(index);

@@ -9,6 +9,7 @@ import jQuery from 'jquery';
 import log4js from 'log4js';
 import { Range } from 'immutable';
 
+import dumpCanvas from './render/canvas';
 import config from './app/config';
 import { World } from './app/ipc';
 import SimulationWorld from './render/world/simulationWorld';
@@ -76,4 +77,16 @@ ipcRenderer.on(World.TogglePause, () => {
  */
 ipcRenderer.on(World.ToggleRendering, () => {
   simulation.isRenderingEnabled = !simulation.isRenderingEnabled;
+});
+
+/**
+ * IPC-Callback for the main process's menu item 'Save Screen'.
+ * Saves the current content of the renderer process.
+ */
+ipcRenderer.on(World.SaveScreen, () => {
+
+  const canvas = jQuery('#viewport')[0];
+  const fileName = Date.now().toString() + '.png';
+
+  dumpCanvas(canvas, fileName);
 });

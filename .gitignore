@@ -47,7 +47,7 @@ evolutjs/node_modules
 #
 # Generated builds
 #
-evolutjs/build/evolut*
+evolutjs/dist/evolut*
 
 #
 # Generated API Documentation

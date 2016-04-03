@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "assert": "mocha test/**/*.js",
-    "build": "electron-packager ./ --platform=all --arch=x64 --asar=true --ignore='node_modules/*' --out=./build",
+    "build": "electron-packager ./ --platform=all --arch=x64 --asar=true --ignore='node_modules/*' --out=./dist",
     "doc": "jsdoc -d doc -r src",
     "lint": "eslint src/**/*.js test/**/*.js",
     "esdoc": "esdoc -c .esdocrc",
@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/hedigerf/evolut/#readme",
   "dependencies": {
+    "app-root-path": "latest",
     "bootstrap": "latest",
     "babel-preset-es2015": "latest",
     "babel-preset-react": "latest",

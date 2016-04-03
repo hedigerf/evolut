@@ -1,3 +1,7 @@
-test/**
+assets/**
+css/**
+dist/**
 lib/**
+logs/**
 node_modules/**
+test/**

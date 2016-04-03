@@ -4,6 +4,7 @@
  * @module render/canvas
  */
 
+import { path as appRoot } from 'app-root-path';
 import fs from 'fs';
 import path from 'path';
 import canvasBuffer from 'electron-canvas-to-buffer';
@@ -16,7 +17,7 @@ import canvasBuffer from 'electron-canvas-to-buffer';
  * @return {String}
 */
 function imagePath(name) {
-  return path.join(__dirname, 'assets/images', path.basename(name));
+  return path.join(appRoot, 'assets/images', path.basename(name));
 }
 
 /**

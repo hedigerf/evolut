@@ -16,5 +16,6 @@
 export const World = {
   NextGeneration:   'world-next-generation',
   TogglePause:      'world-toggle-pause',
-  ToggleRendering:  'world-toggle-rendering'
+  ToggleRendering:  'world-toggle-rendering',
+  SaveScreen:       'world-save-screen'
 }
