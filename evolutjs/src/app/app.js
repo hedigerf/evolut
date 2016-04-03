@@ -1,5 +1,7 @@
 /**
  * Defines the main application menu.
+ * Runs within the main process.
+ * The spawned window run each in a separate render process.
  *
  * @module app/app
  */
@@ -39,7 +41,7 @@ app.on('ready', () => {
   });
 
   mainWindow.loadURL(index);
-  mainWindow.openDevTools();
+  // mainWindow.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;

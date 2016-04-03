@@ -7,10 +7,10 @@
 import { ipcRenderer } from 'electron';
 import jQuery from 'jquery';
 import log4js from 'log4js';
-import path from 'path';
 import { Range } from 'immutable';
 
 import config from './app/config';
+import { World } from './app/ipc';
 import SimulationWorld from './render/world/simulationWorld';
 import SettingsPanel from './settings/settingsPanel';
 import InitialPopulationGenerator from './algorithm/population/initialPopulationGenerator';
@@ -18,8 +18,7 @@ import Mutator from './algorithm/mutation/mutator';
 import {debug, info} from './util/logUtil';
 import TournamentBasedSelectionStrategy from './algorithm/selection/tournamentBasedSelectionStrategy';
 
-const logConfigurationPath = path.join(__dirname, '../config/log4js.json');
-log4js.configure(logConfigurationPath);
+import './app/log';
 const logger = log4js.getLogger('applicationController');
 
 let simulation;
@@ -59,7 +58,7 @@ jQuery(() => {
  * IPC-Callback for the main process's menu item 'Next Generation'.
  * Aborts the current run of the simulation and proceeds to the next.
  */
-ipcRenderer.on('world-next-generation', () => {
+ipcRenderer.on(World.NextGeneration, () => {
   simulation.runOver = true;
 });
 
@@ -67,7 +66,7 @@ ipcRenderer.on('world-next-generation', () => {
  * IPC-Callback for the main process's menu item 'Pause / Resume'.
  * Halt/resume the current run.
  */
-ipcRenderer.on('world-toggle-pause', () => {
+ipcRenderer.on(World.TogglePause, () => {
   simulation.pauseToggle();
 });
 
@@ -75,6 +74,6 @@ ipcRenderer.on('world-toggle-pause', () => {
  * IPC-Callback for the main process's menu item 'Toggle Rendering'.
  * Shows/hides the phenotypes.
  */
-ipcRenderer.on('world-toggle-rendering', () => {
+ipcRenderer.on(World.ToggleRendering, () => {
   simulation.isRenderingEnabled = !simulation.isRenderingEnabled;
 });

@@ -15,7 +15,7 @@ import { PartialGenotype } from '../genotype/genotype';
  *
  * @enum {Number}
  */
-export const ORIENTATION = {
+export const Orientation = {
   BACK: 1,
   FORTH: 2
 };
@@ -53,7 +53,7 @@ export default class Joint extends PartialGenotype {
    * Default constructor of a joint of an individual.
    *
    * @param {Object} options
-   * @param {ORIENTATION} options.orientation
+   * @param {Orientation} options.orientation
    */
   constructor(options) {
 
@@ -76,7 +76,7 @@ export default class Joint extends PartialGenotype {
     /**
      * Orientation of this joint.
      *
-     * @type {ORIENTATION}
+     * @type {Orientation}
      */
     this.orientation = view(lensOrientation, options);
   }
@@ -94,11 +94,11 @@ export default class Joint extends PartialGenotype {
    * Returns a randomly seeded joint.
    *
    * @param {Object} options
-   * @param {ORIENTATION} options.orientation
+   * @param {Orientation} options.orientation
    * @return {Object}
    */
   static seed(options) {
-    const orientation = view(lensOrientation, options) || ORIENTATION.BACK;
+    const orientation = view(lensOrientation, options) || Orientation.BACK;
     return super.seed(set(lensOrientation, orientation, options));
   }
 

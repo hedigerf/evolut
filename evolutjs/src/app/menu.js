@@ -7,6 +7,8 @@
 import { app } from 'electron';
 import Menu from 'menu';
 
+import { World } from './ipc';
+
 /**
  * Menu configuration.
  *
@@ -42,17 +44,17 @@ const template = [
       {
         label: 'Next Generation',
         accelerator: 'CmdOrCtrl+F',
-        click: (item, focusedWindow) => focusedWindow.webContents.send('world-next-generation')
+        click: (item, focusedWindow) => focusedWindow.webContents.send(World.NextGeneration)
       },
       {
         label: 'Pause / Resume',
         accelerator: 'CmdOrCtrl+P',
-        click: (item, focusedWindow) => focusedWindow.webContents.send('world-toggle-pause')
+        click: (item, focusedWindow) => focusedWindow.webContents.send(World.TogglePause)
       },
       {
         label: 'Toggle Rendering',
         accelerator: 'CmdOrCtrl+V',
-        click: (item, focusedWindow) => focusedWindow.webContents.send('world-toggle-rendering')
+        click: (item, focusedWindow) => focusedWindow.webContents.send(World.ToggleRendering)
       }
     ]
   }
