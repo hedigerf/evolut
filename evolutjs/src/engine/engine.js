@@ -92,7 +92,7 @@ export default class Engine {
     const moved = movement(phenotype, time);
 
     if (moved) {
-      return this.transition(phenotype);
+      phenotype.engine.current = this.nextState(phenotype);
     }
 
     return phenotype;
@@ -107,18 +107,6 @@ export default class Engine {
    */
   static nextState(phenotype) {
     return (phenotype.engine.current + 1) % phenotype.engine.descriptor.length;
-  }
-
-  /**
-   * Transition to the next state.
-   *
-   * @protected
-   * @param {Phenotype} phenotype
-   * @return {Phenotype}
-   */
-  static transition(phenotype) {
-    phenotype.engine.current = this.nextState(phenotype);
-    return phenotype;
   }
 
 }
