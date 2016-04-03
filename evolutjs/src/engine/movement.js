@@ -7,6 +7,7 @@
 import R, { curry, view } from 'ramda';
 
 import { Movement } from './engine';
+import { freeze } from '../util/object';
 
 /**
  * Divisor for tolerated margin of an angle.
@@ -396,3 +397,26 @@ export const until = curry(
 export const when = curry(
   (pred, onTrue, lens, phenotype, time) => When.move(pred, onTrue, lens, phenotype, time)
 );
+
+/**
+ * Lens map.
+ *
+ * @type {Object<Movement>}
+ */
+const MovementIdMap = freeze({
+  [SetAnglesTo.identifier]: setAngles,
+  [SetMotor.identifier]: setMotor,
+  [SetSpeedTo.identifier]: setSpeed,
+  [Until.identifier]: until,
+  [When.identifier]: when
+});
+
+/**
+ * Returns the movement specified by id.
+ *
+ * @param {String} movementId
+ * @return {Lens}
+ */
+export function getMovementById(movementId) {
+  return MovementIdMap[movementId];
+}

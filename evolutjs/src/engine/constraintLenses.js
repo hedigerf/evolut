@@ -7,6 +7,8 @@
 import L from 'partial.lenses';
 import { lens } from 'ramda';
 
+import { freeze } from '../util/object';
+
 /**
  * Lens for immutable-js data types.
  *
@@ -127,3 +129,51 @@ export const lensRightMiddleJoint = L.compose(lensRightJoints, lensMiddle);
  * @return {Lens}
  */
 export const lensRightBackJoint = L.compose(lensRightJoints, lensBack);
+
+//
+
+export const lensLFHip = L.compose(lensLeftFrontJoint, lensHip);
+export const lensLMHip = L.compose(lensLeftMiddleJoint, lensHip);
+export const lensLBHip = L.compose(lensLeftBackJoint, lensHip);
+
+export const lensLFKnee = L.compose(lensLeftFrontJoint, lensKnee);
+export const lensLMKnee = L.compose(lensLeftMiddleJoint, lensKnee);
+export const lensLBKnee = L.compose(lensLeftBackJoint, lensKnee);
+
+export const lensRFHip = L.compose(lensRightFrontJoint, lensHip);
+export const lensRMHip = L.compose(lensRightMiddleJoint, lensHip);
+export const lensRBHip = L.compose(lensRightBackJoint, lensHip);
+
+export const lensRFKnee = L.compose(lensRightFrontJoint, lensKnee);
+export const lensRMKnee = L.compose(lensRightMiddleJoint, lensKnee);
+export const lensRBKnee = L.compose(lensRightBackJoint, lensKnee);
+
+/**
+ * Lens map.
+ *
+ * @type {Object<Lens>}
+ */
+const LensIdMap = freeze({
+  LFH: lensLFHip,
+  LMH: lensLMHip,
+  LBH: lensLBHip,
+  LFK: lensLFKnee,
+  LMK: lensLMKnee,
+  LBK: lensLBKnee,
+  RFH: lensRFHip,
+  RMH: lensRMHip,
+  RBH: lensRBHip,
+  RFK: lensRFKnee,
+  RMK: lensRMKnee,
+  RBK: lensRBKnee
+});
+
+/**
+ * Returns the lens specified by id.
+ *
+ * @param {String} lensId
+ * @return {Lens}
+ */
+export function getLensById(lensId) {
+  return LensIdMap[lensId];
+}

@@ -29,6 +29,81 @@ const lensRFKnee = L.compose(CL.lensRightFrontJoint, CL.lensKnee);
 const lensRMKnee = L.compose(CL.lensRightMiddleJoint, CL.lensKnee);
 const lensRBKnee = L.compose(CL.lensRightBackJoint, CL.lensKnee);
 
+/**
+ * Describes an ant's movement.
+ *
+ * @type {Object}
+ * @property {Array<MovementDescriptor>} initial
+ * @property {Array<MovementDescriptor>} movements
+ */
+export const AntEngineDescriptor = {
+
+  initial: [
+    {
+      id: 'XX',
+      lensId: 'LFH',
+      params: [0, 1]
+    },
+    {
+      id: 'XX',
+      lensId: 'LFH',
+      params: [0, 1]
+    }
+  ],
+
+  movements: [
+
+    {
+      id: 'allPass',
+      params: [
+        {
+          id: 'XX',
+          lensId: 'LFH',
+          params: [0, 1]
+        },
+        {
+          id: 'XX',
+          lensId: 'LFH',
+          params: [0, 1]
+        }
+      ]
+    },
+    {
+      id: 'XX',
+      lensId: 'LFH',
+      params: [0, 1]
+    },
+    {
+      id: 'XX',
+      lensId: 'LFH',
+      params: [0, 1]
+    },
+    {
+      id: 'anyPass',
+      params: [
+        {
+          id: 'until',
+          lensId: 'LFH',
+          params: ['isMaxAngle']
+        },
+        {
+          id: 'until',
+          lensId: 'LMH',
+          params: ['isMaxAngle']
+        },
+        {
+          id: 'until',
+          lensId: 'LBH',
+          params: ['isMaxAngle']
+        }
+      ]
+    }
+
+  ]
+
+};
+
+
 export const antEngineMovements = [
   [
     M.setAngles(ANGLE_MIN, ANGLE_MAX, lensLFHip),
