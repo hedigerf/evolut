@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "assert": "mocha test/**/*.js",
-    "build": "electron-packager ./ --platform=all --arch=x64 --asar=true --ignore='node_modules/*' --out=./dist",
+    "build": "electron-packager ./ --platform=all --arch=x64 --asar=true --ignore='node_modules/*' --ignore=doc --ignore=test --out=./dist",
     "doc": "jsdoc -d doc -r src",
     "lint": "eslint src/**/*.js test/**/*.js",
     "esdoc": "esdoc -c .esdocrc",

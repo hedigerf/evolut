@@ -8,7 +8,7 @@
  * World ipc channel names.
  *
  * @enum {String}
- * @type {Object} World
+ * @type {Object}
  * @property {String} World.NextGeneration
  * @property {String} World.TogglePause
  * @property {String} World.ToggleRendering
