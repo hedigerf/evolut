@@ -154,18 +154,18 @@ export const lensRBKnee = L.compose(lensRightBackJoint, lensKnee);
  * @type {Object<Lens>}
  */
 const LensIdMap = freeze({
-  LFH: lensLFHip,
-  LMH: lensLMHip,
-  LBH: lensLBHip,
-  LFK: lensLFKnee,
-  LMK: lensLMKnee,
-  LBK: lensLBKnee,
-  RFH: lensRFHip,
-  RMH: lensRMHip,
-  RBH: lensRBHip,
-  RFK: lensRFKnee,
-  RMK: lensRMKnee,
-  RBK: lensRBKnee
+  lfh: lensLFHip,
+  lmh: lensLMHip,
+  lbh: lensLBHip,
+  lfk: lensLFKnee,
+  lmk: lensLMKnee,
+  lbk: lensLBKnee,
+  rfh: lensRFHip,
+  rmh: lensRMHip,
+  rbh: lensRBHip,
+  rfk: lensRFKnee,
+  rmk: lensRMKnee,
+  rbk: lensRBKnee
 });
 
 /**
