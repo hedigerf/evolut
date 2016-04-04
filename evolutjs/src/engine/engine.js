@@ -4,42 +4,10 @@
  * @module engine/engine
  */
 
-import { apply, append, forEach, nth } from 'ramda';
+import { append, forEach, nth, partial } from 'ramda';
 
 import { getLensById } from './constraintLenses';
-import Identifiable from '../types/identifiable';
 import { getMovementById } from './movement';
-
-/**
- * @typedef {{
- *   id: String,
- *   lensId: String,
- *   params: Array<*>
- * }} MovementDescriptor
- */
-
-/**
- * Represents a single movement of a phonotype.
- * A movement could be locking the angle of a joint.
- * Or setting the speed of joint's motor.
- *
- * @abstract
- * @extends {Identifiable}
- */
-export class Movement extends Identifiable() {
-
-  /**
-   * Apply the movemement to a phenotype.
-   *
-   * @param {Phenotype} phenotype The target phenotype
-   * @param {Number} time The world time
-   * @return {Boolean}
-   */
-  static move(phenotype, time) { // eslint-disable-line no-unused-vars
-    return true;
-  }
-
-}
 
 /**
  * TODO
@@ -53,7 +21,7 @@ function getMovementByDescriptor(descriptor) {
   const lens = getLensById(descriptor.lensId);
   const params = append(lens, descriptor.params);
 
-  return apply(movement, params);
+  return partial(movement, params);
 }
 
 /**
@@ -75,7 +43,7 @@ export default class Engine {
    * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype.
    */
   static initialStep(phenotype) {
-    forEach(m => getMovementByDescriptor(m)(phenotype, 0), phenotype.engine.descriptor.initial);
+    forEach(m => console.log(JSON.stringify(m)), phenotype.engine.descriptor.initial);
   }
 
   /**
@@ -87,7 +55,7 @@ export default class Engine {
    */
   static step(phenotype, time) {
 
-    const descriptor = nth(phenotype.engine.current, phenotype.engine.descriptor);
+    const descriptor = nth(phenotype.engine.current, phenotype.engine.descriptor.movements);
     const movement = getMovementByDescriptor(descriptor);
     const moved = movement(phenotype, time);
 

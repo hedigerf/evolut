@@ -5,7 +5,7 @@
  * @see module:algorithm/genotype/genotype
  */
 
-import L  from 'partial.lenses';
+import * as L from 'partial.lenses'
 import { set, view } from 'ramda';
 
 import AntEngineDescriptor from '../../engine/type/ant';

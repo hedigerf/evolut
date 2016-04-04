@@ -48,10 +48,10 @@
     "nconf": "latest",
     "p2": "latest",
     "p2Pixi": "git+https://github.com/TomWHall/p2Pixi.git#master",
-    "partial.lenses": "latest",
+    "partial.lenses": "2.0.x",
     "pixi.js": "latest",
     "point-in-polygon": "latest",
-    "ramda": "latest",
+    "ramda": "0.20.x",
     "random-js": "latest"
   },
   "devDependencies": {
@@ -59,7 +59,7 @@
     "chai-fuzzy": "latest",
     "chai-immutable": "latest",
     "electron-packager": "latest",
-    "electron-prebuilt": "latest",
+    "electron-prebuilt": "0.37.3",
     "esdoc": "latest",
     "eslint": "latest",
     "jsdoc": "latest",

@@ -57,7 +57,8 @@ export default class Individual extends Phenotype {
    */
   fromGenotype(genotype) {
 
-    this.engine = genotype.engine.movementEngine;
+    this.engine = genotype.engine;
+    this.engine.current = 0;
 
     const bodyDescriptor = genotype.body;
     const posX = 0;

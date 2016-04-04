@@ -4,11 +4,12 @@
  * @module render/world/simulationWorld
  */
 
-import L from 'partial.lenses';
+import * as L from 'partial.lenses'
 import log4js from 'log4js';
 import path from 'path';
 import P2Pixi from './../../../lib/p2Pixi';
 
+import Engine from '../../engine/engine';
 import FlatParcour from '../object/parcour/flatParcour';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
 import config from '../../app/config';
@@ -135,12 +136,10 @@ export default class SimulationWorld extends P2Pixi.Game {
 
         this.phenoTypes.forEach((individual) => {
 
-          const engine = individual.engine;
-
           if (this.currentTime === WORLD_START_TIME + stepTime) {
-            engine.initialStep(individual);
+            Engine.initialStep(individual);
           } else {
-            engine.step(individual, this.currentTime);
+            Engine.step(individual, this.currentTime);
           }
 
         });

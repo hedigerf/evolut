@@ -6,8 +6,7 @@
 
 import R, { curry, view } from 'ramda';
 
-import { Movement } from './engine';
-import { freeze } from '../util/object';
+import Identifiable from '../types/identifiable';
 
 /**
  * Divisor for tolerated margin of an angle.
@@ -75,6 +74,37 @@ export function isMinAngle(constraint) {
 }
 
 /**
+ * @typedef {{
+ *   id: String,
+ *   lensId: String,
+ *   params: Array<*>
+ * }} MovementDescriptor
+ */
+
+/**
+ * Represents a single movement of a phonotype.
+ * A movement could be locking the angle of a joint.
+ * Or setting the speed of joint's motor.
+ *
+ * @abstract
+ * @extends {Identifiable}
+ */
+export class Movement extends Identifiable() {
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
+   */
+  static move(phenotype, time) { // eslint-disable-line no-unused-vars
+    return true;
+  }
+
+}
+
+/**
  * Locks a revolute constraint to certain angles.
  *
  * @extends {Movement}
@@ -87,7 +117,7 @@ class SetAnglesTo extends Movement {
    * @return {String}
    */
   static get identifier() {
-    return '144ae59d-d0d3-4de1-8644-a79ea406358c';
+    return 'sta';
   }
 
   /**
@@ -127,7 +157,7 @@ class SetAnglesToCurrent extends Movement {
    * @return {String}
    */
   static get identifier() {
-    return '0130da45-8f18-441e-824a-726baa7e384d';
+    return 'stc';
   }
 
   /**
@@ -157,7 +187,7 @@ class SetMotor extends Movement {
    * @return {String}
    */
   static get identifier() {
-    return '96e58dbc-a11d-4f84-a2f6-a3456b0c0e16';
+    return 'stm';
   }
 
   /**
@@ -195,7 +225,7 @@ class SetSpeedTo extends Movement {
    * @return {String}
    */
   static get identifier() {
-    return 'a485a6a1-d027-4f06-b5e1-7b6a7f195cc6';
+    return 'sts';
   }
 
   /**
@@ -226,7 +256,7 @@ class Until extends Movement {
    * @return {String}
    */
   static get identifier() {
-    return '6f1c0cb1-1df4-4347-9029-cc7747c97c16';
+    return 'utl';
   }
 
   /**
@@ -258,7 +288,7 @@ class When extends Movement {
    * @return {String}
    */
   static get identifier() {
-    return 'bd309204-174a-4818-8061-f3d370e163ba';
+    return 'whn';
   }
 
   /**
@@ -403,13 +433,16 @@ export const when = curry(
  *
  * @type {Object<Movement>}
  */
-const MovementIdMap = freeze({
+const MovementIdMap = {
+  all: allPass,
+  one: anyPass,
+  la0: lockAngleToZero,
   [SetAnglesTo.identifier]: setAngles,
   [SetMotor.identifier]: setMotor,
   [SetSpeedTo.identifier]: setSpeed,
   [Until.identifier]: until,
   [When.identifier]: when
-});
+};
 
 /**
  * Returns the movement specified by id.

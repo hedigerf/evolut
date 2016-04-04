@@ -4,10 +4,8 @@
  * @module engine/constraintLenses
  */
 
-import L from 'partial.lenses';
+import * as L from 'partial.lenses'
 import { lens } from 'ramda';
-
-import { freeze } from '../util/object';
 
 /**
  * Lens for immutable-js data types.
@@ -153,7 +151,7 @@ export const lensRBKnee = L.compose(lensRightBackJoint, lensKnee);
  *
  * @type {Object<Lens>}
  */
-const LensIdMap = freeze({
+const LensIdMap = {
   lfh: lensLFHip,
   lmh: lensLMHip,
   lbh: lensLBHip,
@@ -166,7 +164,7 @@ const LensIdMap = freeze({
   rfk: lensRFKnee,
   rmk: lensRMKnee,
   rbk: lensRBKnee
-});
+};
 
 /**
  * Returns the lens specified by id.

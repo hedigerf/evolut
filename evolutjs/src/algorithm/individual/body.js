@@ -6,7 +6,7 @@
  */
 
 import { List } from 'immutable';
-import L  from 'partial.lenses';
+import * as L from 'partial.lenses'
 import { compose, set, view } from 'ramda';
 import Random  from 'random-js';
 import inside from 'point-in-polygon';
