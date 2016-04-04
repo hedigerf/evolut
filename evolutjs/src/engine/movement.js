@@ -4,8 +4,9 @@
  * @module engine/movement
  */
 
-import R, { curry, view } from 'ramda';
+import { allPass, always, anyPass, append, curry, map, partial, view } from 'ramda';
 
+import { getLensById } from './constraintLenses';
 import Identifiable from '../types/identifiable';
 
 /**
@@ -21,24 +22,6 @@ const BLUR_FACTOR_DIVISOR = 10;
  * @type {Number}
  */
 const BLUR_FACTOR = Math.PI / BLUR_FACTOR_DIVISOR;
-
-/**
- * Tests if all movements were completed.
- *
- * @function
- * @param {...function(Phenotype, Number)} movements A list of movements
- * @return {function(Phenotype, Number): Boolean}
- */
-export const allPass = (...movements) => R.allPass(movements);
-
-/**
- * Tests if at least one movement was completed.
- *
- * @function
- * @param {...function(Phenotype, Number): Boolean} movements
- * @return {function(Phenotype, Number): Boolean}
- */
-export const anyPass = (...movements) => R.anyPass(movements);
 
 /**
  * @function
@@ -262,13 +245,16 @@ class Until extends Movement {
   /**
    * Apply the movemement to a phenotype.
    *
-   * @param {function(*, Number): Boolean} pred
+   * @param {function(*, Number): Boolean} predId
    * @param {Lens} lens The lens to a contraint
    * @param {Phenotype} phenotype The target phenotype
    * @param {Number} time The world time
    * @return {Boolean}
    */
-  static move(pred, lens, phenotype, time) {
+  static move(predId, lens, phenotype, time) {
+
+    const pred = getMovementPredicate(predId);
+
     return pred(view(lens, phenotype), time);
   }
 
@@ -397,7 +383,7 @@ export const setMotor = curry(
  * @function
  * @return {Boolean} Always false
  */
-export const stop = R.always(false);
+export const stop = always(false);
 
 /**
  * Waits until pred is true for a constraint.
@@ -434,8 +420,6 @@ export const when = curry(
  * @type {Object<Movement>}
  */
 const MovementIdMap = {
-  all: allPass,
-  one: anyPass,
   la0: lockAngleToZero,
   [SetAnglesTo.identifier]: setAngles,
   [SetMotor.identifier]: setMotor,
@@ -450,6 +434,40 @@ const MovementIdMap = {
  * @param {String} movementId
  * @return {Lens}
  */
-export function getMovementById(movementId) {
+function getMovementById(movementId) {
   return MovementIdMap[movementId];
+}
+
+function getMovementPredicate(predicateId) {
+  switch (predicateId) {
+    case 'mxa':
+      return isMaxAngle;
+
+    case 'mia':
+      return isMinAngle;
+
+    case 'isa':
+      return isAngle;
+  }
+}
+
+/**
+ * Resolve a movement descriptor and return the movement function.
+ *
+ * @param {MovementDescriptor} descriptor
+ * @return {Movement}
+ */
+export function resolveMovementDescriptor({ id, lensId, params }) {
+
+  if (id === 'all') {
+    return allPass(map(resolveMovementDescriptor, params));
+  } else if (id === 'one') {
+    return anyPass(map(resolveMovementDescriptor, params));
+  }
+
+  const movement = getMovementById(id);
+  const lens = getLensById(lensId);
+  const args = append(lens, params);
+
+  return partial(movement, args);
 }

@@ -4,25 +4,9 @@
  * @module engine/engine
  */
 
-import { append, forEach, nth, partial } from 'ramda';
+import { forEach, nth } from 'ramda';
 
-import { getLensById } from './constraintLenses';
-import { getMovementById } from './movement';
-
-/**
- * TODO
- *
- * @param {MovementDescriptor} descriptor
- * @return {function(Phenotype, Number): Boolean}
- */
-function getMovementByDescriptor(descriptor) {
-
-  const movement = getMovementById(descriptor.id);
-  const lens = getLensById(descriptor.lensId);
-  const params = append(lens, descriptor.params);
-
-  return partial(movement, params);
-}
+import { resolveMovementDescriptor } from './movement';
 
 /**
  * Represents an engine.
@@ -43,7 +27,10 @@ export default class Engine {
    * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype.
    */
   static initialStep(phenotype) {
-    forEach(m => console.log(JSON.stringify(m)), phenotype.engine.descriptor.initial);
+    forEach(
+      descriptor => resolveMovementDescriptor(descriptor)(phenotype, 0),
+      phenotype.engine.descriptor.initial
+    );
   }
 
   /**
@@ -56,7 +43,7 @@ export default class Engine {
   static step(phenotype, time) {
 
     const descriptor = nth(phenotype.engine.current, phenotype.engine.descriptor.movements);
-    const movement = getMovementByDescriptor(descriptor);
+    const movement = resolveMovementDescriptor(descriptor);
     const moved = movement(phenotype, time);
 
     if (moved) {
@@ -74,7 +61,7 @@ export default class Engine {
    * @return {Number} The index of the next state
    */
   static nextState(phenotype) {
-    return (phenotype.engine.current + 1) % phenotype.engine.descriptor.length;
+    return (phenotype.engine.current + 1) % phenotype.engine.descriptor.movements.length;
   }
 
 }
