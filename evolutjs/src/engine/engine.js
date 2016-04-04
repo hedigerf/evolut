@@ -13,9 +13,6 @@ import { resolveMovementDescriptor } from './movement';
  * It's responsibility is moving an phenotype's legs.
  * An engine consists of multiple movements.
  * A movement itself may consist of multiple movements.
- *
- * An engine's operations should be chainable.
- * Therefore each operation must return the input it received.
  */
 export default class Engine {
 
