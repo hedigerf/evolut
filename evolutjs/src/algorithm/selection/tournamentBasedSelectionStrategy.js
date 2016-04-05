@@ -1,10 +1,15 @@
-import log4js from 'log4js';
-import Immutable from 'immutable';
-import Random from 'random-js';
+/**
+ * Provides a tournament based selection strategy.
+ *
+ * @module algorithm/selection/tournamentBasedSelectionStrategy
+ */
 
-import SelectionStrategy from './selectionStrategy';
-import {debug, info} from '../../util/logUtil';
+import { debug, info } from '../../util/logUtil';
+import Immutable from 'immutable';
+import log4js from 'log4js';
 import Population from '../population/population';
+import Random from 'random-js';
+import SelectionStrategy from './selectionStrategy';
 
 const logger = log4js.getLogger('TournamentBasedSelectionStrategy');
 const random = new Random(Random.engines.mt19937().autoSeed());
@@ -12,7 +17,8 @@ const random = new Random(Random.engines.mt19937().autoSeed());
 /**
  * TournamentBasedSelectionStrategy
  */
-export default class TournamentBasedSelectionStrategy extends SelectionStrategy{
+export default class TournamentBasedSelectionStrategy extends SelectionStrategy {
+
   constructor(population, k) {
     super(population);
     this.population = population;
@@ -23,7 +29,7 @@ export default class TournamentBasedSelectionStrategy extends SelectionStrategy{
   /**
    * Selects the new generation
    *
-   * @return {Population} the new population
+   * @return {Population} The new population
    */
   select() {
     const runs = this.population.individuals.size;

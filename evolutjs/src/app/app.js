@@ -6,11 +6,10 @@
  * @module app/app
  */
 
-import { path as appRoot } from 'app-root-path';
-import { app, BrowserWindow } from 'electron';
-
-import config from './config';
 import './menu';
+import { app, BrowserWindow } from 'electron';
+import { path as appRoot } from 'app-root-path';
+import config from './config';
 
 /**
  * Start page.

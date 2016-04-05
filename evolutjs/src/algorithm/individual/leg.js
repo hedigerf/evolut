@@ -7,11 +7,10 @@
 
 import * as L from 'partial.lenses'
 import { compose, isNil, over, view, when } from 'ramda';
-import Random  from 'random-js';
-
-import { PartialGenotype } from '../genotype/genotype';
-import Foot  from './foot';
+import Foot from './foot';
 import { KneeJoint } from './joint';
+import { PartialGenotype } from '../genotype/genotype';
+import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 

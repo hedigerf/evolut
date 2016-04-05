@@ -6,7 +6,6 @@
 
 import { app } from 'electron';
 import Menu from 'menu';
-
 import { World } from './ipc';
 
 /**

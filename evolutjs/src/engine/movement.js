@@ -5,7 +5,6 @@
  */
 
 import { allPass, always, anyPass, append, curry, map, partial, view } from 'ramda';
-
 import { getLensById } from './constraintLenses';
 import { IdentifiableStatic } from '../types/identifiable';
 

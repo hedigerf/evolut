@@ -5,7 +5,6 @@
  */
 
 import { forEach, nth } from 'ramda';
-
 import { resolveMovementDescriptor } from './movement';
 
 /**

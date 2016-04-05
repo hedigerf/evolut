@@ -1,9 +1,14 @@
-import {List, Range} from 'immutable';
-import log4js from 'log4js';
+/**
+ * Provides a generator for an population.
+ *
+ * @module algorithm/population/InitialPopulationGenerator
+ */
 
-import Population from './population';
+import { debug, error, info } from '../../util/logUtil';
+import { List, Range } from 'immutable';
 import Individual from '../individual/individual';
-import {debug, info, error} from '../../util/logUtil';
+import log4js from 'log4js';
+import Population from './population';
 
 const logger = log4js.getLogger('InitialPopulationGenerator');
 
@@ -11,10 +16,12 @@ const logger = log4js.getLogger('InitialPopulationGenerator');
  * Responsible for generation the initial Population of the Simulation
  */
 export default class InitialPopulationGenerator {
+
   constructor(bodyPointsRange, populationSize) {
     this.bodyPointsRange = bodyPointsRange;
     this.populationSize = populationSize;
   }
+
   /**
    * Generate an initial population
    *
@@ -71,4 +78,5 @@ export default class InitialPopulationGenerator {
     });
     return new Population(new List(individuals), 1);
   }
+
 }

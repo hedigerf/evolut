@@ -5,13 +5,12 @@
  * @see module:algorithm/genotype/genotype
  */
 
-import { List } from 'immutable';
 import * as L from 'partial.lenses'
 import { compose, set, view } from 'ramda';
-import Random  from 'random-js';
 import inside from 'point-in-polygon';
-
+import { List } from 'immutable';
 import { PartialGenotype } from '../genotype/genotype';
+import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 const RADIUS = 1;

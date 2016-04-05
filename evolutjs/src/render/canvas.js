@@ -5,9 +5,9 @@
  */
 
 import { path as appRoot } from 'app-root-path';
+import canvasBuffer from 'electron-canvas-to-buffer';
 import fs from 'fs';
 import path from 'path';
-import canvasBuffer from 'electron-canvas-to-buffer';
 
 /**
  * Returns the path of an output image.

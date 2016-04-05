@@ -143,6 +143,12 @@
       "single",
       "avoid-escape"
     ],
+    "sort-imports": [
+      2,
+      {
+        "ignoreCase": true
+      }
+    ],
     "space-before-blocks": [
       2,
       "always"

@@ -5,7 +5,6 @@
  */
 
 import { compose, curry, equals, keys, not } from 'ramda';
-
 import { reduce } from '../../util/object';
 
 /**

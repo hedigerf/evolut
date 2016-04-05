@@ -4,8 +4,8 @@
  * @module P2Pixi
  */
 
-import PIXI from 'pixi.js';
 import p2 from 'p2';
+import PIXI from 'pixi.js';
 
 PIXI.utils._saidHello = true;
 
