@@ -9,7 +9,7 @@ import log4js from 'log4js';
 import path from 'path';
 import P2Pixi from './../../../lib/p2Pixi';
 
-import Engine, { Feedback } from '../../engine/engine';
+import Engine from '../../engine/engine';
 import FlatParcour from '../object/parcour/flatParcour';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
 import config from '../../app/config';
@@ -53,9 +53,10 @@ export default class SimulationWorld extends P2Pixi.Game {
     super({
       assetUrls: [rockTexturePath()],
       pixiOptions: {
-        view: document.getElementById('viewport'),
+        autoResize: true,
+        preserveDrawingBuffer: true, // Ensures that a canvas with a webgl context can be saved via toDataUrl
         transparent: true,
-        autoResize: true
+        view: document.getElementById('viewport')
       },
       worldOptions: {
         gravity
@@ -126,6 +127,7 @@ export default class SimulationWorld extends P2Pixi.Game {
     this.drawPhenotypes();
     const runDuration = config('simulation.runDuration');
     this.currentTime = 0;
+
     this.world.on('postStep', (event) => { // eslint-disable-line no-unused-vars
 
       this.currentTime += this.stepTime;
@@ -137,7 +139,6 @@ export default class SimulationWorld extends P2Pixi.Game {
         this.phenoTypes.forEach((individual) => {
 
           if (this.currentTime === WORLD_START_TIME + stepTime) {
-            Feedback.register(this.world, individual);
             Engine.initialStep(individual);
           } else {
             Engine.step(individual, this.currentTime);

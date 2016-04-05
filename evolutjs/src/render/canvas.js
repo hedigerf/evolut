@@ -23,9 +23,10 @@ function imagePath(name) {
 /**
  * Writes a canvas dom element to a picture.
  *
- * @param {Node} canvas
- * @param {String} imageName
+ * @param {Node} canvas The canvas element
+ * @param {String} imageName The file name
+ * @param {String} [mimeType='image/png'] The mime type of the saved file
 */
-export default function dumpCanvas(canvas, imageName) {
-  fs.writeFile(imagePath(imageName), canvasBuffer(canvas));
+export default function dumpCanvas(canvas, imageName, mimeType = 'image/png') {
+  fs.writeFile(imagePath(imageName), canvasBuffer(canvas, mimeType));
 }

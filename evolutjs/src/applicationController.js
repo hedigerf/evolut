@@ -85,7 +85,7 @@ ipcRenderer.on(World.ToggleRendering, () => {
  */
 ipcRenderer.on(World.SaveScreen, () => {
 
-  const canvas = jQuery('#viewport')[0];
+  const canvas = document.getElementById('viewport');
   const fileName = Date.now().toString() + '.png';
 
   dumpCanvas(canvas, fileName);
