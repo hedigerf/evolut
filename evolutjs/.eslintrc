@@ -8,8 +8,10 @@
     "document": true,
     "requestAnimationFrame": true,
     "Reflect": true,
+    "screen": true,
     "Symbol": true,
-    "WeakMap": true
+    "WeakMap": true,
+    "window": true
   },
   "parserOptions": {
     "ecmaVersion": 6,
@@ -96,7 +98,9 @@
         "ignore": [
           -1,
           0,
-          1
+          0.5,
+          1,
+          2
         ],
         "ignoreArrayIndexes": true
       }

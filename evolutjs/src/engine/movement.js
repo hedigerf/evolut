@@ -7,7 +7,7 @@
 import { allPass, always, anyPass, append, curry, map, partial, view } from 'ramda';
 
 import { getLensById } from './constraintLenses';
-import Identifiable from '../types/identifiable';
+import { IdentifiableStatic } from '../types/identifiable';
 
 /**
  * Divisor for tolerated margin of an angle.
@@ -70,9 +70,9 @@ export function isMinAngle(constraint) {
  * Or setting the speed of joint's motor.
  *
  * @abstract
- * @extends {Identifiable}
+ * @extends {IdentifiableStatic}
  */
-export class Movement extends Identifiable() {
+export class Movement extends IdentifiableStatic() {
 
   /**
    * Apply the movemement to a phenotype.

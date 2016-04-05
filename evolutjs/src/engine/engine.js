@@ -62,3 +62,51 @@ export default class Engine {
   }
 
 }
+
+/**
+ * Represents a feedback event.
+ */
+export class Feedback {
+
+  /**
+   * This callback is fired when an impact event was triggered in the current world.
+   *
+   * @param {p2.Event} event The event object
+   * @param {p2.World} world The world
+   * @param {Phenotype} phenotype The phenotype
+   */
+  static onImpact(event, world, phenotype) {
+    console.log(event.type + ': ' + phenotype.identifier);
+    Engine.step(phenotype, world.currentTime);
+  }
+
+  /**
+   * Register a callback when a phenotype is involved in a collision.
+   *
+   * @param {p2.World} world The world
+   * @param {Phenotype} phenotype The phenotype
+   */
+  static register(world, phenotype) {
+
+    // Get the lower leg bodies
+    const lowerLegs = [
+      phenotype.bodies[3],
+      phenotype.bodies[5],
+      phenotype.bodies[7],
+      phenotype.bodies[9],
+      phenotype.bodies[11],
+      phenotype.bodies[13]
+    ]
+
+    world.on('impact', event => {
+
+      // Check if the phenotype body is involved in this contact event.
+      if (lowerLegs.find(b => event.bodyA === b || event.bodyB === b)) {
+        this.onImpact(event, world, phenotype);
+      }
+
+    });
+
+  }
+
+}

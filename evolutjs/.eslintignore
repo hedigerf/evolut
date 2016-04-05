@@ -1,7 +1,7 @@
 assets/**
 css/**
 dist/**
-lib/**
+lib/p2Pixi.js
 logs/**
 node_modules/**
 test/**

@@ -52,7 +52,8 @@
     "pixi.js": "latest",
     "point-in-polygon": "latest",
     "ramda": "0.20.x",
-    "random-js": "latest"
+    "random-js": "latest",
+    "uuid": "2.0.1"
   },
   "devDependencies": {
     "chai": "latest",

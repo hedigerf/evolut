@@ -7,7 +7,7 @@
 import * as L from 'partial.lenses'
 import { always, curry, either, ifElse, mapObjIndexed, merge, view } from 'ramda';
 
-import Identifiable from '../../types/identifiable';
+import { IdentifiableStatic } from '../../types/identifiable';
 
 /**
  * Extract the options for a certain key.
@@ -147,7 +147,7 @@ export default class Genotype {
  * @extends {Genotype}
  * @extends {Identifiable}
  */
-export class PartialGenotype extends Identifiable(Genotype) {
+export class PartialGenotype extends IdentifiableStatic(Genotype) {
 
   /**
    * @param {Object} options

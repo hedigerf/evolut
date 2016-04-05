@@ -9,7 +9,7 @@ import log4js from 'log4js';
 import path from 'path';
 import P2Pixi from './../../../lib/p2Pixi';
 
-import Engine from '../../engine/engine';
+import Engine, { Feedback } from '../../engine/engine';
 import FlatParcour from '../object/parcour/flatParcour';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
 import config from '../../app/config';
@@ -137,6 +137,7 @@ export default class SimulationWorld extends P2Pixi.Game {
         this.phenoTypes.forEach((individual) => {
 
           if (this.currentTime === WORLD_START_TIME + stepTime) {
+            Feedback.register(this.world, individual);
             Engine.initialStep(individual);
           } else {
             Engine.step(individual, this.currentTime);
