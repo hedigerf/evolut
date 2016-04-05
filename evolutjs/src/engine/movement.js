@@ -452,10 +452,22 @@ function getMovementPredicate(predicateId) {
 }
 
 /**
+ * Make a movement descriptor object.
+ *
+ * @param {String} id The movement identifier
+ * @param {String} lensId The lens identifier
+ * @param {Array<*>} [params=[]] The optional paramerter list
+ * @return {makeMovementDescriptor} The movement descriptor
+ */
+export function makeMovementDescriptor(id, lensId, params = []) {
+  return { id, lensId, params };
+}
+
+/**
  * Resolve a movement descriptor and return the movement function.
  *
- * @param {MovementDescriptor} descriptor
- * @return {Movement}
+ * @param {MovementDescriptor} descriptor The movement descriptor
+ * @return {Movement} The movement function
  */
 export function resolveMovementDescriptor({ id, lensId, params }) {
 

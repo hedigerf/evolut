@@ -8,6 +8,14 @@ import * as L from 'partial.lenses'
 import { lens } from 'ramda';
 
 /**
+ * @typedef {{
+ *   side: String,
+ *   type: String,
+ *   index: Number
+ * }} LensDescriptor
+ */
+
+/**
  * Lens for immutable-js data types.
  *
  * @function
@@ -174,4 +182,41 @@ const LensIdMap = {
  */
 export function getLensById(lensId) {
   return LensIdMap[lensId];
+}
+
+/**
+ * Create a lens desriptor object.
+ *
+ * @param {String} side The side, left or right
+ * @param {String} type The type, hip or joint
+ * @param {Number} index The leg index
+ * @return {LensDescriptor} The lens descriptor
+ */
+export function makeLensDescriptor(side, type, index = 0) {
+  return { side, type, index };
+}
+
+/**
+ * Resolve a lens descriptor and return the lens.
+ *
+ * @param {LensDescriptor} descriptor
+ * @return {Lens} The lens
+ */
+export function resolveLensDecriptor({ side, type, index }) {
+
+  let lensSide;
+  if (side === 'left') {
+    lensSide = immutableLens('left');
+  } else if (side === 'right') {
+    lensSide = immutableLens('right');
+  }
+
+  let lensType;
+  if (type === 'hip') {
+    lensType = lensHip;
+  } else if (type === 'knee') {
+    lensType = lensKnee;
+  }
+
+  return L.compose(lensSide, L.index(index), lensType);
 }
