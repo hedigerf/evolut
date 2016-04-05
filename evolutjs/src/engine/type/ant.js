@@ -5,28 +5,8 @@
  * @see module:engine/engine
  */
 
-import { makeMovementDescriptor } from '../movement';
+import { all, makeMovementDescriptor, one } from '../movement';
 import { ANGLE_MAX, ANGLE_MIN } from '../../algorithm/individual/joint';
-
-/**
- * Returns a 'all' movement descriptor.
- *
- * @param {...MovementDescriptor} params The nested movements
- * @return {MovementDescriptor} The all movement descriptor
- */
-function all(...params) {
-  return { id: 'all', params };
-}
-
-/**
- * Returns a 'one' movement descriptor.
- *
- * @param {...MovementDescriptor} params The nested movements
- * @return {MovementDescriptor} The one movement descriptor
- */
-function one(...params) {
-  return { id: 'one', params };
-}
 
 /**
  * Describes an ant's movement.

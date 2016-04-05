@@ -464,6 +464,26 @@ export function makeMovementDescriptor(id, lensId, params = []) {
 }
 
 /**
+ * Returns a 'all' movement descriptor.
+ *
+ * @param {...MovementDescriptor} params The nested movements
+ * @return {MovementDescriptor} The all movement descriptor
+ */
+export function all(...params) {
+  return { id: 'all', params };
+}
+
+/**
+ * Returns a 'one' movement descriptor.
+ *
+ * @param {...MovementDescriptor} params The nested movements
+ * @return {MovementDescriptor} The one movement descriptor
+ */
+export function one(...params) {
+  return { id: 'one', params };
+}
+
+/**
  * Resolve a movement descriptor and return the movement function.
  *
  * @param {MovementDescriptor} descriptor The movement descriptor
