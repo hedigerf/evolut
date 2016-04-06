@@ -4,9 +4,9 @@
  * @module engine/movement
  */
 
-import R, { curry, view } from 'ramda';
-
-import { Movement } from './engine';
+import { allPass, always, anyPass, append, curry, map, partial, view } from 'ramda';
+import { getLensById } from './constraintLenses';
+import { IdentifiableStatic } from '../types/identifiable';
 
 /**
  * Divisor for tolerated margin of an angle.
@@ -21,24 +21,6 @@ const BLUR_FACTOR_DIVISOR = 10;
  * @type {Number}
  */
 const BLUR_FACTOR = Math.PI / BLUR_FACTOR_DIVISOR;
-
-/**
- * Tests if all movements were completed.
- *
- * @function
- * @param {...function(Phenotype, Number)} movements A list of movements
- * @return {function(Phenotype, Number): Boolean}
- */
-export const allPass = (...movements) => R.allPass(movements);
-
-/**
- * Tests if at least one movement was completed.
- *
- * @function
- * @param {...function(Phenotype, Number): Boolean} movements
- * @return {function(Phenotype, Number): Boolean}
- */
-export const anyPass = (...movements) => R.anyPass(movements);
 
 /**
  * @function
@@ -74,11 +56,51 @@ export function isMinAngle(constraint) {
 }
 
 /**
+ * @typedef {{
+ *   id: String,
+ *   lensId: String,
+ *   params: Array<*>
+ * }} MovementDescriptor
+ */
+
+/**
+ * Represents a single movement of a phonotype.
+ * A movement could be locking the angle of a joint.
+ * Or setting the speed of joint's motor.
+ *
+ * @abstract
+ * @extends {IdentifiableStatic}
+ */
+export class Movement extends IdentifiableStatic() {
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
+   */
+  static move(phenotype, time) { // eslint-disable-line no-unused-vars
+    return true;
+  }
+
+}
+
+/**
  * Locks a revolute constraint to certain angles.
  *
  * @extends {Movement}
  */
 class SetAnglesTo extends Movement {
+
+  /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'sta';
+  }
 
   /**
    * Apply the movemement to a phenotype.
@@ -112,6 +134,15 @@ class SetAnglesTo extends Movement {
 class SetAnglesToCurrent extends Movement {
 
   /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'stc';
+  }
+
+  /**
    * @param {Lens} lens The lens to a contraint
    * @param {Phenotype} phenotype The target phenotype
    * @return {Boolean}
@@ -131,6 +162,15 @@ class SetAnglesToCurrent extends Movement {
  * @extends {Movement}
  */
 class SetMotor extends Movement {
+
+  /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'stm';
+  }
 
   /**
    * Apply the movemement to a phenotype.
@@ -162,6 +202,15 @@ class SetMotor extends Movement {
 class SetSpeedTo extends Movement {
 
   /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'sts';
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Number} speed The speed of a constraint
@@ -184,15 +233,27 @@ class SetSpeedTo extends Movement {
 class Until extends Movement {
 
   /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'utl';
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
-   * @param {function(*, Number): Boolean} pred
+   * @param {function(*, Number): Boolean} predId
    * @param {Lens} lens The lens to a contraint
    * @param {Phenotype} phenotype The target phenotype
    * @param {Number} time The world time
    * @return {Boolean}
    */
-  static move(pred, lens, phenotype, time) {
+  static move(predId, lens, phenotype, time) {
+
+    const pred = getMovementPredicate(predId);
+
     return pred(view(lens, phenotype), time);
   }
 
@@ -205,6 +266,15 @@ class Until extends Movement {
  * @extends {Movement}
  */
 class When extends Movement {
+
+  /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'whn';
+  }
 
   /**
    * Apply the movemement to a phenotype.
@@ -312,7 +382,7 @@ export const setMotor = curry(
  * @function
  * @return {Boolean} Always false
  */
-export const stop = R.always(false);
+export const stop = always(false);
 
 /**
  * Waits until pred is true for a constraint.
@@ -329,6 +399,10 @@ export const until = curry(
 );
 
 /**
+ * Waits until a predicate is true for a constraint
+ * and then executes a callback.
+ *
+ * @function
  * @param {function(*, Number): Boolean} pred
  * @param {function(Lens, *, Number)} onTrue
  * @param {Lens} lens The lens to a contraint
@@ -338,3 +412,93 @@ export const until = curry(
 export const when = curry(
   (pred, onTrue, lens, phenotype, time) => When.move(pred, onTrue, lens, phenotype, time)
 );
+
+/**
+ * Lens map.
+ *
+ * @type {Object<Movement>}
+ */
+const MovementIdMap = {
+  la0: lockAngleToZero,
+  [SetAnglesTo.identifier]: setAngles,
+  [SetMotor.identifier]: setMotor,
+  [SetSpeedTo.identifier]: setSpeed,
+  [Until.identifier]: until,
+  [When.identifier]: when
+};
+
+/**
+ * Returns the movement specified by id.
+ *
+ * @param {String} movementId
+ * @return {Lens}
+ */
+function getMovementById(movementId) {
+  return MovementIdMap[movementId];
+}
+
+function getMovementPredicate(predicateId) {
+  switch (predicateId) {
+    case 'mxa':
+      return isMaxAngle;
+
+    case 'mia':
+      return isMinAngle;
+
+    case 'isa':
+      return isAngle;
+  }
+}
+
+/**
+ * Make a movement descriptor object.
+ *
+ * @param {String} id The movement identifier
+ * @param {String} lensId The lens identifier
+ * @param {Array<*>} [params=[]] The optional paramerter list
+ * @return {makeMovementDescriptor} The movement descriptor
+ */
+export function makeMovementDescriptor(id, lensId, params = []) {
+  return { id, lensId, params };
+}
+
+/**
+ * Returns a 'all' movement descriptor.
+ *
+ * @param {...MovementDescriptor} params The nested movements
+ * @return {MovementDescriptor} The all movement descriptor
+ */
+export function all(...params) {
+  return { id: 'all', params };
+}
+
+/**
+ * Returns a 'one' movement descriptor.
+ *
+ * @param {...MovementDescriptor} params The nested movements
+ * @return {MovementDescriptor} The one movement descriptor
+ */
+export function one(...params) {
+  return { id: 'one', params };
+}
+
+/**
+ * Resolve a movement descriptor and return the movement function.
+ *
+ * @param {MovementDescriptor} descriptor The movement descriptor
+ * @return {Movement} The movement function
+ */
+export function resolveMovementDescriptor({ id, lensId, params }) {
+
+  if (id === 'all') {
+    return allPass(map(resolveMovementDescriptor, params));
+  } else if (id === 'one') {
+    return anyPass(map(resolveMovementDescriptor, params));
+  }
+
+  const movement = getMovementById(id);
+  const lens = getLensById(lensId);
+  const args = append(lens, params);
+
+  return partial(movement, args);
+}

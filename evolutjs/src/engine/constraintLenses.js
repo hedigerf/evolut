@@ -4,8 +4,16 @@
  * @module engine/constraintLenses
  */
 
-import L from 'partial.lenses';
+import * as L from 'partial.lenses'
 import { lens } from 'ramda';
+
+/**
+ * @typedef {{
+ *   side: String,
+ *   type: String,
+ *   index: Number
+ * }} LensDescriptor
+ */
 
 /**
  * Lens for immutable-js data types.
@@ -127,3 +135,88 @@ export const lensRightMiddleJoint = L.compose(lensRightJoints, lensMiddle);
  * @return {Lens}
  */
 export const lensRightBackJoint = L.compose(lensRightJoints, lensBack);
+
+//
+
+export const lensLFHip = L.compose(lensLeftFrontJoint, lensHip);
+export const lensLMHip = L.compose(lensLeftMiddleJoint, lensHip);
+export const lensLBHip = L.compose(lensLeftBackJoint, lensHip);
+
+export const lensLFKnee = L.compose(lensLeftFrontJoint, lensKnee);
+export const lensLMKnee = L.compose(lensLeftMiddleJoint, lensKnee);
+export const lensLBKnee = L.compose(lensLeftBackJoint, lensKnee);
+
+export const lensRFHip = L.compose(lensRightFrontJoint, lensHip);
+export const lensRMHip = L.compose(lensRightMiddleJoint, lensHip);
+export const lensRBHip = L.compose(lensRightBackJoint, lensHip);
+
+export const lensRFKnee = L.compose(lensRightFrontJoint, lensKnee);
+export const lensRMKnee = L.compose(lensRightMiddleJoint, lensKnee);
+export const lensRBKnee = L.compose(lensRightBackJoint, lensKnee);
+
+/**
+ * Lens map.
+ *
+ * @type {Object<Lens>}
+ */
+const LensIdMap = {
+  lfh: lensLFHip,
+  lmh: lensLMHip,
+  lbh: lensLBHip,
+  lfk: lensLFKnee,
+  lmk: lensLMKnee,
+  lbk: lensLBKnee,
+  rfh: lensRFHip,
+  rmh: lensRMHip,
+  rbh: lensRBHip,
+  rfk: lensRFKnee,
+  rmk: lensRMKnee,
+  rbk: lensRBKnee
+};
+
+/**
+ * Returns the lens specified by id.
+ *
+ * @param {String} lensId
+ * @return {Lens}
+ */
+export function getLensById(lensId) {
+  return LensIdMap[lensId];
+}
+
+/**
+ * Create a lens desriptor object.
+ *
+ * @param {String} side The side, left or right
+ * @param {String} type The type, hip or joint
+ * @param {Number} index The leg index
+ * @return {LensDescriptor} The lens descriptor
+ */
+export function makeLensDescriptor(side, type, index = 0) {
+  return { side, type, index };
+}
+
+/**
+ * Resolve a lens descriptor and return the lens.
+ *
+ * @param {LensDescriptor} descriptor
+ * @return {Lens} The lens
+ */
+export function resolveLensDecriptor({ side, type, index }) {
+
+  let lensSide;
+  if (side === 'left') {
+    lensSide = immutableLens('left');
+  } else if (side === 'right') {
+    lensSide = immutableLens('right');
+  }
+
+  let lensType;
+  if (type === 'hip') {
+    lensType = lensHip;
+  } else if (type === 'knee') {
+    lensType = lensKnee;
+  }
+
+  return L.compose(lensSide, L.index(index), lensType);
+}

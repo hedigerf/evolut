@@ -4,24 +4,28 @@
  * @module render/object/individual/phenotype
  */
 
-import P2Pixi from '../../../../lib/p2Pixi';
+// import P2Pixi from '../../../../lib/p2Pixi';
+import { GameObject } from '../../../../lib/p2Pixi.es6';
+import uuid from 'uuid';
+
+import { decorateAccessor, memoize } from '../../../util/decorate';
+import { Identifiable } from '../../../types/identifiable';
 
 /**
  * Represents a phenotype.
  *
- * @extends {P2Pixi.GameObject}
+ * @extends {GameObject}
+ * @extends {Identifiable}
  */
-export default class Phenotype extends P2Pixi.GameObject {
+class Phenotype extends Identifiable(GameObject) {
 
   /**
-   * @param {P2Pixi.GameObject} world
+   * @param {Game} world
    * @param {Genotype} genotype
    */
   constructor(world, genotype) {
     super(world);
     this.fromGenotype(genotype);
-    this.movementState = 0;
-    this.movementIndex = 0;
   }
 
   /**
@@ -31,39 +35,19 @@ export default class Phenotype extends P2Pixi.GameObject {
   fromGenotype(genotype) {} // eslint-disable-line no-unused-vars
 
   /**
-   * Returns the current movement this phenotype is in.
+   * Returns the identifier for this phenotype.
    *
-   * @return {Number}
+   * @return {String}
    */
-  get movement() {
-    return this.movementIndex;
-  }
-
-  /**
-   * Returns the current movement phase this phenotype is in.
-   *
-   * @return {Number}
-   */
-  get state() {
-    return this.movementState;
-  }
-
-  /**
-   * Sets the movement this phenotype is in.
-   *
-   * @param {Number} movement
-   */
-  set movement(movement) {
-    this.movementIndex = movement;
-  }
-
-  /**
-   * Sets the movement phase this phenotype is in.
-   *
-   * @param {Number} phase
-   */
-  set state(phase) {
-    this.movementState = phase;
+  get identifier() {
+    return uuid.v4();
   }
 
 }
+
+// Decorate the static accessors (or the property) 'identifier'
+// The goal is to memoize this accessor and store it's result.
+// Every consecutive call to this accessor will return the stored result.
+decorateAccessor(memoize, 'identifier', Phenotype);
+
+export default Phenotype;

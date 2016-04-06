@@ -13,6 +13,8 @@
 'use strict';
 
 var PIXI = require('pixi.js');
+PIXI.utils._saidHello = true;
+
 var p2 = require('p2');
 
 var P2Pixi;

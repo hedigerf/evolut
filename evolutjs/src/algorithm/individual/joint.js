@@ -5,7 +5,7 @@
  * @see module:algorithm/genotype/genotype
  */
 
-import L  from 'partial.lenses';
+import * as L from 'partial.lenses'
 import { set, view } from 'ramda';
 import { PartialGenotype } from '../genotype/genotype';
 
@@ -15,7 +15,7 @@ import { PartialGenotype } from '../genotype/genotype';
  *
  * @enum {Number}
  */
-export const ORIENTATION = {
+export const Orientation = {
   BACK: 1,
   FORTH: 2
 };
@@ -25,17 +25,21 @@ export const ORIENTATION = {
  *
  * @type {Number}
  */
-export const ANGLE_MIN = -Math.PI / 3;
+export const ANGLE_MIN = -Math.PI / 3; // eslint-disable-line no-magic-numbers
 
 /**
  * Maximal angle in rad.
  *
  * @type {Number}
  */
-export const ANGLE_MAX = Math.PI / 3;
+export const ANGLE_MAX = Math.PI / 3; // eslint-disable-line no-magic-numbers
 
+/**
+ * Lens for joint orientation information.
+ *
+ * @return {Lens}
+ */
 const lensOrientation = L.prop('orientation');
-const lensPosition = L.prop('position');
 
 /**
  * Represents a joint of a leg of an indiviual.
@@ -49,14 +53,31 @@ export default class Joint extends PartialGenotype {
    * Default constructor of a joint of an individual.
    *
    * @param {Object} options
-   * @param {ORIENTATION} options.orientation
+   * @param {Orientation} options.orientation
    */
   constructor(options) {
 
     super(options);
 
+    /**
+     * Minimal deflection of this join.
+     *
+     * @type {Number}
+     */
     this.angleMin = ANGLE_MIN;
+
+    /**
+     * Maximal deflection of this join.
+     *
+     * @type {Number}
+     */
     this.angleMax = ANGLE_MAX;
+
+    /**
+     * Orientation of this joint.
+     *
+     * @type {Orientation}
+     */
     this.orientation = view(lensOrientation, options);
   }
 
@@ -73,11 +94,11 @@ export default class Joint extends PartialGenotype {
    * Returns a randomly seeded joint.
    *
    * @param {Object} options
-   * @param {ORIENTATION} options.orientation
+   * @param {Orientation} options.orientation
    * @return {Object}
    */
   static seed(options) {
-    const orientation = view(lensOrientation, options) || ORIENTATION.BACK;
+    const orientation = view(lensOrientation, options) || Orientation.BACK;
     return super.seed(set(lensOrientation, orientation, options));
   }
 
@@ -89,36 +110,7 @@ export default class Joint extends PartialGenotype {
  *
  * @extends {Joint}
  */
-export class HipJoint extends Joint {
-
-  /**
-   * Default constructor for a hip joint.
-   *
-   * @param {Object} options
-   * @param {ORIENTATION} options.orientation
-   * @param {Point} options.position
-   */
-  constructor(options) {
-
-    super(options);
-
-    this.position = view(lensPosition, options);
-  }
-
-  /**
-   * Returns a randomly seeded joint.
-   *
-   * @param {Object} options
-   * @param {ORIENTATION} options.orientation
-   * @param {Point} options.position
-   * @return {Object}
-   */
-  static seed(options) {
-    const position = view(lensPosition, options) || [1, 2];
-    return super.seed(set(lensPosition, position, options));
-  }
-
-}
+export class HipJoint extends Joint {}
 
 /**
  * Represents a knee joint of an individual.

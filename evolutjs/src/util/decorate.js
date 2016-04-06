@@ -58,15 +58,36 @@ function memoizationFor(obj) {
 }
 
 /**
+ * Wraps a getter in a decorator.
+ *
+ * @function
+ * @param {function(Object, String, Object)} decorator The decorator function
+ * @param {String} property The property name
+ * @param {Object} object The target
+ */
+export const decorateAccessor = curry(
+  (decorator, property, object) => {
+
+    let _temp = decorator(object.prototype, property,
+      _temp = Object.getOwnPropertyDescriptor(object.prototype, property)) || _temp;
+
+    if (_temp) {
+      Object.defineProperty(object.prototype, property, _temp);
+    }
+  }
+);
+
+/**
  * Wraps a static getter in a decorator.
  *
  * @function
  * @param {function(Object, String, Object)} decorator The decorator function
  * @param {String} property The property name
- * @param {Object} O The target
+ * @param {Object} object The target
  */
 export const decorateAccessorStatic = curry(
   (decorator, property, object) => {
+
     let _temp = decorator(object.prototype, property,
       _temp = Object.getOwnPropertyDescriptor(object.prototype.constructor, property)) || _temp;
 

@@ -5,21 +5,49 @@
  * @see module:algorithm/genotype/genotype
  */
 
-import { List, Range } from 'immutable';
-import L  from 'partial.lenses';
+import * as L from 'partial.lenses'
 import { compose, set, view } from 'ramda';
-import Random  from 'random-js';
 import inside from 'point-in-polygon';
-
+import { List } from 'immutable';
 import { PartialGenotype } from '../genotype/genotype';
+import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 const RADIUS = 1;
 
+/**
+ * Lens for body mass information.
+ *
+ * @return {Lens}
+ */
 const lensMass = L.prop('mass');
+
+/**
+ * Lens for body mass factor information.
+ *
+ * @return {Lens}
+ */
 const lensMassFactor = L.prop('massFactor');
+
+/**
+ * Lens for body points information.
+ *
+ * @return {Lens}
+ */
 const lensBodyPoints = L.prop('bodyPoints');
+
+/**
+ * Lens for body point count information.
+ *
+ * @return {Lens}
+ */
 const lensBodyPointsCount = L.prop('bodyPointsCount');
+
+/**
+ * Lens for hip joint positions information.
+ *
+ * @return {Lens}
+ */
 const lensHipJointPositions = L.prop('hipJointPositions');
 /**
  * [Generates a random polygon point]
@@ -106,10 +134,40 @@ export default class Body extends PartialGenotype {
 
     super(options);
 
+    /**
+     * The mass of this body.
+     *
+     * @type {Number}
+     */
     this.mass = view(lensMass, options);
+
+    /**
+     * The mass factor of this body.
+     *
+     * @type {Number}
+     */
     this.massFactor = view(lensMassFactor, options);
+
+    /**
+     * List of polygon points forming the body.
+     * Counter clock wise.
+     *
+     * @type {Array<Point>}
+     */
     this.bodyPoints = view(lensBodyPoints, options);
+
+    /**
+     * The number of polygon points.
+     *
+     * @type {Number}
+     */
     this.bodyPointsCount = view(lensBodyPointsCount, options);
+
+    /**
+     * The positions of the hip joints.
+     *
+     * @type {Array<Point>}
+     */
     this.hipJointPositions = view(lensHipJointPositions, options);
   }
 

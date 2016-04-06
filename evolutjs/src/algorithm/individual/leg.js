@@ -5,13 +5,12 @@
  * @see module:algorithm/genotype/genotype
  */
 
-import L  from 'partial.lenses';
+import * as L from 'partial.lenses'
 import { compose, isNil, over, view, when } from 'ramda';
-import Random  from 'random-js';
-
-import { PartialGenotype } from '../genotype/genotype';
-import Foot  from './foot';
+import Foot from './foot';
 import { KneeJoint } from './joint';
+import { PartialGenotype } from '../genotype/genotype';
+import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
@@ -41,7 +40,7 @@ const DEFAULT_LEG_HEIGHT = 1;
 export default class Leg extends PartialGenotype {
 
   /**
-   * Default constructor of a Leg.
+   * Constructor of a Leg.
    *
    * @param {Object} options
    * @param {Number} options.massFactor
@@ -52,9 +51,33 @@ export default class Leg extends PartialGenotype {
 
     super(options);
 
+    /**
+     * Mass of this leg.
+     *
+     * @type {Number}
+     */
     this.mass = view(lensMass, options);
+
+    /**
+     * Mass factor of this leg.
+     *
+     * @type {Number}
+     */
     this.massFactor = view(lensMassfactor, options);
+
+    /**
+     * Height of this leg.
+     *
+     * @type {Number}
+     */
     this.height = view(lensHeight, options) || DEFAULT_LEG_HEIGHT;
+
+    /**
+     * Height factor of this leg.
+     * Determines the size of the thigh and shank.
+     *
+     * @type {Number}
+     */
     this.heightFactor = view(lensHeightFactor, options);
   }
 

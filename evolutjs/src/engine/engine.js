@@ -4,101 +4,16 @@
  * @module engine/engine
  */
 
-import { nth } from 'ramda';
-
-import CyclicStateMachine, { CyclicState } from './cyclicStateMachine';
-
-/**
- * Offset for advancing a movement index.
- *
- * @type {Number}
- */
-const MOVEMENT_OFFSET = 1;
+import { forEach, nth } from 'ramda';
+import { resolveMovementDescriptor } from './movement';
 
 /**
- * Represents a single movement of a phonotype.
- * A movement could be locking the angle of a joint.
- * Or setting the speed of joint's motor.
- */
-export class Movement {
-
-  /**
-   * Apply the movemement to a phenotype.
-   *
-   * @param {Phenotype} phenotype The target phenotype
-   * @param {Number} time The world time
-   * @return {Boolean}
-   */
-  static move(phenotype, time) { // eslint-disable-line no-unused-vars
-    return true;
-  }
-
-}
-
-/**
- * Represents a phase of a whole movement.
- * A movement phase resebles a state in a state machine.
- * The phase is complete once all predicates are fulfilled.
- *
- * @extends {CyclicalState}
- */
-export class MovementPhase extends CyclicState {
-
-  /**
-   * Returns all movements of this phase.
-   *
-   * @protected
-   * @return {Array<Movement>}
-   */
-  static get movements() {
-    return [];
-  }
-
-  /**
-   * Progresses the movement phase of a phenotype.
-   *
-   * @param {Phenotype} phenotype
-   * @param {Number} time The current world time
-   * @return {Boolean}
-   */
-  static progress(phenotype, time) {
-
-    const movement = nth(phenotype.movement, this.movements);
-    const moved = movement(phenotype, time);
-
-    if (moved) {
-      phenotype.movement += MOVEMENT_OFFSET;
-    }
-
-    return moved;
-  }
-
-  /**
-   * Tests the predicates of the current state.
-   *
-   * @param {Phenotype} phenotype The phenotype
-   * @param {Number} time The world time
-   * @return {Boolean}
-   */
-  static isComplete(phenotype, time) { // eslint-disable-line no-unused-vars
-    return phenotype.movement > this.movements.length - MOVEMENT_OFFSET;
-  }
-
-}
-
-/**
- * Represents an abstract class for an engine.
+ * Represents an engine.
  * It's responsibility is moving an phenotype's legs.
- * An engine consists of multiple movement phases.
- * A phase itself may consist of multiple movements.
- *
- * An engine's operations should be chainable.
- * Therefore each operation must return the input it received.
- *
- * @abstract
- * @extends {CyclicStateMachine}
+ * An engine consists of multiple movements.
+ * A movement itself may consist of multiple movements.
  */
-export default class Engine extends CyclicStateMachine {
+export default class Engine {
 
   /**
    * Applies the initial step of an engine.
@@ -107,7 +22,12 @@ export default class Engine extends CyclicStateMachine {
    *
    * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype.
    */
-  static initialStep(phenotype) {} // eslint-disable-line no-unused-vars
+  static initialStep(phenotype) {
+    forEach(
+      descriptor => resolveMovementDescriptor(descriptor)(phenotype, 0),
+      phenotype.engine.descriptor.initial
+    );
+  }
 
   /**
    * Executes a single step of the engine.
@@ -118,30 +38,74 @@ export default class Engine extends CyclicStateMachine {
    */
   static step(phenotype, time) {
 
-    const state = nth(phenotype.state, this.states);
-    const progressed = state.progress(phenotype, time);
+    const descriptor = nth(phenotype.engine.current, phenotype.engine.descriptor.movements);
+    const movement = resolveMovementDescriptor(descriptor);
+    const moved = movement(phenotype, time);
 
-    if (progressed && state.isComplete(phenotype, time)) {
-      return this.transition(phenotype);
+    if (moved) {
+      phenotype.engine.current = this.nextState(phenotype);
     }
+
     return phenotype;
   }
 
   /**
-   * Transition to the next phase.
+   * Returns the index of the next state.
    *
    * @protected
    * @param {Phenotype} phenotype
-   * @return {Phenotype}
+   * @return {Number} The index of the next state
    */
-  static transition(phenotype) {
+  static nextState(phenotype) {
+    return (phenotype.engine.current + 1) % phenotype.engine.descriptor.movements.length;
+  }
 
-    const stateIndex = phenotype.state;
+}
 
-    phenotype.state = this.nextState(stateIndex);
-    phenotype.movement = 0;
+/**
+ * Represents a feedback event.
+ */
+export class Feedback {
 
-    return phenotype;
+  /**
+   * This callback is fired when an impact event was triggered in the current world.
+   *
+   * @param {p2.Event} event The event object
+   * @param {p2.World} world The world
+   * @param {Phenotype} phenotype The phenotype
+   */
+  static onImpact(event, world, phenotype) {
+    console.log(event.type + ': ' + phenotype.identifier);
+    Engine.step(phenotype, world.currentTime);
+  }
+
+  /**
+   * Register a callback when a phenotype is involved in a collision.
+   *
+   * @param {p2.World} world The world
+   * @param {Phenotype} phenotype The phenotype
+   */
+  static register(world, phenotype) {
+
+    // Get the lower leg bodies
+    const lowerLegs = [
+      phenotype.bodies[3],
+      phenotype.bodies[5],
+      phenotype.bodies[7],
+      phenotype.bodies[9],
+      phenotype.bodies[11],
+      phenotype.bodies[13]
+    ]
+
+    world.on('impact', event => {
+
+      // Check if the phenotype body is involved in this contact event.
+      if (lowerLegs.find(b => event.bodyA === b || event.bodyB === b)) {
+        this.onImpact(event, world, phenotype);
+      }
+
+    });
+
   }
 
 }

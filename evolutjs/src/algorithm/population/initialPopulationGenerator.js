@@ -1,20 +1,27 @@
-import {List, Range} from 'immutable';
-import log4js from 'log4js';
+/**
+ * Provides a generator for an population.
+ *
+ * @module algorithm/population/InitialPopulationGenerator
+ */
 
-import Population from './population';
+import { debug, error, info } from '../../util/logUtil';
+import { List, Range } from 'immutable';
 import Individual from '../individual/individual';
-import {debug, info, error} from '../../util/logUtil';
+import log4js from 'log4js';
+import Population from './population';
 
 const logger = log4js.getLogger('InitialPopulationGenerator');
 
 /**
  * Responsible for generation the initial Population of the Simulation
  */
-export default class InitialPopulationGenerator{
+export default class InitialPopulationGenerator {
+
   constructor(bodyPointsRange, populationSize) {
     this.bodyPointsRange = bodyPointsRange;
     this.populationSize = populationSize;
   }
+
   /**
    * Generate an initial population
    *
@@ -32,24 +39,23 @@ export default class InitialPopulationGenerator{
     info(logger, 'Genearting initial population with ' + this.bodyPointsRange.size +
       ' different BodyPoints. ' + individualsPerBp + ' Individuals per BodyPoint variation.');
     const individuals = Range(1, this.populationSize + 1).map(count => {
-      const currentBodyPoints = this.bodyPointsRange.get(currentBodyPointsIndex);
 
       const seed = Individual.seed({
         body: { massFactor: 1 },
-        engine: { type: 'test' },
+        engine: { movement: [] },
         legs:
         [
           {
             leg: { height: 0.8, heightFactor: 0.5, massFactor: 1 },
-            joint: { position: [(0.5 * (1 - 1)), 0], orientation: 1 }
+            joint: { orientation: 1 }
           },
           {
             leg: { height: 0.8, heightFactor: 0.5, massFactor: 1 },
-            joint: { position: [(0.5 * (2 - 1)), 0] , orientation: 1 }
+            joint: { orientation: 1 }
           },
           {
             leg: { height: 0.8, heightFactor: 0.5, massFactor: 1 },
-            joint: { position: [(0.5 * (3 - 1)), 0], orientation: 1 }
+            joint: { orientation: 1 }
           },
           {
             leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }
@@ -72,4 +78,5 @@ export default class InitialPopulationGenerator{
     });
     return new Population(new List(individuals), 1);
   }
+
 }

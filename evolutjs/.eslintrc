@@ -7,7 +7,11 @@
     "cancelAnimationFrame": true,
     "document": true,
     "requestAnimationFrame": true,
-    "WeakMap": true
+    "Reflect": true,
+    "screen": true,
+    "Symbol": true,
+    "WeakMap": true,
+    "window": true
   },
   "parserOptions": {
     "ecmaVersion": 6,
@@ -94,7 +98,9 @@
         "ignore": [
           -1,
           0,
-          1
+          0.5,
+          1,
+          2
         ],
         "ignoreArrayIndexes": true
       }
@@ -136,6 +142,12 @@
       2,
       "single",
       "avoid-escape"
+    ],
+    "sort-imports": [
+      2,
+      {
+        "ignoreCase": true
+      }
     ],
     "space-before-blocks": [
       2,

@@ -4,8 +4,7 @@
  * @module algorithm/genotype/mass
  */
 
-import { compose, curry, equals, keys, mapObjIndexed, not } from 'ramda';
-
+import { compose, curry, equals, keys, not } from 'ramda';
 import { reduce } from '../../util/object';
 
 /**
@@ -18,6 +17,7 @@ const DEFAULT_BODY_MASS = 1;
 /**
  * Calculates the mass for a single part object.
  *
+ * @function
  * @param {Number} mass The total mass to be distributed.
  * @param {Number} sumFactors The sum of all factors.
  * @param {Number} factor  The current factor.
@@ -30,6 +30,7 @@ const calcMass = curry(
 /**
  * Tests a property name if it's not equal 'mass'.
  *
+ * @function
  * @param {String} propertyName The name of a property.
  * @return {Boolean}
  */

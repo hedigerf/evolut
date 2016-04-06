@@ -4,11 +4,14 @@
  * @module applicationController
  */
 
+import { ipcRenderer } from 'electron';
 import jQuery from 'jquery';
 import log4js from 'log4js';
-import config from '../config';
-import {Range} from 'immutable';
+import { Range } from 'immutable';
 
+import dumpCanvas from './render/canvas';
+import config from './app/config';
+import { World } from './app/ipc';
 import SimulationWorld from './render/world/simulationWorld';
 import SettingsPanel from './settings/settingsPanel';
 import InitialPopulationGenerator from './algorithm/population/initialPopulationGenerator';
@@ -16,7 +19,7 @@ import Mutator from './algorithm/mutation/mutator';
 import {debug, info} from './util/logUtil';
 import TournamentBasedSelectionStrategy from './algorithm/selection/tournamentBasedSelectionStrategy';
 
-log4js.configure('log4js.json');
+import './app/log';
 const logger = log4js.getLogger('applicationController');
 
 let simulation;
@@ -50,4 +53,40 @@ jQuery(() => {
   settings.bindEvents();
 
   info(logger, 'application successfully started.');
+});
+
+/**
+ * IPC-Callback for the main process's menu item 'Next Generation'.
+ * Aborts the current run of the simulation and proceeds to the next.
+ */
+ipcRenderer.on(World.NextGeneration, () => {
+  simulation.runOver = true;
+});
+
+/**
+ * IPC-Callback for the main process's menu item 'Pause / Resume'.
+ * Halt/resume the current run.
+ */
+ipcRenderer.on(World.TogglePause, () => {
+  simulation.pauseToggle();
+});
+
+/**
+ * IPC-Callback for the main process's menu item 'Toggle Rendering'.
+ * Shows/hides the phenotypes.
+ */
+ipcRenderer.on(World.ToggleRendering, () => {
+  simulation.isRenderingEnabled = !simulation.isRenderingEnabled;
+});
+
+/**
+ * IPC-Callback for the main process's menu item 'Save Screen'.
+ * Saves the current content of the renderer process.
+ */
+ipcRenderer.on(World.SaveScreen, () => {
+
+  const canvas = document.getElementById('viewport');
+  const fileName = Date.now().toString() + '.png';
+
+  dumpCanvas(canvas, fileName);
 });

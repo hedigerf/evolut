@@ -5,14 +5,13 @@
  * @see module:algorithm/genotype/genotype
  */
 
-import { repeat } from 'ramda';
-
 import Body  from './body';
 import distribute from '../genotype/mass';
 import Engine  from './engine';
 import Genotype  from '../genotype/genotype';
 import { HipJoint } from './joint';
 import Leg  from './leg';
+import { repeat } from 'ramda';
 
 /**
  * Default number of legs an individual posesses.
@@ -39,6 +38,11 @@ export const IDENTIFIER_LEGS = 'legs';
  */
 export default class Individual extends Genotype {
 
+  /**
+   * Constructor of an individual.
+   *
+   * @param {Object} genotype A seeded genotype information object
+   */
   constructor(genotype) {
     super(distribute(genotype));
   }

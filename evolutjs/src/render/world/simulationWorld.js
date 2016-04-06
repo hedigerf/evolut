@@ -4,18 +4,15 @@
  * @module render/world/simulationWorld
  */
 
+import * as L from 'partial.lenses'
+import log4js from 'log4js';
 import path from 'path';
 import P2Pixi from './../../../lib/p2Pixi';
-import log4js from 'log4js';
-import { List, Map } from 'immutable';
-import L  from 'partial.lenses';
-import { view } from 'ramda';
 
-
+import Engine from '../../engine/engine';
 import FlatParcour from '../object/parcour/flatParcour';
-import DemoGround from '../object/demoGround';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
-import config from '../../../config';
+import config from '../../app/config';
 import { info } from '../../util/logUtil';
 import Individual from '../object/individual/individual';
 
@@ -28,17 +25,16 @@ const WORLD_START_TIME = 0;
 
 const logger = log4js.getLogger('simulationWorld');
 
+const evaluateAfterTickCount = config('simulation.evaluateAfterTickCount');
 const friction = config('simulation.friction');
+const gravity = config('simulation.gravity');
+const mustMovement = config('simulation.mustMovement');
 const render = config('simulation.render');
+const runDuration = config('simulation.runDuration');
 const solo = config('simulation.solo');
 const stepTime = config('simulation.stepTime');
-const evaluateAfterTickCount = config('simulation.evaluateAfterTickCount');
 const timeOut = config('simulation.timeOut');
-const mustMovement = config('simulation.mustMovement');
-const runDuration = config('simulation.runDuration');
 const trackY = config('simulation.trackY');
-
-
 
 const lensBodyXpos = L.compose(L.prop('bodies'), L.index(0), L.prop('position'), L.index(0));
 
@@ -55,17 +51,22 @@ export default class SimulationWorld extends P2Pixi.Game {
 
   constructor(parcourOptions, population, cb) {
     super({
+      assetUrls: [rockTexturePath()],
       pixiOptions: {
-        view: document.getElementById('viewport'),
+        autoResize: true,
+        preserveDrawingBuffer: true, // Ensures that a canvas with a webgl context can be saved via toDataUrl
         transparent: true,
-        autoResize: true
+        view: document.getElementById('viewport')
       },
-      assetUrls: [rockTexturePath()]
+      worldOptions: {
+        gravity
+      }
     });
     this.world.defaultContactMaterial.friction = friction;
     this.population = population;
     this.parcourOptions = parcourOptions;
     this.cb = cb;
+    this.isRenderingEnabled = render;
     this.reset();
   }
 
@@ -77,30 +78,17 @@ export default class SimulationWorld extends P2Pixi.Game {
     this.stepTime = stepTime;
     this.runOver = false;
     this.currentTime = 0;
-    this.tickCount = 0;
-    this.positionLastEvaluation = Map();
-    this.phenotypeToGenotype = Map();
-
   }
-  /**
-   * Triggers the parcour generation
-   *
-   * @param  {Number} maxSlope max. slope
-   * @param  {Number} highestY highest possible position
-   */
+
   generateParcour(maxSlope, highestY) {
     if (this.parcourOptions.mode === 'flat') {
       new FlatParcour(this);
-    } else if (this.parcourOptions.mode === 'demo') {
-      new DemoGround(this);
     } else if (this.parcourOptions.mode === 'generator') {
       const parcourGenerator = new ParcourGenerator();
       parcourGenerator.generateParcour(this, maxSlope, highestY);
     }
   }
-  /**
-   * Draws all phenotypes and creates the pheno- to genotype mapping
-   */
+
   drawPhenotypes() {
     // Force evaluation of sequence
     // jshint -W098
@@ -110,66 +98,21 @@ export default class SimulationWorld extends P2Pixi.Game {
     } else {
       takeN = this.population.individuals.size;
     }
-    this.phenoTypes = this.population.individuals.take(takeN).map(genotype => {
-      const individual = new Individual(this, genotype);
-      this.positionLastEvaluation = this.positionLastEvaluation.set(individual, view(lensBodyXpos, individual));
-      this.phenotypeToGenotype = this.phenotypeToGenotype.set(individual, genotype);
-      return individual;
-    });
+    this.phenoTypes = this.population.individuals.take(takeN).map(i => new Individual(this, i));
     info(logger, 'drawn ' + this.phenoTypes.size + ' phenoTypes');
     const trackedIndividual = this.phenoTypes.get(0);
     this.trackedBody = trackedIndividual.bodies[0];
   }
-  /**
-   * Add a new population to the simulation
-   *
-   * @param {Population} population the population
-   */
+
   addNewPopulation(population) {
     this.population = population;
     this.clear();
     this.reset();
+    this.mapIndividualsToRenderers();
   }
-  /**
-   * Evaluates the current state of the simulation. Timeout all stuck individuals and record information.
-   */
-  evaluate() {
-    let removeElements = List();
-    this.phenoTypes.forEach((individual) => {
-      const posLastEvaluation = this.positionLastEvaluation.get(individual);
-      const posCurEvaluation = view(lensBodyXpos, individual);
-      const delta = posCurEvaluation - posLastEvaluation;
-      if (timeOut && mustMovement >= delta) {
-        // Remove Individuals which are stuck from simulation
-        removeElements = removeElements.push(individual);
-        this.removeGameObject(individual);
-      }else {
-        this.positionLastEvaluation = this.positionLastEvaluation.set(individual, posCurEvaluation);
-      }
-    });
-    this.phenoTypes = this.phenoTypes.filterNot(individual => removeElements.includes(individual));
-    this.recordFitness(removeElements);
-    if (this.phenoTypes.size === 0) {
-      // If there are no more individuals remaining in the simulation, end the run
-      this.runOver = true;
-    }else {
-      // Track always the individual which is leading
-      const trackedIndividual = this.phenoTypes.maxBy(individual => view(lensBodyXpos, individual));
-      this.trackedBody = trackedIndividual.bodies[0];
 
-    }
-
-  }
-  /**
-   * Record fitenss of the the given phenotypes
-   *
-   * @param  {List<Phenotype>} phenotypes to be recorded.
-   */
-  recordFitness(phenotypes) {
-    phenotypes.forEach((individual) => {
-      const genotype = this.phenotypeToGenotype.get(individual);
-      genotype.fitness = view(lensBodyXpos, individual);
-    });
+  mapIndividualsToRenderers() {
+    // TODO create renderers for each indiviual
   }
 
   /**
@@ -182,28 +125,23 @@ export default class SimulationWorld extends P2Pixi.Game {
     info(logger, 'Preparing Simulation for Generation: ' + this.population.generationCount);
     this.generateParcour(this.parcourOptions.maxSlope, this.parcourOptions.highestY);
     this.drawPhenotypes();
+    const runDuration = config('simulation.runDuration');
     this.currentTime = 0;
+
     this.world.on('postStep', (event) => { // eslint-disable-line no-unused-vars
-      this.tickCount++;
-      if (this.tickCount % evaluateAfterTickCount === 0) {
-        // Perform Evulation after tickCount is reached
-        this.evaluate();
-      }
+
       this.currentTime += this.stepTime;
       if (runDuration <= this.currentTime) {
-        this.evaluate();
         this.runOver = true;
         info(logger, 'Simulation run ended.');
       } else {
 
         this.phenoTypes.forEach((individual) => {
 
-          const engine = individual.engine;
-
           if (this.currentTime === WORLD_START_TIME + stepTime) {
-            engine.initialStep(individual);
+            Engine.initialStep(individual);
           } else {
-            engine.step(individual, this.currentTime);
+            Engine.step(individual, this.currentTime);
           }
 
         });
@@ -230,7 +168,7 @@ export default class SimulationWorld extends P2Pixi.Game {
           self.world.step(self.stepTime, timeSinceLastCall, maxSubSteps);
         }
 
-        if (render) {
+        if (self.isRenderingEnabled) {
           self.beforeRender();
           self.render();
           self.afterRender();
@@ -238,7 +176,6 @@ export default class SimulationWorld extends P2Pixi.Game {
 
         self.req = requestAnimationFrame(update);
       } else {
-        self.recordFitness(self.phenoTypes);
         cancelAnimationFrame(self.req);
         self.cb({ generationCount: self.population.generationCount, individuals: self.population.individuals });
       }
@@ -265,7 +202,7 @@ export default class SimulationWorld extends P2Pixi.Game {
       containerPosition.x = ((trackedBodyOffset[0] + 1) * renderer.width * 0.5) - (trackedBodyPosition[0] * ppu * deviceScale);
       if (trackY) {
         containerPosition.y = ((trackedBodyOffset[1] + 1) * renderer.height * 0.5) + (trackedBodyPosition[1] * ppu * deviceScale);
-      }else {
+      } else {
         containerPosition.y = ((0 + 1) * renderer.height * 0.5) + (0 * ppu * deviceScale);
       }
     }

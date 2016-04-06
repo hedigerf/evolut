@@ -1,4 +1,8 @@
-'use strict';
+/**
+ * Provides performance enhanced log functions.
+ *
+ * @module util/logUtil
+ */
 
 /**
  * Only call logger.debug() if the logger has debug enabled.

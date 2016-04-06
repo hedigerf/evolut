@@ -5,27 +5,17 @@
  * @see module:algorithm/genotype/genotype
  */
 
-import L  from 'partial.lenses';
-import { always, set, view } from 'ramda';
-
-import AntEngine from '../../engine/ant/antEngine';
+import * as L from 'partial.lenses'
+import { set, view } from 'ramda';
+import AntEngineDescriptor from '../../engine/type/ant';
 import { PartialGenotype } from '../genotype/genotype';
 
 /**
- * Lens for the engine type.
+ * Lens for the movement description.
  *
- * @param {Object} The option object.
- * @return {String} The engine type.
+ * @return {Lens} The engine movement.
  */
-const lensType = L.prop('type');
-
-/**
- * Returns the constructor for an engine.
- *
- * @param {String} type The engine type.
- * @return {Engine} The engine.
- */
-const getEngine = always(AntEngine);
+const lensDescriptor = L.prop('descriptor');
 
 /**
  * Represents the engine part of an individual.
@@ -39,13 +29,18 @@ export default class Engine extends PartialGenotype {
    * Default constructor for an engine.
    *
    * @param {Object} options
-   * @param {String} options.type
+   * @param {String} options.descriptor
    */
   constructor(options) {
 
     super(options);
 
-    this.type = getEngine(view(lensType, options));
+    /**
+     * Describes the movemement.
+     *
+     * @type {Array<Movement>}
+     */
+    this.descriptor = view(lensDescriptor, options);
   }
 
   /**
@@ -61,12 +56,12 @@ export default class Engine extends PartialGenotype {
    * Returns a randomly seeded version of a genotype.
    *
    * @param {Object} options
-   * @param {String} options.type
+   * @param {String} options.descriptor
    * @return {Object}
    */
   static seed(options) {
-    const type = view(lensType, options) || 'ant';
-    return super.seed(set(lensType, type, options));
+    const movement = view(lensDescriptor, options) || AntEngineDescriptor;
+    return super.seed(set(lensDescriptor, movement, options));
   }
 
 }

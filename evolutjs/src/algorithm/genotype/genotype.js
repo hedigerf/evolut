@@ -4,8 +4,9 @@
  * @module algorithm/genotype/genotype
  */
 
-import L from 'partial.lenses';
+import * as L from 'partial.lenses'
 import { always, curry, either, ifElse, mapObjIndexed, merge, view } from 'ramda';
+import { IdentifiableStatic } from '../../types/identifiable';
 
 /**
  * Extract the options for a certain key.
@@ -143,17 +144,9 @@ export default class Genotype {
  * from the whole genotype.
  *
  * @extends {Genotype}
+ * @extends {Identifiable}
  */
-export class PartialGenotype extends Genotype {
-
-  /**
-   * Returns the identifier for a partial genotype.
-   *
-   * @return {String}
-   */
-  static get identifier() {
-    return '';
-  }
+export class PartialGenotype extends IdentifiableStatic(Genotype) {
 
   /**
    * @param {Object} options

@@ -1,13 +1,15 @@
 /**
  * Defines the main application menu.
+ * Runs within the main process.
+ * The spawned window run each in a separate render process.
  *
- * @module app
+ * @module app/app
  */
 
+import './menu';
 import { app, BrowserWindow } from 'electron';
-
+import { path as appRoot } from 'app-root-path';
 import config from './config';
-import './src/app/menu';
 
 /**
  * Start page.
@@ -15,10 +17,10 @@ import './src/app/menu';
  * @private
  * @type {String}
  */
-const index = 'file://' + __dirname + '/index.html';
+const index = 'file://' + appRoot + '/index.html';
 
 /**
- * Main application handle.
+ * Main window application handle.
  *
  * @private
  * @type {BrowserWindow}
@@ -34,15 +36,16 @@ app.on('window-all-closed', () =>  {
 app.on('ready', () => {
 
   mainWindow = new BrowserWindow({
-    width: config('window.width'),
-    height: config('window.height')
+    width: config('window:width'),
+    height: config('window:height')
   });
 
   mainWindow.loadURL(index);
-  mainWindow.openDevTools();
+  // mainWindow.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
     app.exit(0);
   });
+
 });
