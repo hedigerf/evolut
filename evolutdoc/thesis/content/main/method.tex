@@ -49,11 +49,13 @@
         Das ganze Individum weisst eine fixe Masse von 1 auf \(m = 0\).
         Die Masse wird aber auf die einzelnen Koerpeteile verteilt.
         \\
-        \input{./graphics/concept-leg}
+        \input{graphics/concept-leg}
 
     \subsection{Genotyp\label{sub:Genotyp}}
 
-      \subsubsection{Design\label{subsub:GenotypDesign}}
+      % TODO ramda, lenses
+
+      \subsubsection{Design\label{subsub:GenotypeDesign}}
 
         Der Anspruch an das Design des Genotyps ist möglichst modular und einfach zu sein.
         Als Grund für ein modulares Design spricht die Erweiterbarkeit und Wiederverwendung der bestehenden Teile.
@@ -67,7 +69,12 @@
         und beliebige Kombinationen aus vorhandenen Teil-Genotypen innerhalb eines Genotypes zu bilden,
         ohne dass die Implementation der seed-Funktion angepasst werden muss.
 
+      \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
+
+        % TODO
+
   \section{Auswahl des Evolutinären Algorithmus}
+
     Es stehen 4 Typen von Evolutionäre Algorithmen zur Auswahl:
     \begin{itemize}
       \item Genetische Programmierung~\ref{item:genProg}
