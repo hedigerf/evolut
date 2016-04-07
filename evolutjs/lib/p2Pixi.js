@@ -8,6 +8,9 @@
 // jshint ignore:start
 // jscs:disable
 
+/**
+ * @deprecated
+ */
 (function() {
 
 'use strict';
