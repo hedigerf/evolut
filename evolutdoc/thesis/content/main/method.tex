@@ -67,6 +67,17 @@
         und beliebige Kombinationen aus vorhandenen Teil-Genotypen innerhalb eines Genotypes zu bilden,
         ohne dass die Implementation der seed-Funktion angepasst werden muss.
 
+      \subsubsection{Generierung Körperpunkte\label{subsub:GenotypGenerierungKörperpunkte}}
+        Es werden Körper mit 4-8 Punkten generiert. Dazu wird der Einheitskreis in 4-8 Sektoren untertteilt.
+        Der Winkel eines Sektors entspricht \(\pi / Anzahl Punkte\). \\
+        Anschliessend wird in jedem Kreissektor mit Hilfe von Polar Korrdinaten ein Punkt bestimmt. \\
+        \( r = random (0, 1), winkel = random(startSektorWinkel, endeSektorWinkel ) \)
+        Anschliessend werden die Poolarkordinaten in kartesische Koordinaten transformiert.
+        Die Punkte verbunden, ergeben den Körper des Individuum. \\
+        Die folgende Abbildung zeigt die Punkte eines Invidiuum mit 6 Körperpunkten: \\
+
+        \input{./graphics/unit-circle-body-points}
+
   \section{Auswahl des Evolutinären Algorithmus}
     Es stehen 4 Typen von Evolutionäre Algorithmen zur Auswahl:
     \begin{itemize}
