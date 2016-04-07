@@ -1,20 +1,20 @@
 /**
- * P2Pixi rewritten in es6.
+ * P2Pixi in es6.
+ *
+ * P2Pixi v0.8.1 - 13-11-2015
+ * Copyright (c) Tom W Hall <tomshalls@gmail.com>
+ * A simple 2D vector game model framework using p2.js for physics and Pixi.js for rendering.
+ * License: MIT
  *
  * @module P2Pixi
  */
+
+/* eslint-disable complexity, max-statements, no-magic-numbers  */
 
 import p2 from 'p2';
 import PIXI from 'pixi.js';
 
 PIXI.utils._saidHello = true;
-
-/**
- * Factor for conversion from ms to s.
- *
- * @type {Number}
- */
-const FACTOR_MS_TO_S = 1000;
 
 /**
  * Resolution of world step.
@@ -44,9 +44,7 @@ export class Game {
     this.gameObjects = [];
     this.trackedBody = null;
     this.paused = false;
-
     this.lastWorldStepTime = null;
-
     this.assetsLoaded = false;
 
     if (options.assetUrls) {
@@ -56,7 +54,6 @@ export class Game {
     }
 
     this.runIfAssetsLoaded();
-
   }
 
   /**
@@ -125,7 +122,7 @@ export class Game {
    * @return {Number}
    */
   time() {
-    return new Date().getTime() / FACTOR_MS_TO_S;
+    return new Date().getTime() / 1000;
   }
 
   /**

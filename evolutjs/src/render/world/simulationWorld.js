@@ -118,44 +118,43 @@ export default class SimulationWorld extends P2Pixi.Game {
   }
 
   evaluate() {
-   let removeElements = List();
-   this.phenoTypes.forEach((individual) => {
-     const posLastEvaluation = this.positionLastEvaluation.get(individual);
-     const posCurEvaluation = view(lensBodyXpos, individual);
-     const delta = posCurEvaluation - posLastEvaluation;
-     if (timeOut && mustMovement >= delta) {
-       // Remove Individuals which are stuck from simulation
-       removeElements = removeElements.push(individual);
-       this.removeGameObject(individual);
-     }else {
-       this.positionLastEvaluation = this.positionLastEvaluation.set(individual, posCurEvaluation);
-     }
-   });
-   this.phenoTypes = this.phenoTypes.filterNot(individual => removeElements.includes(individual));
-   this.recordFitness(removeElements);
-   if (this.phenoTypes.size === 0) {
-     // If there are no more individuals remaining in the simulation, end the run
-     this.runOver = true;
-   }else {
-     // Track always the individual which is leading
-     const trackedIndividual = this.phenoTypes.maxBy(individual => view(lensBodyXpos, individual));
-     this.trackedBody = trackedIndividual.bodies[0];
+    let removeElements = List();
+    this.phenoTypes.forEach((individual) => {
+      const posLastEvaluation = this.positionLastEvaluation.get(individual);
+      const posCurEvaluation = view(lensBodyXpos, individual);
+      const delta = posCurEvaluation - posLastEvaluation;
+      if (timeOut && mustMovement >= delta) {
+        // Remove Individuals which are stuck from simulation
+        removeElements = removeElements.push(individual);
+        this.removeGameObject(individual);
+      } else {
+        this.positionLastEvaluation = this.positionLastEvaluation.set(individual, posCurEvaluation);
+      }
+    });
+    this.phenoTypes = this.phenoTypes.filterNot(individual => removeElements.includes(individual));
+    this.recordFitness(removeElements);
+    if (this.phenoTypes.size === 0) {
+      // If there are no more individuals remaining in the simulation, end the run
+      this.runOver = true;
+    } else {
+      // Track always the individual which is leading
+      const trackedIndividual = this.phenoTypes.maxBy(individual => view(lensBodyXpos, individual));
+      this.trackedBody = trackedIndividual.bodies[0];
+    }
 
-   }
+  }
 
- }
-
- /**
- * Record fitenss of the the given phenotypes
- *
- * @param  {List<Phenotype>} phenotypes to be recorded.
- */
-recordFitness(phenotypes) {
-  phenotypes.forEach((individual) => {
-    const genotype = this.phenotypeToGenotype.get(individual);
-    genotype.fitness = view(lensBodyXpos, individual);
-  });
-}
+  /**
+   * Record fitenss of the the given phenotypes
+   *
+   * @param  {List<Phenotype>} phenotypes to be recorded.
+   */
+  recordFitness(phenotypes) {
+    phenotypes.forEach((individual) => {
+      const genotype = this.phenotypeToGenotype.get(individual);
+      genotype.fitness = view(lensBodyXpos, individual);
+    });
+  }
 
   /**
    * Callback on before run.
