@@ -95,7 +95,7 @@ export class Feedback {
       phenotype.bodies[9],
       phenotype.bodies[11],
       phenotype.bodies[13]
-    ]
+    ];
 
     world.on('impact', event => {
 

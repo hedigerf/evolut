@@ -5,6 +5,7 @@
 % !TEX root = ../../main.tex
 
 \chapter{Methode}
+
   \todo[inline]{Beschreibt die Grundüberlegungen der realisierten Lösung (Konstruktion/Entwurf) und die
   Realisierung als Simulation, als Prototyp oder als Software-Komponente}
   \todo[inline]{Definiert Messgrössen, beschreibt Mess- oder Versuchsaufbau, beschreibt und dokumentiert
@@ -49,23 +50,34 @@
         Das ganze Individum weisst eine fixe Masse von 1 auf \(m = 0\).
         Die Masse wird aber auf die einzelnen Koerpeteile verteilt.
         \\
-        \input{./graphics/concept-leg}
+        \input{graphics/concept-leg}
 
-    \subsection{Genotyp\label{sub:Genotyp}}
+    \subsection{Genotyp\label{sub:Genotype}}
 
-      \subsubsection{Design\label{subsub:GenotypDesign}}
+      % TODO ramda, lenses
+
+      \subsubsection{Design\label{subsub:GenotypeDesign}}
+
+        % TODO
 
         Der Anspruch an das Design des Genotyps ist möglichst modular und einfach zu sein.
         Als Grund für ein modulares Design spricht die Erweiterbarkeit und Wiederverwendung der bestehenden Teile.
-
         Deshalb wurde der Genotyp in Teil-Genotypen unterteilt.
-
         Ein Teil-Genotyp repräsentiert dabei eine beliebige Eigenschaft des Individuums.
         Weiter können Teil-Genotypen wiederum in verschiedene weitere Teile aufgespaltet werden.
-
         Damit entsteht die Möglichkeit Individuen nach einem dynamisch generierten Bauplan zu erstellen
         und beliebige Kombinationen aus vorhandenen Teil-Genotypen innerhalb eines Genotypes zu bilden,
         ohne dass die Implementation der seed-Funktion angepasst werden muss.
+
+        \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
+
+          Die initiale Population wird zufällig erstellt. Dieser Vorgang wird Seeding genannt.
+          Dabei wird eine Anzahl von Individuen zufällig generiert.
+          Unter gewissen Umständen ist es jedoch hilfreich gewisse Parameter nicht zufällig generiern zu lassen
+          sondern mit einem fixen Wert zu initialisieren.
+          Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
+          Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp separat mit
+          spezifizierten Werten zu initialisieren.
 
       \subsubsection{Generierung Körperpunkte\label{subsub:GenotypGenerierungKörperpunkte}}
         Es werden Körper mit 4-8 Punkten generiert. Dazu wird der Einheitskreis in 4-8 Sektoren untertteilt.
@@ -90,7 +102,9 @@
     Auf allen Revolute Contraint wird ein Rototationsmotor für die Bewegung definiert.
 
 
+
   \section{Auswahl des Evolutinären Algorithmus}
+
     Es stehen 4 Typen von Evolutionäre Algorithmen zur Auswahl:
     \begin{itemize}
       \item Genetische Programmierung~\ref{item:genProg}
@@ -116,28 +130,30 @@
 
   \section{Eingesetzte Technologien}
 
-    Zur Auswahl standen mehrere Programmiersprachen und Physik Engines zur Auswahl. Die Evaluationskriterien dabei waren:
+    Zur Auswahl standen mehrere Programmiersprachen und Physik Engines. Die Evaluationskriterien dabei waren:
     \begin{itemize}
-      \item Platform Interoperabilität (Linux, Windows Mac OS X)
+      \item Platform-Interoperabilität (Linux, Windows Mac OS X)
       \item Einfache Handhabung
-      \item Stablität
-      \item Features der Physik Engine
+      \item Stabilität
+      \item Funktionsumfang der Physik-Engine
       \item Ökosystem der Programmiersprache (verfügbare Bibilotheken)
     \end{itemize}
 
-     Als erstes wurde F\# und diverse populäre .NET Physics Engines wie Farseer Physics, Physics 2D und Digital Rune Engine evaluiert.
-     F\# ist eine neue funktionale Sprache die mit einer sauberen Synatx und einem der besten Typensystem überhaupt besticht.
-     Jedoch gestaltete sich die Konfiguration und Platform Interoperablität sehr schwierig. Dies lag nich an den Physic Engines selber,
-     sondern an der Open Source Implementiertung Mono Game. Eine plattformübergreifende Konfiguration,
-     damit mit allen oben genannten Betriebssystemen entwickelt werden kann, konnte nicht erstellt werden.\\
-     Als zweite Möglichkeit wurde JavaScript und die Physics Engines Matter.js und p2.js in Betracht gezogen.
-     Die Popularität von JavaScript hat in den letzten Jahren enorm zugenommen.
-     Auch wurde mit dem neuen ECMA2015 Standard die Sprache enorm verbessert und viele neue Features eingeführt. Das JavaScript Ökosystem ist eines der grössten überhaupt.
-     Da JavaScript eine Webtechnologie ursprünglich ist und auf allen Plattformen problemlos läuft, wurde das Kriterium der Platform Interoperabilität ohne zusätzliche Konfiguration erfüllt.
-     Matter.js wirkte noch nicht so ausgereift wie p2.js und wies viele Fehler auf. Um JavaScript und p2.js ohne Browser zu betreiben wird Electron eingesetzt.
-     Electron ist nicht anderes als Node.js und Chromium vereint in einer Standalone Anwendung.
-     Mit Hilfe von Node.js lassen sich alle I/0 Zugriffe regeln und es kann auf den Node Package Manager zur Abhänigskeitsverwaltung von anderen Bibliotheken zurück gegriffen werden.
-     Auch lässt sich unter bestimmten Umständen JavaScript schneller ausführen unter Node.js als in einem Browser.
+    % Ignore punctuation warning on '.NET'
+    % chktex-file 26
+    Als erstes wurde F\# und diverse populäre .NET Physics Engines wie Farseer Physics, Physics 2D und Digital Rune Engine evaluiert. % chktex-ignore
+    F\# ist eine neue funktionale Sprache die mit einer sauberen Synatx und einem der besten Typensystem überhaupt besticht.
+    Jedoch gestaltete sich die Konfiguration und Platform Interoperablität sehr schwierig. Dies lag nich an den Physic Engines selber,
+    sondern an der Open Source Implementiertung Mono Game. Eine plattformübergreifende Konfiguration,
+    damit mit allen oben genannten Betriebssystemen entwickelt werden kann, konnte nicht erstellt werden.\\
+    Als zweite Möglichkeit wurde JavaScript und die Physics Engines Matter.js und p2.js in Betracht gezogen.
+    Die Popularität von JavaScript hat in den letzten Jahren enorm zugenommen.
+    Auch wurde mit dem neuen ECMA2015 Standard die Sprache enorm verbessert und viele neue Features eingeführt. Das JavaScript Ökosystem ist eines der grössten überhaupt.
+    Da JavaScript eine Webtechnologie ursprünglich ist und auf allen Plattformen problemlos läuft, wurde das Kriterium der Platform Interoperabilität ohne zusätzliche Konfiguration erfüllt.
+    Matter.js wirkte noch nicht so ausgereift wie p2.js und wies viele Fehler auf. Um JavaScript und p2.js ohne Browser zu betreiben wird Electron eingesetzt.
+    Electron ist nicht anderes als Node.js und Google Chrome vereint in einer Standalone Anwendung.
+    Mit Hilfe von Node.js lassen sich alle I/0 Zugriffe regeln und es kann auf den Node Package Manager zur Abhänigskeitsverwaltung von anderen Bibliotheken zurück gegriffen werden.
+    Auch lässt sich unter bestimmten Umständen JavaScript schneller ausführen unter Node.js als in einem Browser.
 
   \section{Initiale Polulation\label{sec:Initiale Polulation}}
 
