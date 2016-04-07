@@ -32,7 +32,6 @@ function performSimulationPostprocessing(population) {
   const mutated = mutator.mutate(selected);
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
   simulation.addNewPopulation(mutated);
-  simulation.drawPhenotypes();
   simulation.generateParcour(config('parcour.startMaxSlope'), config('parcour.startHighestY'));
   info(logger, 'starting simulation for generation: ' + mutated.generationCount);
   simulation.run();
