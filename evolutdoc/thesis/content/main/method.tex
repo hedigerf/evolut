@@ -52,7 +52,7 @@
         \\
         \input{graphics/concept-leg}
 
-    \subsection{Genotyp\label{sub:Genotyp}}
+    \subsection{Genotyp\label{sub:Genotype}}
 
       % TODO ramda, lenses
 
@@ -62,19 +62,22 @@
 
         Der Anspruch an das Design des Genotyps ist möglichst modular und einfach zu sein.
         Als Grund für ein modulares Design spricht die Erweiterbarkeit und Wiederverwendung der bestehenden Teile.
-
         Deshalb wurde der Genotyp in Teil-Genotypen unterteilt.
-
         Ein Teil-Genotyp repräsentiert dabei eine beliebige Eigenschaft des Individuums.
         Weiter können Teil-Genotypen wiederum in verschiedene weitere Teile aufgespaltet werden.
-
         Damit entsteht die Möglichkeit Individuen nach einem dynamisch generierten Bauplan zu erstellen
         und beliebige Kombinationen aus vorhandenen Teil-Genotypen innerhalb eines Genotypes zu bilden,
         ohne dass die Implementation der seed-Funktion angepasst werden muss.
 
       \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
 
-        % TODO
+        Die initiale Population wird zufällig erstellt. Dieser Vorgang wird Seeding genannt.
+        Dabei wird eine Anzahl von Individuen zufällig generiert.
+        Unter gewissen Umständen ist es jedoch hilfreich gewisse Parameter nicht zufällig generiern zu lassen
+        sondern mit einem fixen Wert zu initialisieren.
+        Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
+        Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp separat mit
+        spezifizierten Werten zu initialisieren.
 
   \section{Auswahl des Evolutinären Algorithmus}
 
@@ -103,12 +106,12 @@
 
   \section{Eingesetzte Technologien}
 
-    Zur Auswahl standen mehrere Programmiersprachen und Physik Engines zur Auswahl. Die Evaluationskriterien dabei waren:
+    Zur Auswahl standen mehrere Programmiersprachen und Physik Engines. Die Evaluationskriterien dabei waren:
     \begin{itemize}
-      \item Platform Interoperabilität (Linux, Windows Mac OS X)
+      \item Platform-Interoperabilität (Linux, Windows Mac OS X)
       \item Einfache Handhabung
-      \item Stablität
-      \item Features der Physik Engine
+      \item Stabilität
+      \item Funktionsumfang der Physik-Engine
       \item Ökosystem der Programmiersprache (verfügbare Bibilotheken)
     \end{itemize}
 
