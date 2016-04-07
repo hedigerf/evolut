@@ -5,7 +5,7 @@
  * @see module:algorithm/genotype/genotype
  */
 
-import * as L from 'partial.lenses'
+import * as L from 'partial.lenses';
 import { compose, set, view } from 'ramda';
 import inside from 'point-in-polygon';
 import { List } from 'immutable';

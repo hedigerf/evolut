@@ -69,15 +69,39 @@
         und beliebige Kombinationen aus vorhandenen Teil-Genotypen innerhalb eines Genotypes zu bilden,
         ohne dass die Implementation der seed-Funktion angepasst werden muss.
 
-      \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
+        \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
 
-        Die initiale Population wird zufällig erstellt. Dieser Vorgang wird Seeding genannt.
-        Dabei wird eine Anzahl von Individuen zufällig generiert.
-        Unter gewissen Umständen ist es jedoch hilfreich gewisse Parameter nicht zufällig generiern zu lassen
-        sondern mit einem fixen Wert zu initialisieren.
-        Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
-        Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp separat mit
-        spezifizierten Werten zu initialisieren.
+          Die initiale Population wird zufällig erstellt. Dieser Vorgang wird Seeding genannt.
+          Dabei wird eine Anzahl von Individuen zufällig generiert.
+          Unter gewissen Umständen ist es jedoch hilfreich gewisse Parameter nicht zufällig generiern zu lassen
+          sondern mit einem fixen Wert zu initialisieren.
+          Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
+          Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp separat mit
+          spezifizierten Werten zu initialisieren.
+
+      \subsubsection{Generierung Körperpunkte\label{subsub:GenotypGenerierungKörperpunkte}}
+        Es werden Körper mit 4-8 Punkten generiert. Dazu wird der Einheitskreis in 4-8 Sektoren untertteilt.
+        Der Winkel eines Sektors entspricht \(\pi / Anzahl Punkte\). \\
+        Anschliessend wird in jedem Kreissektor mit Hilfe von Polar Korrdinaten ein Punkt bestimmt. \\
+        \( r = random (0, 1), winkel = random(startSektorWinkel, endeSektorWinkel ) \)
+        Anschliessend werden die Poolarkordinaten in kartesische Koordinaten transformiert.
+        Die Punkte verbunden, ergeben den Körper des Individuum. \\
+        Zuerst wurde ein Ansatz mit einem Quadrat evaluiert, bei diesem stellte sich jedoch die zufällige Bestimmung
+        der Punkte als viel schwerer als mit einem Einheitskreis heraus. Der Nachteil unserer gewählten
+        Ansatzes ist, dass eine quadratische Form nur angenähert werden kann.
+        Die folgende Abbildung zeigt die Punkte eines Invidiuum mit 6 Körperpunkten: \\
+
+        \input{./graphics/unit-circle-body-points}
+
+
+  \subsection{Phenotyp\label{sub:Phenotyp}}
+    Der Phenotyp stell die Repräentation des Genotyps in der Physik Engine dar.
+    Er setzt sich aus mehreren geometrischen Figuren zusammen. Die Beine des Individuums
+    werden mit Hilfe eines sogenannten Revolute Contraint an den Körper gebunden.
+    Ebenso wird der Ober- mit dem Unterschenkel mit solch einem Constraint verbunden.
+    Auf allen Revolute Contraint wird ein Rototationsmotor für die Bewegung definiert.
+
+
 
   \section{Auswahl des Evolutinären Algorithmus}
 
@@ -154,3 +178,7 @@
       Es wird die Hypothese aufgestellt, dass Tournament-based-Selection die besseren Resulate liefert im Vergleich zu den folgenden Selektionsstrategien: X und Y.
       Um dies zu validieren werden die Selektionsstrategien X und Y implementiert und anschliessend analysiert.
       Ob dies zutrifft wird in Kapitel~\ref{chap:Resulate} diskutiert.
+
+  \section{Mutation\label{sec:Mutation}}
+
+    Auf die Selektionsstrategie folgt nun die Mutation der Individuen.

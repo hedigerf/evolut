@@ -1,0 +1,79 @@
+\begin{tikzpicture}[scale=5.3,cap=round,>=latex]
+ % draw the coordinates
+ \draw[->] (-1.5cm,0cm) -- (1.5cm,0cm) node[right,fill=white] {$x$};
+ \draw[->] (0cm,-1.5cm) -- (0cm,1.5cm) node[above,fill=white] {$y$};
+
+ % draw the unit circle
+ \draw[thick] (0cm,0cm) circle(1cm);
+
+ \foreach \x in {0,60,...,360} {
+         % lines from center to point
+         \draw[black] (0cm,0cm) -- (\x:1cm);
+         % dots at each point
+         \filldraw[black] (\x:1cm) circle(0.4pt);
+         % draw each angle in degrees
+         \draw (\x:0.6cm) node[fill=white] {};
+ }
+
+ \foreach \x in {30} {
+         % dots at each point
+         \filldraw[red] (\x:0.4cm) circle(0.4pt);
+         \draw (\x:0.5cm) node[fill=white] {\(P_{0}\)};
+
+ }
+
+ \foreach \x in {110} {
+         % dots at each point
+         \filldraw[red] (\x:0.4cm) circle(0.4pt);
+         \draw (\x:0.5cm) node[fill=white] {\(P_{1}\)};
+
+ }
+
+ \foreach \x in {150} {
+         % dots at each point
+         \filldraw[red] (\x:0.8cm) circle(0.4pt);
+         \draw (\x:0.9cm) node[fill=white] {\(P_{2}\)};
+ }
+
+ \foreach \x in {220} {
+         % dots at each point
+         \filldraw[red] (\x:0.3cm) circle(0.4pt);
+         \draw (\x:0.4cm) node[fill=white] {\(P_{3}\)};
+
+
+ }
+
+ \foreach \x in {280} {
+         % dots at each point
+         \filldraw[red] (\x:0.6cm) circle(0.4pt);
+         \draw (\x:0.7cm) node[fill=white] {\(P_{4}\)};
+
+
+ }
+
+ \foreach \x in {340} {
+         % dots at each point
+         \filldraw[red] (\x:0.2cm) circle(0.4pt);
+         \draw (\x:0.3cm) node[fill=white] {\(P_{5}\)};
+
+ }
+
+ % draw each angle in radians
+ \foreach \x/\xtext in {
+     60/\frac{\pi}{6},
+     120/\frac{\pi}{4},
+     180/\frac{\pi}{3},
+     240/\frac{\pi}{2},
+     300/\frac{2\pi}{3},
+     360/2\pi}
+         \draw (\x:0.85cm) node[fill=white] {$\xtext$};
+
+
+
+ % draw the horizontal and vertical coordinates
+ % the placement is better this way
+ \draw (-1.25cm,0cm) node[above=1pt] {$(-1,0)$}
+       (1.25cm,0cm)  node[above=1pt] {$(1,0)$}
+       (0cm,-1.25cm) node[fill=white] {$(0,-1)$}
+       (0cm,1.25cm)  node[fill=white] {$(0,1)$};
+\end{tikzpicture}
