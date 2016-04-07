@@ -57,7 +57,7 @@ const lensHipJointPositions = L.prop('hipJointPositions');
  * @return {Array}            [the coordinates]
  */
 export function generateRandomPolygonPoint(startAngle, endAngle) {
-  const r = random.real(RADIUS / 2, RADIUS);
+  const r = random.real(0, RADIUS);
   const angle = random.real(startAngle, endAngle);
   const x = r * Math.cos(angle);
   const y = r * Math.sin(angle);

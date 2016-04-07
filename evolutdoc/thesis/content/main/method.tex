@@ -182,3 +182,11 @@
   \section{Mutation\label{sec:Mutation}}
 
     Auf die Selektionsstrategie folgt nun die Mutation der Individuen.
+    Bei der Mutation wird über jede Eigenschaft des Individuums iteriert und
+    diese wird mit einer bestimmten Wahrscheinlichkeit verändert. Die Position eines Beines,
+    wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
+    dass ein Bein ausserhalb des Körper ist, wird die Position zufällig neu bestimmt.
+
+  \section{Wiederholungen}
+    Alle Schritte (ausser die Generiung der initialen Population) werden solange ausgeführt,
+    bis ein zufriedenstellendes Resultat gefunden wird.
