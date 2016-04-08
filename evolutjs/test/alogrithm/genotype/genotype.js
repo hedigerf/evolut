@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 import Genotype, { PartialGenotype } from '../../../src/algorithm/genotype/genotype';
 import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
