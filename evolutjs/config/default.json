@@ -10,6 +10,9 @@
     "startMaxSlope": 0,
     "startHighestY": 0
   },
+  "workers": {
+    "count": 1
+  },
   "simulation": {
     "evaluateAfterTickCount": 240,
     "mustMovement": 0.05,

@@ -4,56 +4,51 @@
  * @module applicationController
  */
 
+import './app/log';
+import config from './app/config';
+import dumpCanvas from './render/canvas';
+import { info } from './util/logUtil';
 import { ipcRenderer } from 'electron';
 import jQuery from 'jquery';
+import { List } from 'immutable';
 import log4js from 'log4js';
-import { Range } from 'immutable';
-
-import dumpCanvas from './render/canvas';
-import config from './app/config';
-import { World } from './app/ipc';
-import SimulationWorld from './render/world/simulationWorld';
 import SettingsPanel from './settings/settingsPanel';
-import InitialPopulationGenerator from './algorithm/population/initialPopulationGenerator';
-import Mutator from './algorithm/mutation/mutator';
-import {debug, info} from './util/logUtil';
-import TournamentBasedSelectionStrategy from './algorithm/selection/tournamentBasedSelectionStrategy';
+import SimulationWorld from './render/world/simulationWorld';
+import { World } from './app/ipc';
 
-import './app/log';
 const logger = log4js.getLogger('applicationController');
 
-let simulation;
+let simulation = null;
 
 function performSimulationPostprocessing(population) {
-  info(logger, 'starting postprocessing');
-  const selectionStrategy = new TournamentBasedSelectionStrategy(population, 10);
-  const selected = selectionStrategy.select();
-  const mutator = new Mutator();
-  const mutated = mutator.mutate(selected);
-  debug(logger, 'selected individuals size: ' + selected.individuals.size);
-  simulation.addNewPopulation(mutated);
-  simulation.generateParcour(config('parcour.startMaxSlope'), config('parcour.startHighestY'));
-  info(logger, 'starting simulation for generation: ' + mutated.generationCount);
-  simulation.run();
+  const stringified = population.individuals.toArray().map(x => JSON.stringify(x));
+  ipcRenderer.send('work-finished', stringified);
 }
 
-jQuery(() => {
-  info(logger, 'starting application...');
-  const initialPopulationGenerator = new InitialPopulationGenerator(Range(4, 9),
-    config('algorithm.populationSize'));
-  const initialPopulation = initialPopulationGenerator.generateInitialPopulation();
-  simulation = new SimulationWorld(
-    {
-      mode: 'generator',
-      maxSlope: config('parcour.startMaxSlope'),
-      highestY: config('parcour.startHighestY')
-    }, initialPopulation, performSimulationPostprocessing.bind(this));
-  const settings = new SettingsPanel(simulation);
-  settings.bindEvents();
+ipcRenderer.on('receive-work', function(event, individualsStringified, generationCount) {
+  info(logger, 'received work');
+  const individuals = individualsStringified.map(x => JSON.parse(x));
+  const population = {individuals: List(individuals), generationCount};
+  if (simulation === null) {
+    jQuery(() => {
+      simulation = new SimulationWorld(
+        {
+          mode: 'generator',
+          maxSlope: config('parcour.startMaxSlope'),
+          highestY: config('parcour.startHighestY')
+        }, population, performSimulationPostprocessing.bind(this));
+      const settings = new SettingsPanel(simulation);
+      settings.bindEvents();
 
-  info(logger, 'application successfully started.');
+      info(logger, 'worker sucessfully started.');
+    });
+  } else {
+    simulation.addNewPopulation(population);
+    simulation.generateParcour(config('parcour.startMaxSlope'), config('parcour.startHighestY'));
+    info(logger, 'starting simulation for generation: ' + generationCount);
+    simulation.run();
+  }
 });
-
 /**
  * IPC-Callback for the main process's menu item 'Next Generation'.
  * Aborts the current run of the simulation and proceeds to the next.
