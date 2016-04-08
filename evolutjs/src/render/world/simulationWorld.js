@@ -10,10 +10,10 @@ import * as L from 'partial.lenses';
 import { List, Map } from 'immutable';
 import config from '../../app/config';
 import Engine from '../../engine/engine';
+import { Game } from './../../../lib/p2Pixi.es6';
 import Individual from '../object/individual/individual';
 import { info } from '../../util/logUtil';
 import log4js from 'log4js';
-import P2Pixi from './../../../lib/p2Pixi.es6';
 import ParcourGenerator from '../object/parcour/parcourGenerator';
 import path from 'path';
 import { view } from 'ramda';
@@ -49,7 +49,7 @@ function rockTexturePath() {
  *
  * @extends {P2Pixi.Game}
  */
-export default class SimulationWorld extends P2Pixi.Game {
+export default class SimulationWorld extends Game {
 
   constructor(parcourOptions, population, cb) {
     super({

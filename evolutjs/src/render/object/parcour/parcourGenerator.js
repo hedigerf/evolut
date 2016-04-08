@@ -4,10 +4,10 @@
  * @module renderer/object/parcour/parcourGenerator
  */
 
+import { GameObject } from './../../../../lib/p2Pixi.es6';
 import Immutable from 'immutable';
 import log4js from 'log4js';
 import p2 from 'p2';
-import P2Pixi from './../../../../lib/p2Pixi.es6';
 import path from 'path';
 import PIXI from 'pixi.js';
 import Random from 'random-js';
@@ -87,7 +87,7 @@ export default class ParcourGenerator {
     if (logger.isDebugEnabled()) {
       logger.debug('ParcourGenerator has started.');
     }
-    const parcour = new P2Pixi.GameObject(world);
+    const parcour = new GameObject(world);
     const bodyOptions = {
       collisionGroup: Math.pow(2, 0),
       collisionMask: Math.pow(2, 1)
