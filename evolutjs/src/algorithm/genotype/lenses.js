@@ -55,7 +55,7 @@ export const lensLegs = L.prop('legs');
  * @param {Number} index
  * @return {Lens}
  */
-export const lensNthLegPair = index => L.compose(lensLegs, L.index(index));
+export const lensNthLegPair = (index) => L.compose(lensLegs, L.index(index));
 
 /**
  * Lens for nth leg information.
@@ -63,7 +63,7 @@ export const lensNthLegPair = index => L.compose(lensLegs, L.index(index));
  * @param {Number} index
  * @return {Lens}
  */
-export const lensNthLeg = index => L.compose(lensNthLegPair(index), lensLeg);
+export const lensNthLeg = (index) => L.compose(lensNthLegPair(index), lensLeg);
 
 /**
  * Lens for nth hip joint information.
@@ -71,7 +71,7 @@ export const lensNthLeg = index => L.compose(lensNthLegPair(index), lensLeg);
  * @param {Number} index
  * @return {Lens}
  */
-export const lensNthHipJoint = index => L.compose(lensNthLegPair(index), lensJoint);
+export const lensNthHipJoint = (index) => L.compose(lensNthLegPair(index), lensJoint);
 
 /**
  * Lens for nth knee joint (nth leg's joint) information.
@@ -79,7 +79,7 @@ export const lensNthHipJoint = index => L.compose(lensNthLegPair(index), lensJoi
  * @param {Number} index
  * @return {Lens}
  */
-export const lensNthKneeJoint = index => L.compose(lensNthLegPair(index), lensLeg, lensJoint);
+export const lensNthKneeJoint = (index) => L.compose(lensNthLegPair(index), lensLeg, lensJoint);
 
 /**
  * Lens for first leg pair information.

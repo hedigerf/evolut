@@ -67,7 +67,6 @@ function memoizationFor(obj) {
  */
 export const decorateAccessor = curry(
   (decorator, property, object) => {
-
     let _temp = decorator(object.prototype, property,
       _temp = Object.getOwnPropertyDescriptor(object.prototype, property)) || _temp;
 
@@ -87,7 +86,6 @@ export const decorateAccessor = curry(
  */
 export const decorateAccessorStatic = curry(
   (decorator, property, object) => {
-
     let _temp = decorator(object.prototype, property,
       _temp = Object.getOwnPropertyDescriptor(object.prototype.constructor, property)) || _temp;
 

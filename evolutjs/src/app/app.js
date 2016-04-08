@@ -97,4 +97,5 @@ app.on('ready', () => {
   const distributor = curry(distributeInitialWork)(initialPopulation);
   workers.forEach(distributor);
 
+
 });

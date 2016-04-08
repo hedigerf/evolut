@@ -4,18 +4,19 @@
  * @module render/world/simulationWorld
  */
 
-import * as L from 'partial.lenses';
-import log4js from 'log4js';
-import path from 'path';
-import P2Pixi from './../../../lib/p2Pixi';
-import { view } from 'ramda';
-import { List, Map } from 'immutable';
+/* eslint-env browser */
 
-import Engine from '../../engine/engine';
-import ParcourGenerator from '../object/parcour/parcourGenerator';
+import * as L from 'partial.lenses';
+import { List, Map } from 'immutable';
 import config from '../../app/config';
-import { info } from '../../util/logUtil';
+import Engine from '../../engine/engine';
+import { Game } from './../../../lib/p2Pixi.es6';
 import Individual from '../object/individual/individual';
+import { info } from '../../util/logUtil';
+import log4js from 'log4js';
+import ParcourGenerator from '../object/parcour/parcourGenerator';
+import path from 'path';
+import { view } from 'ramda';
 
 /**
  * World start time.
@@ -48,7 +49,7 @@ function rockTexturePath() {
  *
  * @extends {P2Pixi.Game}
  */
-export default class SimulationWorld extends P2Pixi.Game {
+export default class SimulationWorld extends Game {
 
   constructor(parcourOptions, population, cb) {
     super({
@@ -82,7 +83,6 @@ export default class SimulationWorld extends P2Pixi.Game {
     this.tickCount = 0;
     this.positionLastEvaluation = Map();
     this.phenotypeToGenotype = Map();
-
   }
 
   generateParcour(maxSlope, highestY) {
@@ -99,7 +99,7 @@ export default class SimulationWorld extends P2Pixi.Game {
     } else {
       takeN = this.population.individuals.size;
     }
-    this.phenoTypes = this.population.individuals.take(takeN).map(genotype => {
+    this.phenoTypes = this.population.individuals.take(takeN).map((genotype) => {
       const individual = new Individual(this, genotype);
       this.positionLastEvaluation = this.positionLastEvaluation.set(individual, view(lensBodyXpos, individual));
       this.phenotypeToGenotype = this.phenotypeToGenotype.set(individual, genotype);
@@ -131,14 +131,14 @@ export default class SimulationWorld extends P2Pixi.Game {
         this.positionLastEvaluation = this.positionLastEvaluation.set(individual, posCurEvaluation);
       }
     });
-    this.phenoTypes = this.phenoTypes.filterNot(individual => removeElements.includes(individual));
+    this.phenoTypes = this.phenoTypes.filterNot((individual) => removeElements.includes(individual));
     this.recordFitness(removeElements);
     if (this.phenoTypes.size === 0) {
       // If there are no more individuals remaining in the simulation, end the run
       this.runOver = true;
     } else {
       // Track always the individual which is leading
-      const trackedIndividual = this.phenoTypes.maxBy(individual => view(lensBodyXpos, individual));
+      const trackedIndividual = this.phenoTypes.maxBy((individual) => view(lensBodyXpos, individual));
       this.trackedBody = trackedIndividual.bodies[0];
     }
 
@@ -229,6 +229,7 @@ export default class SimulationWorld extends P2Pixi.Game {
 
     self.req = requestAnimationFrame(update);
   }
+
   /**
    * P2Pixi beforeRender function, modified so it only tracks x position and not y position
    */
@@ -245,11 +246,13 @@ export default class SimulationWorld extends P2Pixi.Game {
       const trackedBodyOffset = this.options.trackedBodyOffset;
       const deviceScale = pixiAdapter.deviceScale;
 
-      containerPosition.x = ((trackedBodyOffset[0] + 1) * renderer.width * 0.5) - (trackedBodyPosition[0] * ppu * deviceScale);
+      const scaledPPU = ppu * deviceScale;
+
+      containerPosition.x = ((trackedBodyOffset[0] + 1) * renderer.width * 0.5) - (trackedBodyPosition[0] * scaledPPU);
       if (trackY) {
-        containerPosition.y = ((trackedBodyOffset[1] + 1) * renderer.height * 0.5) + (trackedBodyPosition[1] * ppu * deviceScale);
+        containerPosition.y = ((trackedBodyOffset[1] + 1) * renderer.height * 0.5) + trackedBodyPosition[1] * scaledPPU;
       } else {
-        containerPosition.y = ((0 + 1) * renderer.height * 0.5) + (0 * ppu * deviceScale);
+        containerPosition.y = ((0 + 1) * renderer.height * 0.5) + (0 * scaledPPU);
       }
     }
   }

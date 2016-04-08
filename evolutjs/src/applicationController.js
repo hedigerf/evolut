@@ -4,6 +4,7 @@
  * @module applicationController
  */
 
+
 import './app/log';
 import config from './app/config';
 import dumpCanvas from './render/canvas';

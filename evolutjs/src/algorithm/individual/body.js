@@ -80,10 +80,10 @@ export function calcSectorAngle(pointCount) {
  * @return {Object}         [Object containing bounds]
  */
 export function calculatePolygonBounds(polygon) {
-  const minX = polygon.minBy (p => p[0])[0];
-  const minY = polygon.minBy (p => p[1])[1];
-  const maxX = polygon.maxBy (p => p[0])[0];
-  const maxY = polygon.maxBy (p => p[1])[1];
+  const minX = polygon.minBy((p) => p[0])[0];
+  const minY = polygon.minBy((p) => p[1])[1];
+  const maxX = polygon.maxBy((p) => p[0])[0];
+  const maxY = polygon.maxBy((p) => p[1])[1];
   return { minX, minY, maxX, maxY };
 }
 
@@ -234,9 +234,9 @@ export default class Body extends PartialGenotype {
     const xStep = calculateXStep(minX, maxX);
 
     const mins = List.of(minX, minX + xStep, minX + xStep * 2);
-    //Const mins = List.of(minX, minX, minX);
+    // const mins = List.of(minX, minX, minX);
 
-    const hipJointPositions = mins.map(min => generateHipJointPosition(min, min + xStep, minY, maxY, polygonArray));
+    const hipJointPositions = mins.map((min) => generateHipJointPosition(min, min + xStep, minY, maxY, polygonArray));
 
     return hipJointPositions.toArray();
   }

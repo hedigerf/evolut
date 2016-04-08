@@ -1,12 +1,9 @@
-'use strict';
-
-import chai from 'chai';
-import chaiFuzzy from 'chai-fuzzy';
-import chaiImmutable from 'chai-immutable';
+/* eslint-env mocha */
 
 import Genotype, { PartialGenotype } from '../../../src/algorithm/genotype/genotype';
+import chai from 'chai';
+import chaiImmutable from 'chai-immutable';
 
-chai.use(chaiFuzzy);
 chai.use(chaiImmutable);
 
 describe('Genotype', () => {
@@ -19,8 +16,8 @@ describe('Genotype', () => {
 
 describe('PartialGenotype', () => {
   describe('identifier', () => {
-    it('should have an empty identifier', () => {
-      chai.expect(PartialGenotype.identifier).to.be.empty;
+    it('should have no implementation for identifier', () => {
+      chai.expect(() => PartialGenotype.identifier).to.throw(Error, 'not implemented');
     });
   });
   describe('seed', () => {

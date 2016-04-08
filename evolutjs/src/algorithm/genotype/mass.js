@@ -71,7 +71,7 @@ function sumMassFactor(obj) {
  */
 function setMassFactor(obj, calcMass) {
 
-  keys(obj).filter(isNotMass).forEach(name => {
+  keys(obj).filter(isNotMass).forEach((name) => {
     const prop = obj[name];
     if (name === 'massFactor') {
       obj.mass = calcMass(prop || 0);
