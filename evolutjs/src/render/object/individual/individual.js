@@ -8,18 +8,7 @@
 import { List, Map } from 'immutable';
 import p2 from 'p2';
 import Phenotype from './phenotype';
-import Random from 'random-js';
-
-const random = new Random(Random.engines.mt19937().autoSeed());
-
-/**
- * Returns a random color
- *
- * @return {Number}
- */
-function randomColor() {
-  return parseInt((random.hex(6)), 16);
-}
+import { randomColor } from '../../color';
 
 /**
  * Represents the phenotype of an individual.
@@ -45,7 +34,6 @@ export default class Individual extends Phenotype {
     this.addConstraint(revoluteHip);
     return revoluteHip;
   }
-
 
   /**
    * Creates this phonetype from a genotype.
