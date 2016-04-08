@@ -5,11 +5,10 @@
  * @see mdoule:render/object/individual/phenotype
  */
 
-import p2 from 'p2';
-import Random from 'random-js';
 import { List, Map } from 'immutable';
-
+import p2 from 'p2';
 import Phenotype from './phenotype';
+import Random from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
@@ -55,7 +54,7 @@ export default class Individual extends Phenotype {
    * @protected
    * @param {Genotype} genotype The genotype
    */
-  fromGenotype(genotype) {
+  fromGenotype(genotype) { // eslint-disable-line max-statements
 
     this.engine = genotype.engine;
     this.engine.current = 0;
@@ -70,7 +69,7 @@ export default class Individual extends Phenotype {
     };
 
     const body = new p2.Body({
-      position: [posX, posY ],
+      position: [posX, posY],
       mass: bodyDescriptor.mass
     });
 
@@ -102,7 +101,7 @@ export default class Individual extends Phenotype {
     this.addShape(midBody, midShape, [0, 0] , 0, bodyOptions, styleMid);
     this.addConstraint(midConstraint);
     let counter = 0;
-    const createLeg = ({ pos, speed, legDescriptor, hipJointPosition }) => {
+    const createLeg = ({ pos, speed, legDescriptor, hipJointPosition }) => { // eslint-disable-line max-statements
       counter++;
       const styleLeg = {
         lineWidth: 1,
@@ -138,7 +137,7 @@ export default class Individual extends Phenotype {
 
 
       // Foot
-      /*Const footShape = new p2.Circle({ radius: 0.2 });
+      /* const footShape = new p2.Circle({ radius: 0.2 });
       const footBody = new p2.Body({
         mass: 1,
         position: [lowerLegBody.position[0], lowerLegBody.position[1]]
@@ -164,17 +163,15 @@ export default class Individual extends Phenotype {
 
     const speed = 0;
     const toLeg = ({ pos, id, speed, legDescriptor, hipJointPosition }) => {
-      return (
-        [
-          id,
-          createLeg(
-          {
-            pos,
-            speed,
-            legDescriptor,
-            hipJointPosition
-          })
-        ]);
+      return [
+        id,
+        createLeg({
+          pos,
+          speed,
+          legDescriptor,
+          hipJointPosition
+        })
+      ];
     };
 
     // Only take 3 legs because one side is symertrical to the other.

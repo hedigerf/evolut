@@ -1,23 +1,13 @@
-'use strict';
+/**
+ * Flat parcour generator
+ *
+ * @module render/object/parcour/flatParcour
+ */
 
 import p2 from 'p2';
+import P2Pixi from './../../../../lib/p2Pixi.es6';
 import path from 'path';
 import PIXI from 'pixi.js';
-
-import P2Pixi from './../../../../lib/p2Pixi';
-
-/**
- * Returns a height for an element in a height field
- *
- * @param  {Number} i Height field index
- * @return {Number}
- */
-function toHeight(i) {
-  const cos = (a) => {
-    return Math.cos(i * a);
-  };
-  return cos(0.2) * cos(0.5) * cos(0.1) * cos(0.05);
-}
 
 /**
  * Returns the path to a rock texture

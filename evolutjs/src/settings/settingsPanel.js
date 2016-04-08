@@ -1,8 +1,12 @@
-'use strict';
+/**
+ * Provides a settings panel for the renderer.
+ *
+ * @module settings/SettingsPanel
+ */
 
 import jQuery from 'jquery';
-import p2 from 'p2';
 import log4js from 'log4js';
+import p2 from 'p2';
 
 const logger = log4js.getLogger('SettingsPanel');
 
@@ -22,12 +26,12 @@ export default class SettingsPanel {
       this.game.pauseToggle();
     });
     jQuery('#gravityX').on('change', () => {
-      let newGravityX = jQuery('#gravityX').val();
+      const newGravityX = jQuery('#gravityX').val();
       logger.debug('new gravity x: ' + newGravityX);
       this.world.gravity = p2.vec2.fromValues(newGravityX, this.world.gravity[1]);
     });
     jQuery('#gravityY').on('change', () => {
-      let newGravityY = jQuery('#gravityY').val();
+      const newGravityY = jQuery('#gravityY').val();
       logger.debug('new gravity y: ' + newGravityY);
       this.world.gravity = p2.vec2.fromValues(this.world.gravity[0], newGravityY);
     });

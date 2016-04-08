@@ -38,7 +38,7 @@ export default class InitialPopulationGenerator {
     let currentBodyPointsIndex = 0;
     info(logger, 'Genearting initial population with ' + this.bodyPointsRange.size +
       ' different BodyPoints. ' + individualsPerBp + ' Individuals per BodyPoint variation.');
-    const individuals = Range(1, this.populationSize + 1).map(count => {
+    const individuals = Range(1, this.populationSize + 1).map((count) => {
 
       const seed = Individual.seed({
         body: { massFactor: 1 },

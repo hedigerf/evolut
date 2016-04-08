@@ -1,18 +1,10 @@
 {
   "env": {
+  	"es6": true,
     "node": true,
     "mocha": true
   },
-  "globals": {
-    "cancelAnimationFrame": true,
-    "document": true,
-    "requestAnimationFrame": true,
-    "Reflect": true,
-    "screen": true,
-    "Symbol": true,
-    "WeakMap": true,
-    "window": true
-  },
+  "globals": {},
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
@@ -25,6 +17,7 @@
         "singleValue": false
       }
     ],
+	"arrow-parens": 2,
     "arrow-spacing": 2,
     "brace-style": [
       2,
@@ -74,7 +67,7 @@
     ],
     "max-nested-callbacks": [
       2,
-      3
+      4
     ],
     "max-statements": [
       2,
@@ -92,19 +85,6 @@
     "no-eq-null": 0,
     "no-extra-semi": 2,
     "no-eval": 2,
-    "no-magic-numbers": [
-      2,
-      {
-        "ignore": [
-          -1,
-          0,
-          0.5,
-          1,
-          2
-        ],
-        "ignoreArrayIndexes": true
-      }
-    ],
     "no-mixed-spaces-and-tabs": 2,
     "no-multi-str": 2,
     "no-multiple-empty-lines": [
@@ -126,7 +106,7 @@
     "one-var": [
       2,
       {
-        "uninitialized": "always",
+        "uninitialized": "never",
         "initialized": "never"
       }
     ],

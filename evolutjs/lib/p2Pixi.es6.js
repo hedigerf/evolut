@@ -9,6 +9,7 @@
  * @module P2Pixi
  */
 
+/* eslint-env browser */
 /* eslint-disable complexity, max-statements, no-magic-numbers  */
 
 import p2 from 'p2';
@@ -735,7 +736,7 @@ export class PixiAdapter extends p2.EventEmitter {
       this.drawCircle(graphics, offset[0] * ppu, -offset[1] * ppu, shape.radius * ppu, style);
 
     } else if (shape instanceof p2.Particle) {
-      this.drawCircle(graphics, offset[0] * ppu, -offset[1] * ppu, 2 * lw, style);
+      this.drawCircle(graphics, offset[0] * ppu, -offset[1] * ppu, 2 * style.lineWidth, style);
 
     } else if (shape instanceof p2.Plane) {
       // TODO: use shape angle

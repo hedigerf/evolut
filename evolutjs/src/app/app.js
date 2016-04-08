@@ -34,7 +34,6 @@ app.on('window-all-closed', () =>  {
 });
 
 app.on('ready', () => {
-
   mainWindow = new BrowserWindow({
     width: config('window:width'),
     height: config('window:height')

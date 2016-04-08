@@ -15,7 +15,7 @@ import { assoc, curry } from 'ramda';
 export function freeze(object) {
 
   const propNames = Object.getOwnPropertyNames(object);
-  propNames.forEach(name => {
+  propNames.forEach((name) => {
     const prop = object[name];
     if (typeof prop === 'object' && prop !== null) {
       freeze(prop);

@@ -4,22 +4,23 @@
  * @module applicationController
  */
 
+/* eslint-env browser */
+
+import './app/log';
+import { debug, info } from './util/logUtil';
+import config from './app/config';
+import dumpCanvas from './render/canvas';
+import InitialPopulationGenerator from './algorithm/population/initialPopulationGenerator';
 import { ipcRenderer } from 'electron';
 import jQuery from 'jquery';
 import log4js from 'log4js';
-import { Range } from 'immutable';
-
-import dumpCanvas from './render/canvas';
-import config from './app/config';
-import { World } from './app/ipc';
-import SimulationWorld from './render/world/simulationWorld';
-import SettingsPanel from './settings/settingsPanel';
-import InitialPopulationGenerator from './algorithm/population/initialPopulationGenerator';
 import Mutator from './algorithm/mutation/mutator';
-import {debug, info} from './util/logUtil';
+import { Range } from 'immutable';
+import SettingsPanel from './settings/settingsPanel';
+import SimulationWorld from './render/world/simulationWorld';
 import TournamentBasedSelectionStrategy from './algorithm/selection/tournamentBasedSelectionStrategy';
+import { World } from './app/ipc';
 
-import './app/log';
 const logger = log4js.getLogger('applicationController');
 
 let simulation;

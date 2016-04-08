@@ -24,7 +24,7 @@ export default class Engine {
    */
   static initialStep(phenotype) {
     forEach(
-      descriptor => resolveMovementDescriptor(descriptor)(phenotype, 0),
+      (descriptor) => resolveMovementDescriptor(descriptor)(phenotype, 0),
       phenotype.engine.descriptor.initial
     );
   }
@@ -97,10 +97,10 @@ export class Feedback {
       phenotype.bodies[13]
     ];
 
-    world.on('impact', event => {
+    world.on('impact', (event) => {
 
       // Check if the phenotype body is involved in this contact event.
-      if (lowerLegs.find(b => event.bodyA === b || event.bodyB === b)) {
+      if (lowerLegs.find((b) => event.bodyA === b || event.bodyB === b)) {
         this.onImpact(event, world, phenotype);
       }
 

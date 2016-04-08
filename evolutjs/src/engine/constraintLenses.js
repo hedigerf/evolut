@@ -22,7 +22,7 @@ import { lens } from 'ramda';
  * @param {String} key
  * @return {Lens}
  */
-export const immutableLens = key => lens(x => x.get(key), (val, x) => x.set(key, val));
+export const immutableLens = (key) => lens((x) => x.get(key), (val, x) => x.set(key, val));
 
 /**
  * Lens for revolute constraint information of a phenotype.
@@ -205,13 +205,14 @@ export function makeLensDescriptor(side, type, index = 0) {
 export function resolveLensDecriptor({ side, type, index }) {
 
   let lensSide;
+  let lensType;
+
   if (side === 'left') {
     lensSide = immutableLens('left');
   } else if (side === 'right') {
     lensSide = immutableLens('right');
   }
 
-  let lensType;
   if (type === 'hip') {
     lensType = lensHip;
   } else if (type === 'knee') {

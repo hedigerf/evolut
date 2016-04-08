@@ -11,6 +11,6 @@
  * @param {function(f, ...*): *} f
  * @return {function(...*)}
  */
-const Y = f => (...args) => f((...args) => Y(f)(...args), ...args);
+const Y = (f) => (...args) => f((...args) => Y(f)(...args), ...args);
 
 export default Y;

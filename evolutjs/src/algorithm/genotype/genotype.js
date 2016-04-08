@@ -16,7 +16,7 @@ import { IdentifiableStatic } from '../../types/identifiable';
  * @param {String} key The property name
  * @return {function(Object): Object} The option object
  */
-const extractOption = key => either(
+const extractOption = (key) => either(
   view(L.prop(key)),
   always({})
 );
@@ -45,7 +45,7 @@ const seedType = (T, option) => T.seed(option);
  * @param {*} T
  * @return {Boolean}
  */
-const isPartialGenotype = T => PartialGenotype.prototype.isPrototypeOf(T.prototype);
+const isPartialGenotype = (T) => PartialGenotype.prototype.isPrototypeOf(T.prototype);
 
 /**
  * Processes a genotype or maps an array or object.
@@ -60,7 +60,7 @@ const processPartialGenotype = curry((operation, options, type, key) => {
 
   const partialOptions = extractOption(key)(options);
   const applyOperation = ifElse(isPartialGenotype,
-    T => operation(T, partialOptions),
+    (T) => operation(T, partialOptions),
     mapObjIndexed(processPartialGenotype(operation, partialOptions)) // Process nested object
   );
 

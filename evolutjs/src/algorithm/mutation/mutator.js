@@ -1,11 +1,9 @@
+/**
+ * Provides mutation operations for genotypes.
+ *
+ * @module algorithm/mutation/mutator
+ */
 
-import inside from 'point-in-polygon';
-import Random  from 'random-js';
-import { List } from 'immutable';
-
-import Individual from '../individual/individual';
-import Leg from '../individual/leg';
-import Population from '../population/population';
 import {
           calcSectorAngle,
           calculatePolygonBounds,
@@ -14,6 +12,12 @@ import {
           generateRandomPolygonPoint
         }
 from '../individual/body';
+import Individual from '../individual/individual';
+import inside from 'point-in-polygon';
+import Leg from '../individual/leg';
+import { List } from 'immutable';
+import Population from '../population/population';
+import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
@@ -38,8 +42,8 @@ export default class Mutator {
    * @return {Population}            mutated population
    */
   mutate(population) {
-    const copied = population.individuals.map(toCopy => new Individual(toCopy));
-    const offsprings = copied.map(individual => {
+    const copied = population.individuals.map((toCopy) => new Individual(toCopy));
+    const offsprings = copied.map((individual) => {
 
       const bodyPoints = this.tryMutateBodyPoints(individual.body.bodyPoints, individual.body.bodyPointsCount);
       individual.body.bodyPoints = bodyPoints;
@@ -91,25 +95,23 @@ export default class Mutator {
 
   tryMutateLegs(oldLegs) {
     const oldLegList = List.of(oldLegs['0'], oldLegs['1'], oldLegs['2'], oldLegs['3'], oldLegs['4'], oldLegs['5']);
-    const legs = oldLegList.map(legDescriptor => {
+    const legs = oldLegList.map((legDescriptor) => {
       const leg = legDescriptor.leg;
       const legHeight = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT),
         this.mutateRealValue(leg.height, MUTATION_STEP_LEG_HEIGHT), leg.height);
       const legHeightFactor = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT_FACTOR),
         this.mutateRealValue(leg.heightFactor, MUTATION_STEP_LEG_HEIGHT_FACTOR), leg.heightFactor);
-      return (
-        {
-          leg: new Leg(
-            {
-              mass: leg.mass,
-              massFactor: leg.massFactor,
-              height: legHeight,
-              heightFactor: legHeightFactor
-            }
-          ),
-          joint: legDescriptor.hipJoint
-        }
-      );
+      return ({
+        leg: new Leg(
+          {
+            mass: leg.mass,
+            massFactor: leg.massFactor,
+            height: legHeight,
+            heightFactor: legHeightFactor
+          }
+        ),
+        joint: legDescriptor.hipJoint
+      });
     });
     return { 0: legs.get(0), 1: legs.get(1), 2: legs.get(2), 3: legs.get(3), 4: legs.get(4), 5: legs.get(5) };
   }

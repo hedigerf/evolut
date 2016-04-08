@@ -4,12 +4,10 @@
  * @module render/object/individual/phenotype
  */
 
-// import P2Pixi from '../../../../lib/p2Pixi';
-import { GameObject } from '../../../../lib/p2Pixi.es6';
-import uuid from 'uuid';
-
 import { decorateAccessor, memoize } from '../../../util/decorate';
+import { GameObject } from '../../../../lib/p2Pixi.es6';
 import { Identifiable } from '../../../types/identifiable';
+import uuid from 'uuid';
 
 /**
  * Represents a phenotype.
