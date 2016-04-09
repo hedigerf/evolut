@@ -14,7 +14,7 @@ import { Game } from './../../../lib/p2Pixi.es6';
 import Individual from '../object/individual/individual';
 import { info } from '../../util/logUtil';
 import log4js from 'log4js';
-import ParcourGenerator from '../object/parcour/parcourGenerator';
+import ParcourGenerator from '../object/parcour/parcourCreator';
 import path from 'path';
 import { view } from 'ramda';
 

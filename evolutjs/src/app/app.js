@@ -19,7 +19,7 @@ import Mutator from '../algorithm/mutation/mutator';
 import TournamentBasedSelectionStrategy from '../algorithm/selection/tournamentBasedSelectionStrategy';
 
 
-const logger = log4js.getLogger('applicationController');
+const logger = log4js.getLogger('app');
 const index = 'file://' + appRoot + '/index.html';
 const workerCount = config('workers.count');
 const populationSize = config('algorithm.populationSize');
@@ -74,7 +74,6 @@ ipcMain.on('work-finished', (event, individualsStringified) => {
   const partialPopulation = individualsStringified.map(x => JSON.parse(x));
   individuals = individuals.concat(partialPopulation);
   if (finishedWorkCounter % workerCount === 0) {
-    generationCounter
     const population = { individuals, generationCount: generationCounter++};
     const mutated = performSimulationPostprocessing(population);
     const distributor = curry(distributeWork)(mutated);
