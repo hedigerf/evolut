@@ -13,7 +13,7 @@ import PIXI from 'pixi.js';
 import Random from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
-const logger = log4js.getLogger('ParcourGenerator');
+const logger = log4js.getLogger('ParcourCreator');
 
 /**
  * Is able to generate a parcour
@@ -42,40 +42,7 @@ export default class ParcourGenerator {
     return path.join(__dirname, '../../../..', 'assets/textures', 'rock.jpg');
   }
 
-  /**
-   * Returns a height for an element in a height field
-   *
-   * @param {Number} y Height field index
-   * @param {Number} maxSlope
-   * @param {Number} highestY
-   * @return {Number}
-   */
-  toHeight(y, maxSlope, highestY) {
-    const positive = random.integer(0, 1);
-    if (positive === 1) {
-      const newY = y + random.real(0, maxSlope, true);
-      // If highestY is reached generate a flat top
-      if (newY > highestY) {
-        return y;
-      }
-      return newY;
-    }
-    const newY = y + random.real(-maxSlope, 0);
-    // Same for highest negative Y
-    if (newY < (highestY * -1)) {
-      return y;
-    }
-    return newY;
-  }
-
-  createMontains(length, maxSlope, highestY) {
-    const range = Immutable.Range(0, length);
-    const record = { lastY: 0, heights: Immutable.List.of() };
-    const res = range.reduce((result) => {
-      const y = this.toHeight(result.lastY, maxSlope, highestY);
-      return { lastY: y, heights: result.heights.push(y) };
-    }, record);
-    const heights = res.heights.toArray();
+  createMontains(heights) {
     return new p2.Heightfield({
       heights,
       elementWidth: this.elementWidth,
@@ -83,28 +50,33 @@ export default class ParcourGenerator {
     });
   }
 
-  generateParcour(world, maxSlope, highestY) {
+  createParcour(world, parcour) {
     if (logger.isDebugEnabled()) {
-      logger.debug('ParcourGenerator has started.');
+      logger.debug('ParcourCreator has started.');
     }
-    const parcour = new GameObject(world);
-    const bodyOptions = {
-      collisionGroup: Math.pow(2, 0),
-      collisionMask: Math.pow(2, 1)
-    };
+    const parcourGameObject = new GameObject(world);
 
-    const rockTexture = PIXI.Texture.fromImage(this.rockTexturePath(), false);
+    parcour.forEach(({type, value}) => {
+      if (type === 'mountain') {
+        const bodyOptions = {
+          collisionGroup: Math.pow(2, 0),
+          collisionMask: Math.pow(2, 1)
+        };
 
-    const body = new p2.Body({
-      position: [-10, 0],
-      mass: 0
+        const rockTexture = PIXI.Texture.fromImage(this.rockTexturePath(), false);
+
+        const body = new p2.Body({
+          position: [-10, 0],
+          mass: 0
+        });
+        // TODO change position after one object is added
+        parcourGameObject.addBody(body);
+        parcourGameObject.addShape(body, this.createMontains(value), [0, 0], 0, bodyOptions, null, rockTexture);
+      }
     });
 
-    parcour.addBody(body);
-    parcour.addShape(body, this.createMontains(500, maxSlope , highestY), [0, 0], 0, bodyOptions, null, rockTexture);
-
     if (logger.isDebugEnabled()) {
-      logger.debug('Parcourgeneration ended.');
+      logger.debug('ParcourCreator ended.');
     }
   }
 

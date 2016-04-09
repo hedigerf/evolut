@@ -16,6 +16,7 @@ import config from './config';
 import InitialPopulationGenerator from '../algorithm/population/initialPopulationGenerator';
 import log4js from 'log4js';
 import Mutator from '../algorithm/mutation/mutator';
+import ParcourGenerator from '../algorithm/parcour/parcourGenerator';
 import TournamentBasedSelectionStrategy from '../algorithm/selection/tournamentBasedSelectionStrategy';
 
 
@@ -31,6 +32,8 @@ const kTournamentBasedSelection = 10;
 let workers = null;
 let finishedWorkCounter = 0;
 let generationCounter = 1;
+let maxSlope = config('parcour.startMaxSlope');
+let highestY = config('parcour.startHighestY');
 
 function startWorker() {
   const worker = new BrowserWindow({
@@ -44,18 +47,18 @@ function startWorker() {
   return worker;
 }
 
-function distributeInitialWork(initialPopulation, worker, index) {
+function distributeInitialWork(initialPopulation, options, worker, index) {
   worker.webContents.on('did-finish-load', () => {
-    distributeWork(initialPopulation, worker, index);
+    distributeWork(initialPopulation, options, worker, index);
   });
 }
 
-function distributeWork(population, worker, index) {
+function distributeWork(population, options, worker, index) {
   const start = index * partialPopulationSize;
   const end = (index + 1) * partialPopulationSize;
   const partialPopulation = population.individuals.slice(start, end);
   const stringified = partialPopulation.toArray().map(x => x.blueprint());
-  worker.webContents.send('receive-work', stringified, population.generationCount);
+  worker.webContents.send('receive-work', stringified, population.generationCount, options);
 }
 
 function performSimulationPostprocessing(population) {
@@ -76,7 +79,8 @@ ipcMain.on('work-finished', (event, individualsStringified) => {
   if (finishedWorkCounter % workerCount === 0) {
     const population = { individuals, generationCount: generationCounter++};
     const mutated = performSimulationPostprocessing(population);
-    const distributor = curry(distributeWork)(mutated);
+    const parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
+    const distributor = curry(distributeWork)(mutated, {parcour: parcour});
     workers.forEach(distributor);
   }
 });
@@ -93,7 +97,8 @@ app.on('ready', () => {
   const initialPopulationGenerator = new InitialPopulationGenerator(
     Range(bodyPointsMin, bodyPointsMax + 1), populationSize);
   const initialPopulation = initialPopulationGenerator.generateInitialPopulation();
-  const distributor = curry(distributeInitialWork)(initialPopulation);
+  const parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
+  const distributor = curry(distributeInitialWork)(initialPopulation, { parcour: parcour });
   workers.forEach(distributor);
 
 

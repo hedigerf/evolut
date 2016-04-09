@@ -85,9 +85,9 @@ export default class SimulationWorld extends Game {
     this.phenotypeToGenotype = Map();
   }
 
-  generateParcour(maxSlope, highestY) {
+  createParcour(parcour) {
     const parcourGenerator = new ParcourGenerator();
-    parcourGenerator.generateParcour(this, maxSlope, highestY);
+    parcourGenerator.createParcour(this, parcour);
   }
 
   drawPhenotypes() {
@@ -164,7 +164,7 @@ export default class SimulationWorld extends Game {
   beforeRun() {
 
     info(logger, 'Preparing Simulation for Generation: ' + this.population.generationCount);
-    this.generateParcour(this.parcourOptions.maxSlope, this.parcourOptions.highestY);
+    this.createParcour(this.parcourOptions.parcour);
     this.drawPhenotypes();
     this.currentTime = 0;
 
