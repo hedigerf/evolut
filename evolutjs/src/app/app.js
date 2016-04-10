@@ -15,6 +15,7 @@ import { curry } from 'ramda';
 import config from './config';
 import InitialPopulationGenerator from '../algorithm/population/initialPopulationGenerator';
 import log4js from 'log4js';
+import Reporter from '../report/reporter';
 import Mutator from '../algorithm/mutation/mutator';
 import ParcourGenerator from '../algorithm/parcour/parcourGenerator';
 import TournamentBasedSelectionStrategy from '../algorithm/selection/tournamentBasedSelectionStrategy';
@@ -107,6 +108,7 @@ app.on('window-all-closed', () =>  {
 });
 
 app.on('ready', () => {
+  const pathToReportFile = Reporter.createReportFile();
   const workerRange = List(Range(0, workerCount));
   workers = workerRange.map(x =>  startWorker() );
   const initialPopulationGenerator = new InitialPopulationGenerator(
