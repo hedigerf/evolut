@@ -28,6 +28,10 @@ const partialPopulationSize = populationSize / workerCount;
 const bodyPointsMin = 4;
 const bodyPointsMax = 8;
 const kTournamentBasedSelection = 10;
+const increaseDifficultyAfter = config('parcour.increaseDifficultyAfter');
+const maxSlopeStep = config('parcour.maxSlopeStep');
+const highestYStep = config('parcour.highestYStep');
+const limitSlope = config('parcour.limitSlope');
 
 let workers = null;
 let finishedWorkCounter = 0;
@@ -71,6 +75,12 @@ function performSimulationPostprocessing(population) {
   return mutated;
 }
 
+function prepareDistributor(distributeWork, population) {
+  const parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
+  const distributor = curry(distributeWork)(population, { parcour: JSON.stringify(parcour), maxSlope, highestY });
+  return distributor;
+}
+
 let individuals = List();
 ipcMain.on('work-finished', (event, individualsStringified) => {
   finishedWorkCounter++;
@@ -79,8 +89,13 @@ ipcMain.on('work-finished', (event, individualsStringified) => {
   if (finishedWorkCounter % workerCount === 0) {
     const population = { individuals, generationCount: generationCounter++};
     const mutated = performSimulationPostprocessing(population);
-    const parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
-    const distributor = curry(distributeWork)(mutated, {parcour: parcour});
+    if (generationCounter % increaseDifficultyAfter === 0) {
+      if (maxSlope < limitSlope) {
+        maxSlope = maxSlope + maxSlopeStep;
+      }
+      highestY = highestY + highestYStep;
+    }
+    const distributor = prepareDistributor(distributeWork, mutated);
     workers.forEach(distributor);
   }
 });
@@ -97,8 +112,7 @@ app.on('ready', () => {
   const initialPopulationGenerator = new InitialPopulationGenerator(
     Range(bodyPointsMin, bodyPointsMax + 1), populationSize);
   const initialPopulation = initialPopulationGenerator.generateInitialPopulation();
-  const parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
-  const distributor = curry(distributeInitialWork)(initialPopulation, { parcour: parcour });
+  const distributor = prepareDistributor(distributeInitialWork, initialPopulation)
   workers.forEach(distributor);
 
 

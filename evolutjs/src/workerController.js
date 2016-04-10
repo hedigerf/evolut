@@ -26,7 +26,7 @@ function performSimulationPostprocessing(population) {
   ipcRenderer.send('work-finished', stringified);
 }
 
-ipcRenderer.on('receive-work', (event, individualsStringified, generationCount, { parcour }) => {
+ipcRenderer.on('receive-work', (event, individualsStringified, generationCount, { parcour,  maxSlope, highestY }) => {
   info(logger, 'received work');
   const individuals = individualsStringified.map(x => JSON.parse(x));
   const population = {individuals: List(individuals), generationCount};
@@ -34,7 +34,7 @@ ipcRenderer.on('receive-work', (event, individualsStringified, generationCount, 
     jQuery(() => {
       simulation = new SimulationWorld(
         {
-          parcour: parcour
+          parcour: JSON.parse(parcour)
         }, population, performSimulationPostprocessing.bind(this));
       const settings = new SettingsPanel(simulation);
       settings.bindEvents();
@@ -43,7 +43,7 @@ ipcRenderer.on('receive-work', (event, individualsStringified, generationCount, 
     });
   } else {
     simulation.addNewPopulation(population);
-    simulation.createParcour(parcour);
+    simulation.createParcour(JSON.parse(parcour));
     info(logger, 'starting simulation for generation: ' + generationCount);
     simulation.run();
   }

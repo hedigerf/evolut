@@ -5,14 +5,11 @@
  */
 
 import { GameObject } from './../../../../lib/p2Pixi.es6';
-import Immutable from 'immutable';
 import log4js from 'log4js';
 import p2 from 'p2';
 import path from 'path';
 import PIXI from 'pixi.js';
-import Random from 'random-js';
 
-const random = new Random(Random.engines.mt19937().autoSeed());
 const logger = log4js.getLogger('ParcourCreator');
 
 /**

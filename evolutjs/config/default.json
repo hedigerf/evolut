@@ -8,10 +8,14 @@
   },
   "parcour": {
     "startMaxSlope": 0,
-    "startHighestY": 0
+    "maxSlopeStep": 0.05,
+    "limitSlope": 1,
+    "startHighestY": 0,
+    "highestYStep": 0.05,
+    "increaseDifficultyAfter": 20
   },
   "workers": {
-    "count": 1
+    "count": 2
   },
   "simulation": {
     "evaluateAfterTickCount": 240,
