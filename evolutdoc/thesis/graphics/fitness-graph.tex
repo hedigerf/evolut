@@ -1,6 +1,6 @@
 \begin{tikzpicture}
 \begin{axis}[
-    title={Fitness Graph - Beste Individuen},
+    title={Fitness Graph},
     xlabel={Generation},
     ylabel={Fitness},
     xmin=0, xmax=50,
@@ -13,13 +13,26 @@
 ]
 
 \addplot[
-    color=blue,
+    color=red,
     mark=square,
     ]
     coordinates {
     (1,5)(2,10)(3,11)(4,12)(5,12.4567873)
     };
-    \legend{Bestes Individuum}
+    \addlegendentry{Bestes Individum}
+
+
+\addplot[
+    color=blue,
+    mark=square,
+    ]
+    coordinates {
+    (1,2)(2,4)(3,4.4)(4,5)(5,7)
+    };
+    \addlegendentry{Durchschnitt}
+
+
+
 
 \end{axis}
 \end{tikzpicture}

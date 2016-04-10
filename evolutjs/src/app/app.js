@@ -33,7 +33,7 @@ const increaseDifficultyAfter = config('parcour.increaseDifficultyAfter');
 const maxSlopeStep = config('parcour.maxSlopeStep');
 const highestYStep = config('parcour.highestYStep');
 const limitSlope = config('parcour.limitSlope');
-const reportBestFitness = Reporter.createFitnessGraphBestReport();
+const reporters = Reporter.createReports();
 
 let workers = null;
 let finishedWorkCounter = 0;
@@ -69,7 +69,7 @@ function distributeWork(population, options, worker, index) {
 
 function performSimulationPostprocessing(population) {
   info(logger, 'starting postprocessing');
-  reportBestFitness(population);
+  reporters(population);
   const selectionStrategy = new TournamentBasedSelectionStrategy(population, kTournamentBasedSelection);
   const selected = selectionStrategy.select();
   const mutator = new Mutator();
