@@ -46,25 +46,25 @@ export default class InitialPopulationGenerator {
         legs:
         [
           {
-            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1 },
+            leg: { massFactor: 1 },
             joint: { orientation: 1 }
           },
           {
-            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1 },
+            leg: { massFactor: 1 },
             joint: { orientation: 1 }
           },
           {
-            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1 },
+            leg: { massFactor: 1 },
             joint: { orientation: 1 }
           },
           {
-            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }
+            leg: { massFactor: 1, joint: { orientation: 1 } }
           },
           {
-            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }
+            leg: { massFactor: 1, joint: { orientation: 1 } }
           },
           {
-            leg: { height: 0.8, heightFactor: 0.5, massFactor: 1, joint: { orientation: 1 } }
+            leg: {  massFactor: 1, joint: { orientation: 1 } }
           }
         ]
       });

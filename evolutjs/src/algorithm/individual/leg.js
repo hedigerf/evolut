@@ -19,12 +19,12 @@ const lensMassfactor = L.prop('massFactor');
 const lensHeight = L.prop('height');
 const lensHeightFactor = L.prop('heightFactor');
 
-/**
- * Default height for of a leg.
- *
- * @type {Number}
- */
-const DEFAULT_LEG_HEIGHT = 1;
+
+const LEG_LOWER_LIMIT_HEIGHT = 0.6;
+const LEG_UPPER_LIMIT_HEIGHT = 0.8;
+const LEG_LOWER_LIMIT_HEIGHT_FACTOR = 0.4;
+const LEG_UPPER_LIMIT_HEIGHT_FACTOR = 0.6;
+
 
 /**
  * Represents a leg of an indiviual.
@@ -70,7 +70,7 @@ export default class Leg extends PartialGenotype {
      *
      * @type {Number}
      */
-    this.height = view(lensHeight, options) || DEFAULT_LEG_HEIGHT;
+    this.height = view(lensHeight, options);
 
     /**
      * Height factor of this leg.
@@ -110,13 +110,19 @@ export default class Leg extends PartialGenotype {
    * @return {Object}
    */
   static seed(options) {
+    const orRandomHeight = when(isNil, () => {
+      return random.real(LEG_LOWER_LIMIT_HEIGHT, LEG_UPPER_LIMIT_HEIGHT);
+    });
+    const orRandomHeightFactor = when(isNil, () => {
+      return random.real(LEG_LOWER_LIMIT_HEIGHT_FACTOR, LEG_UPPER_LIMIT_HEIGHT_FACTOR);
+    });
 
     const orRandom = when(isNil, () => random.real(0.1, 0.9));
 
     const setter = compose(
       over(lensMassfactor, orRandom),
-      over(lensHeight, orRandom),
-      over(lensHeightFactor, orRandom)
+      over(lensHeight, orRandomHeight),
+      over(lensHeightFactor, orRandomHeightFactor)
     );
 
     return super.seed(setter(options));

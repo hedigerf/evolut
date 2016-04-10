@@ -26,7 +26,7 @@ function performSimulationPostprocessing(population) {
   ipcRenderer.send('work-finished', stringified);
 }
 
-ipcRenderer.on('receive-work', (event, individualsStringified, generationCount, { parcour,  maxSlope, highestY }) => {
+ipcRenderer.on('receive-work', (event, individualsStringified, generationCount, { parcour }) => {
   info(logger, 'received work');
   const individuals = individualsStringified.map(x => JSON.parse(x));
   const population = {individuals: List(individuals), generationCount};
