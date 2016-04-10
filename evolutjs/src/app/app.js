@@ -33,6 +33,7 @@ const increaseDifficultyAfter = config('parcour.increaseDifficultyAfter');
 const maxSlopeStep = config('parcour.maxSlopeStep');
 const highestYStep = config('parcour.highestYStep');
 const limitSlope = config('parcour.limitSlope');
+const reportBestFitness = Reporter.createFitnessGraphBestReport();
 
 let workers = null;
 let finishedWorkCounter = 0;
@@ -68,11 +69,13 @@ function distributeWork(population, options, worker, index) {
 
 function performSimulationPostprocessing(population) {
   info(logger, 'starting postprocessing');
+  reportBestFitness(population);
   const selectionStrategy = new TournamentBasedSelectionStrategy(population, kTournamentBasedSelection);
   const selected = selectionStrategy.select();
   const mutator = new Mutator();
   const mutated = mutator.mutate(selected);
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
+  mutated.generationCount = ++generationCounter;
   return mutated;
 }
 
@@ -88,7 +91,7 @@ ipcMain.on('work-finished', (event, individualsStringified) => {
   const partialPopulation = individualsStringified.map(x => JSON.parse(x));
   individuals = individuals.concat(partialPopulation);
   if (finishedWorkCounter % workerCount === 0) {
-    const population = { individuals, generationCount: generationCounter++};
+    const population = { individuals, generationCount: generationCounter};
     const mutated = performSimulationPostprocessing(population);
     if (generationCounter % increaseDifficultyAfter === 0) {
       if (maxSlope < limitSlope) {
@@ -108,7 +111,6 @@ app.on('window-all-closed', () =>  {
 });
 
 app.on('ready', () => {
-  const pathToReportFile = Reporter.createReportFile();
   const workerRange = List(Range(0, workerCount));
   workers = workerRange.map(x =>  startWorker() );
   const initialPopulationGenerator = new InitialPopulationGenerator(
