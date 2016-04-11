@@ -3,6 +3,7 @@ texlive-IEEEtran
 texlive-babel-german
 texlive-hyphen-german
 texlive-lipsum
+texlive-pgfplots
 texlive-qtree
 texlive-titlesec
 texlive-tkz-base

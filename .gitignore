@@ -55,6 +55,11 @@ evolutjs/dist/evolut*
 evolutjs/doc/*
 
 #
+# Generated simulation reports
+#
+evolutjs/assets/reports/*_fitness_*.txt
+
+#
 # Generated protocol documents
 #
 evolutdoc/protocol/*.pdf
