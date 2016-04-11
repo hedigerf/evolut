@@ -93,6 +93,8 @@ ipcMain.on('work-finished', (event, individualsStringified) => {
   if (finishedWorkCounter % workerCount === 0) {
     const population = { individuals, generationCount: generationCounter};
     const mutated = performSimulationPostprocessing(population);
+    // reset list
+    individuals = List();
     if (generationCounter % increaseDifficultyAfter === 0) {
       if (maxSlope < limitSlope) {
         maxSlope = maxSlope + maxSlopeStep;
