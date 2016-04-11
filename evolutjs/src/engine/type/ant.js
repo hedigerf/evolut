@@ -7,6 +7,21 @@
 
 import { all, makeMovementDescriptor, one } from '../movement';
 import { ANGLE_MAX, ANGLE_MIN } from '../../algorithm/individual/joint';
+import { makeLensDescriptor } from '../constraintLenses';
+
+// Lens descriptors
+const lfh = makeLensDescriptor('left', 0, 'hip');
+const lmh = makeLensDescriptor('left', 1, 'hip');
+const lbh = makeLensDescriptor('left', 2, 'hip');
+const lfk = makeLensDescriptor('left', 0, 'knee');
+const lmk = makeLensDescriptor('left', 1, 'knee');
+const lbk = makeLensDescriptor('left', 2, 'knee');
+const rfh = makeLensDescriptor('right', 0, 'hip');
+const rmh = makeLensDescriptor('right', 1, 'hip');
+const rbh = makeLensDescriptor('right', 2, 'hip');
+const rfk = makeLensDescriptor('right', 0, 'knee');
+const rmk = makeLensDescriptor('right', 1, 'knee');
+const rbk = makeLensDescriptor('right', 2, 'knee');
 
 /**
  * Describes an ant's movement.
@@ -18,15 +33,15 @@ import { ANGLE_MAX, ANGLE_MIN } from '../../algorithm/individual/joint';
 const AntEngineDescriptor = {
   // Initial movement.
   initial: [
-    makeMovementDescriptor('la0', 'lfh'),
-    makeMovementDescriptor('la0', 'lmh'),
-    makeMovementDescriptor('la0', 'lbh'),
-    makeMovementDescriptor('la0', 'rfh'),
-    makeMovementDescriptor('la0', 'rmh'),
-    makeMovementDescriptor('la0', 'rbh'),
-    makeMovementDescriptor('sts', 'lfh', [0]),
-    makeMovementDescriptor('sts', 'lmh', [0]),
-    makeMovementDescriptor('sts', 'lbh', [0])
+    makeMovementDescriptor('la0', lfh),
+    makeMovementDescriptor('la0', lmh),
+    makeMovementDescriptor('la0', lbh),
+    makeMovementDescriptor('la0', rfh),
+    makeMovementDescriptor('la0', rmh),
+    makeMovementDescriptor('la0', rbh),
+    makeMovementDescriptor('sts', lfh, [0]),
+    makeMovementDescriptor('sts', lmh, [0]),
+    makeMovementDescriptor('sts', lbh, [0])
   ],
   // The cyclic movement
   movements: [
@@ -35,25 +50,25 @@ const AntEngineDescriptor = {
     // Start the hip and knee joint motors
     // Wait until the hip joints are all fully deflected
     all(
-      makeMovementDescriptor('sta', 'lfh', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lmh', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lbh', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lfk', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lmk', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lbk', [ANGLE_MIN, ANGLE_MAX])
+      makeMovementDescriptor('sta', lfh, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lmh, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lbh, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lfk, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lmk, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lbk, [ANGLE_MIN, ANGLE_MAX])
     ),
     all(
-      makeMovementDescriptor('sts', 'lfh', [1]),
-      makeMovementDescriptor('sts', 'lmh', [1]),
-      makeMovementDescriptor('sts', 'lbh', [1]),
-      makeMovementDescriptor('sts', 'lfk', [1]),
-      makeMovementDescriptor('sts', 'lmk', [1]),
-      makeMovementDescriptor('sts', 'lbk', [1])
+      makeMovementDescriptor('sts', lfh, [1]),
+      makeMovementDescriptor('sts', lmh, [1]),
+      makeMovementDescriptor('sts', lbh, [1]),
+      makeMovementDescriptor('sts', lfk, [1]),
+      makeMovementDescriptor('sts', lmk, [1]),
+      makeMovementDescriptor('sts', lbk, [1])
     ),
     all(
-      makeMovementDescriptor('utl', 'lfh', ['mxa']),
-      makeMovementDescriptor('utl', 'lmh', ['mxa']),
-      makeMovementDescriptor('utl', 'lbh', ['mxa'])
+      makeMovementDescriptor('utl', lfh, ['mxa']),
+      makeMovementDescriptor('utl', lmh, ['mxa']),
+      makeMovementDescriptor('utl', lbh, ['mxa'])
     ),
     // Phase 2
     // Unlock the angles of the right side
@@ -61,27 +76,27 @@ const AntEngineDescriptor = {
     // Start the motor of the right hip joints
     // Wait until one right hip is at it's minimal angle
     all(
-      makeMovementDescriptor('sta', 'rfh', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'rmh', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'rbh', [ANGLE_MIN, ANGLE_MAX])
+      makeMovementDescriptor('sta', rfh, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', rmh, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', rbh, [ANGLE_MIN, ANGLE_MAX])
     ),
     all(
-      makeMovementDescriptor('sts', 'lfh', [0]),
-      makeMovementDescriptor('sts', 'lmh', [0]),
-      makeMovementDescriptor('sts', 'lbh', [0]),
-      makeMovementDescriptor('sts', 'lfk', [0]),
-      makeMovementDescriptor('sts', 'lmk', [0]),
-      makeMovementDescriptor('sts', 'lbk', [0])
+      makeMovementDescriptor('sts', lfh, [0]),
+      makeMovementDescriptor('sts', lmh, [0]),
+      makeMovementDescriptor('sts', lbh, [0]),
+      makeMovementDescriptor('sts', lfk, [0]),
+      makeMovementDescriptor('sts', lmk, [0]),
+      makeMovementDescriptor('sts', lbk, [0])
     ),
     all(
-      makeMovementDescriptor('sts', 'rfh', [-1]),
-      makeMovementDescriptor('sts', 'rmh', [-1]),
-      makeMovementDescriptor('sts', 'rbh', [-1])
+      makeMovementDescriptor('sts', rfh, [-1]),
+      makeMovementDescriptor('sts', rmh, [-1]),
+      makeMovementDescriptor('sts', rbh, [-1])
     ),
     one(
-      makeMovementDescriptor('utl', 'rfh', ['mia']),
-      makeMovementDescriptor('utl', 'rmh', ['mia']),
-      makeMovementDescriptor('utl', 'rbh', ['mia'])
+      makeMovementDescriptor('utl', rfh, ['mia']),
+      makeMovementDescriptor('utl', rmh, ['mia']),
+      makeMovementDescriptor('utl', rbh, ['mia'])
     ),
     // Phase 3
     // Remove speed from right hip joint motors
@@ -90,60 +105,60 @@ const AntEngineDescriptor = {
     // Wait until left hip joints are at angle 0 (current minimum)
     // Lock left hip and knee joint angles to 0
     all(
-      makeMovementDescriptor('sts', 'rfh', [0]),
-      makeMovementDescriptor('sts', 'rmh', [0]),
-      makeMovementDescriptor('sts', 'rbh', [0])
+      makeMovementDescriptor('sts', rfh, [0]),
+      makeMovementDescriptor('sts', rmh, [0]),
+      makeMovementDescriptor('sts', rbh, [0])
     ),
     all(
-      makeMovementDescriptor('sta', 'lfh', [0, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lmh', [0, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lbh', [0, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lfk', [0, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lmk', [0, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lbk', [0, ANGLE_MAX])
+      makeMovementDescriptor('sta', lfh, [0, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lmh, [0, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lbh, [0, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lfk, [0, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lmk, [0, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lbk, [0, ANGLE_MAX])
     ),
     all(
-      makeMovementDescriptor('sts', 'lfh', [-1]),
-      makeMovementDescriptor('sts', 'lmh', [-1]),
-      makeMovementDescriptor('sts', 'lbh', [-1]),
-      makeMovementDescriptor('sts', 'lfk', [-1]),
-      makeMovementDescriptor('sts', 'lmk', [-1]),
-      makeMovementDescriptor('sts', 'lbk', [-1])
+      makeMovementDescriptor('sts', lfh, [-1]),
+      makeMovementDescriptor('sts', lmh, [-1]),
+      makeMovementDescriptor('sts', lbh, [-1]),
+      makeMovementDescriptor('sts', lfk, [-1]),
+      makeMovementDescriptor('sts', lmk, [-1]),
+      makeMovementDescriptor('sts', lbk, [-1])
     ),
     all(
-      makeMovementDescriptor('utl', 'lfh', ['mia']),
-      makeMovementDescriptor('utl', 'lmh', ['mia']),
-      makeMovementDescriptor('utl', 'lbh', ['mia'])
+      makeMovementDescriptor('utl', lfh, ['mia']),
+      makeMovementDescriptor('utl', lmh, ['mia']),
+      makeMovementDescriptor('utl', lbh, ['mia'])
     ),
     all(
-      makeMovementDescriptor('la0', 'lfh'),
-      makeMovementDescriptor('la0', 'lmh'),
-      makeMovementDescriptor('la0', 'lbh'),
-      makeMovementDescriptor('la0', 'lfk'),
-      makeMovementDescriptor('la0', 'lmk'),
-      makeMovementDescriptor('la0', 'lbk')
+      makeMovementDescriptor('la0', lfh),
+      makeMovementDescriptor('la0', lmh),
+      makeMovementDescriptor('la0', lbh),
+      makeMovementDescriptor('la0', lfk),
+      makeMovementDescriptor('la0', lmk),
+      makeMovementDescriptor('la0', lbk)
     ),
     // Phase 4
     // Unlock right knee angles
     // Set motor speed of right hip and knee joints
     // Wait until right hip joints are fully deflected
     all(
-      makeMovementDescriptor('sta', 'rfk', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'rmk', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'rbk', [ANGLE_MIN, ANGLE_MAX])
+      makeMovementDescriptor('sta', rfk, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', rmk, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', rbk, [ANGLE_MIN, ANGLE_MAX])
     ),
     all(
-      makeMovementDescriptor('sts', 'rfh', [1]),
-      makeMovementDescriptor('sts', 'rmh', [1]),
-      makeMovementDescriptor('sts', 'rbh', [1]),
-      makeMovementDescriptor('sts', 'rfk', [1]),
-      makeMovementDescriptor('sts', 'rmk', [1]),
-      makeMovementDescriptor('sts', 'rbk', [1])
+      makeMovementDescriptor('sts', rfh, [1]),
+      makeMovementDescriptor('sts', rmh, [1]),
+      makeMovementDescriptor('sts', rbh, [1]),
+      makeMovementDescriptor('sts', rfk, [1]),
+      makeMovementDescriptor('sts', rmk, [1]),
+      makeMovementDescriptor('sts', rbk, [1])
     ),
     all(
-      makeMovementDescriptor('utl', 'rfh', ['mxa']),
-      makeMovementDescriptor('utl', 'rmh', ['mxa']),
-      makeMovementDescriptor('utl', 'rbh', ['mxa'])
+      makeMovementDescriptor('utl', rfh, ['mxa']),
+      makeMovementDescriptor('utl', rmh, ['mxa']),
+      makeMovementDescriptor('utl', rbh, ['mxa'])
     ),
     // Phase 5
     // Unlock left hip joints
@@ -151,27 +166,27 @@ const AntEngineDescriptor = {
     // Set speed of left hip joints in backward direction
     // Wait until one left hip joint angle is minimally deflected
     all(
-      makeMovementDescriptor('sta', 'lfh', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lmh', [ANGLE_MIN, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'lbh', [ANGLE_MIN, ANGLE_MAX])
+      makeMovementDescriptor('sta', lfh, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lmh, [ANGLE_MIN, ANGLE_MAX]),
+      makeMovementDescriptor('sta', lbh, [ANGLE_MIN, ANGLE_MAX])
     ),
     all(
-      makeMovementDescriptor('sts', 'lfh', [0]),
-      makeMovementDescriptor('sts', 'lmh', [0]),
-      makeMovementDescriptor('sts', 'lbh', [0]),
-      makeMovementDescriptor('sts', 'lfk', [0]),
-      makeMovementDescriptor('sts', 'lmk', [0]),
-      makeMovementDescriptor('sts', 'lbk', [0])
+      makeMovementDescriptor('sts', lfh, [0]),
+      makeMovementDescriptor('sts', lmh, [0]),
+      makeMovementDescriptor('sts', lbh, [0]),
+      makeMovementDescriptor('sts', lfk, [0]),
+      makeMovementDescriptor('sts', lmk, [0]),
+      makeMovementDescriptor('sts', lbk, [0])
     ),
     all(
-      makeMovementDescriptor('sts', 'lfh', [-1]),
-      makeMovementDescriptor('sts', 'lmh', [-1]),
-      makeMovementDescriptor('sts', 'lbh', [-1])
+      makeMovementDescriptor('sts', lfh, [-1]),
+      makeMovementDescriptor('sts', lmh, [-1]),
+      makeMovementDescriptor('sts', lbh, [-1])
     ),
     one(
-      makeMovementDescriptor('utl', 'lfh', ['mia']),
-      makeMovementDescriptor('utl', 'lmh', ['mia']),
-      makeMovementDescriptor('utl', 'lbh', ['mia'])
+      makeMovementDescriptor('utl', lfh, ['mia']),
+      makeMovementDescriptor('utl', lmh, ['mia']),
+      makeMovementDescriptor('utl', lbh, ['mia'])
     ),
     // Phase 6
     // Remove speed of left hip joint motors
@@ -180,38 +195,38 @@ const AntEngineDescriptor = {
     // Wait until one angle is 0
     // Lock right hip and knee joints
     all(
-      makeMovementDescriptor('sts', 'lfh', [0]),
-      makeMovementDescriptor('sts', 'lmh', [0]),
-      makeMovementDescriptor('sts', 'lbh', [0])
+      makeMovementDescriptor('sts', lfh, [0]),
+      makeMovementDescriptor('sts', lmh, [0]),
+      makeMovementDescriptor('sts', lbh, [0])
     ),
     all(
-      makeMovementDescriptor('sta', 'rfh', [0, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'rmh', [0, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'rbh', [0, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'rfk', [0, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'rmk', [0, ANGLE_MAX]),
-      makeMovementDescriptor('sta', 'rbk', [0, ANGLE_MAX])
+      makeMovementDescriptor('sta', rfh, [0, ANGLE_MAX]),
+      makeMovementDescriptor('sta', rmh, [0, ANGLE_MAX]),
+      makeMovementDescriptor('sta', rbh, [0, ANGLE_MAX]),
+      makeMovementDescriptor('sta', rfk, [0, ANGLE_MAX]),
+      makeMovementDescriptor('sta', rmk, [0, ANGLE_MAX]),
+      makeMovementDescriptor('sta', rbk, [0, ANGLE_MAX])
     ),
     all(
-      makeMovementDescriptor('sts', 'rfh', [-1]),
-      makeMovementDescriptor('sts', 'rmh', [-1]),
-      makeMovementDescriptor('sts', 'rbh', [-1]),
-      makeMovementDescriptor('sts', 'rfk', [-1]),
-      makeMovementDescriptor('sts', 'rmk', [-1]),
-      makeMovementDescriptor('sts', 'rbk', [-1])
+      makeMovementDescriptor('sts', rfh, [-1]),
+      makeMovementDescriptor('sts', rmh, [-1]),
+      makeMovementDescriptor('sts', rbh, [-1]),
+      makeMovementDescriptor('sts', rfk, [-1]),
+      makeMovementDescriptor('sts', rmk, [-1]),
+      makeMovementDescriptor('sts', rbk, [-1])
     ),
     one(
-      makeMovementDescriptor('utl', 'rfh', ['mia']), // ['isa', 0]
-      makeMovementDescriptor('utl', 'rmh', ['mia']),
-      makeMovementDescriptor('utl', 'rbh', ['mia'])
+      makeMovementDescriptor('utl', rfh, ['mia']), // ['isa', 0]
+      makeMovementDescriptor('utl', rmh, ['mia']),
+      makeMovementDescriptor('utl', rbh, ['mia'])
     ),
     all(
-      makeMovementDescriptor('la0', 'rfh'),
-      makeMovementDescriptor('la0', 'rmh'),
-      makeMovementDescriptor('la0', 'rbh'),
-      makeMovementDescriptor('la0', 'rfk'),
-      makeMovementDescriptor('la0', 'rmk'),
-      makeMovementDescriptor('la0', 'rbk')
+      makeMovementDescriptor('la0', rfh),
+      makeMovementDescriptor('la0', rmh),
+      makeMovementDescriptor('la0', rbh),
+      makeMovementDescriptor('la0', rfk),
+      makeMovementDescriptor('la0', rmk),
+      makeMovementDescriptor('la0', rbk)
     )
   ]
 };

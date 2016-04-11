@@ -11,6 +11,19 @@ import Phenotype from './phenotype';
 import { randomColor } from '../../color';
 
 /**
+ * Create a random style for a body.
+ *
+ * @return {Object}
+ */
+function createBodyStyle() {
+  return {
+    lineWidth: 1,
+    lineColor: randomColor(),
+    fillColor: randomColor()
+  };
+}
+
+/**
  * Represents the phenotype of an individual.
  * The phenotype is the graphical representation of  it's corresponding genotype.
  *
@@ -70,24 +83,15 @@ export default class Individual extends Phenotype {
       mass: bodyDescriptor.mass
     });
 
-    const style = {
-      lineWidth: 1,
-      lineColor: randomColor(),
-      fillColor: randomColor()
-    };
-
     this.addBody(body);
-    this.addShape(body, this.createBodyShape(genotype.body.bodyPoints), [0, 0], 0, bodyOptions, style);
+    this.addShape(body, this.createBodyShape(genotype.body.bodyPoints), [0, 0], 0, bodyOptions, createBodyStyle());
 
     // Mid
     this.createCenterOfMassPoint(body, bodyOptions);
 
     const createLeg = ({ pos, legDescriptor, hipJointPosition }) => { // eslint-disable-line max-statements
-      const styleLeg = {
-        lineWidth: 1,
-        lineColor: randomColor(),
-        fillColor: randomColor()
-      };
+
+      const styleLeg = createBodyStyle();
       const leg = legDescriptor.leg;
       // Leg-parts heights
       const upperLegHeight = (1 - leg.heightFactor) * leg.height;
@@ -115,22 +119,18 @@ export default class Individual extends Phenotype {
       this.addBody(lowerLegBody);
       this.addShape(lowerLegBody, lowerLegShape, [0, 0], 0, bodyOptions, styleLeg);
 
-      const calcX = hipJointPosition[0];
-      const calcY = hipJointPosition[1];
-      const revoluteHip = this.createRevoluteConstraint(upperLegBody, body,
+      const hip = this.createRevoluteConstraint(upperLegBody, body,
         [0, upperLegHeight / 2],
-        [calcX, calcY]
+        hipJointPosition
       );
-      const revoltuteKnee = this.createRevoluteConstraint(upperLegBody, lowerLegBody,
+      const knee = this.createRevoluteConstraint(upperLegBody, lowerLegBody,
         [0, -lowerLegHeight / 2],
         [0, lowerLegHeight / 2]);
 
-      return { hip: revoluteHip, knee: revoltuteKnee };
+      return { hip, knee };
     };
 
-    const toLeg = (blueprint, index) => {
-      return [index, createLeg(blueprint)];
-    };
+    const toLeg = (blueprint, index) => [index, createLeg(blueprint)];
 
     // Only take 3 legs because one side is symertrical to the other.
     // It would be bettter if legs isn array insted of object
@@ -146,14 +146,11 @@ export default class Individual extends Phenotype {
       { pos: 1, legDescriptor: sortedByXpos.get(1), hipJointPosition: genotype.body.hipJointPositions[1] },
       { pos: 2, legDescriptor: sortedByXpos.get(2), hipJointPosition: genotype.body.hipJointPositions[2] }
     );
-    let jointsMap = Map();
 
     const leftSide = bluePrints.map(toLeg);
     const rightSide = bluePrints.map(toLeg);
 
-    jointsMap = jointsMap.set('left', new Map(leftSide)).set('right', new Map(rightSide));
-
-    this.jointsMap = jointsMap;
+    this.jointsMap = Map().set('left', new Map(leftSide)).set('right', new Map(rightSide));
   }
 
   /**
@@ -169,10 +166,10 @@ export default class Individual extends Phenotype {
       lineColor: randomColor(),
       fillColor: randomColor()
     };
-    const shape = new p2.Circle({ radius: 0.05 });
+    const shape = new p2.Circle({ radius: 0.02 });
     const midBody = new p2.Body({
-      mass: 0.0001,
-      position: body.position[0]
+      mass: 0.0000001,
+      position: body.position
     });
     const constraint = new p2.RevoluteConstraint(midBody, body, {
       localPivotA: [0, 0],
@@ -188,11 +185,11 @@ export default class Individual extends Phenotype {
   * Returns the shape of the phenotype.
   *
   * @protected
-  * @param {Array} bodyPoints
+  * @param {Array} vertices The list of body polygon points
   * @return {p2.Convex}
   */
-  createBodyShape(bodyPoints) {
-    return new p2.Convex({ vertices: bodyPoints });
+  createBodyShape(vertices) {
+    return new p2.Convex({ vertices });
   }
 
 }
