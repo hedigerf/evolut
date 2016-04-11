@@ -15,7 +15,7 @@ import Individual from '../object/individual/individual';
 import { info } from '../../util/logUtil';
 import log4js from 'log4js';
 import ParcourGenerator from '../object/parcour/parcourCreator';
-import path from 'path';
+import { texture } from '../../util/path';
 import { view } from 'ramda';
 
 /**
@@ -40,10 +40,6 @@ const trackY = config('simulation.trackY');
 
 const lensBodyXpos = L.compose(L.prop('bodies'), L.index(0), L.prop('position'), L.index(0));
 
-function rockTexturePath() {
-  return path.join(__dirname, '../../..', 'assets/textures', 'rock.jpg');
-}
-
 /**
  * Responsible for simulating one simulation run.
  *
@@ -53,7 +49,7 @@ export default class SimulationWorld extends Game {
 
   constructor(parcourOptions, population, cb) {
     super({
-      assetUrls: [rockTexturePath()],
+      assetUrls: [texture('rock.jpg')],
       pixiOptions: {
         autoResize: true,
         preserveDrawingBuffer: true, // Ensures that a canvas with a webgl context can be saved via toDataUrl

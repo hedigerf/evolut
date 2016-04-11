@@ -7,8 +7,8 @@
 import { GameObject } from './../../../../lib/p2Pixi.es6';
 import log4js from 'log4js';
 import p2 from 'p2';
-import path from 'path';
 import PIXI from 'pixi.js';
+import { texture } from '../../../util/path';
 
 const logger = log4js.getLogger('ParcourCreator');
 
@@ -28,15 +28,6 @@ export default class ParcourGenerator {
   */
   createPlane() {
     return new p2.Plane({});
-  }
-
-  /**
-   * Returns the path to a rock texture
-   *
-   * @return {String}
-   */
-  rockTexturePath() {
-    return path.join(__dirname, '../../../..', 'assets/textures', 'rock.jpg');
   }
 
   createMontains(heights) {
@@ -60,7 +51,7 @@ export default class ParcourGenerator {
           collisionMask: Math.pow(2, 1)
         };
 
-        const rockTexture = PIXI.Texture.fromImage(this.rockTexturePath(), false);
+        const rockTexture = PIXI.Texture.fromImage(texture('rock.jpg'), false);
 
         const body = new p2.Body({
           position: [-10, 0],

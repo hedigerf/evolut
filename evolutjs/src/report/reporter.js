@@ -1,20 +1,20 @@
-import { path as appRoot } from 'app-root-path';
+import { createTimePrefix, report } from '../util/path';
 import fs from 'graceful-fs';
 import { List } from 'immutable';
-import moment from 'moment';
-import path from 'path';
 
 export default class Reporter {
 
   static createReportFile(reportName) {
-    const fileName = moment().format('YYYYMMDDHHmmss') + '_' + reportName + '.txt';
-    const pathToFile = path.join(appRoot, 'assets/reports', path.basename(fileName));
-    fs.writeFile(pathToFile, '', (err) => {
+
+    const fileName = createTimePrefix() + '_' + reportName + '.txt';
+    const filePath = report(fileName);
+
+    fs.writeFile(filePath, '', (err) => {
       if (err) {
         throw err;
       }
     });
-    return pathToFile;
+    return filePath;
   }
 
   static createFitnessGraphBestReport() {

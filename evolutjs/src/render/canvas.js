@@ -4,21 +4,9 @@
  * @module render/canvas
  */
 
-import { path as appRoot } from 'app-root-path';
 import canvasBuffer from 'electron-canvas-to-buffer';
 import fs from 'fs';
-import path from 'path';
-
-/**
- * Returns the path of an output image.
- * Images are stored under assets/images/.
- *
- * @param {String} name The file name.
- * @return {String}
-*/
-function imagePath(name) {
-  return path.join(appRoot, 'assets/images', path.basename(name));
-}
+import { image } from '../util/path';
 
 /**
  * Writes a canvas dom element to a picture.
@@ -28,5 +16,7 @@ function imagePath(name) {
  * @param {String} [mimeType='image/png'] The mime type of the saved file
 */
 export default function dumpCanvas(canvas, imageName, mimeType = 'image/png') {
-  fs.writeFile(imagePath(imageName), canvasBuffer(canvas, mimeType));
+  const imagePath = image(imageName);
+  const buffer = canvasBuffer(canvas, mimeType);
+  fs.writeFile(imagePath, buffer);
 }

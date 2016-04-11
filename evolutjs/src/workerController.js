@@ -4,9 +4,11 @@
  * @module applicationController
  */
 
+/* eslint-env browser */
 
+import './app/config';
 import './app/log';
-import config from './app/config';
+import { createTimePrefix } from './util/path';
 import dumpCanvas from './render/canvas';
 import { info } from './util/logUtil';
 import { ipcRenderer } from 'electron';
@@ -22,13 +24,13 @@ const logger = log4js.getLogger('applicationController');
 let simulation = null;
 
 function performSimulationPostprocessing(population) {
-  const stringified = population.individuals.toArray().map(x => JSON.stringify(x));
+  const stringified = population.individuals.toArray().map((x) => JSON.stringify(x));
   ipcRenderer.send('work-finished', stringified);
 }
 
 ipcRenderer.on('receive-work', (event, individualsStringified, generationCount, { parcour }) => {
   info(logger, 'received work');
-  const individuals = individualsStringified.map(x => JSON.parse(x));
+  const individuals = individualsStringified.map((x) => JSON.parse(x));
   const population = {individuals: List(individuals), generationCount};
   if (simulation === null) {
     jQuery(() => {
@@ -79,7 +81,7 @@ ipcRenderer.on(World.ToggleRendering, () => {
 ipcRenderer.on(World.SaveScreen, () => {
 
   const canvas = document.getElementById('viewport');
-  const fileName = Date.now().toString() + '.png';
+  const fileName = createTimePrefix() + '_screenshot.png';
 
   dumpCanvas(canvas, fileName);
 });
