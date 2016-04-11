@@ -123,6 +123,10 @@
       "single",
       "avoid-escape"
     ],
+    "semi": [
+      2,
+      "always"
+    ],
     "sort-imports": [
       2,
       {

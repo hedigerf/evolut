@@ -78,4 +78,4 @@ export {
   fs,
   path as default,
   root
-}
+};

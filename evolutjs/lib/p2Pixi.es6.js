@@ -158,7 +158,7 @@ export class Game {
    * Called before rendering
    */
   beforeRender() {
-    const trackedBody = this.trackedBody
+    const trackedBody = this.trackedBody;
 
     // Focus tracked body, if set
     if (trackedBody !== null) {
@@ -481,7 +481,7 @@ export class PixiAdapter extends p2.EventEmitter {
     const lineWidth = style.lineWidthUnits
       ? style.lineWidthUnits * this.pixelsPerLengthUnit
       : style.lineWidth || 0;
-    const lineColor = style.lineColor || 0x000000
+    const lineColor = style.lineColor || 0x000000;
     const fillColor = style.fillColor;
 
     graphics.lineStyle(lineWidth, lineColor, 1);

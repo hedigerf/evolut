@@ -4,7 +4,7 @@
  * @module engine/constraintLenses
  */
 
-import * as L from 'partial.lenses'
+import * as L from 'partial.lenses';
 import { lens } from 'ramda';
 
 /**
@@ -86,7 +86,7 @@ export const lensLeftJoints = L.compose(lensJointsMap, immutableLens('left'));
  * @function
  * @return {Lens}
  */
-export const lensLeftFrontJoint = L.compose(lensLeftJoints, lensFront);
+export const lensLeftFrontJoint = L.compose(lensLeftJoints, immutableLens(0));
 
 /**
  * Lens left middle revolute constraint information.
@@ -94,7 +94,7 @@ export const lensLeftFrontJoint = L.compose(lensLeftJoints, lensFront);
  * @function
  * @return {Lens}
  */
-export const lensLeftMiddleJoint = L.compose(lensLeftJoints, lensMiddle);
+export const lensLeftMiddleJoint = L.compose(lensLeftJoints, immutableLens(1));
 
 /**
  * Lens left back revolute constraint information.
@@ -102,7 +102,7 @@ export const lensLeftMiddleJoint = L.compose(lensLeftJoints, lensMiddle);
  * @function
  * @return {Lens}
  */
-export const lensLeftBackJoint = L.compose(lensLeftJoints, lensBack);
+export const lensLeftBackJoint = L.compose(lensLeftJoints, immutableLens(2));
 
 /**
  * Lens right revolute constraints information.
@@ -118,7 +118,7 @@ export const lensRightJoints = L.compose(lensJointsMap, immutableLens('right'));
  * @function
  * @return {Lens}
  */
-export const lensRightFrontJoint = L.compose(lensRightJoints, lensFront);
+export const lensRightFrontJoint = L.compose(lensRightJoints, immutableLens(0));
 
 /**
  * Lens right middle revolute constraint information.
@@ -126,7 +126,7 @@ export const lensRightFrontJoint = L.compose(lensRightJoints, lensFront);
  * @function
  * @return {Lens}
  */
-export const lensRightMiddleJoint = L.compose(lensRightJoints, lensMiddle);
+export const lensRightMiddleJoint = L.compose(lensRightJoints, immutableLens(1));
 
 /**
  * Lens right back revolute constraint information.
@@ -134,9 +134,7 @@ export const lensRightMiddleJoint = L.compose(lensRightJoints, lensMiddle);
  * @function
  * @return {Lens}
  */
-export const lensRightBackJoint = L.compose(lensRightJoints, lensBack);
-
-//
+export const lensRightBackJoint = L.compose(lensRightJoints, immutableLens(2));
 
 export const lensLFHip = L.compose(lensLeftFrontJoint, lensHip);
 export const lensLMHip = L.compose(lensLeftMiddleJoint, lensHip);

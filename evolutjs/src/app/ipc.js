@@ -18,4 +18,4 @@ export const World = {
   TogglePause: 'world-toggle-pause',
   ToggleRendering: 'world-toggle-rendering',
   SaveScreen: 'world-save-screen'
-}
+};

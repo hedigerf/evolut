@@ -15,7 +15,7 @@
     "increaseDifficultyAfter": 20
   },
   "workers": {
-    "count": 2
+    "count": 1
   },
   "simulation": {
     "evaluateAfterTickCount": 240,

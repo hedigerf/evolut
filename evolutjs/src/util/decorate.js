@@ -33,13 +33,13 @@ export function memoize(target, name, descriptor) {
       return table[name];
     }
     return table[name] = getter.call(this);
-  }
+  };
 
   descriptor.set = function(val) {
     let table = memoizationFor(this); // eslint-disable-line prefer-const
     setter.call(this, val);
     table[name] = val;
-  }
+  };
 }
 
 /**
