@@ -64,7 +64,7 @@ export default class Individual extends Phenotype {
    * @protected
    * @param {Genotype} genotype The genotype
    */
-  fromGenotype(genotype) { // eslint-disable-line max-statements
+  fromGenotype(genotype) {
 
     this.engine = genotype.engine;
     this.engine.current = 0;
@@ -89,7 +89,7 @@ export default class Individual extends Phenotype {
     // Mid
     this.createCenterOfMassPoint(body, bodyOptions);
 
-    const createLeg = ({ pos, legDescriptor, hipJointPosition }) => { // eslint-disable-line max-statements
+    const createLeg = ({ pos, legDescriptor, hipJointPosition }) => {
 
       const styleLeg = createBodyStyle();
       const leg = legDescriptor.leg;
@@ -139,13 +139,10 @@ export default class Individual extends Phenotype {
       genotype.legs['2'],
       genotype.legs['4']
     );
-    // Const sortedByXposition = legs.sort((a, b) => a.legRelPos[0] < b.legRelPos[0]);
-    const sortedByXpos = legs;
-    const bluePrints = List.of(
-      { pos: 0, legDescriptor: sortedByXpos.get(0), hipJointPosition: genotype.body.hipJointPositions[0] },
-      { pos: 1, legDescriptor: sortedByXpos.get(1), hipJointPosition: genotype.body.hipJointPositions[1] },
-      { pos: 2, legDescriptor: sortedByXpos.get(2), hipJointPosition: genotype.body.hipJointPositions[2] }
-    );
+
+    const bluePrints = legs.map((legDescriptor, pos) => ({
+      pos, legDescriptor, hipJointPosition: genotype.body.hipJointPositions[pos]
+    }));
 
     const leftSide = bluePrints.map(toLeg);
     const rightSide = bluePrints.map(toLeg);
