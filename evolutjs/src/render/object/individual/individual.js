@@ -74,8 +74,8 @@ export default class Individual extends Phenotype {
     const posY = 0.4;
 
     const bodyOptions = {
-      collisionGroup: Math.pow(2, 1),
-      collisionMask: Math.pow(2, 0)
+      collisionGroup: 1 << 1,
+      collisionMask: 1 << 0
     };
 
     const body = new p2.Body({

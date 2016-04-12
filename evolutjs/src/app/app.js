@@ -11,13 +11,13 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { debug, info } from '../util/logUtil';
 import { List, Range } from 'immutable';
 import { path as appRoot } from 'app-root-path';
-import { curry } from 'ramda';
 import config from './config';
+import { curry } from 'ramda';
 import InitialPopulationGenerator from '../algorithm/population/initialPopulationGenerator';
 import log4js from 'log4js';
-import Reporter from '../report/reporter';
 import Mutator from '../algorithm/mutation/mutator';
 import ParcourGenerator from '../algorithm/parcour/parcourGenerator';
+import Reporter from '../report/reporter';
 import TournamentBasedSelectionStrategy from '../algorithm/selection/tournamentBasedSelectionStrategy';
 
 
@@ -63,7 +63,7 @@ function distributeWork(population, options, worker, index) {
   const start = index * partialPopulationSize;
   const end = (index + 1) * partialPopulationSize;
   const partialPopulation = population.individuals.slice(start, end);
-  const stringified = partialPopulation.toArray().map(x => x.blueprint());
+  const stringified = partialPopulation.toArray().map((x) => x.blueprint());
   worker.webContents.send('receive-work', stringified, population.generationCount, options);
 }
 
@@ -88,7 +88,7 @@ function prepareDistributor(distributeWork, population) {
 let individuals = List();
 ipcMain.on('work-finished', (event, individualsStringified) => {
   finishedWorkCounter++;
-  const partialPopulation = individualsStringified.map(x => JSON.parse(x));
+  const partialPopulation = individualsStringified.map((x) => JSON.parse(x));
   individuals = individuals.concat(partialPopulation);
   if (finishedWorkCounter % workerCount === 0) {
     const population = { individuals, generationCount: generationCounter};
@@ -114,11 +114,11 @@ app.on('window-all-closed', () =>  {
 
 app.on('ready', () => {
   const workerRange = List(Range(0, workerCount));
-  workers = workerRange.map(x =>  startWorker() );
+  workers = workerRange.map(() =>  startWorker());
   const initialPopulationGenerator = new InitialPopulationGenerator(
     Range(bodyPointsMin, bodyPointsMax + 1), populationSize);
   const initialPopulation = initialPopulationGenerator.generateInitialPopulation();
-  const distributor = prepareDistributor(distributeInitialWork, initialPopulation)
+  const distributor = prepareDistributor(distributeInitialWork, initialPopulation);
   workers.forEach(distributor);
 
 
