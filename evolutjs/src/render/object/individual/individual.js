@@ -11,6 +11,19 @@ import Phenotype from './phenotype';
 import { randomColor } from '../../color';
 
 /**
+ * Create a random style for a body.
+ *
+ * @return {Object}
+ */
+function createBodyStyle() {
+  return {
+    lineWidth: 1,
+    lineColor: randomColor(),
+    fillColor: randomColor()
+  };
+}
+
+/**
  * Represents the phenotype of an individual.
  * The phenotype is the graphical representation of  it's corresponding genotype.
  *
@@ -18,21 +31,30 @@ import { randomColor } from '../../color';
  */
 export default class Individual extends Phenotype {
 
-  createRevoluteConstraint(speed, bodyToConnect, jointBody, pivotA, pivotB) {
-    const revoluteHip = new p2.RevoluteConstraint(bodyToConnect, jointBody, {
+  /**
+   * Create a revolute constraint.
+   *
+   * @param  {p2.Body} bodyA
+   * @param  {p2.Body} bodyB
+   * @param  {Vector} pivotA
+   * @param  {Vector} pivotB
+   * @return {p2.RevoluteConstraint}
+   */
+  createRevoluteConstraint(bodyA, bodyB, pivotA, pivotB) {
+
+    const constraint = new p2.RevoluteConstraint(bodyA, bodyB, {
       localPivotA: pivotA,
       localPivotB: pivotB,
       collideConnected: false
     });
 
-    revoluteHip.enableMotor();
-    revoluteHip.setMotorSpeed(speed);
+    constraint.enableMotor();
+    constraint.setMotorSpeed(0);
+    constraint.setLimits(0, 0);
 
-    const maxAngle = 0; // Math.PI / 6;
-    const minAngle = 0; // -Math.PI / 6;
-    revoluteHip.setLimits(minAngle, maxAngle);
-    this.addConstraint(revoluteHip);
-    return revoluteHip;
+    this.addConstraint(constraint);
+
+    return constraint;
   }
 
   /**
@@ -42,7 +64,7 @@ export default class Individual extends Phenotype {
    * @protected
    * @param {Genotype} genotype The genotype
    */
-  fromGenotype(genotype) { // eslint-disable-line max-statements
+  fromGenotype(genotype) {
 
     this.engine = genotype.engine;
     this.engine.current = 0;
@@ -52,8 +74,8 @@ export default class Individual extends Phenotype {
     const posY = 0.4;
 
     const bodyOptions = {
-      collisionGroup: Math.pow(2, 1),
-      collisionMask: Math.pow(2, 0)
+      collisionGroup: 1 << 1,
+      collisionMask: 1 << 0
     };
 
     const body = new p2.Body({
@@ -61,41 +83,15 @@ export default class Individual extends Phenotype {
       mass: bodyDescriptor.mass
     });
 
-    const style = {
-      lineWidth: 1,
-      lineColor: randomColor(),
-      fillColor: randomColor()
-    };
-
     this.addBody(body);
-    this.addShape(body, this.makeShape(genotype.body.bodyPoints), [0, 0], 0, bodyOptions, style);
+    this.addShape(body, this.createBodyShape(genotype.body.bodyPoints), [0, 0], 0, bodyOptions, createBodyStyle());
+
     // Mid
-    const styleMid = {
-      lineWidth: 1,
-      lineColor: randomColor(),
-      fillColor: randomColor()
-    };
-    const midShape = new p2.Circle({ radius: 0.05 });
-    const midBody = new p2.Body({
-      mass: 0.0001,
-      position: [body.position[0], body.position[1]]
-    });
-    const midConstraint = new p2.RevoluteConstraint(midBody, body, {
-      localPivotA: [0, 0],
-      localPivotB: [0, 0],
-      collideConnected: false
-    });
-    this.addBody(midBody);
-    this.addShape(midBody, midShape, [0, 0] , 0, bodyOptions, styleMid);
-    this.addConstraint(midConstraint);
-    let counter = 0;
-    const createLeg = ({ pos, speed, legDescriptor, hipJointPosition }) => { // eslint-disable-line max-statements
-      counter++;
-      const styleLeg = {
-        lineWidth: 1,
-        lineColor: randomColor(),
-        fillColor: randomColor()
-      };
+    this.createCenterOfMassPoint(body, bodyOptions);
+
+    const createLeg = ({ pos, legDescriptor, hipJointPosition }) => {
+
+      const styleLeg = createBodyStyle();
       const leg = legDescriptor.leg;
       // Leg-parts heights
       const upperLegHeight = (1 - leg.heightFactor) * leg.height;
@@ -109,58 +105,32 @@ export default class Individual extends Phenotype {
       const upperLegShape = new p2.Box({ width: legWidth, height: upperLegHeight });
       const upperLegBody = new p2.Body({
         mass: upperLegMass,
-        position: [posX + (0.5 * (pos - 1)), posY]
+        position: [posX + (0.5 * pos), posY]
       });
       this.addBody(upperLegBody);
-      this.addShape(upperLegBody, upperLegShape, [0, 0] , 0, bodyOptions, styleLeg);
+      this.addShape(upperLegBody, upperLegShape, [0, 0], 0, bodyOptions, styleLeg);
 
       // Shank
       const lowerLegShape = new p2.Box({ width: legWidth, height: lowerLegHeight });
       const lowerLegBody = new p2.Body({
         mass: lowerLegMass,
-        position: [posX + (0.5 * (pos - 1)), posY + upperLegHeight]
+        position: [posX + (0.5 * pos), posY + upperLegHeight]
       });
       this.addBody(lowerLegBody);
-      this.addShape(lowerLegBody, lowerLegShape, [0, 0] , 0, bodyOptions, styleLeg);
+      this.addShape(lowerLegBody, lowerLegShape, [0, 0], 0, bodyOptions, styleLeg);
 
-
-      // Foot
-      /* const footShape = new p2.Circle({ radius: 0.2 });
-      const footBody = new p2.Body({
-        mass: 1,
-        position: [lowerLegBody.position[0], lowerLegBody.position[1]]
-      });
-      this.addBody(footBody);
-      this.addShape(footBody, footShape, [0, 0], bodyOptions, styleLeg);
-
-      const lowerLegFootLock = new p2.LockConstraint({ localOffsetB: [0, 0] });
-      this.addConstraint(lowerLegFootLock);*/
-
-      const calcX = hipJointPosition[0]; // - centerOfMassBody[0];
-      const calcY = hipJointPosition[1]; // - centerOfMassBody[1];
-      const revoluteHip = this.createRevoluteConstraint(speed, upperLegBody, body,
+      const hip = this.createRevoluteConstraint(upperLegBody, body,
         [0, upperLegHeight / 2],
-        [calcX, calcY]
+        hipJointPosition
       );
-      const revoltuteKnee = this.createRevoluteConstraint(speed, upperLegBody, lowerLegBody,
+      const knee = this.createRevoluteConstraint(upperLegBody, lowerLegBody,
         [0, -lowerLegHeight / 2],
         [0, lowerLegHeight / 2]);
 
-      return { hip: revoluteHip, knee: revoltuteKnee };
+      return { hip, knee };
     };
 
-    const speed = 0;
-    const toLeg = ({ pos, id, speed, legDescriptor, hipJointPosition }) => {
-      return [
-        id,
-        createLeg({
-          pos,
-          speed,
-          legDescriptor,
-          hipJointPosition
-        })
-      ];
-    };
+    const toLeg = (blueprint, index) => [index, createLeg(blueprint)];
 
     // Only take 3 legs because one side is symertrical to the other.
     // It would be bettter if legs isn array insted of object
@@ -169,36 +139,54 @@ export default class Individual extends Phenotype {
       genotype.legs['2'],
       genotype.legs['4']
     );
-    // Const sortedByXposition = legs.sort((a, b) => a.legRelPos[0] < b.legRelPos[0]);
-    const sortedByXpos = legs;
-    const bluePrints = List.of(
-      { id: 'back',   speed, pos: 1, legDescriptor: sortedByXpos.get(0),
-        hipJointPosition: genotype.body.hipJointPositions[0]
-      } ,
-      { id: 'middle', speed, pos: 2, legDescriptor: sortedByXpos.get(1),
-        hipJointPosition: genotype.body.hipJointPositions[1]
-      } ,
-      { id: 'front' , speed, pos: 3, legDescriptor: sortedByXpos.get(2),
-        hipJointPosition: genotype.body.hipJointPositions[2]
-      }
-    );
-    let jointsMap = Map();
+
+    const bluePrints = legs.map((legDescriptor, pos) => ({
+      pos, legDescriptor, hipJointPosition: genotype.body.hipJointPositions[pos]
+    }));
+
     const leftSide = bluePrints.map(toLeg);
     const rightSide = bluePrints.map(toLeg);
-    jointsMap = jointsMap.set('left', new Map(leftSide));
-    jointsMap = jointsMap.set('right', new Map(rightSide));
-    this.jointsMap = jointsMap;
+
+    this.jointsMap = Map().set('left', new Map(leftSide)).set('right', new Map(rightSide));
+  }
+
+  /**
+   * Create a point around the center of mass of an individuals body.
+   *
+   * @param {p2.Body} body
+   * @param {Object} bodyOptions
+   */
+  createCenterOfMassPoint(body, bodyOptions) {
+
+    const style = {
+      lineWidth: 1,
+      lineColor: randomColor(),
+      fillColor: randomColor()
+    };
+    const shape = new p2.Circle({ radius: 0.02 });
+    const midBody = new p2.Body({
+      mass: 0.0000001,
+      position: body.position
+    });
+    const constraint = new p2.RevoluteConstraint(midBody, body, {
+      localPivotA: [0, 0],
+      localPivotB: [0, 0],
+      collideConnected: false
+    });
+    this.addBody(midBody);
+    this.addShape(midBody, shape, [0, 0], 0, bodyOptions, style);
+    this.addConstraint(constraint);
   }
 
   /**
   * Returns the shape of the phenotype.
   *
   * @protected
-  * @param {Array} bodyPoints
+  * @param {Array} vertices The list of body polygon points
   * @return {p2.Convex}
   */
-  makeShape(bodyPoints) {
-    return new p2.Convex({ vertices: bodyPoints });
+  createBodyShape(vertices) {
+    return new p2.Convex({ vertices });
   }
 
 }

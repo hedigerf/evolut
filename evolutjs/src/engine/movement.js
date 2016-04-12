@@ -5,8 +5,8 @@
  */
 
 import { allPass, always, anyPass, append, curry, map, partial, view } from 'ramda';
-import { getLensById } from './constraintLenses';
 import { IdentifiableStatic } from '../types/identifiable';
+import { resolveLensDecriptor } from './constraintLenses';
 
 /**
  * Divisor for tolerated margin of an angle.
@@ -454,12 +454,12 @@ function getMovementPredicate(predicateId) {
  * Make a movement descriptor object.
  *
  * @param {String} id The movement identifier
- * @param {String} lensId The lens identifier
+ * @param {LensDescriptor} lens The lens descriptor
  * @param {Array<*>} [params=[]] The optional paramerter list
  * @return {makeMovementDescriptor} The movement descriptor
  */
-export function makeMovementDescriptor(id, lensId, params = []) {
-  return { id, lensId, params };
+export function makeMovementDescriptor(id, lens, params = []) {
+  return { id, lens, params };
 }
 
 /**
@@ -483,22 +483,50 @@ export function one(...params) {
 }
 
 /**
+ * Tests a movement id if it is a compound movement.
+ * Compound movements group one or more movements togehter.
+ *
+ *
+ * @param {String} id The movement id
+ * @return {Boolean}
+ */
+function isCompoundMovemet(id) {
+  return id === 'all' || id === 'one';
+}
+
+/**
+ * Resolves a compound movement descriptor.
+ *
+ * @param {MovementDescriptor} descriptor The movement descriptor
+ * @return {Movement} The movement function
+ */
+function resolveCompoundMovementDescriptor({ id, params }) {
+
+  let compound;
+
+  if (id === 'all') {
+    compound = allPass;
+  } else if (id === 'one') {
+    compound = anyPass;
+  }
+
+  return compound(map(resolveMovementDescriptor, params));
+}
+
+/**
  * Resolve a movement descriptor and return the movement function.
  *
  * @param {MovementDescriptor} descriptor The movement descriptor
  * @return {Movement} The movement function
  */
-export function resolveMovementDescriptor({ id, lensId, params }) {
+export function resolveMovementDescriptor({ id, lens, params }) {
 
-  if (id === 'all') {
-    return allPass(map(resolveMovementDescriptor, params));
-  } else if (id === 'one') {
-    return anyPass(map(resolveMovementDescriptor, params));
+  if (isCompoundMovemet(id)) {
+    return resolveCompoundMovementDescriptor({ id, params });
   }
 
   const movement = getMovementById(id);
-  const lens = getLensById(lensId);
-  const args = append(lens, params);
+  const args = append(resolveLensDecriptor(lens), params);
 
   return partial(movement, args);
 }
