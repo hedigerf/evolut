@@ -4,7 +4,7 @@
  * @module algorithm/genotype/genotype
  */
 
-import * as L from 'partial.lenses'
+import * as L from 'partial.lenses';
 import { always, curry, either, ifElse, mapObjIndexed, merge, view } from 'ramda';
 import { IdentifiableStatic } from '../../types/identifiable';
 

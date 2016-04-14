@@ -5,7 +5,7 @@
  * @see module:algorithm/genotype/genotype
  */
 
-import * as L from 'partial.lenses'
+import * as L from 'partial.lenses';
 import { compose, isNil, over, view, when } from 'ramda';
 import Foot from './foot';
 import { KneeJoint } from './joint';

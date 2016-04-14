@@ -4,7 +4,7 @@
  * @module algorithm/genotype/lenses
  */
 
-import * as L from 'partial.lenses'
+import * as L from 'partial.lenses';
 import { apply, keys } from 'ramda';
 
 /**

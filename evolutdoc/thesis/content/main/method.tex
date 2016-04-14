@@ -54,8 +54,6 @@
 
     \subsection{Genotyp\label{sub:Genotype}}
 
-      % TODO ramda, lenses
-
       \subsubsection{Design\label{subsub:GenotypeDesign}}
 
         Der Anspruch an das Design des Genotyps ist möglichst modular und einfach zu sein.
@@ -147,9 +145,10 @@
     würde es hier um reale Kreaturen gehen und nicht nur um virtuelle Roboter,
     welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
 
-  \section{Eingesetzte Technologien}
+  \section{Eingesetzte Technologien\label{sec:Technology}}
 
-    Zur Auswahl standen mehrere Programmiersprachen und Physik Engines. Die Evaluationskriterien dabei waren:
+    Zur Auswahl standen mehrere Programmiersprachen und Physik Engines.
+    Die Evaluationskriterien dabei waren:
     \begin{itemize}
       \item Platform-Interoperabilität (Linux, Windows Mac OS X)
       \item Einfache Handhabung
@@ -160,52 +159,94 @@
 
     % Ignore punctuation warning on '.NET'
     % chktex-file 26
-    Als erstes wurde F\# und diverse populäre .NET Physics Engines wie Farseer Physics, Physics 2D und Digital Rune Engine evaluiert. % chktex-ignore
-    F\# ist eine neue funktionale Sprache die mit einer sauberen Synatx und einem der besten Typensystem überhaupt besticht.
-    Jedoch gestaltete sich die Konfiguration und Platform Interoperablität sehr schwierig. Dies lag nich an den Physic Engines selber,
-    sondern an der Open Source Implementiertung Mono Game. Eine plattformübergreifende Konfiguration,
-    damit mit allen oben genannten Betriebssystemen entwickelt werden kann, konnte nicht erstellt werden.\\
-    Als zweite Möglichkeit wurde JavaScript und die Physics Engines Matter.js und p2.js in Betracht gezogen.
+    Als erstes wurde F\# und diverse populäre .NET Physics Engines wie Farseer Physics,
+    Physics 2D und Digital Rune Engine evaluiert.
+    F\# ist eine funktionale Sprache die mit einer sauberen Synatx und einem der besten Typensystem überhaupt besticht.
+    Jedoch gestaltete sich die Konfiguration und Platform-Interoperablität sehr schwierig.
+    Dies lag nich an den Physic Engines selber, sondern an der Open Source Implementiertung Mono Game.
+    Eine plattformübergreifende Konfiguration,
+    damit mit allen oben genannten Betriebssystemen entwickelt werden kann,
+    konnte nicht erstellt werden.
+    \\
+    Als zweite Möglichkeit wurde JavaScript und die Physics Engine Matter.js und p2.js in Betracht gezogen.
     Die Popularität von JavaScript hat in den letzten Jahren enorm zugenommen.
-    Auch wurde mit dem neuen ECMA2015 Standard die Sprache enorm verbessert und viele neue Features eingeführt. Das JavaScript Ökosystem ist eines der grössten überhaupt.
-    Da JavaScript eine Webtechnologie ursprünglich ist und auf allen Plattformen problemlos läuft, wurde das Kriterium der Platform Interoperabilität ohne zusätzliche Konfiguration erfüllt.
-    Matter.js wirkte noch nicht so ausgereift wie p2.js und wies viele Fehler auf. Um JavaScript und p2.js ohne Browser zu betreiben wird Electron eingesetzt.
-    Electron ist nicht anderes als Node.js und Google Chrome vereint in einer Standalone Anwendung.
-    Mit Hilfe von Node.js lassen sich alle I/0 Zugriffe regeln und es kann auf den Node Package Manager zur Abhänigskeitsverwaltung von anderen Bibliotheken zurück gegriffen werden.
+    Auch wurde mit dem neuen ECMA2015 Standard die Sprache enorm verbessert und viele neue Features eingeführt.
+    Das JavaScript-Ökosystem ist eines der grössten überhaupt.
+    Da JavaScript ursprünglich eine Webtechnologie ist und auf allen Plattformen problemlos läuft,
+    wurde das Kriterium der Platform-Interoperabilität ohne zusätzliche Konfiguration erfüllt.
+    Matter.js wirkte noch nicht so ausgereift wie p2.js und wies viele Fehler auf.
+    Um JavaScript und p2.js ohne Browser zu betreiben wird Electron eingesetzt.
+    Electron ist Node.js und Google Chrome vereint in einer Standalone-Anwendung.
+    Mit Hilfe von Node.js lassen sich alle I/0-Zugriffe regeln und es kann auf den
+    Node Package Manager zur Abhänigskeitsverwaltung von anderen Bibliotheken zurück gegriffen werden.
     Auch lässt sich unter bestimmten Umständen JavaScript schneller ausführen unter Node.js als in einem Browser.
 
-  \section{Initiale Polulation\label{sec:Initiale Polulation}}
+    \subsection{Programmierparadigma\label{sub:TechnologyParadigma}}
 
-    Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse wird auf 100 festgelegt,
-    um eine breite Diversität zu erhalten.
-    Es werden jeweils 20 Individuen mit 4,5,6,7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
-    Die Verantwortliche Klasse in JavaScript ist der InitialPopulationGenerator.
+      In der Programmierung gibt es verschiedene Ansätze,
+      wie der Quellcode aufgebaut werden soll und wie Probleme gelöst werden sollen.
+      Die bekanntesten Ansätze sind prozedural, objekt-orientiert und funktional.
 
-  \section{Parcour Generierung\label{sec:Parcour Generierung}}
+      \subsubsection{Prozedural\label{subsub:TechnologyParadigmaProzedural}}
 
-    Der Parcour wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcour generiert.
-    Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours, das heisst es werden höhere Steigungen, ein höherer Punkt und XYZ vorkommen.
-    Dazu muss eine Klasse erstellt werden (ParcourGenerator), welche mit Hilfe von Obergrenzen von Werten einen Parcour generieren kann.
+        Prozedurale Programme bestehen aus einer Folge von Befehlen,
+        die vorgeben wann was ausgeführt wird.
+        Die Daten und die Routinen die mit diesen arbeiten sind voneinander getrennt.
 
-  \section{Selektion\label{sec:Selektion}}
+      \subsubsection{Objekt-Orientiert\label{subsub:TechnologyParadigmaObjectOriented}}
 
-    Als Seleketionsstrategie wird Tournament-based Selection eingesetzt. Tournamend-based Selection hat den Vorteil,
-    dass die Diversität erhalten bleibt, bei gleichzeitig guter Selektion der fittesten Individuen.
+        Die objekt-orientierte Programmierung verbindet die Daten und
+        die Routinen die mit diesen interagieren. Sie werden zu Einheiten zusammengefasst.
+        Diese Einheiten werden im Zusammenhang mit Objekt-Orientierter-Programmierung Klassen genannt.
 
-    \subsection{Hypothese Selektionsstratgegie\label{sub:Hypothese Selektionsstratgegie}}
+      \subsubsection{Funkional\label{subsub:TechnologyParadigmaFunctional}}
 
-      Es wird die Hypothese aufgestellt, dass Tournament-based-Selection die besseren Resulate liefert im Vergleich zu den folgenden Selektionsstrategien: X und Y.
-      Um dies zu validieren werden die Selektionsstrategien X und Y implementiert und anschliessend analysiert.
-      Ob dies zutrifft wird in Kapitel~\ref{chap:Resulate} diskutiert.
+        % TODO
+        % Funktionale Konzepte: Lenses
 
-  \section{Mutation\label{sec:Mutation}}
+  \section{Ablauf\label{sec:Ablauf}}
 
-    Auf die Selektionsstrategie folgt nun die Mutation der Individuen.
-    Bei der Mutation wird über jede Eigenschaft des Individuums iteriert und
-    diese wird mit einer bestimmten Wahrscheinlichkeit verändert. Die Position eines Beines,
-    wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
-    dass ein Bein ausserhalb des Körper ist, wird die Position zufällig neu bestimmt.
+    \subsection{Initiale Polulation\label{sec:Initiale Polulation}}
 
-  \section{Wiederholungen}
-    Alle Schritte (ausser die Generiung der initialen Population) werden solange ausgeführt,
-    bis ein zufriedenstellendes Resultat gefunden wird.
+      Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse wird auf 100 festgelegt,
+      um eine breite Diversität zu erhalten.
+      Es werden jeweils 20 Individuen mit 4,5,6,7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
+      Die Verantwortliche Klasse in JavaScript ist der InitialPopulationGenerator.
+      Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
+
+    \subsection{Parcour Generierung\label{sec:Parcour Generierung}}
+
+      Der Parcour wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcour generiert.
+      Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours, das heisst es werden höhere Steigungen, ein höherer Punkt und XYZ vorkommen.
+      Dazu muss eine Klasse erstellt werden (ParcourGenerator), welche mit Hilfe von Obergrenzen von Werten einen Parcour generieren kann.
+
+    \subsection{Simulation}
+      Nachdem eine neue Population und ein neuer Parcour erstellt worden ist.
+      Muss eine Simulation durchgefuehrt werden um den Fitnesswert der Individuen zu bestimmen.
+      Die Verantwortliche Klasse ist die SimulationWorld. Zuerst muss jeder Genotyp zu einem Phenotyp abgebildet werden.
+      Anschliessend muss der Parcour aus dem Blueprint erstellt werden. Erst dann kann mit der Simulation begonnen werden.
+      Die Simulation merkt sich zu jedem Individuum die Position. Individuen welche sich waehrend 4 Sekunden kaum bewegt haben,
+      werden aus der Simulation entfernt und ihr Fitnesswert wird abgespeichert.
+
+    \subsection{Selektion\label{sec:Selektion}}
+
+      Als Seleketionsstrategie wird Tournament-based Selection eingesetzt. Tournamend-based Selection hat den Vorteil,
+      dass die Diversität erhalten bleibt, bei gleichzeitig guter Selektion der fittesten Individuen.
+
+      \subsubsection{Hypothese Selektionsstratgegie\label{sub:Hypothese Selektionsstratgegie}}
+
+        Es wird die Hypothese aufgestellt, dass Tournament-based-Selection die besseren Resulate liefert im Vergleich zu den folgenden Selektionsstrategien: X und Y.
+        Um dies zu validieren werden die Selektionsstrategien X und Y implementiert und anschliessend analysiert.
+        Ob dies zutrifft wird in Kapitel~\ref{chap:Resulate} diskutiert.
+
+    \subsection{Mutation\label{sec:Mutation}}
+
+      Auf die Selektionsstrategie folgt nun die Mutation der Individuen.
+      Bei der Mutation wird über jede Eigenschaft des Individuums iteriert und
+      diese wird mit einer bestimmten Wahrscheinlichkeit verändert. Die Position eines Beines,
+      wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
+      dass ein Bein ausserhalb des Körper ist, wird die Position zufällig neu bestimmt.
+
+    \subsection{Wiederholungen}
+      Alle Schritte (ausser die Generiung der initialen Population) werden solange ausgeführt,
+      bis ein zufriedenstellendes Resultat gefunden wird.
