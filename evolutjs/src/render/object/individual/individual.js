@@ -6,9 +6,12 @@
  */
 
 import { List, Map } from 'immutable';
+import config from '../../../app/config';
 import p2 from 'p2';
 import Phenotype from './phenotype';
 import { randomColor } from '../../color';
+
+p2.Equation.DEFAULT_RELAXATION = config('simulation:relaxation');
 
 /**
  * Create a random style for a body.
@@ -69,7 +72,6 @@ export default class Individual extends Phenotype {
     this.engine = genotype.engine;
     this.engine.current = 0;
 
-    const bodyDescriptor = genotype.body;
     const posX = 0;
     const posY = 0.4;
 
@@ -80,7 +82,7 @@ export default class Individual extends Phenotype {
 
     const body = new p2.Body({
       position: [posX, posY],
-      mass: bodyDescriptor.mass
+      mass: genotype.body.mass
     });
 
     this.addBody(body);

@@ -32,6 +32,7 @@ const friction = config('simulation.friction');
 const gravity = config('simulation.gravity');
 const mustMovement = config('simulation.mustMovement');
 const render = config('simulation.render');
+const relaxation = config('simulation:relaxation');
 const runDuration = config('simulation.runDuration');
 const solo = config('simulation.solo');
 const stepTime = config('simulation.stepTime');
@@ -61,6 +62,8 @@ export default class SimulationWorld extends Game {
       }
     });
     this.world.defaultContactMaterial.friction = friction;
+    this.world.defaultContactMaterial.frictionRelaxation = relaxation;
+    this.world.defaultContactMaterial.relaxation = relaxation;
     this.population = population;
     this.parcourOptions = parcourOptions;
     this.cb = cb;
