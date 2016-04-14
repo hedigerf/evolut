@@ -691,7 +691,7 @@ export class PixiAdapter extends p2.EventEmitter {
           graphics.moveTo(x, y);
         } else {
           // Check if the lines are parallel
-          const  p1x = lastx;
+          const p1x = lastx;
           const p1y = lasty;
           const p2x = x;
           const p2y = y;
