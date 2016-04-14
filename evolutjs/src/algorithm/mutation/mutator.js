@@ -32,7 +32,9 @@ const PROBABILITY_LEG_HEIGHT_FACTOR = 0.1;
 const MUTATION_STEP_LEG_HEIGHT = 0.05;
 const MUTATION_STEP_LEG_HEIGHT_FACTOR = 0.05;
 
-
+/**
+ * Represents a mutator for genotypes.
+ */
 export default class Mutator {
 
   /**
@@ -101,7 +103,7 @@ export default class Mutator {
         this.mutateRealValue(leg.height, MUTATION_STEP_LEG_HEIGHT), leg.height);
       const legHeightFactor = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT_FACTOR),
         this.mutateRealValue(leg.heightFactor, MUTATION_STEP_LEG_HEIGHT_FACTOR), leg.heightFactor);
-      return ({
+      return {
         leg: new Leg(
           {
             mass: leg.mass,
@@ -111,7 +113,7 @@ export default class Mutator {
           }
         ),
         joint: legDescriptor.hipJoint
-      });
+      };
     });
     return { 0: legs.get(0), 1: legs.get(1), 2: legs.get(2), 3: legs.get(3), 4: legs.get(4), 5: legs.get(5) };
   }
@@ -132,11 +134,10 @@ export default class Mutator {
     const discreteNumber = probability * 100;
     const randomNumber = random.integer(1, 100);
     return randomNumber <= discreteNumber;
-
   }
 
-  ifElse(bol, valueA, valueB) {
-    if (bol) {
+  ifElse(bool, valueA, valueB) {
+    if (bool) {
       return valueA;
     }
     return valueB;
