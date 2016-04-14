@@ -173,39 +173,51 @@
     Electron ist nicht anderes als Node.js und Google Chrome vereint in einer Standalone Anwendung.
     Mit Hilfe von Node.js lassen sich alle I/0 Zugriffe regeln und es kann auf den Node Package Manager zur Abhänigskeitsverwaltung von anderen Bibliotheken zurück gegriffen werden.
     Auch lässt sich unter bestimmten Umständen JavaScript schneller ausführen unter Node.js als in einem Browser.
+    
+  \section{Ablauf\label{sec:Ablauf}}
 
-  \section{Initiale Polulation\label{sec:Initiale Polulation}}
 
-    Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse wird auf 100 festgelegt,
-    um eine breite Diversität zu erhalten.
-    Es werden jeweils 20 Individuen mit 4,5,6,7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
-    Die Verantwortliche Klasse in JavaScript ist der InitialPopulationGenerator.
+    \subsection{Initiale Polulation\label{sec:Initiale Polulation}}
 
-  \section{Parcour Generierung\label{sec:Parcour Generierung}}
+      Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse wird auf 100 festgelegt,
+      um eine breite Diversität zu erhalten.
+      Es werden jeweils 20 Individuen mit 4,5,6,7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
+      Die Verantwortliche Klasse in JavaScript ist der InitialPopulationGenerator.
+      Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
 
-    Der Parcour wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcour generiert.
-    Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours, das heisst es werden höhere Steigungen, ein höherer Punkt und XYZ vorkommen.
-    Dazu muss eine Klasse erstellt werden (ParcourGenerator), welche mit Hilfe von Obergrenzen von Werten einen Parcour generieren kann.
+    \subsection{Parcour Generierung\label{sec:Parcour Generierung}}
 
-  \section{Selektion\label{sec:Selektion}}
+      Der Parcour wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcour generiert.
+      Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours, das heisst es werden höhere Steigungen, ein höherer Punkt und XYZ vorkommen.
+      Dazu muss eine Klasse erstellt werden (ParcourGenerator), welche mit Hilfe von Obergrenzen von Werten einen Parcour generieren kann.
 
-    Als Seleketionsstrategie wird Tournament-based Selection eingesetzt. Tournamend-based Selection hat den Vorteil,
-    dass die Diversität erhalten bleibt, bei gleichzeitig guter Selektion der fittesten Individuen.
+    \subsection{Simulation}
+      Nachdem eine neue Population und ein neuer Parcour erstellt worden ist.
+      Muss eine Simulation durchgefuehrt werden um den Fitnesswert der Individuen zu bestimmen.
+      Die Verantwortliche Klasse ist die SimulationWorld. Zuerst muss jeder Genotyp zu einem Phenotyp abgebildet werden.
+      Anschliessend muss der Parcour aus dem Blueprint erstellt werden. Erst dann kann mit der Simulation begonnen werden.
+      Die Simulation merkt sich zu jedem Individuum die Position. Individuen welche sich waehrend 4 Sekunden kaum bewegt haben,
+      werden aus der Simulation entfernt und ihr Fitnesswert wird abgespeichert.
 
-    \subsection{Hypothese Selektionsstratgegie\label{sub:Hypothese Selektionsstratgegie}}
+    \subsection{Selektion\label{sec:Selektion}}
 
-      Es wird die Hypothese aufgestellt, dass Tournament-based-Selection die besseren Resulate liefert im Vergleich zu den folgenden Selektionsstrategien: X und Y.
-      Um dies zu validieren werden die Selektionsstrategien X und Y implementiert und anschliessend analysiert.
-      Ob dies zutrifft wird in Kapitel~\ref{chap:Resulate} diskutiert.
+      Als Seleketionsstrategie wird Tournament-based Selection eingesetzt. Tournamend-based Selection hat den Vorteil,
+      dass die Diversität erhalten bleibt, bei gleichzeitig guter Selektion der fittesten Individuen.
 
-  \section{Mutation\label{sec:Mutation}}
+      \subsubsection{Hypothese Selektionsstratgegie\label{sub:Hypothese Selektionsstratgegie}}
 
-    Auf die Selektionsstrategie folgt nun die Mutation der Individuen.
-    Bei der Mutation wird über jede Eigenschaft des Individuums iteriert und
-    diese wird mit einer bestimmten Wahrscheinlichkeit verändert. Die Position eines Beines,
-    wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
-    dass ein Bein ausserhalb des Körper ist, wird die Position zufällig neu bestimmt.
+        Es wird die Hypothese aufgestellt, dass Tournament-based-Selection die besseren Resulate liefert im Vergleich zu den folgenden Selektionsstrategien: X und Y.
+        Um dies zu validieren werden die Selektionsstrategien X und Y implementiert und anschliessend analysiert.
+        Ob dies zutrifft wird in Kapitel~\ref{chap:Resulate} diskutiert.
 
-  \section{Wiederholungen}
-    Alle Schritte (ausser die Generiung der initialen Population) werden solange ausgeführt,
-    bis ein zufriedenstellendes Resultat gefunden wird.
+    \subsection{Mutation\label{sec:Mutation}}
+
+      Auf die Selektionsstrategie folgt nun die Mutation der Individuen.
+      Bei der Mutation wird über jede Eigenschaft des Individuums iteriert und
+      diese wird mit einer bestimmten Wahrscheinlichkeit verändert. Die Position eines Beines,
+      wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
+      dass ein Bein ausserhalb des Körper ist, wird die Position zufällig neu bestimmt.
+
+    \subsection{Wiederholungen}
+      Alle Schritte (ausser die Generiung der initialen Population) werden solange ausgeführt,
+      bis ein zufriedenstellendes Resultat gefunden wird.
