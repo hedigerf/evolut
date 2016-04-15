@@ -32,11 +32,12 @@ const friction = config('simulation.friction');
 const gravity = config('simulation.gravity');
 const mustMovement = config('simulation.mustMovement');
 const render = config('simulation.render');
-const relaxation = config('simulation:relaxation');
+const relaxation = config('simulation.relaxation');
 const runDuration = config('simulation.runDuration');
 const solo = config('simulation.solo');
 const stepTime = config('simulation.stepTime');
 const timeOut = config('simulation.timeOut');
+const trackBestIndividual = config('simulation.trackBestIndividual');
 const trackY = config('simulation.trackY');
 
 const lensBodyXpos = L.compose(L.prop('bodies'), L.index(0), L.prop('position'), L.index(0));
@@ -64,6 +65,8 @@ export default class SimulationWorld extends Game {
     this.world.defaultContactMaterial.friction = friction;
     this.world.defaultContactMaterial.frictionRelaxation = relaxation;
     this.world.defaultContactMaterial.relaxation = relaxation;
+    this.world.defaultContactMaterial.stiffness = 10000;
+    this.world.defaultContactMaterial.frictionStifness = 10000;
     this.population = population;
     this.parcourOptions = parcourOptions;
     this.cb = cb;
@@ -87,6 +90,9 @@ export default class SimulationWorld extends Game {
   createParcour(parcour) {
     const parcourGenerator = new ParcourGenerator();
     parcourGenerator.createParcour(this, parcour);
+    if (!trackBestIndividual) {
+      this.trackedBody = parcourGenerator.trackMe;
+    }
   }
 
   drawPhenotypes() {
@@ -105,8 +111,11 @@ export default class SimulationWorld extends Game {
       return individual;
     });
     info(logger, 'drawn ' + this.phenoTypes.size + ' phenoTypes');
-    const trackedIndividual = this.phenoTypes.get(0);
-    this.trackedBody = trackedIndividual.bodies[0];
+    if (trackBestIndividual) {
+      const trackedIndividual = this.phenoTypes.get(0);
+      this.trackedBody = trackedIndividual.bodies[0];
+    }
+
   }
 
   addNewPopulation(population) {
@@ -135,7 +144,7 @@ export default class SimulationWorld extends Game {
     if (this.phenoTypes.size === 0) {
       // If there are no more individuals remaining in the simulation, end the run
       this.runOver = true;
-    } else {
+    } else if (trackBestIndividual) {
       // Track always the individual which is leading
       const trackedIndividual = this.phenoTypes.maxBy((individual) => view(lensBodyXpos, individual));
       this.trackedBody = trackedIndividual.bodies[0];
@@ -199,7 +208,7 @@ export default class SimulationWorld extends Game {
   run() {
 
     const self = this;
-    const maxSubSteps = 10;
+    const maxSubSteps = 20;
 
     self.lastWorldStepTime = self.time();
 

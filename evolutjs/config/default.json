@@ -19,8 +19,9 @@
   },
   "simulation": {
     "evaluateAfterTickCount": 240,
-    "mustMovement": 0.05,
+    "mustMovement": 0.01,
     "timeOut": true,
-    "trackY": false
+    "trackY": false,
+    "trackBestIndividual": true
   }
 }

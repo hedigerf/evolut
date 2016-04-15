@@ -11,7 +11,7 @@ import p2 from 'p2';
 import Phenotype from './phenotype';
 import { randomColor } from '../../color';
 
-p2.Equation.DEFAULT_RELAXATION = config('simulation:relaxation');
+p2.Equation.DEFAULT_RELAXATION = config('simulation.relaxation');
 
 /**
  * Create a random style for a body.
@@ -73,7 +73,7 @@ export default class Individual extends Phenotype {
     this.engine.current = 0;
 
     const posX = 0;
-    const posY = 0.4;
+    const posY = 2;
 
     const bodyOptions = {
       collisionGroup: 1 << 1,

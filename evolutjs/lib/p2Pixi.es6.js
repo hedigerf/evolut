@@ -472,10 +472,9 @@ export class PixiAdapter extends p2.EventEmitter {
    * @param {Graphics} graphics
    * @param {Number} x0
    * @param {Number} x1
-   * @param {Number} color
    * @param {Object} style
    */
-  drawPlane(graphics, x0, x1, color, style = {}) {
+  drawPlane(graphics, x0, x1, style = {}) {
 
     const max = 1e6;
     const lineWidth = style.lineWidthUnits
@@ -523,6 +522,20 @@ export class PixiAdapter extends p2.EventEmitter {
 
     graphics.moveTo(-len / 2, 0);
     graphics.lineTo(len / 2, 0);
+  }
+
+
+  drawRay(graphics, from, to, style = {}) {
+
+    const lineWidth = style.lineWidthUnits
+      ? style.lineWidthUnits * this.pixelsPerLengthUnit
+      : style.lineWidth || 1;
+    const lineColor = style.lineColor || 0x000000;
+
+    graphics.lineStyle(lineWidth, lineColor, 1);
+
+    graphics.moveTo(from);
+    graphics.lineTo(to);
   }
 
   /**
@@ -745,9 +758,10 @@ export class PixiAdapter extends p2.EventEmitter {
     } else if (shape instanceof p2.Line) {
       this.drawLine(graphics, shape.length * ppu, style);
 
+    } else if (shape instanceof p2.Ray) {
+      this.drawRay(graphics, shape.from * ppu, shape.to * ppu, style);
     } else if (shape instanceof p2.Box) {
       this.drawRectangle(graphics, offset[0] * ppu, -offset[1] * ppu, shape.width * ppu, shape.height * ppu, style);
-
     } else if (shape instanceof p2.Capsule) {
       this.drawCapsule(graphics,
         offset[0] * ppu,
