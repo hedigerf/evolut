@@ -73,7 +73,7 @@ export default class Individual extends Phenotype {
     this.engine.current = 0;
 
     const posX = 0;
-    const posY = 2;
+    const posY = 0.4;
 
     const bodyOptions = {
       collisionGroup: 1 << 1,
