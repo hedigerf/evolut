@@ -13,11 +13,15 @@ import { List, Range } from 'immutable';
 import { path as appRoot } from 'app-root-path';
 import config from './config';
 import { curry } from 'ramda';
+import express from 'express';
+import http from 'http';
 import InitialPopulationGenerator from '../algorithm/population/initialPopulationGenerator';
+import io from 'socket.io';
 import log4js from 'log4js';
 import Mutator from '../algorithm/mutation/mutator';
 import ParcourGenerator from '../algorithm/parcour/parcourGenerator';
 import Reporter from '../report/reporter';
+import Slave from './slave';
 import TournamentBasedSelectionStrategy from '../algorithm/selection/tournamentBasedSelectionStrategy';
 
 
@@ -34,6 +38,7 @@ const maxSlopeStep = config('parcour.maxSlopeStep');
 const highestYStep = config('parcour.highestYStep');
 const limitSlope = config('parcour.limitSlope');
 const reporters = Reporter.createReports();
+const clusterMode = config('cluster.mode');
 
 let workers = null;
 let finishedWorkCounter = 0;
@@ -113,6 +118,33 @@ app.on('window-all-closed', () =>  {
 });
 
 app.on('ready', () => {
+  if (clusterMode === 'master') {
+    const appExpr = express();
+    const httpObject = http.Server(appExpr);
+    const _io = io(httpObject);
+
+    _io.on('connection', (socket) => {
+      info(logger, 'worker connected');
+      socket.on('slave_registration', (msg) => {
+        console.log('message: ' + msg);
+      });
+      socket.on('disconnect', () => {
+        console.log('user disconnected');
+      });
+    });
+
+    appExpr.get('/', function(req, res) {
+      res.send('<h1>Hello world</h1>');
+    });
+
+    appExpr.listen(3000, function() {
+      console.log('listening on *:3000');
+    });
+  } else if (clusterMode === 'slave') {
+    const slave = new Slave();
+    slave.connect();
+  }
+
   const workerRange = List(Range(0, workerCount));
   workers = workerRange.map(() =>  startWorker());
   const initialPopulationGenerator = new InitialPopulationGenerator(

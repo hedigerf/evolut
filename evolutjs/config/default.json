@@ -4,7 +4,7 @@
     "width": 1920
   },
   "algorithm": {
-    "populationSize": 10
+    "populationSize": 5
   },
   "parcour": {
     "startMaxSlope": 0,
@@ -16,6 +16,11 @@
   },
   "workers": {
     "count": 1
+  },
+  "cluster": {
+    "mode": "master",
+    "master-adress": "http://10.0.0.8:3000",
+    "expectedSlaves": 1
   },
   "simulation": {
     "evaluateAfterTickCount": 240,
