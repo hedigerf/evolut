@@ -130,12 +130,12 @@ app.on('ready', () => {
     server.listen(3000, function() {
       console.log('listening on *:3000');
     });
-    let slaveWorkerCount = Map();
+    //let slaveWorkerCount = Map();
     _io.on('connection', (socket) => {
       info(logger, 'worker connected');
       socket.on('slave_registration', ({ slaveWorkerCount }) => {
         const remoteAdress = socket.request.connection.remoteAddress;
-        slaveWorkerCount = slaveWorkerCount.set(socket, slaveWorkerCount);
+        //slaveWorkerCount = slaveWorkerCount.set(socket, slaveWorkerCount);
         socket.emit('slave_registration', { populationSize: 20 });
         info('slave (' + remoteAdress + ') registered. Has ' + slaveWorkerCount + ' workers.')
       });
