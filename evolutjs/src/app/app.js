@@ -120,9 +120,16 @@ app.on('window-all-closed', () =>  {
 app.on('ready', () => {
   if (clusterMode === 'master') {
     const appExpr = express();
-    const httpObject = http.Server(appExpr);
-    const _io = io(httpObject);
+    const server = http.createServer(appExpr);
+    const _io = io(server);
 
+    appExpr.get('/', function(req, res) {
+      res.send('<h1>Hello world</h1>');
+    });
+
+    server.listen(3000, function() {
+      console.log('listening on *:3000');
+    });
     _io.on('connection', (socket) => {
       info(logger, 'worker connected');
       socket.on('slave_registration', (msg) => {
@@ -132,14 +139,6 @@ app.on('ready', () => {
       socket.on('disconnect', () => {
         console.log('user disconnected');
       });
-    });
-
-    appExpr.get('/', function(req, res) {
-      res.send('<h1>Hello world</h1>');
-    });
-
-    appExpr.listen(3000, function() {
-      console.log('listening on *:3000');
     });
   } else if (clusterMode === 'slave') {
     const slave = new Slave();
