@@ -126,7 +126,7 @@ export default class Individual extends Phenotype {
         hipJointPosition
       );
       const knee = this.createRevoluteConstraint(upperLegBody, lowerLegBody,
-        [0, -lowerLegHeight / 2],
+        [0, -upperLegHeight / 2],
         [0, lowerLegHeight / 2]);
 
       return { hip, knee };
