@@ -126,6 +126,7 @@ app.on('ready', () => {
     _io.on('connection', (socket) => {
       info(logger, 'worker connected');
       socket.on('slave_registration', (msg) => {
+        socket.emit('slave_registration', { populationSize: 20 });
         console.log('message: ' + msg);
       });
       socket.on('disconnect', () => {
