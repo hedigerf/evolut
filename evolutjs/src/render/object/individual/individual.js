@@ -11,7 +11,7 @@ import p2 from 'p2';
 import Phenotype from './phenotype';
 import { randomColor } from '../../color';
 
-p2.Equation.DEFAULT_RELAXATION = config('simulation:relaxation');
+p2.Equation.DEFAULT_RELAXATION = config('simulation.relaxation');
 
 /**
  * Create a random style for a body.
@@ -126,7 +126,7 @@ export default class Individual extends Phenotype {
         hipJointPosition
       );
       const knee = this.createRevoluteConstraint(upperLegBody, lowerLegBody,
-        [0, -lowerLegHeight / 2],
+        [0, -upperLegHeight / 2],
         [0, lowerLegHeight / 2]);
 
       return { hip, knee };
