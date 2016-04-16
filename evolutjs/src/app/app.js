@@ -9,7 +9,7 @@
 import './menu';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { debug, info } from '../util/logUtil';
-import { List, Range } from 'immutable';
+import { List, Range, Map } from 'immutable';
 import { path as appRoot } from 'app-root-path';
 import config from './config';
 import { curry } from 'ramda';
@@ -130,11 +130,14 @@ app.on('ready', () => {
     server.listen(3000, function() {
       console.log('listening on *:3000');
     });
+    let slaveWorkerCount = Map();
     _io.on('connection', (socket) => {
       info(logger, 'worker connected');
-      socket.on('slave_registration', (msg) => {
+      socket.on('slave_registration', ({ slaveWorkerCount }) => {
+        const remoteAdress = socket.request.connection.remoteAddress;
+        slaveWorkerCount = slaveWorkerCount.set(socket, slaveWorkerCount);
         socket.emit('slave_registration', { populationSize: 20 });
-        console.log('message: ' + msg);
+        info('slave (' + remoteAdress + ') registered. Has ' + slaveWorkerCount + ' workers.')
       });
       socket.on('disconnect', () => {
         console.log('user disconnected');
@@ -144,7 +147,6 @@ app.on('ready', () => {
     const slave = new Slave();
     slave.connect();
   }
-
   const workerRange = List(Range(0, workerCount));
   workers = workerRange.map(() =>  startWorker());
   const initialPopulationGenerator = new InitialPopulationGenerator(

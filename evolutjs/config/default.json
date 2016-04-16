@@ -18,7 +18,7 @@
     "count": 1
   },
   "cluster": {
-    "mode": "slave",
+    "mode": "master",
     "master-adress": "http://10.0.0.8:3000",
     "expectedSlaves": 1
   },

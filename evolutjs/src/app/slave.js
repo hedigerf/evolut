@@ -5,6 +5,8 @@ import log4js from 'log4js';
 
 const logger = log4js.getLogger('slave');
 const masterAdress = config('cluster.master-adress');
+const workerCount = config('workers.count');
+
 
 export default class Slave {
 
@@ -13,7 +15,7 @@ export default class Slave {
     const socket = io.connect(masterAdress, {'connect timeout': 1000});
     socket.on('connect', () => {
       debug(logger, 'connected to master');
-      socket.emit('slave_registration', { my: 'data' });
+      socket.emit('slave_registration', { slaveWorkerCount: workerCount });
       socket.on('slave_registration', ({ populationSize }) => {
         debug(logger, 'Received from master populationSize: ' + populationSize);
       });
