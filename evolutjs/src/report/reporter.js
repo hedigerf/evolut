@@ -22,7 +22,7 @@ export default class Reporter {
     const pathToReport = this.createReportFile(reportName);
     const reporterFunction = (population) => {
       const best =  List(population.individuals).maxBy((individual) => individual.fitness);
-      this.appendToReport(pathToReport, population.generationCount, best.fitness);
+      this.appendToReport(pathToReport, this.createGraphCoordStr(population.generationCount, best.fitness));
     };
     return reporterFunction;
   }
@@ -34,20 +34,33 @@ export default class Reporter {
       const individuals = List(population.individuals);
       const totalFitness = individuals.reduce((total, individual) => total + individual.fitness, 0);
       const averageFitness = totalFitness / individuals.size;
-      this.appendToReport(pathToReport, population.generationCount, averageFitness);
+      this.appendToReport(pathToReport, this.createGraphCoordStr(population.generationCount, averageFitness));
+    };
+    return reporterFunction;
+  }
+
+  static createGenotypeBlueprintReport() {
+    const reportName = 'genotype_blue_print_report';
+    const pathToReport = this.createReportFile(reportName);
+    const reporterFunction = (population)  => {
+      this.appendToReport(pathToReport, JSON.stringify(population) + '\n');
     };
     return reporterFunction;
   }
 
   static createReports() {
-    const reportingFunctionList = List.of(this.createFitnessGraphAveragerReport(), this.createFitnessGraphBestReport());
+    const reportingFunctionList = List.of(this.createFitnessGraphAveragerReport(), this.createFitnessGraphBestReport(), this.createGenotypeBlueprintReport());
     return (population) => {
       reportingFunctionList.forEach((reportingFunction) => reportingFunction(population));
     };
   }
 
-  static appendToReport(pathToReport, x, y) {
-    fs.appendFile(pathToReport, '(' + x + ',' +  y + ')',  (err) => {
+  static createGraphCoordStr(x, y) {
+    return '(' + x + ',' +  y + ')';
+  }
+
+  static appendToReport(pathToReport, str) {
+    fs.appendFile(pathToReport, str,  (err) => {
       if (err) {
         throw err;
       }
