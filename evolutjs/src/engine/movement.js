@@ -6,7 +6,20 @@
 
 import { allPass, always, anyPass, append, curry, map, partial, view } from 'ramda';
 import { IdentifiableStatic } from '../types/identifiable';
+import { ParameterizableStatic } from '../types/parameterizable';
+import Random  from 'random-js';
 import { resolveLensDecriptor } from './constraintLenses';
+
+/**
+ * Describes a movement.
+ *
+ * @typedef {Object} MovementDescriptor
+ * @property {String} id
+ * @property {LensDescriptor} lens
+ * @property {Array<*>} params
+ */
+
+const random = new Random(Random.engines.mt19937().autoSeed());
 
 /**
  * Divisor for tolerated margin of an angle.
@@ -56,14 +69,6 @@ export function isMinAngle(constraint) {
 }
 
 /**
- * @typedef {{
- *   id: String,
- *   lensId: String,
- *   params: Array<*>
- * }} MovementDescriptor
- */
-
-/**
  * Represents a single movement of a phonotype.
  * A movement could be locking the angle of a joint.
  * Or setting the speed of joint's motor.
@@ -72,6 +77,16 @@ export function isMinAngle(constraint) {
  * @extends {IdentifiableStatic}
  */
 export class Movement extends IdentifiableStatic() {
+
+  /**
+   * Returns a random parameter.
+   *
+   * @return {*} A parameter
+   */
+  static randomParameter() {
+    const parameters = this.parameters;
+    return parameters[random.integer(0, parameters.length)];
+  }
 
   /**
    * Apply the movemement to a phenotype.
@@ -427,16 +442,6 @@ const MovementIdMap = {
   [When.identifier]: when
 };
 
-/**
- * Returns the movement specified by id.
- *
- * @param {String} movementId
- * @return {Lens}
- */
-function getMovementById(movementId) {
-  return MovementIdMap[movementId];
-}
-
 function getMovementPredicate(predicateId) {
   switch (predicateId) {
     case 'mxa':
@@ -525,7 +530,7 @@ export function resolveMovementDescriptor({ id, lens, params }) {
     return resolveCompoundMovementDescriptor({ id, params });
   }
 
-  const movement = getMovementById(id);
+  const movement = MovementIdMap[id];
   const args = append(resolveLensDecriptor(lens), params);
 
   return partial(movement, args);

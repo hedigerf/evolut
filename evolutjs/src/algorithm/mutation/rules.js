@@ -1,11 +1,12 @@
 /**
+ * Provides differen mutation rules for genotypes.
  *
  * @module algorithm/mutation/rules
  */
 
-import { reduce, set, view } from 'ramda';
+import * as L from 'partial.lenses';
+import { defaultTo, evolve, reduce, set, view } from 'ramda';
 import { lensEngine } from '../genotype/lenses';
-import { makeLensDescriptor } from '../../engine/constraintLenses';
 import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
@@ -15,7 +16,7 @@ const random = new Random(Random.engines.mt19937().autoSeed());
  * A rule has a probability and a lens.
  * Every rule must implement a mutate() function which cretes a new genotype.
  */
-export class MutationRule {
+class MutationRule {
 
   /**
    * Construct a muation rule.
@@ -23,7 +24,7 @@ export class MutationRule {
    * @param {Number} probability The probability a a genotype is mutated
    * @param {Lens} lens The lens to the part to be mutated
    */
-  construct(probability, lens) {
+  constructor(probability, lens) {
     this.lens = lens;
     this.probability = probability;
   }
@@ -47,7 +48,7 @@ export class MutationRule {
    * @return {Boolean} Should this mutation rule be applied
    */
   shouldMutate(probability) {
-    return probability * 100 <= random.integer(0, 100);
+    return probability <= random.real(0, 1, true);
   }
 
   /**
@@ -66,44 +67,135 @@ export class MutationRule {
 }
 
 /**
+ * Engine mutation probabilities.
+ *
+ * @typedef {Object} EngineMutationProbabilities
+ * @property {Number} probability
+ * @property {Object} engine
+ * @property {Number} engine.add
+ * @property {Number} engine.del
+ * @property {Number} engine.movement
+ * @property {Object} lens
+ * @property {Number} lens.index
+ * @property {Number} lens.site
+ * @property {Number} lens.type
+ * @property {Object} movement
+ * @property {Number} movement.id
+ * @property {Number} movement.lens
+ * @property {Number} movement.parameters
+ */
+
+/**
  * Represents a mutation rule for an engine.
  *
  * @extends {MutationRule}
  */
-export class EngineMuationRule extends MutationRule {
+export class EngineMutationRule extends MutationRule {
 
-  construct(probability) {
-    super(probability, lensEngine);
+  /**
+   * Construct an engine mutation rule.
+   *
+   * @param {EngineMutationProbabilities} [probabilities={}]
+   */
+  constructor(probabilities) {
+
+    super(probabilities.probability, L.compose(
+      lensEngine,
+      L.prop('descritpor'),
+      L.prop('movements')
+    ));
+
+    /**
+     * Mutation probabilities.
+     *
+     * @type {EngineMutationProbabilities}
+     */
+    this.probabilities = this.initializeProbabilities(probabilities);
   }
 
+  /**
+   * Initialize the probability property.
+   * All probabilities default to zero.
+   *
+   * @private
+   * @param  {EngineMutationProbabilities} probabilities
+   * @return {EngineMutationProbabilities}
+   */
+  initializeProbabilities(probabilities) {
+
+    const defaultZero = defaultTo(0);
+    const transformation = {
+      probability: defaultZero,
+      engine: {
+        add: defaultZero,
+        del: defaultZero,
+        movement: defaultZero
+      },
+      lens: {
+        site: defaultZero,
+        index: defaultZero,
+        type: defaultZero
+      },
+      movement: {
+        id: defaultZero,
+        lens: defaultZero,
+        parameters: defaultZero
+      }
+    };
+
+    return evolve(transformation, probabilities);
+  }
+
+  /**
+   * Mutate an engine.
+   *
+   * @protected
+   * @param {Genotype} genotype
+   * @return {Genotype}
+   */
   mutate(genotype) {
 
-    const engine = view(this.lens, genotype);
-    const movements = engine.descriptor.movements;
+    const movements = view(this.lens, genotype);
+    const mutated = reduce((accumulator, movement) => {
 
-    // change
-    // add / delete
+      const shouldAdd = this.shouldMutate(this.probabilities.engine.add);
+      const shouldDelete = this.shouldMutate(this.probabilities.engine.del);
 
-    return genotype;
+      if (shouldAdd && false) {
+        accumulator.push(null);
+      }
+      if (!shouldDelete || true) {
+        accumulator.push(this.mutateMovement(movement));
+      }
+
+      return accumulator;
+
+    }, movements);
+
+    return set(this.lens, mutated, genotype);
   }
 
-  mutateDescriptor(descriptor) {
+  /**
+   * Returns a mutated movement.
+   *
+   * @protected
+   * @param {Movement} movement
+   * @return {Movement}
+   */
+  mutateMovement(movement) {
 
-    // select id
-    // select params
-    // select lens
+    /*
+    const shouldMutateId = this.shouldMutate(this.probabilities.movement.id);
+    const shouldMutateLens = this.shouldMutate(this.probabilities.movement.lens);
+    const shouldMutateParameters = this.shouldMutate(this.probabilities.movement.parameters);
 
-    const id = selectDescriptorId(descriptor);
-    const lens = makeRandomLensDescriptor();
-    const params = [];
+    if (shouldMutateId) {
 
-    const m = compose(
-      set(lensId, makeRandomMovementId),
-      set(lensLens, makeRandomLensDescriptor),
-      set(lensParams, makeRandomMovementParams)
-    );
+    }
+    */
 
-    return m(descriptor);
+    // TODO no mod
+    return movement;
   }
 
 }
