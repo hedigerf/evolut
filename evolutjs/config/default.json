@@ -4,7 +4,8 @@
     "width": 1920
   },
   "algorithm": {
-    "populationSize": 10
+    "populationSize": 10,
+    "loadPopulationFromFile": true
   },
   "parcour": {
     "startMaxSlope": 0,
