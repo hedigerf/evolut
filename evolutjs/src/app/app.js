@@ -94,7 +94,7 @@ function createInitalPopulation() {
     const pathToFile = load('population.json');
     const populationStr = fs.readFileSync(pathToFile).toString();
     const initialPopulation = JSON.parse(populationStr);
-    const shrinked = List(initialPopulation.individuals).take(populationSize);
+    const shrinked = List(initialPopulation.individuals).sort((a, b) => a > b).take(populationSize);
     return { generationCount: initialPopulation.generationCount, individuals: shrinked};
   } else {
     const initialPopulationGenerator = new InitialPopulationGenerator(
