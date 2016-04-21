@@ -7,6 +7,7 @@
 import * as L from 'partial.lenses';
 import { defaultTo, evolve, reduce, set, view } from 'ramda';
 import { lensEngine } from '../genotype/lenses';
+import { makeRandomMovementDescriptor } from '../../engine/movement';
 import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
@@ -161,10 +162,10 @@ export class EngineMutationRule extends MutationRule {
       const shouldAdd = this.shouldMutate(this.probabilities.engine.add);
       const shouldDelete = this.shouldMutate(this.probabilities.engine.del);
 
-      if (shouldAdd && false) {
-        accumulator.push(null);
+      if (shouldAdd) {
+        accumulator.push(makeRandomMovementDescriptor());
       }
-      if (!shouldDelete || true) {
+      if (!shouldDelete) {
         accumulator.push(this.mutateMovement(movement));
       }
 
@@ -184,7 +185,6 @@ export class EngineMutationRule extends MutationRule {
    */
   mutateMovement(movement) {
 
-    /*
     const shouldMutateId = this.shouldMutate(this.probabilities.movement.id);
     const shouldMutateLens = this.shouldMutate(this.probabilities.movement.lens);
     const shouldMutateParameters = this.shouldMutate(this.probabilities.movement.parameters);
@@ -192,7 +192,7 @@ export class EngineMutationRule extends MutationRule {
     if (shouldMutateId) {
 
     }
-    */
+
 
     // TODO no mod
     return movement;

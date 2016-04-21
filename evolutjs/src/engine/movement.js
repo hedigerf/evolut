@@ -4,11 +4,11 @@
  * @module engine/movement
  */
 
-import { allPass, always, anyPass, append, curry, map, partial, view } from 'ramda';
+import { allPass, always, anyPass, append, curry, keys, length, map, partial, view } from 'ramda';
+import { makeRandomLensDescriptor, resolveLensDecriptor } from './constraintLenses';
 import { IdentifiableStatic } from '../types/identifiable';
 import { ParameterizableStatic } from '../types/parameterizable';
 import Random  from 'random-js';
-import { resolveLensDecriptor } from './constraintLenses';
 
 /**
  * Describes a movement.
@@ -456,15 +456,34 @@ function getMovementPredicate(predicateId) {
 }
 
 /**
- * Make a movement descriptor object.
+ * Makes a movement descriptor object.
  *
  * @param {String} id The movement identifier
  * @param {LensDescriptor} lens The lens descriptor
  * @param {Array<*>} [params=[]] The optional paramerter list
- * @return {makeMovementDescriptor} The movement descriptor
+ * @return {MovementDescriptor} The movement descriptor
  */
 export function makeMovementDescriptor(id, lens, params = []) {
   return { id, lens, params };
+}
+
+/**
+ * Makes a random movement descriptor.
+ *
+ * @return {MovementDescriptor} A random movement descriptor
+ */
+export function makeRandomMovementDescriptor() {
+
+  const ids = keys(MovementIdMap);
+  const index = random.integer(0, length(ids));
+  const id = ids[index];
+
+  const movement = MovementIdMap[id];
+  const params = movement.params;
+
+  const lens = makeRandomLensDescriptor();
+
+  return makeMovementDescriptor(id, lens, params);
 }
 
 /**
