@@ -36,8 +36,11 @@ const increaseDifficultyAfter = config('parcour.increaseDifficultyAfter');
 const maxSlopeStep = config('parcour.maxSlopeStep');
 const highestYStep = config('parcour.highestYStep');
 const limitSlope = config('parcour.limitSlope');
+// Find common solution with = 1, evolve evolvability with switchParcourAfterGeneration = increaseDifficultyAfter
+const switchParcourAfterGeneration = config('algorithm.switchParcourAfterGeneration');
 const reporters = Reporter.createReports();
 
+let parcour;
 let workers = null;
 let finishedWorkCounter = 0;
 let generationCounter = 1;
@@ -84,7 +87,9 @@ function performSimulationPostprocessing(population) {
 }
 
 function prepareDistributor(distributeWork, population) {
-  const parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
+  if (generationCounter % switchParcourAfterGeneration === 0) {
+    parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
+  }
   const distributor = curry(distributeWork)(population, { parcour: JSON.stringify(parcour), maxSlope, highestY });
   return distributor;
 }
