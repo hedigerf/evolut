@@ -204,13 +204,28 @@
         % TODO
         % Funktionale Konzepte: Lenses
 
+  \section{Konfiguration}
+  \label{sec:Konfiguration}
+    Die Applikation lässt sich mit diversen Parametern konfigurieren.
+    Es werden nur die wichtigsten hier diskutiert.
+    Es kann ausgewählt werden, ob die allgemeine Lösung gefunden werden kann oder
+    ob auf Evolvierbarkeit evolviert wird. Bei der allgemeinen Lösung wird der Parcour
+    nach jeder Generation neugeneriert. Bei der Evaluation auf Evolvierbarkeit
+    wird der Parcour nur dann neu generiert, wenn sich die Schwierigkeit des Parcours ändert.
+    Die Schwierigkeit des Parcour wird definiert durch die maximale Steigung und die höchste Position.
+    Ebenso kann die Populationsgrösse definiert werden und wie viele Prozesse für die Simulation benutzt werden.
+    Am sinnvollsten ist es, wenn die Anzahl der Prozesse, der Anzahl Kerne des Prozessors entspricht.
+
+
+
+
   \section{Ablauf\label{sec:Ablauf}}
 
     \subsection{Initiale Polulation\label{sec:Initiale Polulation}}
 
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse wird auf 100 festgelegt,
       um eine breite Diversität zu erhalten.
-      Es werden jeweils 20 Individuen mit 4,5,6,7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
+      Es werden jeweils Individuen mit 4,5,6,7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
       Die Verantwortliche Klasse in JavaScript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
 
@@ -227,6 +242,10 @@
       Anschliessend muss der Parcour aus dem Blueprint erstellt werden. Erst dann kann mit der Simulation begonnen werden.
       Die Simulation merkt sich zu jedem Individuum die Position. Individuen welche sich waehrend 4 Sekunden kaum bewegt haben,
       werden aus der Simulation entfernt und ihr Fitnesswert wird abgespeichert.
+      Die Simulation kann wie unter ~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. Es wird dann jeweils für
+      \( Populationsgrösse / Anzahl Simulations Prozesse \) Individuen eine eigene Simulation erstellt. Die Interprozess Komunikation
+      zwischen Simulationsprozessen und Hauptprozess erfolgt über Asynchrones Messaging.
+
 
     \subsection{Selektion\label{sec:Selektion}}
 
