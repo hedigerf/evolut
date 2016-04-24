@@ -22,6 +22,7 @@ export const CONFIG = 'config';
 export const IMAGES = path.join(ASSETS, 'images');
 export const REPORTS = path.join(ASSETS, 'reports');
 export const TEXTURES = path.join(ASSETS, 'textures');
+export const LOAD = path.join(ASSETS, 'load');
 
 /**
  * Returns a joined path with the application root as first element.
@@ -41,6 +42,16 @@ export function relative(...pathElements) {
  */
 export function image(filename) {
   return relative(IMAGES, path.basename(filename));
+}
+
+/**
+ * Returns the path of an ressource in the load folder.
+ *
+ * @param {String} filename The file name.
+ * @return {String}
+ */
+export function load(filename) {
+  return relative(LOAD, path.basename(filename));
 }
 
 /**

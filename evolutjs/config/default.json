@@ -4,7 +4,9 @@
     "width": 1920
   },
   "algorithm": {
-    "populationSize": 10
+    "populationSize": 10,
+    "loadPopulationFromFile": true,
+    "switchParcourAfterGeneration": 1
   },
   "parcour": {
     "startMaxSlope": 0,
@@ -12,14 +14,14 @@
     "limitSlope": 1,
     "startHighestY": 0,
     "highestYStep": 0.05,
-    "increaseDifficultyAfter": 20
+    "increaseDifficultyAfter": 100
   },
   "workers": {
     "count": 1
   },
   "simulation": {
     "evaluateAfterTickCount": 240,
-    "mustMovement": 0.01,
+    "mustMovement": 0.05,
     "timeOut": true,
     "trackY": false,
     "trackBestIndividual": true

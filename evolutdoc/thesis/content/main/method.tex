@@ -204,21 +204,38 @@
         % TODO
         % Funktionale Konzepte: Lenses
 
+  \section{Konfiguration}
+  \label{sec:Konfiguration}
+    Die Applikation lässt sich mit diversen Parametern konfigurieren.
+    Es werden nur die wichtigsten hier diskutiert.
+    Es kann ausgewählt werden, ob die allgemeine Lösung gefunden werden kann oder
+    ob auf Evolvierbarkeit evolviert wird. Bei der allgemeinen Lösung wird der Parcour
+    nach jeder Generation neugeneriert. Bei der Evaluation auf Evolvierbarkeit
+    wird der Parcour nur dann neu generiert, wenn sich die Schwierigkeit des Parcours ändert.
+    Die Schwierigkeit des Parcour wird definiert durch die maximale Steigung und die höchste Position.
+    Ebenso kann die Populationsgrösse definiert werden und wie viele Prozesse für die Simulation benutzt werden.
+    Am sinnvollsten ist es, wenn die Anzahl der Prozesse, der Anzahl Kerne des Prozessors entspricht.
+
+
+
+
   \section{Ablauf\label{sec:Ablauf}}
 
     \subsection{Initiale Polulation\label{sec:Initiale Polulation}}
 
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse wird auf 100 festgelegt,
       um eine breite Diversität zu erhalten.
-      Es werden jeweils 20 Individuen mit 4,5,6,7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
+      Es werden jeweils Individuen mit 4,5,6,7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
       Die Verantwortliche Klasse in JavaScript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
 
     \subsection{Parcour Generierung\label{sec:Parcour Generierung}}
 
       Der Parcour wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcour generiert.
-      Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours, das heisst es werden höhere Steigungen, ein höherer Punkt und XYZ vorkommen.
+      Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours, das heisst es werden höhere Steigungen und ein höherer Punkt vorkommen.
       Dazu muss eine Klasse erstellt werden (ParcourGenerator), welche mit Hilfe von Obergrenzen von Werten einen Parcour generieren kann.
+      Wie unter \ref{sec:Konfiguration} erwähnt, wird je nach Einstellung der Parcour nach jeder Generation neu generiert oder er wird bis ein Abbruchkriterum
+      eintritt, wiederverwendet.
 
     \subsection{Simulation}
       Nachdem eine neue Population und ein neuer Parcour erstellt worden ist.
@@ -227,6 +244,22 @@
       Anschliessend muss der Parcour aus dem Blueprint erstellt werden. Erst dann kann mit der Simulation begonnen werden.
       Die Simulation merkt sich zu jedem Individuum die Position. Individuen welche sich waehrend 4 Sekunden kaum bewegt haben,
       werden aus der Simulation entfernt und ihr Fitnesswert wird abgespeichert.
+      Die Simulation kann wie unter ~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. Es wird dann jeweils für
+      \( Populationsgrösse / Anzahl Simulations Prozesse \) Individuen eine eigene Simulation erstellt. Die Interprozess Komunikation
+      zwischen Simulationsprozessen und Hauptprozess erfolgt über Asynchrones Messaging.
+
+    \subsection{Reporting}
+    \label{subsec:Reporting}
+      Das Reporting-Modul hilft nach einer Simulation alle wichtigen Daten festzuhalten. Mithilfe einer Funktion die eine Population als Paramter entgegennimmt,
+      werden die Reports erstellt. Es existieren folgende Typen von Reports:
+      \begin{itemize}
+        \item Fitness Graph Average Report: Enthält Koordinaten um einen Graph über die durchschnittliche Fitness pro Generation zu erstellen.
+        \item Fitness Graph Best Report: Enthält Koordinaten um einen Graph über das beste Individum der Generation zu erstellen.
+        \item Genotype Blue Print Report: Enthält pro Generation ein JSON das Informationen über die ganze Population enthält.
+        \item Fitness Grapg Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit Body Points Anzahl x.
+        Ansonsten gleich wie Fitness Graph Average Report.
+      \end{itemize}
+
 
     \subsection{Selektion\label{sec:Selektion}}
 

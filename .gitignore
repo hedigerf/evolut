@@ -62,7 +62,7 @@ evolutjs/assets/images/*screenshot*
 #
 # Generated simulation reports
 #
-evolutjs/assets/reports/*_fitness_*.txt
+evolutjs/assets/reports/*report*.txt
 
 #
 # Generated protocol documents
