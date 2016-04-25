@@ -34,11 +34,11 @@ const MUTATION_STEP_LEG_HEIGHT = 0.05;
 const MUTATION_STEP_LEG_HEIGHT_FACTOR = 0.05;
 
 const ruleEngine = new EngineMutationRule({
-  probability: 0.2,
+  probability: 0.1,
   engine: {
-    add: 0.01,
-    del: 0.01,
-    movement: 0.1
+    add: 0.0001,
+    del: 0.0001,
+    movement: 0.01
   },
   lens: {
     site: 0.01,
@@ -46,9 +46,9 @@ const ruleEngine = new EngineMutationRule({
     type: 0.01
   },
   movement: {
-    id: 0.1,
-    lens: 0.1,
-    parameters: 0.1
+    id: 0.001,
+    lens: 0.0001,
+    parameters: 0.01
   }
 });
 
@@ -77,7 +77,7 @@ export default class Mutator {
       const legs = this.tryMutateLegs(individual.legs);
       individual.legs = legs;
 
-      ruleEngine.tryMutate(individual);
+      individual = ruleEngine.tryMutate(individual);
 
       const offspring = new Individual(individual);
       // offspring.body.massFactor

@@ -22,20 +22,20 @@ const extractOption = (key) => either(
 );
 
 /**
- * Build a partial genotype.
+ * Builds a partial genotype.
  *
- * @param {PartialGenotype} T The constructor of a partial genotype.
- * @param {Object} option The build options.
- * @return {PartialGenotype} The instance of a partial genotype.
+ * @param {PartialGenotype} T The constructor of a partial genotype
+ * @param {Object} option The build options
+ * @return {PartialGenotype} The instance of a partial genotype
  */
 const buildType = (T, option) => new T(option);
 
 /**
- * Seed a partial genotype.
+ * Seeds a partial genotype.
  *
- * @param {PartialGenotype} T The partial genotype.
- * @param {Object} option The build options.
- * @return {Object} The seed object.
+ * @param {PartialGenotype} T The partial genotype
+ * @param {Object} option The build options
+ * @return {Object} The seed object
  */
 const seedType = (T, option) => T.seed(option);
 
@@ -87,7 +87,7 @@ export default class Genotype {
   /**
    * Default genotype constructor.
    *
-   * @param {Object} genotype The whole genotype as object.
+   * @param {Object} genotype The whole genotype as object
    */
   constructor(genotype) {
     const built = this.constructor.build(genotype);

@@ -49,11 +49,11 @@ export function makeRandomLensDescriptor() {
 
   const sides = ['left', 'right'];
   const types = ['hip', 'knee'];
-  const legs = 6;
+  const legPairs = 3;
 
-  const side = sides[random.integer(0, 1)];
-  const type = types[random.integer(0, 1)];
-  const leg = random.integer(0, legs - 1);
+  const side = random.pick(sides);
+  const type = random.pick(types);
+  const leg = random.integer(0, legPairs - 1);
 
   return makeLensDescriptor(side, leg, type);
 }

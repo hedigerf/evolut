@@ -6,11 +6,20 @@
 
 import * as L from 'partial.lenses';
 import { defaultTo, evolve, reduce, set, view } from 'ramda';
+import {
+  makeRandomMovementDescriptor,
+  makeRandomMovementDescriptorId,
+  makeRandomMovementDescriptorParams
+} from '../../engine/movement';
 import { lensEngine } from '../genotype/lenses';
-import { makeRandomMovementDescriptor } from '../../engine/movement';
+import { makeRandomLensDescriptor } from '../../engine/constraintLenses';
 import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
+
+const lensMovementDescriptorId = L.prop('id');
+const lensMovementDescriptorLens = L.prop('lens');
+const lensMovementDescriptorParams = L.prop('params');
 
 /**
  * Represents a mutation rule for a mutator.
@@ -102,7 +111,7 @@ export class EngineMutationRule extends MutationRule {
 
     super(probabilities.probability, L.compose(
       lensEngine,
-      L.prop('descritpor'),
+      L.prop('descriptor'),
       L.prop('movements')
     ));
 
@@ -156,7 +165,9 @@ export class EngineMutationRule extends MutationRule {
    */
   mutate(genotype) {
 
-    const movements = view(this.lens, genotype);
+    // const movements = view(this.lens, genotype);
+
+    const movements = genotype.engine.descriptor.movements;
     const mutated = reduce((accumulator, movement) => {
 
       const shouldAdd = this.shouldMutate(this.probabilities.engine.add);
@@ -171,9 +182,13 @@ export class EngineMutationRule extends MutationRule {
 
       return accumulator;
 
-    }, movements);
+    }, [], movements);
 
-    return set(this.lens, mutated, genotype);
+    // return set(this.lens, mutated, genotype);
+
+    genotype.engine.descriptor.movements = mutated;
+
+    return genotype;
   }
 
   /**
@@ -189,13 +204,48 @@ export class EngineMutationRule extends MutationRule {
     const shouldMutateLens = this.shouldMutate(this.probabilities.movement.lens);
     const shouldMutateParameters = this.shouldMutate(this.probabilities.movement.parameters);
 
-    if (shouldMutateId) {
+    let mutatedMovement = movement;
 
+    if (shouldMutateId) {
+      mutatedMovement = set(lensMovementDescriptorId, makeRandomMovementDescriptorId(), mutatedMovement);
     }
 
+    if (shouldMutateLens && !!movement.lens) {
+      mutatedMovement = set(lensMovementDescriptorLens, makeRandomLensDescriptor(), mutatedMovement);
+    }
 
-    // TODO no mod
-    return movement;
+    if (shouldMutateParameters) {
+
+      if (mutatedMovement.id === 'all' || mutatedMovement.id === 'one') {
+
+        mutatedMovement.params = reduce((accumulator, m) => {
+
+          const shouldAdd = this.shouldMutate(this.probabilities.engine.add);
+          const shouldDelete = this.shouldMutate(this.probabilities.engine.del);
+
+          if (shouldAdd) {
+            accumulator.push(makeRandomMovementDescriptor());
+          }
+          if (!shouldDelete) {
+            accumulator.push(this.mutateMovement(m));
+          }
+
+          return accumulator;
+
+        }, [], mutatedMovement.params);
+
+      } else  {
+
+        mutatedMovement = set(
+          lensMovementDescriptorParams,
+          makeRandomMovementDescriptorParams(mutatedMovement),
+          mutatedMovement
+        );
+
+      }
+    }
+
+    return mutatedMovement;
   }
 
 }
