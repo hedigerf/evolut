@@ -17,6 +17,7 @@ const random = new Random(Random.engines.mt19937().autoSeed());
 const lensMass = L.prop('mass');
 const lensMassfactor = L.prop('massFactor');
 const lensHeight = L.prop('height');
+const lensWidth = L.prop('width');
 const lensHeightFactor = L.prop('heightFactor');
 
 
@@ -24,6 +25,8 @@ const LEG_LOWER_LIMIT_HEIGHT = 0.6;
 const LEG_UPPER_LIMIT_HEIGHT = 0.8;
 const LEG_LOWER_LIMIT_HEIGHT_FACTOR = 0.4;
 const LEG_UPPER_LIMIT_HEIGHT_FACTOR = 0.6;
+const LEG_LOWER_LIMIT_WIDTH = 0.1;
+const LEG_UPPER_LIMIT_WIDTH = 0.2;
 
 
 /**
@@ -38,6 +41,7 @@ const LEG_UPPER_LIMIT_HEIGHT_FACTOR = 0.6;
  * @extends {PartialGenotype}
  */
 export default class Leg extends PartialGenotype {
+
 
   /**
    * Constructor of a Leg.
@@ -71,6 +75,12 @@ export default class Leg extends PartialGenotype {
      * @type {Number}
      */
     this.height = view(lensHeight, options);
+    /**
+     * Width of this leg.
+     *
+     * @type {Number}
+     */
+    this.width = view(lensWidth, options);
 
     /**
      * Height factor of this leg.
@@ -117,12 +127,17 @@ export default class Leg extends PartialGenotype {
       return random.real(LEG_LOWER_LIMIT_HEIGHT_FACTOR, LEG_UPPER_LIMIT_HEIGHT_FACTOR);
     });
 
+    const orRandomWidth = when(isNil, () => {
+      return random.real(LEG_LOWER_LIMIT_WIDTH, LEG_UPPER_LIMIT_WIDTH);
+    });
+
     const orRandom = when(isNil, () => random.real(0.1, 0.9));
 
     const setter = compose(
       over(lensMassfactor, orRandom),
       over(lensHeight, orRandomHeight),
-      over(lensHeightFactor, orRandomHeightFactor)
+      over(lensHeightFactor, orRandomHeightFactor),
+      over(lensWidth, orRandomWidth)
     );
 
     return super.seed(setter(options));

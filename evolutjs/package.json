@@ -11,7 +11,8 @@
     "lint": "eslint src/**/*.js lib/**/*.js test/**/*.js",
     "esdoc": "esdoc -c .esdocrc",
     "start": "electron .",
-    "test": "npm run lint && npm run assert"
+    "test": "npm run lint && npm run assert",
+    "start-dev": "electron --debug  ."
   },
   "repository": {
     "type": "git",

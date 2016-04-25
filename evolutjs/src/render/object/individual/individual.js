@@ -73,7 +73,7 @@ export default class Individual extends Phenotype {
     this.engine.current = 0;
 
     const posX = 0;
-    const posY = 0.4;
+    const posY = 0.8;
 
     const bodyOptions = {
       collisionGroup: 1 << 1,
@@ -102,7 +102,7 @@ export default class Individual extends Phenotype {
       const upperLegMass = (1 - leg.heightFactor) * leg.mass;
       const lowerLegMass = leg.heightFactor * leg.mass;
 
-      const legWidth =  0.1;
+      const legWidth =  leg.width;
 
       const upperLegShape = new p2.Box({ width: legWidth, height: upperLegHeight });
       const upperLegBody = new p2.Body({

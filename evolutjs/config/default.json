@@ -5,7 +5,7 @@
   },
   "algorithm": {
     "populationSize": 10,
-    "loadPopulationFromFile": true,
+    "loadPopulationFromFile": false,
     "switchParcourAfterGeneration": 1
   },
   "parcour": {
