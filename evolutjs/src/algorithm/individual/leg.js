@@ -15,7 +15,6 @@ import Random  from 'random-js';
 const random = new Random(Random.engines.mt19937().autoSeed());
 
 const lensMass = L.prop('mass');
-const lensMassfactor = L.prop('massFactor');
 const lensHeight = L.prop('height');
 const lensWidth = L.prop('width');
 const lensHeightFactor = L.prop('heightFactor');
@@ -61,13 +60,6 @@ export default class Leg extends PartialGenotype {
      * @type {Number}
      */
     this.mass = view(lensMass, options);
-
-    /**
-     * Mass factor of this leg.
-     *
-     * @type {Number}
-     */
-    this.massFactor = view(lensMassfactor, options);
 
     /**
      * Height of this leg.
@@ -131,10 +123,7 @@ export default class Leg extends PartialGenotype {
       return random.real(LEG_LOWER_LIMIT_WIDTH, LEG_UPPER_LIMIT_WIDTH);
     });
 
-    const orRandom = when(isNil, () => random.real(0.1, 0.9));
-
     const setter = compose(
-      over(lensMassfactor, orRandom),
       over(lensHeight, orRandomHeight),
       over(lensHeightFactor, orRandomHeightFactor),
       over(lensWidth, orRandomWidth)

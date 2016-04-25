@@ -109,7 +109,6 @@ export default class Mutator {
         leg: new Leg(
           {
             mass: leg.mass,
-            massFactor: leg.massFactor,
             height: legHeight,
             heightFactor: legHeightFactor,
             width: legWidth
