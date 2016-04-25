@@ -1,13 +1,13 @@
 /**
  * Provides movement functionality for engines.
+ * Joint-driven.
  *
  * @module engine/movement
  */
 
-import { allPass, always, anyPass, append, curry, keys, length, map, partial, view } from 'ramda';
+import { allPass, anyPass, append, curry, keys, length, map, partial, view } from 'ramda';
 import { makeRandomLensDescriptor, resolveLensDecriptor } from './constraintLenses';
 import { IdentifiableStatic } from '../types/identifiable';
-// import { ParameterizableStatic } from '../types/parameterizable';
 import Random  from 'random-js';
 
 /**
@@ -154,6 +154,11 @@ class SetAnglesTo extends Movement {
 
 }
 
+/**
+ * Locks an angle of a revolute constraint to it's initial position (zero).
+ *
+ * @extends {Movement}
+ */
 class LockAnglesToZero extends Movement {
 
   /**
@@ -239,7 +244,7 @@ class SetSpeedTo extends Movement {
    * @return {Array<Number>} A parameter list
    */
   static get randomParams() {
-    return [random.integer(-2, 2)];
+    return [random.integer(-1, 1)];
   }
 
   /**
@@ -302,21 +307,11 @@ class Until extends Movement {
    * @return {Boolean}
    */
   static move(predId, lens, phenotype, time) {
-
     const pred = getMovementPredicate(predId);
-
     return pred(view(lens, phenotype), time);
   }
 
 }
-
-/**
- * Stops the engine.
- *
- * @function
- * @return {Boolean} Always false
- */
-export const stop = always(false);
 
 /**
  * Movement map.
@@ -419,7 +414,7 @@ export function one(...params) {
  * @param {String} id The movement id
  * @return {Boolean}
  */
-function isCompoundMovemet(id) {
+export function isCompoundMovemet(id) {
   return id === 'all' || id === 'one';
 }
 

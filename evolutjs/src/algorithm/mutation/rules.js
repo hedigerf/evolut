@@ -4,9 +4,11 @@
  * @module algorithm/mutation/rules
  */
 
+import '../../app/log';
 import * as L from 'partial.lenses';
-import { defaultTo, evolve, reduce, set, view } from 'ramda';
+import { defaultTo, evolve, reduce, set } from 'ramda';
 import {
+  isCompoundMovemet,
   makeRandomMovementDescriptor,
   makeRandomMovementDescriptorId,
   makeRandomMovementDescriptorParams
@@ -16,10 +18,6 @@ import { makeRandomLensDescriptor } from '../../engine/constraintLenses';
 import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
-
-const lensMovementDescriptorId = L.prop('id');
-const lensMovementDescriptorLens = L.prop('lens');
-const lensMovementDescriptorParams = L.prop('params');
 
 /**
  * Represents a mutation rule for a mutator.
@@ -58,7 +56,7 @@ class MutationRule {
    * @return {Boolean} Should this mutation rule be applied
    */
   shouldMutate(probability) {
-    return probability <= random.real(0, 1, true);
+    return probability >= random.real(0, 1, true);
   }
 
   /**
@@ -165,26 +163,24 @@ export class EngineMutationRule extends MutationRule {
    */
   mutate(genotype) {
 
-    // const movements = view(this.lens, genotype);
-
     const movements = genotype.engine.descriptor.movements;
-    const mutated = reduce((accumulator, movement) => {
+
+    const mutated = [];
+    for (let i = 0; i < movements.length; i++) {
+
+      const movement = movements[i];
 
       const shouldAdd = this.shouldMutate(this.probabilities.engine.add);
       const shouldDelete = this.shouldMutate(this.probabilities.engine.del);
 
       if (shouldAdd) {
-        accumulator.push(makeRandomMovementDescriptor());
+        mutated.push(makeRandomMovementDescriptor());
       }
       if (!shouldDelete) {
-        accumulator.push(this.mutateMovement(movement));
+        mutated.push(this.mutateMovement(movement));
       }
 
-      return accumulator;
-
-    }, [], movements);
-
-    // return set(this.lens, mutated, genotype);
+    }
 
     genotype.engine.descriptor.movements = mutated;
 
@@ -207,16 +203,16 @@ export class EngineMutationRule extends MutationRule {
     let mutatedMovement = movement;
 
     if (shouldMutateId) {
-      mutatedMovement = set(lensMovementDescriptorId, makeRandomMovementDescriptorId(), mutatedMovement);
+      mutatedMovement = set(L.prop('id'), makeRandomMovementDescriptorId(), mutatedMovement);
     }
 
     if (shouldMutateLens && !!movement.lens) {
-      mutatedMovement = set(lensMovementDescriptorLens, makeRandomLensDescriptor(), mutatedMovement);
+      mutatedMovement = set(L.prop('lens'), makeRandomLensDescriptor(), mutatedMovement);
     }
 
     if (shouldMutateParameters) {
 
-      if (mutatedMovement.id === 'all' || mutatedMovement.id === 'one') {
+      if (isCompoundMovemet(mutatedMovement)) {
 
         mutatedMovement.params = reduce((accumulator, m) => {
 
@@ -237,7 +233,7 @@ export class EngineMutationRule extends MutationRule {
       } else  {
 
         mutatedMovement = set(
-          lensMovementDescriptorParams,
+          L.prop('params'),
           makeRandomMovementDescriptorParams(mutatedMovement),
           mutatedMovement
         );

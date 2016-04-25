@@ -42,7 +42,7 @@ const defaults = {
     gravity: [0, EARTH_GRAVITY],
     render: true,
     relaxation: 4,
-    runDuration: 10,
+    runDuration: 12,
     solo: false,
     stepTime: 0.016
   }

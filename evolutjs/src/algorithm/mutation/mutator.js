@@ -36,9 +36,9 @@ const MUTATION_STEP_LEG_HEIGHT_FACTOR = 0.05;
 const ruleEngine = new EngineMutationRule({
   probability: 0.1,
   engine: {
-    add: 0.0001,
-    del: 0.0001,
-    movement: 0.01
+    add: 0.01,
+    del: 0.01,
+    movement: 0.1
   },
   lens: {
     site: 0.01,
@@ -46,9 +46,9 @@ const ruleEngine = new EngineMutationRule({
     type: 0.01
   },
   movement: {
-    id: 0.001,
-    lens: 0.0001,
-    parameters: 0.01
+    id: 0.01,
+    lens: 0.01,
+    parameters: 0.1
   }
 });
 
