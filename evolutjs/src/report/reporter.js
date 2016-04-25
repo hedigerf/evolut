@@ -4,9 +4,9 @@ import { List, Range } from 'immutable';
 
 export default class Reporter {
 
-  static createReportFile(reportName) {
+  static createReportFile(reportName, prefix = createTimePrefix()) {
 
-    const fileName = createTimePrefix() + '_' + reportName + '.txt';
+    const fileName = prefix + '_' + reportName + '.txt';
     const filePath = report(fileName);
 
     fs.writeFile(filePath, '', (err) => {
@@ -52,9 +52,15 @@ export default class Reporter {
   }
 
   static createGenotypeBlueprintReport() {
-    const reportName = 'genotype_blue_print_report';
-    const pathToReport = this.createReportFile(reportName);
+    const prefix = createTimePrefix();
+    const reportBaseName = 'genotype_blue_print_report';
+    const reportName = reportBaseName + '_0';
+    let pathToReport = this.createReportFile(reportName, prefix);
     const reporterFunction = (population)  => {
+      if (population.generationCount % 20 === 0) {
+        const newReportName = reportBaseName + '_' + (population.generationCount / 20);
+        pathToReport = this.createReportFile(newReportName, prefix);
+      }
       this.appendToReport(pathToReport, JSON.stringify(population) + '\n');
     };
     return reporterFunction;
