@@ -38,7 +38,7 @@ export default class TournamentBasedSelectionStrategy extends SelectionStrategy 
 
       const chooseIndividuals = (kCount) => {
         const randomIndex = random.integer(0, this.population.individuals.size - 1);
-        debug(logger, 'kCount: ' + kCount + ' randomIndex: ' + randomIndex);
+        // debug(logger, 'kCount: ' + kCount + ' randomIndex: ' + randomIndex);
         const chosenOne = this.population.individuals.get(randomIndex);
         if (chosenOne === undefined) {
           info(logger, 'undefined at ' + randomIndex);
@@ -46,7 +46,7 @@ export default class TournamentBasedSelectionStrategy extends SelectionStrategy 
         return chosenOne;
       };
 
-      debug(logger, 'RunNr: ' + runNr);
+      // debug(logger, 'RunNr: ' + runNr);
       const selectedIndividuals = Immutable.Range(1, this.k + 1).map(
         chooseIndividuals);
       const fittestIndividual = selectedIndividuals.max((individualA,
