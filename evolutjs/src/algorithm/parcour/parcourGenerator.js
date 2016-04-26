@@ -15,7 +15,8 @@ export default class ParcourGenerator {
       const y = this.toHeight(result.lastY, maxSlope, highestY);
       return { lastY: y, heights: result.heights.push(y) };
     }, record);
-    const heights = res.heights.toArray();
+    const start = List.of(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    const heights = start.concat(res.heights).toArray();
     return { type: 'mountain', value: heights };
   }
 
@@ -54,7 +55,7 @@ export default class ParcourGenerator {
     if (logger.isDebugEnabled()) {
       logger.debug('ParcourGenerator has started.');
     }
-    const mountain = this.createMontains(500, maxSlope , highestY);
+    const mountain = this.createMontains(300, maxSlope , highestY);
     if (logger.isDebugEnabled()) {
       logger.debug('Parcourgeneration ended.');
     }
