@@ -142,6 +142,9 @@ export default class Individual extends Phenotype {
       genotype.legs['4']
     );
 
+    const yBodyPosition = legs.maxBy((legDescriptor) => legDescriptor.leg.height).leg.height + 0.1;
+    body.position[1] = yBodyPosition;
+
     const bluePrints = legs.map((legDescriptor, pos) => ({
       pos, legDescriptor, hipJointPosition: genotype.body.hipJointPositions[pos]
     }));
