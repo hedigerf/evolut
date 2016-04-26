@@ -8,7 +8,7 @@
 
 import './menu';
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { debug, info } from '../util/logUtil';
+import { debug, error, info } from '../util/logUtil';
 import { List, Range } from 'immutable';
 import { path as appRoot } from 'app-root-path';
 import config from './config';
@@ -138,6 +138,10 @@ app.on('window-all-closed', () =>  {
 });
 
 app.on('ready', () => {
+  process.on('uncaughtException', (err) => {
+    error(logger, 'an exception happened.');
+    error(logger, err);
+  });
   const workerRange = List(Range(0, workerCount));
   workers = workerRange.map(() =>  startWorker());
   const initialPopulation = createInitalPopulation();
