@@ -30,6 +30,8 @@ const extractOption = (key) => either(
  */
 const buildType = (T, option) => new T(option);
 
+const mutateType = (T, option) => T.mutate(option);
+
 /**
  * Seeds a partial genotype.
  *
@@ -134,6 +136,16 @@ export default class Genotype {
    */
   blueprint() {
     return JSON.stringify(this);
+  }
+
+  /**
+   * Mutates a genotype.
+   *
+   * @param {Object} options
+   * @return {Genotype}
+   */
+  mutate(options) {
+    return processGenotypeParts(mutateType, options, this.constructor.parts);
   }
 
 }

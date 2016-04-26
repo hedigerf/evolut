@@ -5,7 +5,9 @@
  * @module engine/movement
  */
 
-import { allPass, anyPass, append, curry, keys, length, map, partial, view } from 'ramda';
+import {
+  __, allPass, always, anyPass, append, compose, curry, keys, length, map, partial, tryCatch, view
+} from 'ramda';
 import { makeRandomLensDescriptor, resolveLensDecriptor } from './constraintLenses';
 import { IdentifiableStatic } from '../types/identifiable';
 import Random  from 'random-js';
@@ -88,6 +90,15 @@ export class Movement extends IdentifiableStatic() {
   }
 
   /**
+   * Returns a the bounds of the parameters.
+   *
+   * @return {Array<*>} A bounds list
+   */
+  static get bounds() {
+    return [];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Phenotype} phenotype The target phenotype
@@ -96,6 +107,19 @@ export class Movement extends IdentifiableStatic() {
    */
   static move(phenotype, time) { // eslint-disable-line no-unused-vars
     return true;
+  }
+
+}
+
+class All extends Movement {
+
+  /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'all';
   }
 
 }
@@ -128,6 +152,16 @@ class SetAnglesTo extends Movement {
     const randomMaxAngle = random.real(-fullRadAngle, fullRadAngle);
 
     return [randomMinAngle, randomMaxAngle];
+  }
+
+  /**
+   * Returns a the bounds of the parameters.
+   *
+   * @return {Array<*>} A bounds list
+   */
+  static get bounds() {
+    const fullRadAngle = Math.PI * 2;
+    return [-fullRadAngle, fullRadAngle];
   }
 
   /**
@@ -210,6 +244,15 @@ class SetMotor extends Movement {
   }
 
   /**
+   * Returns a the bounds of the parameters.
+   *
+   * @return {Array<*>} A bounds list
+   */
+  static get bounds() {
+    return [0, 1];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Boolean} state The state of a motor
@@ -257,6 +300,15 @@ class SetSpeedTo extends Movement {
   }
 
   /**
+   * Returns a the bounds of the parameters.
+   *
+   * @return {Array<*>} A bounds list
+   */
+  static get bounds() {
+    return [-1, 1];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Number} speed The speed of a constraint
@@ -295,6 +347,15 @@ class Until extends Movement {
    */
   static get identifier() {
     return 'utl';
+  }
+
+  /**
+   * Returns a the bounds of the parameters.
+   *
+   * @return {Array<*>} A bounds list
+   */
+  static get bounds() {
+    return ['mxa', 'mia'];
   }
 
   /**
@@ -411,10 +472,10 @@ export function one(...params) {
  * Compound movements group one or more movements togehter.
  *
  *
- * @param {String} id The movement id
+ * @param {MovementDescriptor} The movement
  * @return {Boolean}
  */
-export function isCompoundMovemet(id) {
+export function isCompoundMovemet({ id }) {
   return id === 'all' || id === 'one';
 }
 
@@ -445,12 +506,21 @@ function resolveCompoundMovementDescriptor({ id, params }) {
  */
 export function resolveMovementDescriptor({ id, lens, params }) {
 
-  if (isCompoundMovemet(id)) {
+  if (isCompoundMovemet({ id })) {
     return resolveCompoundMovementDescriptor({ id, params });
   }
 
   const movement = MovementIdMap[id];
-  const args = append(resolveLensDecriptor(lens), params);
+  const lensF = resolveLensDecriptor(lens);
+
+  const tryer = compose(
+    append(__, params),
+    resolveLensDecriptor
+  );
+  const catcher = always(params);
+  const args = tryCatch(tryer, catcher, lens);
+
+  const args = append(lensF, params);
 
   return partial(movement.move, args);
 }

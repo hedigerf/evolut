@@ -6,18 +6,26 @@
 
 import '../../app/log';
 import * as L from 'partial.lenses';
-import { defaultTo, evolve, reduce, set } from 'ramda';
+import { bind, defaultTo, evolve, has, pipe, reduce, set } from 'ramda';
 import {
   isCompoundMovemet,
   makeRandomMovementDescriptor,
   makeRandomMovementDescriptorId,
   makeRandomMovementDescriptorParams
 } from '../../engine/movement';
-import { lensEngine } from '../genotype/lenses';
 import { makeRandomLensDescriptor } from '../../engine/constraintLenses';
 import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
+
+/**
+ * Tests an object if it has the property 'lens'.
+ *
+ * @function
+ * @param {Object}
+ * @return {Boolean}
+ */
+const hasLens = has('lens');
 
 /**
  * Represents a mutation rule for a mutator.
@@ -30,11 +38,25 @@ class MutationRule {
    * Construct a muation rule.
    *
    * @param {Number} probability The probability a a genotype is mutated
-   * @param {Lens} lens The lens to the part to be mutated
+   * @param {Number} step The maximum difference to the current value
    */
-  constructor(probability, lens) {
-    this.lens = lens;
+  constructor(probability, step) {
+
+    /**
+     * The probaility that this rule is applied.
+     *
+     * @protected
+     * @type {Number}
+     */
     this.probability = probability;
+
+    /**
+     * The maximum step for this mutation.
+     *
+     * @protected
+     * @type {Number}
+     */
+    this.step = step;
   }
 
   /**
@@ -46,6 +68,17 @@ class MutationRule {
    */
   mutate(genotype) {
     return genotype;
+  }
+
+  /**
+   * Returns a mutated numeric value.
+   *
+   * @param {Number} value The current value
+   * @param {Number} step The maximum difference
+   * @return {Number} The mutated value
+   */
+  mutateNumeric(value, step) {
+    return value + random.real(-step, step, true);
   }
 
   /**
@@ -107,11 +140,7 @@ export class EngineMutationRule extends MutationRule {
    */
   constructor(probabilities) {
 
-    super(probabilities.probability, L.compose(
-      lensEngine,
-      L.prop('descriptor'),
-      L.prop('movements')
-    ));
+    super(probabilities.probability);
 
     /**
      * Mutation probabilities.
@@ -163,28 +192,28 @@ export class EngineMutationRule extends MutationRule {
    */
   mutate(genotype) {
 
-    const movements = genotype.engine.descriptor.movements;
-
-    const mutated = [];
-    for (let i = 0; i < movements.length; i++) {
-
-      const movement = movements[i];
-
-      const shouldAdd = this.shouldMutate(this.probabilities.engine.add);
-      const shouldDelete = this.shouldMutate(this.probabilities.engine.del);
-
-      if (shouldAdd) {
-        mutated.push(makeRandomMovementDescriptor());
-      }
-      if (!shouldDelete) {
-        mutated.push(this.mutateMovement(movement));
-      }
-
-    }
-
-    genotype.engine.descriptor.movements = mutated;
+    genotype.engine.descriptor.movements = reduce(
+      bind(this.reducer, this),
+      [],
+      genotype.engine.descriptor.movements
+    );
 
     return genotype;
+  }
+
+  reducer(accumulator, movement) {
+
+    const shouldAdd = this.shouldMutate(this.probabilities.engine.add);
+    const shouldDelete = this.shouldMutate(this.probabilities.engine.del);
+
+    if (shouldAdd) {
+      accumulator.push(makeRandomMovementDescriptor());
+    }
+    if (!shouldDelete) {
+      accumulator.push(this.mutateMovement(movement));
+    }
+
+    return accumulator;
   }
 
   /**
@@ -196,52 +225,93 @@ export class EngineMutationRule extends MutationRule {
    */
   mutateMovement(movement) {
 
-    const shouldMutateId = this.shouldMutate(this.probabilities.movement.id);
-    const shouldMutateLens = this.shouldMutate(this.probabilities.movement.lens);
-    const shouldMutateParameters = this.shouldMutate(this.probabilities.movement.parameters);
+    const mutate = pipe(
+      bind(this.mutateMovementId, this),
+      bind(this.mutateMovementLens, this),
+      bind(this.mutateMovementParams, this)
+    );
 
-    let mutatedMovement = movement;
+    return mutate(movement);
+  }
 
-    if (shouldMutateId) {
-      mutatedMovement = set(L.prop('id'), makeRandomMovementDescriptorId(), mutatedMovement);
+  /**
+   * Returns a movement with a mutated movement identifier.
+   *
+   * @protected
+   * @param {MovementDescriptor} movement A movement descriptor
+   * @return {MovementDescriptor} A mutated movement descriptor
+   */
+  mutateMovementId(movement) {
+
+    const shouldMutate = this.shouldMutate(this.probabilities.movement.id);
+
+    if (shouldMutate) {
+      const mutated = set(L.prop('id'), makeRandomMovementDescriptorId(), movement);
+
+      const wasCompound = isCompoundMovemet(movement);
+      const isCompound = isCompoundMovemet(mutated);
+
+      if (wasCompound  && !isCompound) {
+        mutated.lens = makeRandomLensDescriptor();
+        mutated.params = makeRandomMovementDescriptorParams(mutated);
+      } else if (!wasCompound && isCompound) {
+        delete mutated.lens;
+        mutated.params = [makeRandomMovementDescriptor()];
+      }
+
+      return mutated;
     }
+    return movement;
+  }
 
-    if (shouldMutateLens && !!movement.lens) {
-      mutatedMovement = set(L.prop('lens'), makeRandomLensDescriptor(), mutatedMovement);
+  /**
+   * Returns a movement with a mutated movement lens.
+   *
+   * @protected
+   * @param {MovementDescriptor} movement A movement descriptor
+   * @return {MovementDescriptor} A mutated movement descriptor
+   */
+  mutateMovementLens(movement) {
+
+    const shouldMutate = this.shouldMutate(this.probabilities.movement.lens);
+
+    if (shouldMutate && hasLens(movement)) {
+      return set(L.prop('lens'), makeRandomLensDescriptor(), movement);
     }
+    return movement;
+  }
 
-    if (shouldMutateParameters) {
+  /**
+   * Returns a movement with mutated movement parameters.
+   *
+   * @protected
+   * @param {MovementDescriptor} movement A movement descriptor
+   * @return {MovementDescriptor} A mutated movement descriptor
+   */
+  mutateMovementParams(movement) {
 
-      if (isCompoundMovemet(mutatedMovement)) {
+    const shouldMutate = this.shouldMutate(this.probabilities.movement.parameters);
 
-        mutatedMovement.params = reduce((accumulator, m) => {
+    if (shouldMutate) {
 
-          const shouldAdd = this.shouldMutate(this.probabilities.engine.add);
-          const shouldDelete = this.shouldMutate(this.probabilities.engine.del);
+      // TODO immutability
 
-          if (shouldAdd) {
-            accumulator.push(makeRandomMovementDescriptor());
-          }
-          if (!shouldDelete) {
-            accumulator.push(this.mutateMovement(m));
-          }
+      if (isCompoundMovemet(movement)) {
 
-          return accumulator;
-
-        }, [], mutatedMovement.params);
+        movement.params = reduce(bind(this.reducer, this), [], movement.params);
 
       } else  {
 
-        mutatedMovement = set(
+        movement = set(
           L.prop('params'),
-          makeRandomMovementDescriptorParams(mutatedMovement),
-          mutatedMovement
+          makeRandomMovementDescriptorParams(movement),
+          movement
         );
 
       }
-    }
 
-    return mutatedMovement;
+    }
+    return movement;
   }
 
 }
