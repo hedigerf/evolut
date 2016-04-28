@@ -113,9 +113,11 @@ function createInitalPopulation() {
 let individuals = List();
 ipcMain.on('work-finished', (event, individualsStringified) => {
   finishedWorkCounter++;
+  debug(logger, 'work finished. finishedWorkCounter: ' + finishedWorkCounter);
   const partialPopulation = individualsStringified.map((x) => JSON.parse(x));
   individuals = individuals.concat(partialPopulation);
   if (finishedWorkCounter % workerCount === 0) {
+    debug(logger, 'population complete again.');
     const population = { individuals, generationCount: generationCounter};
     const mutated = performSimulationPostprocessing(population);
     // reset list
