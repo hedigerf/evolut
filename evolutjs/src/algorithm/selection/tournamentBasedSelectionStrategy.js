@@ -4,15 +4,14 @@
  * @module algorithm/selection/tournamentBasedSelectionStrategy
  */
 
-import { debug, info } from '../../util/logUtil';
 import Immutable from 'immutable';
+import { info } from '../../util/logUtil';
 import log4js from 'log4js';
 import Population from '../population/population';
-import Random from 'random-js';
+import random from '../../util/random';
 import SelectionStrategy from './selectionStrategy';
 
 const logger = log4js.getLogger('TournamentBasedSelectionStrategy');
-const random = new Random(Random.engines.mt19937().autoSeed());
 
 /**
  * TournamentBasedSelectionStrategy

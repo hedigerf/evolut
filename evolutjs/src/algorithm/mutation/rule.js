@@ -28,9 +28,8 @@ export default class MutationRule {
    * Construct a muation rule.
    *
    * @param {Number} probability The probability a a genotype is mutated
-   * @param {Number} step The maximum difference to the current value
    */
-  constructor(probability, step) {
+  constructor(probability) {
 
     /**
      * The probaility that this rule is applied.
@@ -39,14 +38,6 @@ export default class MutationRule {
      * @type {Number}
      */
     this.probability = probability;
-
-    /**
-     * The maximum step for this mutation.
-     *
-     * @protected
-     * @type {Number}
-     */
-    this.step = step;
   }
 
   /**

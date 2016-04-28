@@ -1,8 +1,7 @@
 import { List, Range } from 'immutable';
 import log4js from 'log4js';
-import Random from 'random-js';
+import random from '../../util/random';
 
-const random = new Random(Random.engines.mt19937().autoSeed());
 const logger = log4js.getLogger('ParcourGenerator');
 
 

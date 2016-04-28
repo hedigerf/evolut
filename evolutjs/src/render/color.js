@@ -4,9 +4,7 @@
  * @module render/color
  */
 
-import Random from 'random-js';
-
-const random = new Random(Random.engines.mt19937().autoSeed());
+import random from '../util/random';
 
 /**
  * Width of a hex color number.
