@@ -192,11 +192,13 @@ export class EngineMutationRule extends MutationRule {
    */
   mutate(genotype) {
 
+    /*
     genotype.engine.descriptor.movements = reduce(
       bind(this.reducer, this),
       [],
       genotype.engine.descriptor.movements
     );
+    */
 
     return genotype;
   }

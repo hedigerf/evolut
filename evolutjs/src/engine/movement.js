@@ -5,9 +5,7 @@
  * @module engine/movement
  */
 
-import {
-  __, allPass, always, anyPass, append, compose, curry, keys, length, map, partial, tryCatch, view
-} from 'ramda';
+import { allPass, anyPass, append, compose, curry, keys, length, map, partial, tryCatch, view } from 'ramda';
 import { makeRandomLensDescriptor, resolveLensDecriptor } from './constraintLenses';
 import { IdentifiableStatic } from '../types/identifiable';
 import Random  from 'random-js';
@@ -81,15 +79,6 @@ export function isMinAngle(constraint) {
 export class Movement extends IdentifiableStatic() {
 
   /**
-   * Returns a random parameter list.
-   *
-   * @return {Array<*>} A parameter list
-   */
-  static get randomParams() {
-    return [];
-  }
-
-  /**
    * Returns a the bounds of the parameters.
    *
    * @return {Array<*>} A bounds list
@@ -111,7 +100,41 @@ export class Movement extends IdentifiableStatic() {
 
 }
 
-class All extends Movement {
+/**
+ * Represents a compound movement.
+ * A compound movement has a compound function which takes a list of movements
+ * and applies all movements in one step and reduces the results to one boolean.
+ *
+ * @extends {Movement}
+ */
+class CompoundMovement extends Movement {
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @protected
+   * @param {function(Array<MovementDescriptor>): Boolean} compound
+   * @param {Array<MovementDescriptor>} movements
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
+   */
+  static moveCompound(compound, movements, phenotype, time) {
+
+    const resolved = map(resolveMovementDescriptor, movements);
+    const move = compound(resolved);
+
+    return move(phenotype, time);
+  }
+
+}
+
+/**
+ * Represents a compound movement.
+ *
+ * @extends {CompoundMovement}
+ */
+class All extends CompoundMovement {
 
   /**
    * Returns the identifier of this movement.
@@ -120,6 +143,48 @@ class All extends Movement {
    */
   static get identifier() {
     return 'all';
+  }
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @param {Array<MovementDescriptor>} movements
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
+   */
+  static move(movements, phenotype, time) {
+    return this.moveCompound(allPass, movements, phenotype, time);
+  }
+
+}
+
+/**
+ * Represents a compound movement.
+ *
+ * @extends {CompoundMovement}
+ */
+class One extends CompoundMovement {
+
+  /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'one';
+  }
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @param {Array<MovementDescriptor>} movements
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
+   */
+  static move(movements, phenotype, time) {
+    return this.moveCompound(anyPass, movements, phenotype, time);
   }
 
 }
@@ -138,20 +203,6 @@ class SetAnglesTo extends Movement {
    */
   static get identifier() {
     return 'sta';
-  }
-
-  /**
-   * Returns a random parameter list.
-   *
-   * @return {Array<Number>} A parameter list
-   */
-  static get randomParams() {
-
-    const fullRadAngle = Math.PI * 2;
-    const randomMinAngle = random.real(-fullRadAngle, fullRadAngle);
-    const randomMaxAngle = random.real(-fullRadAngle, fullRadAngle);
-
-    return [randomMinAngle, randomMaxAngle];
   }
 
   /**
@@ -226,15 +277,6 @@ class LockAnglesToZero extends Movement {
 class SetMotor extends Movement {
 
   /**
-   * Returns a random parameter list.
-   *
-   * @return {Array<Number>} A parameter list
-   */
-  static get randomParams() {
-    return [random.integer(0, 1)];
-  }
-
-  /**
    * Returns the identifier of this movement.
    *
    * @return {String}
@@ -282,15 +324,6 @@ class SetMotor extends Movement {
 class SetSpeedTo extends Movement {
 
   /**
-   * Returns a random parameter list.
-   *
-   * @return {Array<Number>} A parameter list
-   */
-  static get randomParams() {
-    return [random.integer(-1, 1)];
-  }
-
-  /**
    * Returns the identifier of this movement.
    *
    * @return {String}
@@ -331,16 +364,6 @@ class SetSpeedTo extends Movement {
 class Until extends Movement {
 
   /**
-   * Returns a random parameter list.
-   *
-   * @return {Array<Number>} A parameter list
-   */
-  static get randomParams() {
-    const predicates = ['mxa', 'mia']; // 'isa' left out
-    return [random.pick(predicates)];
-  }
-
-  /**
    * Returns the identifier of this movement.
    *
    * @return {String}
@@ -376,10 +399,13 @@ class Until extends Movement {
 
 /**
  * Movement map.
+ * Provieds a mapping between a movement identifier and the implementation.
  *
  * @type {Object<Movement>}
  */
 const MovementIdMap = {
+  [All.identifier]: All,
+  [One.identifier]: One,
   [LockAnglesToZero.identifier]: LockAnglesToZero,
   [SetAnglesTo.identifier]: SetAnglesTo,
   [SetMotor.identifier]: SetMotor,
@@ -418,8 +444,10 @@ export function makeMovementDescriptor(id, lens, params = []) {
  * @return {String} Moevement descriptor id
  */
 export function makeRandomMovementDescriptorId() {
+
   const ids = keys(MovementIdMap);
   const index = random.integer(0, length(ids) - 1);
+
   return ids[index];
 }
 
@@ -480,47 +508,17 @@ export function isCompoundMovemet({ id }) {
 }
 
 /**
- * Resolves a compound movement descriptor.
- *
- * @param {MovementDescriptor} descriptor The movement descriptor
- * @return {Movement} The movement function
- */
-function resolveCompoundMovementDescriptor({ id, params }) {
-
-  let compound;
-
-  if (id === 'all') {
-    compound = allPass;
-  } else if (id === 'one') {
-    compound = anyPass;
-  }
-
-  return compound(map(resolveMovementDescriptor, params));
-}
-
-/**
  * Resolve a movement descriptor and return the movement function.
  *
  * @param {MovementDescriptor} descriptor The movement descriptor
  * @return {Movement} The movement function
  */
-export function resolveMovementDescriptor({ id, lens, params }) {
-
-  if (isCompoundMovemet({ id })) {
-    return resolveCompoundMovementDescriptor({ id, params });
-  }
+export function resolveMovementDescriptor({ id, lens, params = [] }) {
 
   const movement = MovementIdMap[id];
-  const lensF = resolveLensDecriptor(lens);
-
-  const tryer = compose(
-    append(__, params),
-    resolveLensDecriptor
-  );
-  const catcher = always(params);
-  const args = tryCatch(tryer, catcher, lens);
-
-  const args = append(lensF, params);
+  const resolveAndAppend = compose((l) => append(l, params), resolveLensDecriptor);
+  const useParams = () => [params];
+  const args = tryCatch(resolveAndAppend, useParams)(lens);
 
   return partial(movement.move, args);
 }
