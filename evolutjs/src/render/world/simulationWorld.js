@@ -25,7 +25,7 @@ import { view } from 'ramda';
  */
 const WORLD_START_TIME = 0;
 
-const logger = log4js.getLogger('simulationWorld');
+let logger;
 
 const evaluateAfterTickCount = config('simulation.evaluateAfterTickCount');
 const friction = config('simulation.friction');
@@ -62,6 +62,7 @@ export default class SimulationWorld extends Game {
         gravity
       }
     });
+    logger = log4js.getLogger('simulationWorld[' + parcourOptions.wokerId + ']');
     this.world.defaultContactMaterial.friction = friction;
     this.world.defaultContactMaterial.frictionRelaxation = relaxation;
     this.world.defaultContactMaterial.relaxation = relaxation;

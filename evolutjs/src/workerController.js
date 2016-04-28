@@ -17,9 +17,11 @@ import { List } from 'immutable';
 import log4js from 'log4js';
 import SettingsPanel from './settings/settingsPanel';
 import SimulationWorld from './render/world/simulationWorld';
+import uuid from 'uuid';
 import { World } from './app/ipc';
 
-const logger = log4js.getLogger('applicationController');
+const workerId = uuid.v4();
+const logger = log4js.getLogger('worker[' + workerId + ']');
 
 let simulation = null;
 
@@ -36,7 +38,8 @@ ipcRenderer.on('receive-work', (event, individualsStringified, generationCount, 
     jQuery(() => {
       simulation = new SimulationWorld(
         {
-          parcour: JSON.parse(parcour)
+          parcour: JSON.parse(parcour),
+          wokerId: workerId
         }, population, performSimulationPostprocessing.bind(this));
       const settings = new SettingsPanel(simulation);
       settings.bindEvents();
