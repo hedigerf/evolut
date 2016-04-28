@@ -149,13 +149,7 @@ const mutateSingleMovement = curry(
       over(L.identity, partial(mutateSingleParams, [probabilities]))
     );
 
-    const m = mutateSingle(movement);
-
-    if (m.id === 'utl') {
-      console.log(JSON.stringify(m.params));
-    }
-
-    return m;
+    return mutateSingle(movement);
   }
 );
 
