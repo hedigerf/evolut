@@ -1,12 +1,23 @@
 /**
  * Provides movement functionality for engines.
+ * Joint-driven.
  *
  * @module engine/movement
  */
 
-import { allPass, always, anyPass, append, curry, map, partial, view } from 'ramda';
+import { allPass, always, anyPass, append, curry, keys, length, map, view } from 'ramda';
+import { makeRandomLensDescriptor, resolveLensDecriptor } from './constraintLenses';
 import { IdentifiableStatic } from '../types/identifiable';
-import { resolveLensDecriptor } from './constraintLenses';
+import random from '../util/random';
+
+/**
+ * Describes a movement.
+ *
+ * @typedef {Object} MovementDescriptor
+ * @property {String} id
+ * @property {LensDescriptor} lens
+ * @property {Array<*>} params
+ */
 
 /**
  * Divisor for tolerated margin of an angle.
@@ -56,14 +67,6 @@ export function isMinAngle(constraint) {
 }
 
 /**
- * @typedef {{
- *   id: String,
- *   lensId: String,
- *   params: Array<*>
- * }} MovementDescriptor
- */
-
-/**
  * Represents a single movement of a phonotype.
  * A movement could be locking the angle of a joint.
  * Or setting the speed of joint's motor.
@@ -74,6 +77,15 @@ export function isMinAngle(constraint) {
 export class Movement extends IdentifiableStatic() {
 
   /**
+   * Returns a the bounds of the parameters.
+   *
+   * @return {Array<*>} A bounds list
+   */
+  static get bounds() {
+    return [];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Phenotype} phenotype The target phenotype
@@ -82,6 +94,95 @@ export class Movement extends IdentifiableStatic() {
    */
   static move(phenotype, time) { // eslint-disable-line no-unused-vars
     return true;
+  }
+
+}
+
+/**
+ * Represents a compound movement.
+ * A compound movement has a compound function which takes a list of movements
+ * and applies all movements in one step and reduces the results to one boolean.
+ *
+ * @extends {Movement}
+ */
+class CompoundMovement extends Movement {
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @protected
+   * @param {function(Array<MovementDescriptor>): Boolean} compound
+   * @param {Array<MovementDescriptor>} movements
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
+   */
+  static moveCompound(compound, movements, phenotype, time) {
+
+    const resolved = map(resolveMovementDescriptor, movements);
+    const move = compound(resolved);
+
+    return move(phenotype, time);
+  }
+
+}
+
+/**
+ * Represents a compound movement.
+ *
+ * @extends {CompoundMovement}
+ */
+class All extends CompoundMovement {
+
+  /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'all';
+  }
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @param {Array<MovementDescriptor>} movements
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
+   */
+  static move(movements, phenotype, time) {
+    return super.moveCompound(allPass, movements, phenotype, time);
+  }
+
+}
+
+/**
+ * Represents a compound movement.
+ *
+ * @extends {CompoundMovement}
+ */
+class One extends CompoundMovement {
+
+  /**
+   * Returns the identifier of this movement.
+   *
+   * @return {String}
+   */
+  static get identifier() {
+    return 'one';
+  }
+
+  /**
+   * Apply the movemement to a phenotype.
+   *
+   * @param {Array<MovementDescriptor>} movements
+   * @param {Phenotype} phenotype The target phenotype
+   * @param {Number} time The world time
+   * @return {Boolean}
+   */
+  static move(movements, phenotype, time) {
+    return super.moveCompound(anyPass, movements, phenotype, time);
   }
 
 }
@@ -100,6 +201,16 @@ class SetAnglesTo extends Movement {
    */
   static get identifier() {
     return 'sta';
+  }
+
+  /**
+   * Returns a the bounds of the parameters.
+   *
+   * @return {Array<*>} A bounds list
+   */
+  static get bounds() {
+    const fullRadAngle = Math.PI * 2;
+    return [-fullRadAngle, fullRadAngle];
   }
 
   /**
@@ -127,11 +238,11 @@ class SetAnglesTo extends Movement {
 }
 
 /**
- * Locks a revolute constraint to certain angles.
+ * Locks an angle of a revolute constraint to it's initial position (zero).
  *
  * @extends {Movement}
  */
-class SetAnglesToCurrent extends Movement {
+class LockAnglesToZero extends Movement {
 
   /**
    * Returns the identifier of this movement.
@@ -139,18 +250,18 @@ class SetAnglesToCurrent extends Movement {
    * @return {String}
    */
   static get identifier() {
-    return 'stc';
+    return 'la0';
   }
 
   /**
+   * Apply the movemement to a phenotype.
+   *
    * @param {Lens} lens The lens to a contraint
    * @param {Phenotype} phenotype The target phenotype
    * @return {Boolean}
    */
   static move(lens, phenotype) {
-    const constraint = view(lens, phenotype);
-    const angle = constraint.bodyA.angle;
-    constraint.setLimits(angle, angle);
+    view(lens, phenotype).setLimits(0, 0);
     return true;
   }
 
@@ -170,6 +281,15 @@ class SetMotor extends Movement {
    */
   static get identifier() {
     return 'stm';
+  }
+
+  /**
+   * Returns a the bounds of the parameters.
+   *
+   * @return {Array<*>} A bounds list
+   */
+  static get bounds() {
+    return [0, 1];
   }
 
   /**
@@ -211,6 +331,15 @@ class SetSpeedTo extends Movement {
   }
 
   /**
+   * Returns a the bounds of the parameters.
+   *
+   * @return {Array<*>} A bounds list
+   */
+  static get bounds() {
+    return [-1, 1];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Number} speed The speed of a constraint
@@ -242,6 +371,15 @@ class Until extends Movement {
   }
 
   /**
+   * Returns a the bounds of the parameters.
+   *
+   * @return {Array<*>} A bounds list
+   */
+  static get bounds() {
+    return ['mxa', 'mia'];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {function(*, Number): Boolean} predId
@@ -251,190 +389,30 @@ class Until extends Movement {
    * @return {Boolean}
    */
   static move(predId, lens, phenotype, time) {
-
     const pred = getMovementPredicate(predId);
-
     return pred(view(lens, phenotype), time);
   }
 
 }
 
 /**
- * Test a predicate on a revolute constraint and
- * calls a function if fulfilled.
- *
- * @extends {Movement}
- */
-class When extends Movement {
-
-  /**
-   * Returns the identifier of this movement.
-   *
-   * @return {String}
-   */
-  static get identifier() {
-    return 'whn';
-  }
-
-  /**
-   * Apply the movemement to a phenotype.
-   *
-   * @param {function(*, Number): Boolean} pred
-   * @param {function(Lens, *, Number)} onTrue
-   * @param {Lens} lens The lens to a contraint
-   * @param {Phenotype} phenotype The target phenotype
-   * @param {Number} time The world time
-   * @return {Boolean}
-   */
-  static move(pred, onTrue, lens, phenotype, time) {
-
-    const fulfilled = pred(view(lens, phenotype), time);
-
-    if (fulfilled) {
-      onTrue(lens, phenotype, time);
-    }
-
-    return fulfilled;
-  }
-
-}
-
-/**
- * Locks an angle of a constraint.
- *
- * @function
- * @param {Number} angle The angle a constraint should be locked to
- * @param {Lens} lens The lens to a contraint
- * @param {Boolean} phenotype The target phenotype
- * @return {Boolean}
- */
-export const lockAngleTo = curry(
-  (angle, lens, phenotype) => SetAnglesTo.move(angle, angle, lens, phenotype)
-);
-
-/**
- * Locks an angle to the current angle of a constraint.
- *
- * @function
- * @param {Lens} lens The lens to a contraint
- * @param {Boolean} phenotype The target phenotype
- * @return {Boolean}
- */
-export const lockAngleToCurrent = curry(
-  (lens, phenotype) => SetAnglesToCurrent.move(lens, phenotype)
-);
-
-/**
- * Locks an angle to 0 of a constraint.
- *
- * @function
- * @param {Lens} lens The lens to a contraint
- * @param {Boolean} phenotype The target phenotype
- * @return {Boolean}
- */
-export const lockAngleToZero = curry(
-  (lens, phenotype) => SetAnglesTo.move(0, 0, lens, phenotype)
-);
-
-/**
- * Sets the angles of a constraint.
- *
- * @function
- * @param {Number} angleMin The min angle a constraint should be locked to
- * @param {Number} angleMax The max angle a constraint should be locked to
- * @param {Lens} lens The lens to a contraint
- * @param {Boolean} phenotype The target phenotype
- * @return {Boolean}
- */
-export const setAngles = curry(
-  (angleMin, angleMax, lens, phenotype) => SetAnglesTo.move(angleMin, angleMax, lens, phenotype)
-);
-
-/**
- * Sets the speed of a constraint.
- *
- * @function
- * @param {Number} speed The speed e a constraint should be set to
- * @param {Lens} lens The lens to a contraint
- * @param {Boolean} phenotype The target phenotype
- * @return {Boolean}
- */
-export const setSpeed = curry(
-  (speed, lens, phenotype) => SetSpeedTo.move(speed, lens, phenotype)
-);
-
-/**
- * Sets the state of a constraint motor.
- *
- * @function
- * @param {Boolean} state
- * @param {Lens} lens The lens to a contraint
- * @param {Phenotype} phenotype The target phenotype
- * @return {Boolean}
- */
-export const setMotor = curry(
-  (state, lens, phenotype) => SetMotor.move(state, lens, phenotype)
-);
-
-/**
- * Stops the engine.
- *
- * @function
- * @return {Boolean} Always false
- */
-export const stop = always(false);
-
-/**
- * Waits until pred is true for a constraint.
- *
- * @function
- * @param {function(*, Number): Boolean} pred
- * @param {Lens} lens The lens to a contraint
- * @param {Phenotype} phenotype The target phenotype
- * @param {Number} time The world time
- * @return {Boolean}
- */
-export const until = curry(
-  (pred, lens, phenotype, time) => Until.move(pred, lens, phenotype, time)
-);
-
-/**
- * Waits until a predicate is true for a constraint
- * and then executes a callback.
- *
- * @function
- * @param {function(*, Number): Boolean} pred
- * @param {function(Lens, *, Number)} onTrue
- * @param {Lens} lens The lens to a contraint
- * @param {Phenotype} phenotype The target phenotype
- * @param {Number} time The world time
- */
-export const when = curry(
-  (pred, onTrue, lens, phenotype, time) => When.move(pred, onTrue, lens, phenotype, time)
-);
-
-/**
- * Lens map.
+ * Movement map.
+ * Provieds a mapping between a movement identifier and the implementation.
  *
  * @type {Object<Movement>}
  */
 const MovementIdMap = {
-  la0: lockAngleToZero,
-  [SetAnglesTo.identifier]: setAngles,
-  [SetMotor.identifier]: setMotor,
-  [SetSpeedTo.identifier]: setSpeed,
-  [Until.identifier]: until,
-  [When.identifier]: when
+  [All.identifier]: All,
+  [One.identifier]: One,
+  [LockAnglesToZero.identifier]: LockAnglesToZero,
+  [SetAnglesTo.identifier]: SetAnglesTo,
+  [SetMotor.identifier]: SetMotor,
+  [SetSpeedTo.identifier]: SetSpeedTo,
+  [Until.identifier]: Until
 };
 
-/**
- * Returns the movement specified by id.
- *
- * @param {String} movementId
- * @return {Lens}
- */
-function getMovementById(movementId) {
-  return MovementIdMap[movementId];
+export function getMovement(id) {
+  return MovementIdMap[id];
 }
 
 function getMovementPredicate(predicateId) {
@@ -447,19 +425,99 @@ function getMovementPredicate(predicateId) {
 
     case 'isa':
       return isAngle;
+
+    default:
+      return always(true);
   }
 }
 
 /**
- * Make a movement descriptor object.
+ * Makes a movement descriptor object.
  *
  * @param {String} id The movement identifier
  * @param {LensDescriptor} lens The lens descriptor
  * @param {Array<*>} [params=[]] The optional paramerter list
- * @return {makeMovementDescriptor} The movement descriptor
+ * @return {MovementDescriptor} The movement descriptor
  */
 export function makeMovementDescriptor(id, lens, params = []) {
   return { id, lens, params };
+}
+
+/**
+ * Makes a compound movement descriptor object.
+ *
+ * @param {String} id The movement identifier
+ * @param {Array<*>} [params=[]] The optional paramerter list
+ * @return {MovementDescriptor} The movement descriptor
+ */
+export function makeCompoundMovementDescriptor(id, params) {
+  return { id, params };
+}
+
+/**
+ * Returns a random movement descriptor id.
+ *
+ * @return {String} Moevement descriptor id
+ */
+export function makeRandomMovementDescriptorId() {
+
+  const ids = keys(MovementIdMap);
+  const index = random.integer(0, length(ids) - 1);
+
+  return ids[index];
+}
+
+/**
+ * Returns a random parameter list for a movement.
+ *
+ * @param {MovementDescriptor} descriptor A movement descriptor
+ * @return {Array} A movement parameter list
+ */
+export function makeRandomMovementDescriptorParams({ id }) {
+
+  if (isCompoundMovement({ id })) {
+    return [makeRandomMovementDescriptor()];
+  }
+
+  switch (id) {
+
+    case 'sta':
+      return [
+        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true),
+        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true)
+      ];
+
+    case 'sts':
+      return [
+        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true)
+      ];
+
+    case 'stm':
+    case 'utl':
+      return [
+        random.pick(getMovement(id).bounds)
+      ];
+
+  }
+}
+
+/**
+ * Makes a random movement descriptor.
+ *
+ * @return {MovementDescriptor} A random movement descriptor
+ */
+export function makeRandomMovementDescriptor() {
+
+  const id = makeRandomMovementDescriptorId();
+  const params = makeRandomMovementDescriptorParams({ id });
+
+  if (isCompoundMovement({ id})) {
+    return makeCompoundMovementDescriptor(id, params);
+  }
+
+  const lens = makeRandomLensDescriptor();
+
+  return makeMovementDescriptor(id, lens, params);
 }
 
 /**
@@ -487,30 +545,11 @@ export function one(...params) {
  * Compound movements group one or more movements togehter.
  *
  *
- * @param {String} id The movement id
+ * @param {MovementDescriptor} The movement
  * @return {Boolean}
  */
-function isCompoundMovemet(id) {
+export function isCompoundMovement({ id }) {
   return id === 'all' || id === 'one';
-}
-
-/**
- * Resolves a compound movement descriptor.
- *
- * @param {MovementDescriptor} descriptor The movement descriptor
- * @return {Movement} The movement function
- */
-function resolveCompoundMovementDescriptor({ id, params }) {
-
-  let compound;
-
-  if (id === 'all') {
-    compound = allPass;
-  } else if (id === 'one') {
-    compound = anyPass;
-  }
-
-  return compound(map(resolveMovementDescriptor, params));
 }
 
 /**
@@ -519,14 +558,25 @@ function resolveCompoundMovementDescriptor({ id, params }) {
  * @param {MovementDescriptor} descriptor The movement descriptor
  * @return {Movement} The movement function
  */
-export function resolveMovementDescriptor({ id, lens, params }) {
+export function resolveMovementDescriptor({ id, lens, params = [] }) {
 
-  if (isCompoundMovemet(id)) {
-    return resolveCompoundMovementDescriptor({ id, params });
+  const movement = getMovement(id);
+  const args = resolveMovementDescriptorArguments(id, lens, params);
+
+  return movement.move.bind(movement, ...args);
+}
+
+/**
+ * Resolves the arguments for a movement descriptor.
+ *
+ * @param  {String} id
+ * @param  {LensDescriptor} lens
+ * @param  {Array<*>} params
+ * @return {Array<*>}
+ */
+function resolveMovementDescriptorArguments(id, lens, params) {
+  if (isCompoundMovement({ id })) {
+    return [params];
   }
-
-  const movement = getMovementById(id);
-  const args = append(resolveLensDecriptor(lens), params);
-
-  return partial(movement, args);
+  return append(resolveLensDecriptor(lens), params);
 }

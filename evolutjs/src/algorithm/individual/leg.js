@@ -30,12 +30,9 @@ const LEG_UPPER_LIMIT_WIDTH = 0.2;
 
 /**
  * Represents a leg of an indiviual.
- * A leg is made of a thigh and a shank.
- * These are connected by a knee joint.
- * The leg itself is connected to the body of an indiviudal
- * by another joint.
- * The leg maintains knowledge about the thigh, shank, knee joint
- * and the foot.
+ * A leg is made of a thigh and a shank. These are connected by a knee joint.
+ * The leg itself is connected to the body of an indiviudal by another joint.
+ * The leg maintains knowledge about the thigh, shank, knee joint and the foot.
  *
  * @extends {PartialGenotype}
  */
@@ -112,12 +109,9 @@ export default class Leg extends PartialGenotype {
    * @return {Object}
    */
   static seed(options) {
-    const orRandomHeight = when(isNil, () => {
-      return random.real(LEG_LOWER_LIMIT_HEIGHT, LEG_UPPER_LIMIT_HEIGHT);
-    });
-    const orRandomHeightFactor = when(isNil, () => {
-      return random.real(LEG_LOWER_LIMIT_HEIGHT_FACTOR, LEG_UPPER_LIMIT_HEIGHT_FACTOR);
-    });
+    const orRandomHeight = when(isNil, () => random.real(LEG_LOWER_LIMIT_HEIGHT, LEG_UPPER_LIMIT_HEIGHT));
+    const orRandomHeightFactor = when(isNil, () =>
+      random.real(LEG_LOWER_LIMIT_HEIGHT_FACTOR, LEG_UPPER_LIMIT_HEIGHT_FACTOR));
 
     const orRandomWidth = when(isNil, () => {
       return random.real(LEG_LOWER_LIMIT_WIDTH, LEG_UPPER_LIMIT_WIDTH);

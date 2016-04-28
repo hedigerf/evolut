@@ -6,13 +6,15 @@
 
 import * as L from 'partial.lenses';
 import { lens } from 'ramda';
+import random from '../util/random';
 
 /**
- * @typedef {{
- *   side: String,
- *   index: Number,
- *   type: String
- * }} LensDescriptor
+ * Describes a lens.
+ *
+ * @typedef {Object} LensDescriptor
+ * @property {Number} index
+ * @property {String} side
+ * @property {String} type
  */
 
 /**
@@ -34,6 +36,24 @@ export const immutableLens = (key) => lens((x) => x.get(key), (val, x) => x.set(
  */
 export function makeLensDescriptor(side, index, type) {
   return { side, index, type };
+}
+
+/**
+ * Returns a random lens descriptor.
+ *
+ * @return {LensDescriptor} A random lens descriptor
+ */
+export function makeRandomLensDescriptor() {
+
+  const sides = ['left', 'right'];
+  const types = ['hip', 'knee'];
+  const legs = 6;
+
+  const side = random.pick(sides);
+  const type = random.pick(types);
+  const leg = random.integer(0, legs / 2 - 1);
+
+  return makeLensDescriptor(side, leg, type);
 }
 
 /**
