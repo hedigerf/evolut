@@ -25,11 +25,13 @@ const PROBABILITY_BODY_POINT = 0.1;
 const PROBABILITY_HIP_JOINT = 0.1;
 const PROBABILITY_LEG_HEIGHT = 0.1;
 const PROBABILITY_LEG_HEIGHT_FACTOR = 0.1;
+const PROBABILITY_LEG_WIDTH = 0.1;
 
 
 // Mutation steps
 const MUTATION_STEP_LEG_HEIGHT = 0.05;
 const MUTATION_STEP_LEG_HEIGHT_FACTOR = 0.05;
+const MUTATION_STEP_LEG_WIDTH = 0.01;
 
 const ruleEngine = new EngineMutationRule({
   probability: 0.1,
@@ -123,13 +125,15 @@ export default class Mutator {
         this.mutateRealValue(leg.height, MUTATION_STEP_LEG_HEIGHT), leg.height);
       const legHeightFactor = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT_FACTOR),
         this.mutateRealValue(leg.heightFactor, MUTATION_STEP_LEG_HEIGHT_FACTOR), leg.heightFactor);
+      const legWidth = this.ifElse(this.shouldMutate(PROBABILITY_LEG_WIDTH),
+        this.mutateRealValue(leg.width, MUTATION_STEP_LEG_WIDTH), leg.width);
       return {
         leg: new Leg(
           {
             mass: leg.mass,
-            massFactor: leg.massFactor,
             height: legHeight,
-            heightFactor: legHeightFactor
+            heightFactor: legHeightFactor,
+            width: legWidth
           }
         ),
         joint: legDescriptor.hipJoint

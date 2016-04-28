@@ -22,12 +22,6 @@ const RADIUS = 1;
  */
 const lensMass = L.prop('mass');
 
-/**
- * Lens for body mass factor information.
- *
- * @return {Lens}
- */
-const lensMassFactor = L.prop('massFactor');
 
 /**
  * Lens for body points information.
@@ -142,13 +136,6 @@ export default class Body extends PartialGenotype {
     this.mass = view(lensMass, options);
 
     /**
-     * The mass factor of this body.
-     *
-     * @type {Number}
-     */
-    this.massFactor = view(lensMassFactor, options);
-
-    /**
      * List of polygon points forming the body.
      * Counter clock wise.
      *
@@ -190,7 +177,6 @@ export default class Body extends PartialGenotype {
    */
   static seed(options) {
 
-    const massFactor = view(lensMassFactor, options) || random.real(0.1, 0.9);
     const bodyPointsCount = view(lensBodyPointsCount, options) || random.integer(4, 8);
     const bodyPoints = view(lensBodyPoints, options) || this.seedCCWPolygonPoints(bodyPointsCount);
     const hipJointPositions = view(lensHipJointPositions, options) || this.seedHipJointPositions(bodyPoints);
@@ -198,7 +184,6 @@ export default class Body extends PartialGenotype {
     const setter = compose(
       set(lensBodyPoints, bodyPoints),
       set(lensBodyPointsCount, bodyPointsCount),
-      set(lensMassFactor, massFactor),
       set(lensHipJointPositions, hipJointPositions)
     );
 

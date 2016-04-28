@@ -8,7 +8,7 @@
 
 import './menu';
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { debug, info } from '../util/logUtil';
+import { debug, error, info } from '../util/logUtil';
 import { List, Range } from 'immutable';
 import { path as appRoot } from 'app-root-path';
 import config from './config';
@@ -99,7 +99,7 @@ function createInitalPopulation() {
     const pathToFile = load('population.json');
     const populationStr = fs.readFileSync(pathToFile).toString();
     const initialPopulation = JSON.parse(populationStr);
-    const shrinked = List(initialPopulation.individuals).sort((a, b) => a > b).take(populationSize);
+    const shrinked = List(initialPopulation.individuals).sortBy((individual) => individual.fitness).reverse().take(populationSize);
     return { generationCount: initialPopulation.generationCount, individuals: shrinked};
   } else {
     const initialPopulationGenerator = new InitialPopulationGenerator(
@@ -113,9 +113,11 @@ function createInitalPopulation() {
 let individuals = List();
 ipcMain.on('work-finished', (event, individualsStringified) => {
   finishedWorkCounter++;
+  debug(logger, 'work finished. finishedWorkCounter: ' + finishedWorkCounter);
   const partialPopulation = individualsStringified.map((x) => JSON.parse(x));
   individuals = individuals.concat(partialPopulation);
   if (finishedWorkCounter % workerCount === 0) {
+    debug(logger, 'population complete again.');
     const population = { individuals, generationCount: generationCounter};
     const mutated = performSimulationPostprocessing(population);
     // reset list
@@ -138,6 +140,10 @@ app.on('window-all-closed', () =>  {
 });
 
 app.on('ready', () => {
+  process.on('uncaughtException', (err) => {
+    error(logger, 'an exception happened.');
+    error(logger, err);
+  });
   const workerRange = List(Range(0, workerCount));
   workers = workerRange.map(() =>  startWorker());
   const initialPopulation = createInitalPopulation();
