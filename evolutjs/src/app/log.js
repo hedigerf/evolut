@@ -17,3 +17,5 @@ const defaultCondfigurationFile = path.join(appRoot, 'config/log4js.json');
 
 // Load default configuration
 log4js.configure(defaultCondfigurationFile);
+
+export default log4js;

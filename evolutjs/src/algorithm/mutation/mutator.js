@@ -12,14 +12,13 @@ import {
           generateRandomPolygonPoint
         }
 from '../individual/body';
+import EngineMutationRule from './rules/engine';
 import Individual from '../individual/individual';
 import inside from 'point-in-polygon';
 import Leg from '../individual/leg';
 import { List } from 'immutable';
 import Population from '../population/population';
-import Random  from 'random-js';
-
-const random = new Random(Random.engines.mt19937().autoSeed());
+import random from '../../util/random';
 
 // Probabilities
 const PROBABILITY_BODY_POINT = 0.1;
@@ -34,7 +33,28 @@ const MUTATION_STEP_LEG_HEIGHT = 0.05;
 const MUTATION_STEP_LEG_HEIGHT_FACTOR = 0.05;
 const MUTATION_STEP_LEG_WIDTH = 0.01;
 
+const ruleEngine = new EngineMutationRule({
+  probability: 0.1,
+  engine: {
+    add: 0.01,
+    del: 0.01,
+    movement: 0.1
+  },
+  lens: {
+    index: 0.01,
+    side: 0.01,
+    type: 0.01
+  },
+  movement: {
+    id: 0.01,
+    lens: 0.01,
+    parameters: 0.1
+  }
+});
 
+/**
+ * Represents a mutator for genotypes.
+ */
 export default class Mutator {
 
   /**
@@ -56,6 +76,8 @@ export default class Mutator {
 
       const legs = this.tryMutateLegs(individual.legs);
       individual.legs = legs;
+
+      individual = ruleEngine.tryMutate(individual);
 
       const offspring = new Individual(individual);
       // offspring.body.massFactor
@@ -105,7 +127,7 @@ export default class Mutator {
         this.mutateRealValue(leg.heightFactor, MUTATION_STEP_LEG_HEIGHT_FACTOR), leg.heightFactor);
       const legWidth = this.ifElse(this.shouldMutate(PROBABILITY_LEG_WIDTH),
         this.mutateRealValue(leg.width, MUTATION_STEP_LEG_WIDTH), leg.width);
-      return ({
+      return {
         leg: new Leg(
           {
             mass: leg.mass,
@@ -115,7 +137,7 @@ export default class Mutator {
           }
         ),
         joint: legDescriptor.hipJoint
-      });
+      };
     });
     return { 0: legs.get(0), 1: legs.get(1), 2: legs.get(2), 3: legs.get(3), 4: legs.get(4), 5: legs.get(5) };
   }
@@ -136,11 +158,10 @@ export default class Mutator {
     const discreteNumber = probability * 100;
     const randomNumber = random.integer(1, 100);
     return randomNumber <= discreteNumber;
-
   }
 
-  ifElse(bol, valueA, valueB) {
-    if (bol) {
+  ifElse(bool, valueA, valueB) {
+    if (bool) {
       return valueA;
     }
     return valueB;
