@@ -5,10 +5,10 @@
  * @module engine/movement
  */
 
-import { allPass, anyPass, append, compose, curry, keys, length, map, partial, tryCatch, view } from 'ramda';
+import { allPass, always, anyPass, append, curry, keys, length, map, view } from 'ramda';
 import { makeRandomLensDescriptor, resolveLensDecriptor } from './constraintLenses';
 import { IdentifiableStatic } from '../types/identifiable';
-import Random  from 'random-js';
+import random from '../util/random';
 
 /**
  * Describes a movement.
@@ -18,8 +18,6 @@ import Random  from 'random-js';
  * @property {LensDescriptor} lens
  * @property {Array<*>} params
  */
-
-const random = new Random(Random.engines.mt19937().autoSeed());
 
 /**
  * Divisor for tolerated margin of an angle.
@@ -154,7 +152,7 @@ class All extends CompoundMovement {
    * @return {Boolean}
    */
   static move(movements, phenotype, time) {
-    return this.moveCompound(allPass, movements, phenotype, time);
+    return super.moveCompound(allPass, movements, phenotype, time);
   }
 
 }
@@ -184,7 +182,7 @@ class One extends CompoundMovement {
    * @return {Boolean}
    */
   static move(movements, phenotype, time) {
-    return this.moveCompound(anyPass, movements, phenotype, time);
+    return super.moveCompound(anyPass, movements, phenotype, time);
   }
 
 }
@@ -413,6 +411,10 @@ const MovementIdMap = {
   [Until.identifier]: Until
 };
 
+export function getMovement(id) {
+  return MovementIdMap[id];
+}
+
 function getMovementPredicate(predicateId) {
   switch (predicateId) {
     case 'mxa':
@@ -423,6 +425,9 @@ function getMovementPredicate(predicateId) {
 
     case 'isa':
       return isAngle;
+
+    default:
+      return always(true);
   }
 }
 
@@ -436,6 +441,17 @@ function getMovementPredicate(predicateId) {
  */
 export function makeMovementDescriptor(id, lens, params = []) {
   return { id, lens, params };
+}
+
+/**
+ * Makes a compound movement descriptor object.
+ *
+ * @param {String} id The movement identifier
+ * @param {Array<*>} [params=[]] The optional paramerter list
+ * @return {MovementDescriptor} The movement descriptor
+ */
+export function makeCompoundMovementDescriptor(id, params) {
+  return { id, params };
 }
 
 /**
@@ -458,7 +474,31 @@ export function makeRandomMovementDescriptorId() {
  * @return {Array} A movement parameter list
  */
 export function makeRandomMovementDescriptorParams({ id }) {
-  return MovementIdMap[id].randomParams;
+
+  if (isCompoundMovement({ id })) {
+    return [makeRandomMovementDescriptor()];
+  }
+
+  switch (id) {
+
+    case 'sta':
+      return [
+        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true),
+        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true)
+      ];
+
+    case 'sts':
+      return [
+        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true)
+      ];
+
+    case 'stm':
+    case 'utl':
+      return [
+        random.pick(getMovement(id).bounds)
+      ];
+
+  }
 }
 
 /**
@@ -469,8 +509,13 @@ export function makeRandomMovementDescriptorParams({ id }) {
 export function makeRandomMovementDescriptor() {
 
   const id = makeRandomMovementDescriptorId();
-  const lens = makeRandomLensDescriptor();
   const params = makeRandomMovementDescriptorParams({ id });
+
+  if (isCompoundMovement({ id})) {
+    return makeCompoundMovementDescriptor(id, params);
+  }
+
+  const lens = makeRandomLensDescriptor();
 
   return makeMovementDescriptor(id, lens, params);
 }
@@ -503,7 +548,7 @@ export function one(...params) {
  * @param {MovementDescriptor} The movement
  * @return {Boolean}
  */
-export function isCompoundMovemet({ id }) {
+export function isCompoundMovement({ id }) {
   return id === 'all' || id === 'one';
 }
 
@@ -515,10 +560,23 @@ export function isCompoundMovemet({ id }) {
  */
 export function resolveMovementDescriptor({ id, lens, params = [] }) {
 
-  const movement = MovementIdMap[id];
-  const resolveAndAppend = compose((l) => append(l, params), resolveLensDecriptor);
-  const useParams = () => [params];
-  const args = tryCatch(resolveAndAppend, useParams)(lens);
+  const movement = getMovement(id);
+  const args = resolveMovementDescriptorArguments(id, lens, params);
 
-  return partial(movement.move, args);
+  return movement.move.bind(movement, ...args);
+}
+
+/**
+ * Resolves the arguments for a movement descriptor.
+ *
+ * @param  {String} id
+ * @param  {LensDescriptor} lens
+ * @param  {Array<*>} params
+ * @return {Array<*>}
+ */
+function resolveMovementDescriptorArguments(id, lens, params) {
+  if (isCompoundMovement({ id })) {
+    return [params];
+  }
+  return append(resolveLensDecriptor(lens), params);
 }

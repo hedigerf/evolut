@@ -12,15 +12,13 @@ import {
           generateRandomPolygonPoint
         }
 from '../individual/body';
-import { EngineMutationRule } from './rules';
+import EngineMutationRule from './rules/engine';
 import Individual from '../individual/individual';
 import inside from 'point-in-polygon';
 import Leg from '../individual/leg';
 import { List } from 'immutable';
 import Population from '../population/population';
-import Random  from 'random-js';
-
-const random = new Random(Random.engines.mt19937().autoSeed());
+import random from '../../util/random';
 
 // Probabilities
 const PROBABILITY_BODY_POINT = 0.1;
@@ -41,8 +39,8 @@ const ruleEngine = new EngineMutationRule({
     movement: 0.1
   },
   lens: {
-    site: 0.01,
     index: 0.01,
+    side: 0.01,
     type: 0.01
   },
   movement: {
