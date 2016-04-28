@@ -64,4 +64,14 @@ export default class Engine extends PartialGenotype {
     return super.seed(set(lensDescriptor, movement, options));
   }
 
+  /**
+   * Returns  a mutated version of itself.
+   *
+   * @param {MutationRule} rule The mutation rule
+   * @return {Engine} The mutated engine
+   */
+  mutate(rule) {
+    return rule.tryMutate(this);
+  }
+
 }

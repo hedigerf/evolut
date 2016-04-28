@@ -1,6 +1,6 @@
 {
   "name": "evolut",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "Design of artificial animals with evolutionary algorithms",
   "private": true,
   "main": "main.js",

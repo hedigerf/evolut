@@ -10,9 +10,8 @@ import { compose, set, view } from 'ramda';
 import inside from 'point-in-polygon';
 import { List } from 'immutable';
 import { PartialGenotype } from '../genotype/genotype';
-import Random  from 'random-js';
+import random from '../../util/random';
 
-const random = new Random(Random.engines.mt19937().autoSeed());
 const RADIUS = 1;
 
 /**
@@ -21,7 +20,6 @@ const RADIUS = 1;
  * @return {Lens}
  */
 const lensMass = L.prop('mass');
-
 
 /**
  * Lens for body points information.

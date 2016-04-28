@@ -73,6 +73,7 @@ export function isMinAngle(constraint) {
  *
  * @abstract
  * @extends {IdentifiableStatic}
+ * @extends {MutatableStatic}
  */
 export class Movement extends IdentifiableStatic() {
 
@@ -82,6 +83,15 @@ export class Movement extends IdentifiableStatic() {
    * @return {Array<*>} A bounds list
    */
   static get bounds() {
+    return [];
+  }
+
+  /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
     return [];
   }
 
@@ -106,6 +116,15 @@ export class Movement extends IdentifiableStatic() {
  * @extends {Movement}
  */
 class CompoundMovement extends Movement {
+
+  /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
+    return [makeRandomMovementDescriptor()];
+  }
 
   /**
    * Apply the movemement to a phenotype.
@@ -209,8 +228,18 @@ class SetAnglesTo extends Movement {
    * @return {Array<*>} A bounds list
    */
   static get bounds() {
-    const fullRadAngle = Math.PI * 2;
-    return [-fullRadAngle, fullRadAngle];
+    const fullAngle = Math.PI * 2;
+    return [-fullAngle, fullAngle];
+  }
+
+  /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
+    const bounds = this.bounds;
+    return [random.real(...bounds, true), random.real(...bounds, true)].sort();
   }
 
   /**
@@ -293,6 +322,16 @@ class SetMotor extends Movement {
   }
 
   /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
+    const bounds = this.bounds;
+    return [random.integer(...bounds)];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Boolean} state The state of a motor
@@ -340,6 +379,16 @@ class SetSpeedTo extends Movement {
   }
 
   /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
+    const bounds = this.bounds;
+    return [random.integer(...bounds)];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Number} speed The speed of a constraint
@@ -380,6 +429,15 @@ class Until extends Movement {
   }
 
   /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
+    return [random.pick(this.bounds)];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {function(*, Number): Boolean} predId
@@ -411,6 +469,12 @@ const MovementIdMap = {
   [Until.identifier]: Until
 };
 
+/**
+ * Returns the movement class to corresponding to a movement id.
+ *
+ * @param {String} id A movement id
+ * @return {Movement} The movement
+ */
 export function getMovement(id) {
   return MovementIdMap[id];
 }
@@ -474,31 +538,9 @@ export function makeRandomMovementDescriptorId() {
  * @return {Array} A movement parameter list
  */
 export function makeRandomMovementDescriptorParams({ id }) {
-
-  if (isCompoundMovement({ id })) {
-    return [makeRandomMovementDescriptor()];
-  }
-
-  switch (id) {
-
-    case 'sta':
-      return [
-        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true),
-        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true)
-      ];
-
-    case 'sts':
-      return [
-        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true)
-      ];
-
-    case 'stm':
-    case 'utl':
-      return [
-        random.pick(getMovement(id).bounds)
-      ];
-
-  }
+  const rnd = getMovement(id).random;
+  console.log('rand params', rnd);
+  return rnd;
 }
 
 /**
@@ -511,7 +553,7 @@ export function makeRandomMovementDescriptor() {
   const id = makeRandomMovementDescriptorId();
   const params = makeRandomMovementDescriptorParams({ id });
 
-  if (isCompoundMovement({ id})) {
+  if (isCompoundMovement({ id })) {
     return makeCompoundMovementDescriptor(id, params);
   }
 

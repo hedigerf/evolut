@@ -30,12 +30,19 @@ const extractOption = (key) => either(
  */
 const buildType = (T, option) => new T(option);
 
+/**
+ * Mutates a partial genotype.
+ *
+ * @param {Mutatable} T The mutatable type
+ * @param {Object} option The mutation options
+ * @return {Mutatable} The mutated object
+ */
 const mutateType = (T, option) => T.mutate(option);
 
 /**
  * Seeds a partial genotype.
  *
- * @param {PartialGenotype} T The partial genotype
+ * @param {SeedableStatic} T The partial genotype
  * @param {Object} option The build options
  * @return {Object} The seed object
  */
@@ -156,7 +163,7 @@ export default class Genotype {
  * from the whole genotype.
  *
  * @extends {Genotype}
- * @extends {Identifiable}
+ * @extends {IdentifiableStatic}
  */
 export class PartialGenotype extends IdentifiableStatic(Genotype) {
 

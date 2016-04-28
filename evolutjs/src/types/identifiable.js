@@ -16,9 +16,11 @@ export const IdentifiableStatic = (Base = function() {}) => class extends Base {
 
   /**
    * Returns the identifier as string.
+   *
+   * @return {String}
    */
   static get identifier() {
-    throw new Error('not implemented');
+    return '';
   }
 
 };
@@ -35,9 +37,11 @@ export const Identifiable = (Base = function() {}) => class extends Base {
 
   /**
    * Returns the identifier as string.
+   *
+   * @return {String}
    */
   get identifier() {
-    throw new Error('not implemented');
+    return '';
   }
 
 };

@@ -2,6 +2,7 @@
  * Provides mutation rules for an engine.
  *
  * @module algorithm/mutation/rules/engine
+ * @see algorithm/mutation/rule
  */
 
 import * as L from 'partial.lenses';
@@ -10,29 +11,22 @@ import {
   getMovement,
   isCompoundMovement,
   makeRandomMovementDescriptor
-  // makeRandomMovementDescriptorId,
-  // makeRandomMovementDescriptorParams
 } from '../../../engine/movement';
 import MutationRule, { shouldMutate } from '../rule';
-// import { makeRandomLensDescriptor } from '../../../engine/constraintLenses';
 import random from '../../../util/random';
 
 /**
  * Engine mutation probabilities.
  *
  * @typedef {Object} EngineMutationProbabilities
- * @property {Number} probability
- * @property {Object} engine
- * @property {Number} engine.add
- * @property {Number} engine.del
- * @property {Number} engine.movement
+ * @property {Number} add
+ * @property {Number} remove
  * @property {Object} lens
  * @property {Number} lens.index
  * @property {Number} lens.site
  * @property {Number} lens.type
  * @property {Object} movement
  * @property {Number} movement.id
- * @property {Number} movement.lens
  * @property {Number} movement.parameters
  */
 
@@ -76,11 +70,6 @@ const mutateCompoundMovement = curry(
     return mutateCompound(movement);
   }
 );
-
-function mutateSingleId(probabilities, id) {
-  // nop
-  return id;
-}
 
 function mutateSingleLens(probabilities, lens) {
 
@@ -144,7 +133,6 @@ const mutateSingleMovement = curry(
   (probabilities, movement) => {
 
     const mutateSingle = compose(
-      // over(lensId, partial(mutateSingleId, [probabilities])),
       over(lensLens, partial(mutateSingleLens, [probabilities])),
       over(L.identity, partial(mutateSingleParams, [probabilities]))
     );
@@ -170,8 +158,8 @@ function mutateMovements(probabilities, movements) {
   const length = movements.length;
   const mutated = [];
 
-  const probabilityAdd = probabilities.engine.add / length;
-  const probabilityRemove = probabilities.engine.del / length;
+  const probabilityAdd = probabilities.add / length;
+  const probabilityRemove = probabilities.del / length;
 
   for (let i = 0; i < length; i++) {
 
@@ -202,7 +190,7 @@ export default class EngineMutationRule extends MutationRule {
    */
   constructor(probabilities) {
 
-    super(probabilities.probability);
+    super(1);
 
     /**
      * Mutation probabilities.
@@ -225,11 +213,8 @@ export default class EngineMutationRule extends MutationRule {
     const defaultZero = defaultTo(0);
     const transformation = {
       probability: defaultZero,
-      engine: {
-        add: defaultZero,
-        del: defaultZero,
-        movement: defaultZero
-      },
+      add: defaultZero,
+      remove: defaultZero,
       lens: {
         index: defaultZero,
         side: defaultZero,
@@ -237,7 +222,6 @@ export default class EngineMutationRule extends MutationRule {
       },
       movement: {
         id: defaultZero,
-        lens: defaultZero,
         parameters: defaultZero
       }
     };
