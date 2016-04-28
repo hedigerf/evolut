@@ -6,7 +6,7 @@
 
 import * as L from 'partial.lenses';
 import { lens } from 'ramda';
-import Random  from 'random-js';
+import random from '../util/random';
 
 /**
  * Describes a lens.
@@ -16,8 +16,6 @@ import Random  from 'random-js';
  * @property {String} side
  * @property {String} type
  */
-
-const random = new Random(Random.engines.mt19937().autoSeed());
 
 /**
  * Lens for immutable-js data types.
