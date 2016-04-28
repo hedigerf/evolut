@@ -7,7 +7,7 @@
 
 import { all, makeMovementDescriptor, one } from '../movement';
 import { ANGLE_MAX, ANGLE_MIN } from '../../algorithm/individual/joint';
-import { makeLensDescriptor } from '../constraintLenses';
+import { makeLensDescriptor } from '../lenses';
 
 // Lens descriptors
 const lfh = makeLensDescriptor('left', 0, 'hip');

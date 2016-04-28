@@ -7,6 +7,8 @@
 import * as L from 'partial.lenses';
 import { always, curry, either, ifElse, mapObjIndexed, merge, view } from 'ramda';
 import { IdentifiableStatic } from '../../types/identifiable';
+import { Mutatable } from '../../types/mutatable';
+import { SeedableStatic } from '../../types/seedable';
 
 /**
  * Extract the options for a certain key.
@@ -90,8 +92,11 @@ const processGenotypeParts = curry(
 
 /**
  * Base class of a genotype.
+ *
+ * @extends {Mutatable}
+ * @extends {SeedableStatic}
  */
-export default class Genotype {
+export default class Genotype extends Mutatable(SeedableStatic()) {
 
   /**
    * Default genotype constructor.
@@ -99,6 +104,7 @@ export default class Genotype {
    * @param {Object} genotype The whole genotype as object
    */
   constructor(genotype) {
+    super();
     const built = this.constructor.build(genotype);
     for (const property in built) {
       this[property] = built[property];

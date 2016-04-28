@@ -6,7 +6,7 @@
  */
 
 import { allPass, always, anyPass, append, curry, keys, length, map, view } from 'ramda';
-import { makeRandomLensDescriptor, resolveLensDecriptor } from './constraintLenses';
+import { makeRandomLensDescriptor, resolveLensDecriptor } from './lenses';
 import { IdentifiableStatic } from '../types/identifiable';
 import random from '../util/random';
 

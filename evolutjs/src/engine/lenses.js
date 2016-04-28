@@ -1,7 +1,7 @@
 /**
  * Lenses for accessing constraints.
  *
- * @module engine/constraintLenses
+ * @module engine/lenses
  */
 
 import * as L from 'partial.lenses';
