@@ -538,9 +538,7 @@ export function makeRandomMovementDescriptorId() {
  * @return {Array} A movement parameter list
  */
 export function makeRandomMovementDescriptorParams({ id }) {
-  const rnd = getMovement(id).random;
-  console.log('rand params', rnd);
-  return rnd;
+  return getMovement(id).random;
 }
 
 /**

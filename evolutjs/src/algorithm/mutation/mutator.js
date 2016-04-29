@@ -5,6 +5,7 @@
  */
 
 import BodyMutationRule from './rules/body';
+import { compose } from 'ramda';
 import EngineMutationRule from './rules/engine';
 import Individual from '../individual/individual';
 import LegMutationRule from './rules/leg';
@@ -26,6 +27,36 @@ const ruleEngine = new EngineMutationRule({
   }
 });
 
+const rules = [ruleBody, ruleLeg, ruleEngine];
+
+/**
+ * Returns a new instance of an individual.
+ *
+ * @function
+ * @param {Object} genotype A genotype of an individual
+ * @return {Individual} An instatitated Individual
+ */
+const instantiate = (genotype) => new Individual(genotype);
+
+/**
+ * Applies a list of mutation rules to a genotype.
+ * Returns a mutated genotype.
+ *
+ * @function
+ * @param {Array<MutationRule>} rules A list of mutation rules
+ * @return {function(Individual): Object} A mutation function
+ */
+const applyMutationRules = (rules) => (genotype) => rules.reduce((mutated, rule) => rule.tryMutate(mutated), genotype);
+
+/**
+ * Returns a mutated individual.
+ *
+ * @function
+ * @param {Individual} genotype A genotype of an individual
+ * @return {Individual} An instatitated Individual
+ */
+const mutateGenotype = compose(instantiate, applyMutationRules(rules));
+
 /**
  * Represents a mutator for genotypes.
  */
@@ -39,15 +70,10 @@ export default class Mutator {
    */
   mutate(population) {
 
-    const rules = [ruleBody, ruleLeg, ruleEngine];
-    const copied = population.individuals.map((toCopy) => new Individual(toCopy));
-    const offsprings = copied.map((individual) => {
+    const offsprings = population.individuals.map(mutateGenotype);
+    const generationCount = population.generationCount + 1;
 
-      individual = rules.reduce((mutated, rule) => rule.tryMutate(mutated), individual);
-      return new Individual(individual);
-
-    });
-    return new Population(offsprings, population.generationCount + 1);
+    return new Population(offsprings, generationCount);
   }
 
 }

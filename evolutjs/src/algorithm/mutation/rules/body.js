@@ -35,12 +35,13 @@ export default class BodyMutationRule extends MutationRule {
    */
   mutate(genotype) {
 
-    const body = genotype.body;
+    const mutated = super.mutate(genotype);
+    const body = mutated.body;
 
     body.bodyPoints = this.tryMutateBodyPoints(body.bodyPoints, body.bodyPointsCount);
     body.hipJointPositions = this.tryMutateHipJoints(body.bodyPoints, body.hipJointPositions);
 
-    return genotype;
+    return mutated;
   }
 
   /**

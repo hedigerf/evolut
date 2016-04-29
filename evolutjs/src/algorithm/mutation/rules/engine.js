@@ -238,13 +238,15 @@ export default class EngineMutationRule extends MutationRule {
    */
   mutate(genotype) {
 
+    const mutated = super.mutate(genotype);
+
     const mutateDescriptor = partial(mutateMovements, [this.probabilities]);
     const mutateEngine = compose(
       over(lensInitial, mutateDescriptor),
       over(lensMovements, mutateDescriptor)
     );
 
-    return mutateEngine(genotype);
+    return mutateEngine(mutated);
   }
 
 }

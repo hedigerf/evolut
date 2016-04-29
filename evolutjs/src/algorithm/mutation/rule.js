@@ -4,6 +4,7 @@
  * @module algorithm/mutation/rule
  */
 
+import { clone } from 'ramda';
 import random from '../../util/random';
 
 /**
@@ -48,7 +49,7 @@ export default class MutationRule {
    * @return {Genotype} The mutated genotype
    */
   mutate(genotype) {
-    return genotype;
+    return clone(genotype);
   }
 
   /**
