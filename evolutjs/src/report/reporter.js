@@ -1,6 +1,6 @@
 import { createTimePrefix, report } from '../util/path';
-import fs from 'graceful-fs';
 import { List, Range } from 'immutable';
+import fs from 'graceful-fs';
 
 export default class Reporter {
 

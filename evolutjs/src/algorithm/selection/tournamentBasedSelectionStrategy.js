@@ -33,9 +33,9 @@ export default class TournamentBasedSelectionStrategy extends SelectionStrategy 
   select() {
     const runs = this.population.individuals.size;
 
-    const selectForRun = (runNr) => {
+    const selectForRun = (/* runNr */) => {
 
-      const chooseIndividuals = (kCount) => {
+      const chooseIndividuals = (/* kCount */) => {
         const randomIndex = random.integer(0, this.population.individuals.size - 1);
         // debug(logger, 'kCount: ' + kCount + ' randomIndex: ' + randomIndex);
         const chosenOne = this.population.individuals.get(randomIndex);

@@ -41,7 +41,7 @@ export const Mutatable = (Base = function() {}) => class extends Base {
    * @return {Mutatable}
    */
   mutate() {
-      return this;
+    return this;
   }
 
 };
