@@ -4,6 +4,7 @@
  * @module engine/feedback
  */
 
+import { curry, when } from 'ramda';
 import Engine from './engine';
 
 /**
@@ -33,6 +34,20 @@ export const FeedbackAction = {
 };
 
 /**
+ * Tests if an event concerns a list of bodies.
+ *
+ * @protected
+ * @param {p2.Event} event
+ * @param {Array<p2.Body>} bodies
+ * @return {Boolean}
+ */
+const concerns = curry(
+  (bodies, event) => {
+    return bodies.find((b) => event.bodyA === b || event.bodyB === b);
+  }
+);
+
+/**
  * Represents a feedback event.
  */
 export default class Feedback {
@@ -40,11 +55,11 @@ export default class Feedback {
   /**
    * This callback is fired when an impact event was triggered in the current world.
    *
-   * @param {p2.Event} event The event object
    * @param {p2.World} world The world
    * @param {Phenotype} phenotype The phenotype
+   * @param {p2.Event} event The event object
    */
-  static onImpact(event, world, phenotype) {
+  static onImpact(world, phenotype, event) {
     console.log(event.type + ': ' + phenotype.identifier);
     Engine.step(phenotype, world.currentTime);
   }
@@ -79,6 +94,15 @@ export default class Feedback {
   }
 
   /**
+   * @param {p2.World} world The world
+   * @param {Phenotype} phenotype The phenotype
+   * @return {function(event: Object)}
+   */
+  static step(world, phenotype) {
+    return (event) => Engine.step(phenotype, world.currentTime, event);
+  }
+
+  /**
    * Returns the action responsible for handling an event.
    *
    * @protected
@@ -89,7 +113,7 @@ export default class Feedback {
     switch (action) {
 
       case FeedbackAction.Step:
-        return Engine.step;
+        return Feedback.step;
 
     }
   }
@@ -113,24 +137,18 @@ export default class Feedback {
   /**
    * Register an engine feedback event.
    *
-   * @param {p2.World} world
    * @param {FeedbackDescriptor} descriptor
+   * @param {p2.World} world
    * @param {Phenotype} phenotype
    * @param {Array<p2.Body>} bodies
    */
-  static register(world, descriptor, phenotype, bodies) {
+  static register(descriptor, world, phenotype, bodies) {
 
-    const action = this.getEventAction(descriptor);
     const type = this.getEventType(descriptor);
+    const action = this.getEventAction(descriptor);
+    const actOn = when(concerns(bodies), action(world, phenotype));
 
-    world.on(type, (event) => {
-
-      if (bodies.find((b) => event.bodyA === b || event.bodyB === b)) {
-        action(event, world, phenotype);
-      }
-
-    });
-
+    world.on(type, actOn);
   }
 
 }
