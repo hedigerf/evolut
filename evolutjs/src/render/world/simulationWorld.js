@@ -11,9 +11,9 @@ import { List, Map } from 'immutable';
 import config from '../../app/config';
 import Engine from '../../engine/engine';
 import { Game } from './../../../lib/p2Pixi.es6';
+import { getLogger } from '../../app/log';
 import Individual from '../object/individual/individual';
 import { info } from '../../util/logUtil';
-import log4js from 'log4js';
 import ParcourGenerator from '../object/parcour/parcourCreator';
 import { texture } from '../../util/path';
 import { view } from 'ramda';
@@ -62,7 +62,7 @@ export default class SimulationWorld extends Game {
         gravity
       }
     });
-    logger = log4js.getLogger('simulationWorld[' + parcourOptions.wokerId + ']');
+    logger = getLogger('SimulationWorld', parcourOptions.wokerId);
     this.world.defaultContactMaterial.friction = friction;
     this.world.defaultContactMaterial.frictionRelaxation = relaxation;
     this.world.defaultContactMaterial.relaxation = relaxation;
