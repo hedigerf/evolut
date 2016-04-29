@@ -105,16 +105,8 @@ function mutateSingleParams(probabilities, movement) {
   switch (movement.id) {
 
     case 'sta':
-      movement.params = [
-        movement.params[0] + random.real(-step, step),
-        movement.params[1] + random.real(-step, step)
-      ];
-      break;
-
     case 'sts':
-      movement.params = [
-        movement.params[0] + random.real(-step, step)
-      ];
+      movement.params = movement.params.map((p) => p + random.real(-step, step));
       break;
 
     case 'stm':
