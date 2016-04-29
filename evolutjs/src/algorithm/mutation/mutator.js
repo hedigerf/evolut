@@ -33,6 +33,10 @@ const MUTATION_STEP_LEG_HEIGHT = 0.05;
 const MUTATION_STEP_LEG_HEIGHT_FACTOR = 0.05;
 const MUTATION_STEP_LEG_WIDTH = 0.01;
 
+// Limits
+const LIMIT_LEG_HEIGHT = 1.5;
+const LIMIT_LEG_WIDTH = 0.25;
+
 const ruleEngine = new EngineMutationRule({
   probability: 0.1,
   engine: {
@@ -122,11 +126,11 @@ export default class Mutator {
     const legs = oldLegList.map((legDescriptor) => {
       const leg = legDescriptor.leg;
       const legHeight = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT),
-        this.mutateRealValue(leg.height, MUTATION_STEP_LEG_HEIGHT), leg.height);
+        this.mutateRealValue(leg.height, MUTATION_STEP_LEG_HEIGHT, LIMIT_LEG_HEIGHT), leg.height);
       const legHeightFactor = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT_FACTOR),
         this.mutateRealValue(leg.heightFactor, MUTATION_STEP_LEG_HEIGHT_FACTOR), leg.heightFactor);
       const legWidth = this.ifElse(this.shouldMutate(PROBABILITY_LEG_WIDTH),
-        this.mutateRealValue(leg.width, MUTATION_STEP_LEG_WIDTH), leg.width);
+        this.mutateRealValue(leg.width, MUTATION_STEP_LEG_WIDTH, LIMIT_LEG_WIDTH), leg.width);
       return {
         leg: new Leg(
           {
@@ -142,9 +146,15 @@ export default class Mutator {
     return { 0: legs.get(0), 1: legs.get(1), 2: legs.get(2), 3: legs.get(3), 4: legs.get(4), 5: legs.get(5) };
   }
 
-  mutateRealValue(realValue, mutationStep) {
+  mutateRealValue(realValue, mutationStep, limit) {
     const step = random.real(-mutationStep, mutationStep);
-    return realValue + step;
+    const res = realValue + step;
+    if (res <= 0) {
+      return realValue;
+    } else if (limit && res > limit) {
+      return limit;
+    }
+    return res;
   }
 
   mutateHipJoint(minX, maxX , minY , maxY, bodyPoints, index) {
