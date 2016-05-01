@@ -85,10 +85,12 @@
         Zuerst wurde ein Ansatz mit einem Quadrat evaluiert, bei diesem stellte sich jedoch die zufällige Bestimmung
         der Punkte als viel schwerer als mit einem Einheitskreis heraus. Der Nachteil unserer gewählten
         Ansatzes ist, dass eine quadratische Form nur angenähert werden kann.
-        Die folgende Abbildung zeigt die Punkte eines Invidiuum mit 6 Körperpunkten: \\
-
-        \input{./graphics/unit-circle-body-points}
-
+        Die folgende Abbildung \ref{fig:kp} zeigt die Punkte eines Invidiuum mit 6 Körperpunkten: \\
+        \begin{figure}[H]
+          \input{./graphics/unit-circle-body-points}
+          \caption{Berechnung Körperpunkt veranschaulicht}
+          \label{fig:kp}
+        \end{figure}
 
   \subsection{Phenotyp\label{sub:Phenotyp}}
     Der Phenotyp stell die Repräentation des Genotyps in der Physik Engine dar.
@@ -220,11 +222,13 @@
 
 
   \section{Ablauf\label{sec:Ablauf}}
-    Der Ablauf der Applikation setzt sich aus mehrere Komponenten zusammen.
+    Der Ablauf der Applikation setzt sich aus mehreren Komponenten zusammen.
     Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen.
-
-    \includegraphics[scale=0.5]{graphics/haupt_simulations_prozess}
-
+    \begin{figure}[H]
+      \includegraphics[scale=0.5]{graphics/haupt_simulations_prozess}
+      \caption{Haupt- und Simulationsprozess}
+      \label{fig:hauptSimuProzesse}
+    \end{figure}
     \subsection{Initiale Polulation\label{sec:Initiale Polulation}}
 
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse wird auf 100 festgelegt,
