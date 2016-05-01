@@ -6,10 +6,35 @@
 
 \chapter{Resultate\label{chap:Resulate}}
 
-\section{Graph}
+\section{Erster Versuch, parameterierbare Steuerung ohne Feedback}
 
-  \input{graphics/fitness-graph}
+  \subsection{Konfiguration}
+      \input{tables/simulation-parameters-first-run-no-feedback.tex}
 
-  \input{graphics/fitness-graph-average-body-points}
+  \subsection{Auswertung}
+    Es ist ein klarer aufwärts Trend zu erkennen bis etwa zur 1000. Generation (siehe Abbildung \ref{fig:graph}).
+    Danach ist ein Abfall der Fitness bei den Individueen zu beobachten.
+    Die Vermutung dabei ist, das der Parcour zu schwierig ist und die Individueen
+    mit der grossen Steigung nicht mehr zurecht kommen. Es wird vermutet das die Implementation,
+    des Feedbacksystem der Steuerung helfen wird. Ausserdem muss für die nächste Simulation
+    die Parameter des Parcours anderst konfiguriert werden.
+    Die maximale Steigung sollte auf 0.5 limitiert werden und der Zuwachs des höchsten Punkt
+    sollte auf 0.02 gestellt werden.
+      \begin{figure}
+        \input{graphics/fitness-graph-first-run-no-feedback}
+        \caption{Bestes Indivuum und Durchschnittliches Individuum}
+        \label{fig:graph}
+      \end{figure}
 
-  \input{tables/simulation-parameters-template.tex}
+  \subsubsection{Körper Punkte}
+    Die Auswertung der Individuuen nach Ihrer Körperpunkte Anzahl ist ernüchternd (siehe Abbildung \ref{fig:graphBp}).
+    Bereits ab der 14. Generation exisitieren nur noch Individueen mit Vier Körper Punkten.
+    Vieleicht ist das ebenfalls auf das fehlende Feedback zurück zuführen. Im besten Fall
+    wurden die Individuuen mit mehr als Vier Körper Punkten der initialen Population unvorteilhaft generiert.
+    Eine weitere Simulation muss zeigen ob Vier Körper Punkten am geeignetsten sind für die bewältigung,
+    der Problemstellung.
+  \begin{figure}
+    \input{graphics/fitness-graph-average-body-points-first-run-no-feedback}
+    \caption{Durchschnittliches Individuum pro Anzahl Körper Punkte}
+    \label{fig:graphBp}
+  \end{figure}
