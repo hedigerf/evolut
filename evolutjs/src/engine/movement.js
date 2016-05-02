@@ -327,8 +327,7 @@ class SetMotor extends Movement {
    * @return {Array<*>} Randomized parameters
    */
   static get random() {
-    const bounds = this.bounds;
-    return [random.integer(...bounds)];
+    return [random.integer(...this.bounds)];
   }
 
   /**
@@ -384,8 +383,7 @@ class SetSpeedTo extends Movement {
    * @return {Array<*>} Randomized parameters
    */
   static get random() {
-    const bounds = this.bounds;
-    return [random.integer(...bounds)];
+    return [random.integer(...this.bounds)];
   }
 
   /**
@@ -501,10 +499,11 @@ function getMovementPredicate(predicateId) {
  * @param {String} id The movement identifier
  * @param {LensDescriptor} lens The lens descriptor
  * @param {Array<*>} [params=[]] The optional paramerter list
+ * @param {FeedbackDescriptor} [feedback] The optional feedback descriptor
  * @return {MovementDescriptor} The movement descriptor
  */
-export function makeMovementDescriptor(id, lens, params = []) {
-  return { id, lens, params };
+export function makeMovementDescriptor(id, lens, params = [], feedback) {
+  return { id, lens, params, feedback };
 }
 
 /**

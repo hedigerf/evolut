@@ -8,17 +8,6 @@ import { clone, evolve } from 'ramda';
 import random from '../../util/random';
 
 /**
- * Determine if this rule should be applied.
- *
- * @protected
- * @param {Number} probability The probability of a mutation
- * @return {Boolean} Should this mutation rule be applied
- */
-export function shouldMutate(probability) {
-  return probability >= random.real(0, 1, true);
-}
-
-/**
  * Represents a mutation rule for a mutator.
  * A rule has a probability and a lens.
  * Every rule must implement a mutate() function which cretes a new genotype.
@@ -70,7 +59,6 @@ export default class MutationRule {
     } else if (limit && result > limit) {
       return limit;
     }
-
     return result;
   }
 
@@ -82,7 +70,7 @@ export default class MutationRule {
    * @return {Boolean} Should this mutation rule be applied
    */
   shouldMutate(probability) {
-    return shouldMutate(probability);
+    return probability >= random.real(0, 1, true);
   }
 
 }

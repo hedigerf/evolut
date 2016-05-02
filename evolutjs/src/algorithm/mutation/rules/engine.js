@@ -7,12 +7,8 @@
 
 import * as L from 'partial.lenses';
 import { compose, curry, defaultTo, evolve, ifElse, over, partial, range } from 'ramda';
-import {
-  getMovement,
-  isCompoundMovement,
-  makeRandomMovementDescriptor
-} from '../../../engine/movement';
-import MutationRule, { shouldMutate } from '../rule';
+import { getMovement, isCompoundMovement, makeRandomMovementDescriptor } from '../../../engine/movement';
+import MutationRule from '../rule';
 import random from '../../../util/random';
 
 /**
@@ -51,6 +47,8 @@ const lensInitial = L.compose(lensDescriptor, L.prop('initial'));
  */
 const lensMovements = L.compose(lensDescriptor, L.prop('movements'));
 
+// TODO clean up the mess below
+
 const lensId = L.prop('id');
 const lensLens = L.prop('lens');
 const lensParams = L.prop('params');
@@ -74,7 +72,7 @@ const mutateCompoundMovement = curry(
 function mutateSingleLens(probabilities, lens) {
 
   const t = (p, c) => (v) => {
-    if (shouldMutate(p)) {
+    if (EngineMutationRule.prototype.shouldMutate(p)) {
       return random.pick(c);
     }
     return v;
@@ -95,19 +93,19 @@ function mutateSingleParams(probabilities, movement) {
     return movement;
   }
 
+  const bounds = getMovement(movement.id).bounds;
+
   switch (movement.id) {
 
     case 'sta':
     case 'sts':
       const step = probabilities.movement[movement.id].step;
-      movement.params = movement.params.map((p) => p + random.real(-step, step));
+      movement.params = movement.params.map((p, i) => EngineMutationRule.prototype.mutateNumeric(p, step, bounds[i]));
       break;
 
     case 'stm':
     case 'utl':
-      movement.params = [
-        random.pick(getMovement(movement.id).bounds)
-      ];
+      movement.params = [random.pick(bounds)];
       break;
 
   }
@@ -144,16 +142,13 @@ function mutateMovements(probabilities, movements) {
   const length = movements.length;
   const mutated = [];
 
-  const probabilityAdd = probabilities.add / length;
-  const probabilityRemove = probabilities.del / length;
-
   for (let i = 0; i < length; i++) {
 
-    if (shouldMutate(probabilityAdd)) {
+    if (EngineMutationRule.prototype.shouldMutate(probabilities.add)) {
       mutated.push(makeRandomMovementDescriptor());
     }
 
-    if (!shouldMutate(probabilityRemove)) {
+    if (!EngineMutationRule.prototype.shouldMutate(probabilities.remove)) {
       mutated.push(mutateMovement(movements[i]));
     }
 
@@ -161,6 +156,8 @@ function mutateMovements(probabilities, movements) {
 
   return mutated;
 }
+
+// TODO clean up the mess above
 
 /**
  * Represents a mutation rule for an engine.
@@ -175,18 +172,18 @@ export default class EngineMutationRule extends MutationRule {
    * @return {EngineMutationOption} The transformation
    */
   static get transformation() {
-    const defaultZero = defaultTo(0);
+    const defaultProbability = defaultTo(0.001);
     return {
-      add: defaultZero,
-      remove: defaultZero,
+      add: defaultProbability,
+      remove: defaultProbability,
       lens: {
-        index: defaultZero,
-        side: defaultZero,
-        type: defaultZero
+        index: defaultProbability,
+        side: defaultProbability,
+        type: defaultProbability
       },
       movement: {
-        id: defaultZero,
-        parameters: defaultZero
+        id: defaultProbability,
+        parameters: defaultProbability
       }
     };
   }

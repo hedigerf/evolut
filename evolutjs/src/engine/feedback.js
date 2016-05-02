@@ -4,7 +4,7 @@
  * @module engine/feedback
  */
 
-import { curry, when } from 'ramda';
+import { curry, props, when } from 'ramda';
 import Engine from './engine';
 
 /**
@@ -34,6 +34,13 @@ export const FeedbackAction = {
 };
 
 /**
+ * Holds all currently registered events.
+ *
+ * @type {Map<String, function>}
+ */
+const events = new Map();
+
+/**
  * Tests if an event concerns a list of bodies.
  *
  * @protected
@@ -50,18 +57,11 @@ const concerns = curry(
 /**
  * Get the lower legs of a individual.
  *
- * @param  {Individual} individual
+ * @param {Individual} individual
  * @return {Array<p2.Body>}
  */
 export function getLowerLegs(individual) {
-  return [
-    individual.bodies[3],
-    individual.bodies[5],
-    individual.bodies[7],
-    individual.bodies[9],
-    individual.bodies[11],
-    individual.bodies[13]
-  ];
+  return props([3, 5, 7, 9, 11, 13], individual.bodies);
 }
 
 /**
@@ -116,9 +116,9 @@ export default class Feedback {
   /**
    * Register an engine feedback event.
    *
-   * @param {FeedbackDescriptor} descriptor
-   * @param {p2.World} world
-   * @param {Phenotype} phenotype
+   * @param {FeedbackDescriptor} descriptor The feedback descriptor
+   * @param {p2.World} world The world to attach the event to
+   * @param {Phenotype} phenotype The phenotype
    * @param {Array<p2.Body>} bodies
    */
   static register(descriptor, world, phenotype, bodies) {
@@ -127,7 +127,24 @@ export default class Feedback {
     const action = this.getEventAction(descriptor);
     const actOn = when(concerns(bodies), action(world, phenotype));
 
+    events.set(phenotype.identifier + type, actOn);
+
     world.on(type, actOn);
+  }
+
+  /**
+   * Removes a registered engine feedback event.
+   *
+   * @param {FeedbackDescriptor} descriptor The feedback descriptor
+   * @param {p2.World} world The world to attach the event to
+   * @param {Phenotype} phenotype The phenotype
+   */
+  static unregister(descriptor, world, phenotype) {
+
+    const type = this.getEventType(descriptor);
+    const feedback = events.get(phenotype.identifier + type);
+
+    world.off(type, feedback);
   }
 
 }

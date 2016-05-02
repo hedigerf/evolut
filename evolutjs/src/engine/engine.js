@@ -38,12 +38,14 @@ export default class Engine {
    * @return {Phenotype}
    */
   static step(phenotype, time, event) { // eslint-disable-line no-unused-vars
+
     const descriptor = nth(phenotype.engine.current, phenotype.engine.descriptor.movements);
     const movement = resolveMovementDescriptor(descriptor);
     const moved = movement(phenotype, time);
 
     if (moved) {
       phenotype.engine.current = this.nextState(phenotype);
+      // TODO register feedback
     }
 
     return phenotype;

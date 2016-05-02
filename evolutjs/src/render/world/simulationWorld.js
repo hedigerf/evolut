@@ -7,7 +7,6 @@
 /* eslint-env browser */
 
 import * as L from 'partial.lenses';
-import Feedback, { getLowerLegs } from '../../engine/feedback';
 import { List, Map } from 'immutable';
 import config from '../../app/config';
 import Engine from '../../engine/engine';
@@ -194,7 +193,6 @@ export default class SimulationWorld extends Game {
 
           if (this.currentTime === WORLD_START_TIME + stepTime) {
             Engine.initialStep(individual);
-            Feedback.register({type: 1, action: 1}, this.world, individual, getLowerLegs(individual));
           } else {
             Engine.step(individual, this.currentTime);
           }
