@@ -46,8 +46,8 @@ const defaultConfig = {
         type: 0.01
       },
       movement: {
-        id: 0.01,
-        params: 0.1,
+        id: 0.001,
+        params: 0.5,
         sts: {
           step: 0.01
         },

@@ -48,50 +48,26 @@ const concerns = curry(
 );
 
 /**
+ * Get the lower legs of a individual.
+ *
+ * @param  {Individual} individual
+ * @return {Array<p2.Body>}
+ */
+export function getLowerLegs(individual) {
+  return [
+    individual.bodies[3],
+    individual.bodies[5],
+    individual.bodies[7],
+    individual.bodies[9],
+    individual.bodies[11],
+    individual.bodies[13]
+  ];
+}
+
+/**
  * Represents a feedback event.
  */
 export default class Feedback {
-
-  /**
-   * This callback is fired when an impact event was triggered in the current world.
-   *
-   * @param {p2.World} world The world
-   * @param {Phenotype} phenotype The phenotype
-   * @param {p2.Event} event The event object
-   */
-  static onImpact(world, phenotype, event) {
-    console.log(event.type + ': ' + phenotype.identifier);
-    Engine.step(phenotype, world.currentTime);
-  }
-
-  /**
-   * Register a callback when a phenotype is involved in a collision.
-   *
-   * @param {p2.World} world The world
-   * @param {Phenotype} phenotype The phenotype
-   */
-  static register(world, phenotype) {
-
-    // Get the lower leg bodies
-    const lowerLegs = [
-      phenotype.bodies[3],
-      phenotype.bodies[5],
-      phenotype.bodies[7],
-      phenotype.bodies[9],
-      phenotype.bodies[11],
-      phenotype.bodies[13]
-    ];
-
-    world.on('impact', (event) => {
-
-      // Check if the phenotype body is involved in this contact event.
-      if (lowerLegs.find((b) => event.bodyA === b || event.bodyB === b)) {
-        this.onImpact(event, world, phenotype);
-      }
-
-    });
-
-  }
 
   /**
    * @param {p2.World} world The world
@@ -99,7 +75,10 @@ export default class Feedback {
    * @return {function(event: Object)}
    */
   static step(world, phenotype) {
-    return (event) => Engine.step(phenotype, world.currentTime, event);
+    return (event) => {
+      console.log(event.type + ': ' + phenotype.identifier);
+      Engine.step(phenotype, world.currentTime, event);
+    };
   }
 
   /**

@@ -95,17 +95,11 @@ function mutateSingleParams(probabilities, movement) {
     return movement;
   }
 
-  const StepMap = {
-    sta: 0.01,
-    sts: 0.1
-  };
-
-  const step = StepMap[movement.id];
-
   switch (movement.id) {
 
     case 'sta':
     case 'sts':
+      const step = probabilities.movement[movement.id].step;
       movement.params = movement.params.map((p) => p + random.real(-step, step));
       break;
 

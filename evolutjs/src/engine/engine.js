@@ -34,9 +34,10 @@ export default class Engine {
    *
    * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype
    * @param {Number} time The current world time
+   * @param {Object} [event] The event that caused the step
    * @return {Phenotype}
    */
-  static step(phenotype, time) {
+  static step(phenotype, time, event) { // eslint-disable-line no-unused-vars
     const descriptor = nth(phenotype.engine.current, phenotype.engine.descriptor.movements);
     const movement = resolveMovementDescriptor(descriptor);
     const moved = movement(phenotype, time);
