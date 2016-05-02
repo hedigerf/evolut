@@ -12,12 +12,20 @@ import {
   generateHipJointPosition,
   generateRandomPolygonPoint
 } from '../../individual/body';
+import { defaultTo } from 'ramda';
 import inside from 'point-in-polygon';
 import { List } from 'immutable';
 import MutationRule from '../rule';
 
-const PROBABILITY_BODY_POINT = 0.1;
-const PROBABILITY_HIP_JOINT = 0.1;
+/**
+ * Options for body mutation.
+ *
+ * @typedef {Object} BodyMutationOption
+ * @property {Object} bodyPoint
+ * @property {Number} bodyPoint.probability
+ * @property {Object} hipJoint
+ * @property {Number} hipJoint.probability
+ */
 
 /**
  * Represents a mutation rule for a body.
@@ -25,6 +33,22 @@ const PROBABILITY_HIP_JOINT = 0.1;
  * @extends {MutationRule}
  */
 export default class BodyMutationRule extends MutationRule {
+
+  /**
+   * Return the option transformation.
+   *
+   * @return {BodyMutationOption} The transformation
+   */
+  static get transformation() {
+    return {
+      bodyPoint: {
+        probability: defaultTo(0.1)
+      },
+      hipJoint: {
+        probability: defaultTo(0.1)
+      }
+    };
+  }
 
   /**
    * Mutates a body.
@@ -54,10 +78,12 @@ export default class BodyMutationRule extends MutationRule {
    */
   tryMutateBodyPoints(oldBodyPoints, bodyPointsCount) {
 
+    const probability = this.options.bodyPoint.probability;
     const sectorAngle = calcSectorAngle(bodyPointsCount);
-    const bodyPoints = oldBodyPoints.map((bodyPoint, index) => {
 
-      if (this.shouldMutate(PROBABILITY_BODY_POINT)) {
+    return oldBodyPoints.map((bodyPoint, index) => {
+
+      if (this.shouldMutate(probability)) {
         const startAngle = index * sectorAngle;
         const endAngle = startAngle + sectorAngle;
         const randomBodyPoint = generateRandomPolygonPoint(startAngle, endAngle);
@@ -66,8 +92,6 @@ export default class BodyMutationRule extends MutationRule {
 
       return bodyPoint;
     });
-
-    return bodyPoints;
   }
 
   /**
@@ -80,10 +104,12 @@ export default class BodyMutationRule extends MutationRule {
    */
   tryMutateHipJoints(bodyPoints, oldHipJointPositions) {
 
+    const probability = this.options.hipJoint.probability;
     const polygon = List(bodyPoints);
     const { minX, minY, maxX, maxY } = calculatePolygonBounds(polygon);
-    const positions = oldHipJointPositions.map((hipJointPosition, index) => {
-      if (this.shouldMutate(PROBABILITY_HIP_JOINT)) {
+
+    return oldHipJointPositions.map((hipJointPosition, index) => {
+      if (this.shouldMutate(probability)) {
         return this.mutateHipJoint(minX, maxX, minY, maxY, bodyPoints, index);
       }
       if (!inside(hipJointPosition, bodyPoints)) {
@@ -91,8 +117,6 @@ export default class BodyMutationRule extends MutationRule {
       }
       return hipJointPosition;
     });
-
-    return positions;
   }
 
   /**

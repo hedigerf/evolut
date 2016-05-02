@@ -86,7 +86,7 @@ const defaultConfig = {
     mustMovement: 0.05,
     render: true,
     relaxation: 4,
-    runDuration: 3,
+    runDuration: 10,
     solo: false,
     stepTime: 0.016,
     timeOut: true,

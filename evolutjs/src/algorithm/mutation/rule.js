@@ -4,7 +4,7 @@
  * @module algorithm/mutation/rule
  */
 
-import { clone } from 'ramda';
+import { clone, evolve } from 'ramda';
 import random from '../../util/random';
 
 /**
@@ -28,17 +28,19 @@ export default class MutationRule {
   /**
    * Construct a muation rule.
    *
-   * @param {Number} probability The probability a a genotype is mutated
+   * @param {Object} [options={}] The mutation options
    */
-  constructor(probability) {
+  constructor(options = {}) {
+    this.options = evolve(this.constructor.transformation, options);
+  }
 
-    /**
-     * The probaility that this rule is applied.
-     *
-     * @protected
-     * @type {Number}
-     */
-    this.probability = probability;
+  /**
+   * Return the option transformation.
+   *
+   * @return {Object} The transformation
+   */
+  static get transformation() {
+    return {};
   }
 
   /**
@@ -72,19 +74,6 @@ export default class MutationRule {
    */
   shouldMutate(probability) {
     return shouldMutate(probability);
-  }
-
-  /**
-   * Try to mutate a genotype with this rule.
-   *
-   * @param {Genotype} genotype The genotype to be mutated
-   * @return {Genotype} The mutated genotype
-   */
-  tryMutate(genotype) {
-    if (this.shouldMutate(this.probability)) {
-      return this.mutate(genotype);
-    }
-    return genotype;
   }
 
 }

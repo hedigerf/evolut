@@ -7,7 +7,6 @@
 import * as L from 'partial.lenses';
 import { always, curry, either, ifElse, mapObjIndexed, merge, view } from 'ramda';
 import { IdentifiableStatic } from '../../types/identifiable';
-import { Mutatable } from '../../types/mutatable';
 import { SeedableStatic } from '../../types/seedable';
 
 /**
@@ -31,15 +30,6 @@ const extractOption = (key) => either(
  * @return {PartialGenotype} The instance of a partial genotype
  */
 const buildType = (T, option) => new T(option);
-
-/**
- * Mutates a partial genotype.
- *
- * @param {Mutatable} T The mutatable type
- * @param {Object} option The mutation options
- * @return {Mutatable} The mutated object
- */
-const mutateType = (T, option) => T.mutate(option);
 
 /**
  * Seeds a partial genotype.
@@ -93,10 +83,9 @@ const processGenotypeParts = curry(
 /**
  * Base class of a genotype.
  *
- * @extends {Mutatable}
  * @extends {SeedableStatic}
  */
-export default class Genotype extends Mutatable(SeedableStatic()) {
+export default class Genotype extends SeedableStatic() {
 
   /**
    * Default genotype constructor.
@@ -149,16 +138,6 @@ export default class Genotype extends Mutatable(SeedableStatic()) {
    */
   blueprint() {
     return JSON.stringify(this);
-  }
-
-  /**
-   * Mutates a genotype.
-   *
-   * @param {Object} options
-   * @return {Genotype}
-   */
-  mutate(options) {
-    return processGenotypeParts(mutateType, options, this.constructor.parts);
   }
 
 }

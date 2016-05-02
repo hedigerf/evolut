@@ -18,7 +18,7 @@ import random from '../../../util/random';
 /**
  * Engine mutation probabilities.
  *
- * @typedef {Object} EngineMutationProbabilities
+ * @typedef {Object} EngineMutationOption
  * @property {Number} add
  * @property {Number} remove
  * @property {Object} lens
@@ -176,35 +176,13 @@ function mutateMovements(probabilities, movements) {
 export default class EngineMutationRule extends MutationRule {
 
   /**
-   * Construct an engine mutation rule.
+   * Return the option transformation.
    *
-   * @param {EngineMutationProbabilities} [probabilities={}]
+   * @return {EngineMutationOption} The transformation
    */
-  constructor(probabilities) {
-
-    super(1);
-
-    /**
-     * Mutation probabilities.
-     *
-     * @type {EngineMutationProbabilities}
-     */
-    this.probabilities = this.initializeProbabilities(probabilities);
-  }
-
-  /**
-   * Initialize the probability property.
-   * All probabilities default to zero.
-   *
-   * @private
-   * @param  {EngineMutationProbabilities} probabilities
-   * @return {EngineMutationProbabilities}
-   */
-  initializeProbabilities(probabilities) {
-
+  static get transformation() {
     const defaultZero = defaultTo(0);
-    const transformation = {
-      probability: defaultZero,
+    return {
       add: defaultZero,
       remove: defaultZero,
       lens: {
@@ -217,8 +195,6 @@ export default class EngineMutationRule extends MutationRule {
         parameters: defaultZero
       }
     };
-
-    return evolve(transformation, probabilities);
   }
 
   /**
@@ -232,7 +208,7 @@ export default class EngineMutationRule extends MutationRule {
 
     const mutated = super.mutate(genotype);
 
-    const mutateDescriptor = partial(mutateMovements, [this.probabilities]);
+    const mutateDescriptor = partial(mutateMovements, [this.options]);
     const mutateEngine = compose(
       over(lensInitial, mutateDescriptor),
       over(lensMovements, mutateDescriptor)

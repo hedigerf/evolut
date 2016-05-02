@@ -4,49 +4,74 @@
  * @module algorithm/mutation/mutator
  */
 
+import { compose, reduce } from 'ramda';
 import BodyMutationRule from './rules/body';
-import { compose } from 'ramda';
+import config from '../../app/config';
 import EngineMutationRule from './rules/engine';
 import Individual from '../individual/individual';
 import LegMutationRule from './rules/leg';
 import Population from '../population/population';
 
-const ruleBody = new BodyMutationRule();
-const ruleLeg = new LegMutationRule();
-const ruleEngine = new EngineMutationRule({
-  add: 0.01,
-  del: 0.01,
-  lens: {
-    index: 0.01,
-    side: 0.01,
-    type: 0.01
-  },
-  movement: {
-    id: 0.01,
-    parameters: 0.1
-  }
-});
+/**
+ * Rule for a body mutation.
+ *
+ * @type {BodyMutationRule}
+ */
+const ruleBody = new BodyMutationRule(config('mutation:body'));
 
+/**
+ * Rule for a leg mutation.
+ *
+ * @type {LegMutationRule}
+ */
+const ruleLeg = new LegMutationRule(config('mutation:leg'));
+
+/**
+ * Mutation rule for an individual's engine.
+ *
+ * @param {EngineMutationRule}
+ */
+const ruleEngine = new EngineMutationRule(config('mutation:engine'));
+
+/**
+ * These rules are applied to a genotype.
+ * Each rule returns a mutated version where some part was modified.
+ *
+ * @type {Array<Mutation>}
+ */
 const rules = [ruleBody, ruleLeg, ruleEngine];
 
 /**
  * Returns a new instance of an individual.
  *
- * @function
  * @param {Object} genotype A genotype of an individual
  * @return {Individual} An instatitated Individual
  */
-const instantiate = (genotype) => new Individual(genotype);
+function instantiate(genotype) {
+  return new Individual(genotype);
+}
+
+/**
+ * Returns a mutated genotype.
+ *
+ * @param {Genotype} genotype
+ * @param {MutationRule} rule
+ * @return {Genotype}
+ */
+function mutate(genotype, rule) {
+  return rule.mutate(genotype);
+}
 
 /**
  * Applies a list of mutation rules to a genotype.
  * Returns a mutated genotype.
  *
- * @function
  * @param {Array<MutationRule>} rules A list of mutation rules
  * @return {function(Individual): Object} A mutation function
  */
-const applyMutationRules = (rules) => (genotype) => rules.reduce((mutated, rule) => rule.tryMutate(mutated), genotype);
+function applyMutationRules(rules) {
+  return (genotype) => reduce(mutate, genotype, rules);
+}
 
 /**
  * Returns a mutated individual.
@@ -58,7 +83,7 @@ const applyMutationRules = (rules) => (genotype) => rules.reduce((mutated, rule)
 const mutateGenotype = compose(instantiate, applyMutationRules(rules));
 
 /**
- * Represents a mutator for genotypes.
+ * Represents a mutator which mutates a selected population.
  */
 export default class Mutator {
 

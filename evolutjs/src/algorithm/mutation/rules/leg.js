@@ -5,17 +5,22 @@
  * @see algorithm/mutation/rule
  */
 
+import { defaultTo, mapObjIndexed } from 'ramda';
 import Leg from '../../individual/leg';
-import { map } from 'ramda';
 import MutationRule from '../rule';
 
-const PROBABILITY_LEG_HEIGHT = 0.1;
-const PROBABILITY_LEG_HEIGHT_FACTOR = 0.1;
-const PROBABILITY_LEG_WIDTH = 0.1;
-
-const MUTATION_STEP_LEG_HEIGHT = 0.05;
-const MUTATION_STEP_LEG_HEIGHT_FACTOR = 0.05;
-const MUTATION_STEP_LEG_WIDTH = 0.01;
+/**
+ * @typedef {Object} LegMutationOption
+ * @property {Object} height
+ * @property {Number} height.probability
+ * @property {Number} height.step
+ * @property {Object} heightFactor
+ * @property {Number} heightFactor.probability
+ * @property {Number} heightFactor.step
+ * @property {Object} width
+ * @property {Number} width.probability
+ * @property {Number} width.step
+ */
 
 /**
  * Represents a mutation rule for a body.
@@ -23,6 +28,32 @@ const MUTATION_STEP_LEG_WIDTH = 0.01;
  * @extends {MutationRule}
  */
 export default class LegMutationRule extends MutationRule {
+
+  /**
+   * Return the option transformation.
+   *
+   * @return {LegMutationOption} The transformation
+   */
+  static get transformation() {
+
+    const defaultProbability = defaultTo(0.1);
+    const defaultStep = defaultTo(0.05);
+
+    return {
+      height: {
+        probability: defaultProbability,
+        step: defaultStep
+      },
+      heightFactor: {
+        probability: defaultProbability,
+        step: defaultStep
+      },
+      width: {
+        probability: defaultProbability,
+        step: defaultTo(0.1)
+      }
+    };
+  }
 
   /**
    * Mutates a body.
@@ -34,10 +65,8 @@ export default class LegMutationRule extends MutationRule {
   mutate(genotype) {
 
     const mutated = super.mutate(genotype);
-    const body = mutated.body;
 
-    body.bodyPoints = this.tryMutateBodyPoints(body.bodyPoints, body.bodyPointsCount);
-    body.hipJointPositions = this.tryMutateHipJoints(body.bodyPoints, body.hipJointPositions);
+    mutated.legs = this.tryMutateLegs(mutated.legs);
 
     return mutated;
   }
@@ -51,30 +80,34 @@ export default class LegMutationRule extends MutationRule {
    */
   tryMutateLegs(legs) {
 
-    const m = (p, s) => (v) => {
-      if (this.shouldMutate(p)) {
-        return this.mutateNumeric(v, s);
+    const self = this;
+
+    const mutateProperty = (o) => (v) => {
+      if (self.shouldMutate(o.probability)) {
+        return self.mutateNumeric(v, o.step);
       }
       return v;
     };
 
-    return map(({ hipJoint, leg }) => {
+    const mutateHeight = mutateProperty(self.options.height);
+    const mutateHeightFactor = mutateProperty(self.options.heightFactor);
+    const mutateWidth = mutateProperty(self.options.width);
 
-      const height = m(PROBABILITY_LEG_HEIGHT, MUTATION_STEP_LEG_HEIGHT, leg.height);
-      const heightFactor = m(PROBABILITY_LEG_HEIGHT_FACTOR, MUTATION_STEP_LEG_HEIGHT_FACTOR, leg.heightFactor);
-      const width = m(PROBABILITY_LEG_WIDTH, MUTATION_STEP_LEG_WIDTH, leg.width);
+    const mutateLegs = mapObjIndexed(({ hipJoint, leg }) => {
 
       return {
         leg: new Leg({
           mass: leg.mass,
-          height,
-          heightFactor,
-          width
+          height: mutateHeight(leg.height),
+          heightFactor: mutateHeightFactor(leg.heightFactor),
+          width: mutateWidth(leg.width)
         }),
         joint: hipJoint
       };
 
-    }, legs);
+    });
+
+    return mutateLegs(legs);
   }
 
 }

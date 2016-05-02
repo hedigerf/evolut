@@ -14,12 +14,6 @@ describe('Genotype', () => {
     });
   });
 
-  describe('mutate', () => {
-    it('should be mutatable', () => {
-      chai.expect(new Genotype()).to.respondTo('mutate');
-    });
-  });
-
   describe('seed', () => {
     it('should be seedable', () => {
       chai.expect(Genotype).itself.to.respondTo('seed');
