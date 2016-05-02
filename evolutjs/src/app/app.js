@@ -14,16 +14,16 @@ import { path as appRoot } from 'app-root-path';
 import config from './config';
 import { curry } from 'ramda';
 import fs from 'graceful-fs';
+import { getLogger } from './log.js';
 import InitialPopulationGenerator from '../algorithm/population/initialPopulationGenerator';
 import { load } from '../util/path';
-import log4js from 'log4js';
 import Mutator from '../algorithm/mutation/mutator';
 import ParcourGenerator from '../algorithm/parcour/parcourGenerator';
 import Reporter from '../report/reporter';
 import TournamentBasedSelectionStrategy from '../algorithm/selection/tournamentBasedSelectionStrategy';
 
 
-const logger = log4js.getLogger('app');
+const logger = getLogger('app', 'main');
 const index = 'file://' + appRoot + '/index.html';
 const workerCount = config('workers.count');
 const populationSize = config('algorithm.populationSize');
@@ -101,6 +101,7 @@ function createInitalPopulation() {
     const initialPopulation = JSON.parse(populationStr);
     const shrinked =
       List(initialPopulation.individuals).sortBy((individual) => individual.fitness).reverse().take(populationSize);
+    generationCounter = initialPopulation.individuals;
     return { generationCount: initialPopulation.generationCount, individuals: shrinked};
   } else {
     const initialPopulationGenerator = new InitialPopulationGenerator(
@@ -112,9 +113,9 @@ function createInitalPopulation() {
 }
 
 let individuals = List();
-ipcMain.on('work-finished', (event, individualsStringified) => {
+ipcMain.on('work-finished', (event, individualsStringified, uuid) => {
   finishedWorkCounter++;
-  debug(logger, 'work finished. finishedWorkCounter: ' + finishedWorkCounter);
+  debug(logger, 'received work finished from ' + uuid + '. finishedWorkCounter: ' + finishedWorkCounter);
   const partialPopulation = individualsStringified.map((x) => JSON.parse(x));
   individuals = individuals.concat(partialPopulation);
   if (finishedWorkCounter % workerCount === 0) {

@@ -58,6 +58,7 @@ const defaultConfig = {
     },
     leg: {
       height: {
+        limit: 1.5,
         probability: 0.1,
         step: 0.05
       },
@@ -66,6 +67,7 @@ const defaultConfig = {
         step: 0.05
       },
       width: {
+        limit: 0.25,
         probability: 0.1,
         step: 0.01
       }

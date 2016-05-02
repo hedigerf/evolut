@@ -85,10 +85,12 @@
         Zuerst wurde ein Ansatz mit einem Quadrat evaluiert, bei diesem stellte sich jedoch die zufällige Bestimmung
         der Punkte als viel schwerer als mit einem Einheitskreis heraus. Der Nachteil unserer gewählten
         Ansatzes ist, dass eine quadratische Form nur angenähert werden kann.
-        Die folgende Abbildung zeigt die Punkte eines Invidiuum mit 6 Körperpunkten: \\
-
-        \input{./graphics/unit-circle-body-points}
-
+        Die folgende Abbildung \ref{fig:kp} zeigt die Punkte eines Invidiuum mit 6 Körperpunkten: \\
+        \begin{figure}[H]
+          \input{./graphics/unit-circle-body-points}
+          \caption{Berechnung Körperpunkt veranschaulicht}
+          \label{fig:kp}
+        \end{figure}
 
   \subsection{Phenotyp\label{sub:Phenotyp}}
     Der Phenotyp stell die Repräentation des Genotyps in der Physik Engine dar.
@@ -220,7 +222,13 @@
 
 
   \section{Ablauf\label{sec:Ablauf}}
-
+    Der Ablauf der Applikation setzt sich aus mehreren Komponenten zusammen.
+    Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen.
+    \begin{figure}[H]
+      \includegraphics[scale=0.5]{graphics/haupt_simulations_prozess}
+      \caption{Haupt- und Simulationsprozess}
+      \label{fig:hauptSimuProzesse}
+    \end{figure}
     \subsection{Initiale Polulation\label{sec:Initiale Polulation}}
 
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse wird auf 100 festgelegt,
@@ -235,7 +243,7 @@
       Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours, das heisst es werden höhere Steigungen und ein höherer Punkt vorkommen.
       Dazu muss eine Klasse erstellt werden (ParcourGenerator), welche mit Hilfe von Obergrenzen von Werten einen Parcour generieren kann.
       Wie unter \ref{sec:Konfiguration} erwähnt, wird je nach Einstellung der Parcour nach jeder Generation neu generiert oder er wird bis ein Abbruchkriterum
-      eintritt, wiederverwendet.
+      eintritt, wiederverwendet. Der Parcour wird im ParcourGenerator generiert (Haupt Prozess) und von den jeweiligen Worker mit Hilfe vom ParcourCreator in der Physik Engine erstellt.
 
     \subsection{Simulation}
       Nachdem eine neue Population und ein neuer Parcour erstellt worden ist.
@@ -256,14 +264,14 @@
         \item Fitness Graph Average Report: Enthält Koordinaten um einen Graph über die durchschnittliche Fitness pro Generation zu erstellen.
         \item Fitness Graph Best Report: Enthält Koordinaten um einen Graph über das beste Individum der Generation zu erstellen.
         \item Genotype Blue Print Report: Enthält pro Generation ein JSON das Informationen über die ganze Population enthält.
-        \item Fitness Grapg Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit Body Points Anzahl x.
+        \item Fitness Graph Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit Body Points Anzahl x.
         Ansonsten gleich wie Fitness Graph Average Report.
       \end{itemize}
 
 
     \subsection{Selektion\label{sec:Selektion}}
 
-      Als Seleketionsstrategie wird Tournament-based Selection eingesetzt. Tournamend-based Selection hat den Vorteil,
+      Als Seleketionsstrategie wird Tournament-based Selection eingesetzt \ref{par:Turnier}. Tournamend-based Selection hat den Vorteil,
       dass die Diversität erhalten bleibt, bei gleichzeitig guter Selektion der fittesten Individuen.
 
       \subsubsection{Hypothese Selektionsstratgegie\label{sub:Hypothese Selektionsstratgegie}}
@@ -276,10 +284,14 @@
 
       Auf die Selektionsstrategie folgt nun die Mutation der Individuen.
       Bei der Mutation wird über jede Eigenschaft des Individuums iteriert und
-      diese wird mit einer bestimmten Wahrscheinlichkeit verändert. Die Position eines Beines,
-      wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
+      diese wird mit einer bestimmten Wahrscheinlichkeit (PROBABILITY) und um einen bestimmten Wert (STEP) verändert.
+      PROBABILITY kann Werte zwischen 0 und 1 annehmen, STEP hat keine Einschränkungen.
+      Nachdem für jedes Attribut diese Werte definiert worden sind, kann die Mutation statt finden.
+      Grenzen wurden definiert, um nicht gewinnbringende Lösung zu verhindern.
+      Solch eine Limite wurde jeweils für die Länge und Breite der Beine aufgestellt.
+      Die Position eines Beins wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
       dass ein Bein ausserhalb des Körper ist, wird die Position zufällig neu bestimmt.
 
     \subsection{Wiederholungen}
-      Alle Schritte (ausser die Generiung der initialen Population) werden solange ausgeführt,
+      Alle Schritte (ausser die Generierung der initialen Population) werden solange ausgeführt,
       bis ein zufriedenstellendes Resultat gefunden wird.

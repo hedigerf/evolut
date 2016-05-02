@@ -12,12 +12,14 @@ import MutationRule from '../rule';
 /**
  * @typedef {Object} LegMutationOption
  * @property {Object} height
+ * @property {Number} height.limit
  * @property {Number} height.probability
  * @property {Number} height.step
  * @property {Object} heightFactor
  * @property {Number} heightFactor.probability
  * @property {Number} heightFactor.step
  * @property {Object} width
+ * @property {Number} width.limit
  * @property {Number} width.probability
  * @property {Number} width.step
  */
@@ -41,6 +43,7 @@ export default class LegMutationRule extends MutationRule {
 
     return {
       height: {
+        limit: defaultTo(1.5),
         probability: defaultProbability,
         step: defaultStep
       },
@@ -49,6 +52,7 @@ export default class LegMutationRule extends MutationRule {
         step: defaultStep
       },
       width: {
+        limit: defaultTo(0.25),
         probability: defaultProbability,
         step: defaultTo(0.1)
       }
@@ -84,7 +88,7 @@ export default class LegMutationRule extends MutationRule {
 
     const mutateProperty = (o) => (v) => {
       if (self.shouldMutate(o.probability)) {
-        return self.mutateNumeric(v, o.step);
+        return self.mutateNumeric(v, o.step, o.limit);
       }
       return v;
     };

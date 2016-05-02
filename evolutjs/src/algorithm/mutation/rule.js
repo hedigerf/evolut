@@ -59,10 +59,19 @@ export default class MutationRule {
    *
    * @param {Number} value The current value
    * @param {Number} step The maximum difference
+   * @param {Number} [limit] The limit to adhere to
    * @return {Number} The mutated value
    */
-  mutateNumeric(value, step) {
-    return value + random.real(-step, step, true);
+  mutateNumeric(value, step, limit) {
+    const result = value + random.real(-step, step, true);
+
+    if (result <= 0) {
+      return value;
+    } else if (limit && result > limit) {
+      return limit;
+    }
+
+    return result;
   }
 
   /**

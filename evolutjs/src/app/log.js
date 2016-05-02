@@ -4,18 +4,53 @@
  * @module app/log
  */
 
-import { path as appRoot } from 'app-root-path';
 import log4js from 'log4js';
-import path from 'path';
+import { once } from 'ramda';
 
-/**
- * Path to the default configuration file.
- *
- * @type {String}
- */
-const defaultCondfigurationFile = path.join(appRoot, 'config/log4js.json');
+const configureOnce = once((uuid) => {
+  if (!uuid) {
+    throw 'Loger cant be configured, missing uuid';
+  }
+  configure(uuid);
+});
 
 // Load default configuration
-log4js.configure(defaultCondfigurationFile);
+function configure(uuid) {
 
-export default log4js;
+  log4js.configure({
+    appenders: [
+      {
+        type: 'file',
+        filename: 'logs/evolutjs_' + uuid + '_full.log',
+        maxLogSize: 204800,
+        backups: 3
+      },
+      {
+        type: 'logLevelFilter',
+        level: 'ERROR',
+        appender: {
+          type: 'file',
+          filename: 'logs/evolutjs_' + uuid + '_errors.log'
+        }
+      },
+      {
+        type: 'console',
+        layout: {
+          type: 'basic'
+        }
+      }
+    ],
+    levels: {
+      '[all]': 'DEBUG'
+    },
+    replaceConsole: true
+  });
+
+}
+
+
+export function getLogger(name, uuid) {
+  configureOnce(uuid);
+  return log4js.getLogger(name);
+
+}
