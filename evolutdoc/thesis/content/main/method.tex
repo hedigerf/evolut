@@ -223,7 +223,8 @@
 
   \section{Ablauf\label{sec:Ablauf}}
     Der Ablauf der Applikation setzt sich aus mehreren Komponenten zusammen.
-    Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen.
+    Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen (siehe Abbildung \ref{fig:hauptSimuProzesse}).
+    Unter \ref{sub:domMod} sind die jeweiligen Zusammenhänge der Klassen und Objekte ausführlicher beschrieben.
     \begin{figure}[H]
       \includegraphics[scale=0.5]{graphics/haupt_simulations_prozess}
       \caption{Haupt- und Simulationsprozess}
@@ -295,3 +296,16 @@
     \subsection{Wiederholungen}
       Alle Schritte (ausser die Generierung der initialen Population) werden solange ausgeführt,
       bis ein zufriedenstellendes Resultat gefunden wird.
+    \subsection{Domänen Model\label{sub:domMod}}
+      Das Domänenmodell beschreibt den Zusammenhang der verschiedenen Klassen und Objekten.
+      Abbildung \ref{fig:mainProcess} beschreibt den Haupt- und Abbildung \ref{fig:simulationProcess} den Simulationsprozess.
+      \begin{figure}[H]
+        \includegraphics[scale=0.8]{graphics/main_process}
+        \caption{Domänen Modell, Hauptprozess}
+        \label{fig:mainProcess}
+      \end{figure}
+      \begin{figure}[H]
+        \includegraphics[scale=0.8]{graphics/main_process}
+        \caption{Domänen Modell, Simulationsprozess}
+        \label{fig:simulationProcess}
+      \end{figure}

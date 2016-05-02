@@ -12,22 +12,23 @@
       \input{tables/simulation-parameters-first-run-no-feedback.tex}
 
   \subsection{Auswertung}
-    Es ist ein klarer aufwärts Trend zu erkennen bis etwa zur 1000. Generation (siehe Abbildung \ref{fig:graph}).
+    Es ist ein klarer aufwärts Trend zu erkennen bis etwa zur 1000. Generation (siehe Abbildung \ref{fig:graphFirst}).
     Danach ist ein Abfall der Fitness bei den Individueen zu beobachten.
     Die Vermutung dabei ist, das der Parcour zu schwierig ist und die Individueen
-    mit der grossen Steigung nicht mehr zurecht kommen. Es wird vermutet das die Implementation,
-    des Feedbacksystem der Steuerung helfen wird. Ausserdem muss für die nächste Simulation
-    die Parameter des Parcours anderst konfiguriert werden.
+    mit der grossen Steigung nicht mehr zurecht kommen. Die Ausreisser sind dadurch zu erklären,
+    das ein bestimmer Parcour sehr einfach für die Individuuen zu bewältigen war oder eben Ihnen Schwierigkeiten bereitet hat.
+    Es wird vermutet das die Implementation, des Feedbacksystem der Steuerung helfen wird.
+    Ausserdem muss für die nächste Simulation die Parameter des Parcours anderst konfiguriert werden.
     Der Zuwachs der Steigung sollte auf 0.01 limitiert werden und der Zuwachs des höchsten Punktes
     sollte auf 0.02 gestellt werden.
       \begin{figure}
         \input{graphics/fitness-graph-first-run-no-feedback}
-        \caption{Bestes Indivuum und Durchschnittliches Individuum}
-        \label{fig:graph}
+        \caption{Bestes Indivuum und Durchschnittliches Individuum, Zweiter Versuch}
+        \label{fig:graphFirst}
       \end{figure}
 
   \subsubsection{Körper Punkte}
-    Die Auswertung der Individuuen nach Ihrer Körperpunkte Anzahl ist ernüchternd (siehe Abbildung \ref{fig:graphBp}).
+    Die Auswertung der Individuuen nach Ihrer Körperpunkte Anzahl ist ernüchternd (siehe Abbildung \ref{fig:graphBpFirst}).
     Bereits ab der 14. Generation exisitieren nur noch Individueen mit Vier Körper Punkten.
     Vieleicht ist das ebenfalls auf das fehlende Feedback zurück zuführen. Im besten Fall
     wurden die Individuuen mit mehr als Vier Körper Punkten der initialen Population unvorteilhaft generiert.
@@ -36,5 +37,30 @@
   \begin{figure}
     \input{graphics/fitness-graph-average-body-points-first-run-no-feedback}
     \caption{Durchschnittliches Individuum pro Anzahl Körper Punkte}
-    \label{fig:graphBp}
+    \label{fig:graphBpFirst}
   \end{figure}
+
+  \section{Zweiter Versuch, parameterierbare Steuerung ohne Feedback}
+
+    \subsection{Konfiguration}
+        \input{tables/simulation-parameters-second-run-no-feedback.tex}
+
+    \subsection{Auswertung}
+      Interessant zu beboachten beim Zweiten Versuch ist, das die Fitness der Individuuen erst ab der 1400. Generation (siehe Abbildung \ref{fig:graphSecond}).
+      wieder abzunehmen beginnt. Jedoch ist auch hier wieder ein klarer, wenn auch nicht so starker Abwärtstrend zu erkennen.
+      Eine weitere Vermutung, neben dem fehlenden Feedback der Engine, warum die Fitness wieder abzunehmen beginnt,
+      ist die zu hohe Wahrscheinlichkeit der Mutation. In einem nächsten Versuch, muss getestet werden ob niedrigere Mutationswahrscheinlichkeiten
+      einen positiven Effekt auf die langfristie Fitness der Individuuen haben.
+        \begin{figure}
+          \input{graphics/fitness-graph-second-run-no-feedback}
+          \caption{Bestes Indivuum und Durchschnittliches Individuum, Zweiter Versuch}
+          \label{fig:graphSecond}
+        \end{figure}
+
+    \subsubsection{Körper Punkte}
+      (siehe Abbildung \ref{fig:graphBpSecond}).
+    \begin{figure}
+      \input{graphics/fitness-graph-average-body-points-second-run-no-feedback}
+      \caption{Durchschnittliches Individuum pro Anzahl Körper Punkte}
+      \label{fig:graphBpSecond}
+    \end{figure}
