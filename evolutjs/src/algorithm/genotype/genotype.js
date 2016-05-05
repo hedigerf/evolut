@@ -10,12 +10,16 @@ import { IdentifiableStatic } from '../../types/identifiable';
 import { SeedableStatic } from '../../types/seedable';
 
 /**
+ * @typedef {function(T: PartialGenotype, option: Object): Object} PartialGenotypeProcessor
+ */
+
+/**
  * Extract the options for a certain key.
  * This is needed while processing the seed because the constructors
  * of partial genotypes only accept their options at the top level of an object.
  *
  * @param {String} key The property name
- * @return {function(Object): Object} The option object
+ * @return {function(key: Object): Object} The option object
  */
 const extractOption = (key) => either(
   view(L.prop(key)),
@@ -51,7 +55,7 @@ const isPartialGenotype = (T) => PartialGenotype.prototype.isPrototypeOf(T.proto
 /**
  * Processes a genotype or maps an array or object.
  *
- * @param {function(PartialGenotype, Object): Object} operation
+ * @param {PartialGenotypeProcessor} operation
  * @param {Object} options
  * @param {PartialGenotype|Array|Object} type
  * @param {String} key
@@ -72,7 +76,7 @@ const processPartialGenotype = curry((operation, options, type, key) => {
  * Maps a part object with a given function.
  * A part object is a nested object containing partial genotypes.
  *
- * @param {function(PartialGenotype, Object): Object} operation
+ * @param {PartialGenotypeProcessor} operation
  * @param {Object} options
  * @param {Object} parts
  */

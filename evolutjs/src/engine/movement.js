@@ -130,7 +130,7 @@ class CompoundMovement extends Movement {
    * Apply the movemement to a phenotype.
    *
    * @protected
-   * @param {function(Array<MovementDescriptor>): Boolean} compound
+   * @param {function(movements: Array<MovementDescriptor>): Boolean} compound
    * @param {Array<MovementDescriptor>} movements
    * @param {Phenotype} phenotype The target phenotype
    * @param {Number} time The world time
@@ -438,7 +438,7 @@ class Until extends Movement {
   /**
    * Apply the movemement to a phenotype.
    *
-   * @param {function(*, Number): Boolean} predId
+   * @param {String} predId
    * @param {Lens} lens The lens to a contraint
    * @param {Phenotype} phenotype The target phenotype
    * @param {Number} time The world time

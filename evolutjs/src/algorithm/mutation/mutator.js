@@ -29,7 +29,7 @@ const ruleLeg = new LegMutationRule(config('mutation:leg'));
 /**
  * Mutation rule for an individual's engine.
  *
- * @param {EngineMutationRule}
+ * @type {EngineMutationRule}
  */
 const ruleEngine = new EngineMutationRule(config('mutation:engine'));
 
@@ -67,7 +67,7 @@ function mutate(genotype, rule) {
  * Returns a mutated genotype.
  *
  * @param {Array<MutationRule>} rules A list of mutation rules
- * @return {function(Individual): Object} A mutation function
+ * @return {function(genotype: Genotype): Object} A mutation function
  */
 function applyMutationRules(rules) {
   return (genotype) => reduce(mutate, genotype, rules);
