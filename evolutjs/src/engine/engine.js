@@ -4,8 +4,36 @@
  * @module engine/engine
  */
 
-import { forEach, nth } from 'ramda';
+import { forEach, has, nth } from 'ramda';
+import Feedback from './feedback';
 import { resolveMovementDescriptor } from './movement';
+
+/**
+ * All registered feedbacks.
+ *
+ * @type {Object<String>}
+ */
+const registeredFeedbacks = {};
+
+/**
+ * Returns a key for a combination of phenotype an it's current movement.
+ *
+ * @param {Phenotype} phenotype The phenotype
+ * @return {String} The key for this combinatio of phenotype and current movement
+ */
+function createFeedbackKey(phenotype) {
+  return phenotype.identifier + phenotype.engine.current.toString();
+}
+
+/**
+ * Returns if this phenotype and the current movement are registered.
+ *
+ * @param {Phenotype} phenotype The phenotype
+ * @return {Boolean}
+ */
+function isFeedbackKeyRegistered(phenotype) {
+  return has(createFeedbackKey(phenotype), registeredFeedbacks);
+}
 
 /**
  * Represents an engine.
@@ -33,15 +61,15 @@ export default class Engine {
    * Executes a single step of the engine.
    *
    * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype
-   * @param {Number} time The current world time
+   * @param {SimulationWorld} world The current world
    * @param {Object} [event] The event that caused the step
    * @return {Phenotype}
    */
-  static step(phenotype, time, event) { // eslint-disable-line no-unused-vars
+  static step(phenotype, world, event) { // eslint-disable-line no-unused-vars
 
     const descriptor = nth(phenotype.engine.current, phenotype.engine.descriptor.movements);
     const movement = resolveMovementDescriptor(descriptor);
-    const moved = movement(phenotype, time);
+    const moved = movement(phenotype, world.currentTime);
 
     if (moved) {
       phenotype.engine.current = this.nextState(phenotype);
@@ -49,6 +77,46 @@ export default class Engine {
     }
 
     return phenotype;
+  }
+
+  /**
+   * Registers a feedback for the current movement.
+   *
+   * @param {Phenotype} phenotype The phenotype
+   * @param {SimulationWorld} world The current world
+   */
+  static registerFeedback(phenotype, world) {
+
+    if (isFeedbackKeyRegistered(phenotype)) {
+      return;
+    }
+
+    const descriptor = {};
+    const bodies = [];
+    const key = createFeedbackKey(phenotype);
+
+    registeredFeedbacks[key] = descriptor;
+
+    Feedback.register(descriptor, world, phenotype, bodies);
+  }
+
+  /**
+   * Removes a feedback for the current movement.
+   *
+   * @param {Phenotype} phenotype The phenotype
+   * @param {SimulationWorld} world The current world
+   */
+  static unregisterFeedback(phenotype, world) {
+
+    if (!isFeedbackKeyRegistered(phenotype)) {
+      return;
+    }
+
+    const descriptor = registeredFeedbacks[key];
+    const key = createFeedbackKey(phenotype);
+
+    Feedback.unregister(descriptor, world, phenotype);
+
   }
 
   /**

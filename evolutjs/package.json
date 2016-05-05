@@ -59,7 +59,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.4",
-    "electron-packager": "^6.0.0",
+    "electron-packager": "^7.0.0",
     "electron-prebuilt": "0.37.7",
     "esdoc": "^0.4.7",
     "eslint": "^2.7.0",

@@ -2,8 +2,8 @@
   "ecmaVersion": 6,
   "libs": [],
   "loadEagerly": [
-    "src/**/*.js",
-    "lib/**/*.js"
+    "evolutjs/src/**/*.js",
+    "evolutjs/lib/**/*.js"
   ],
   "plugins": {
     "complete_strings": {},

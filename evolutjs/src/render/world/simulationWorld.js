@@ -25,22 +25,26 @@ import { view } from 'ramda';
  */
 const WORLD_START_TIME = 0;
 
-let logger;
+/**
+ * Simulation configuration.
+ *
+ * @type {Object}
+ */
+const simulation = config('simulation');
 
-const evaluateAfterTickCount = config('simulation.evaluateAfterTickCount');
-const friction = config('simulation.friction');
-const gravity = config('simulation.gravity');
-const mustMovement = config('simulation.mustMovement');
-const render = config('simulation.render');
-const relaxation = config('simulation.relaxation');
-const runDuration = config('simulation.runDuration');
-const solo = config('simulation.solo');
-const stepTime = config('simulation.stepTime');
-const timeOut = config('simulation.timeOut');
-const trackBestIndividual = config('simulation.trackBestIndividual');
-const trackY = config('simulation.trackY');
-
+/**
+ * Lens to the x-position of a body.
+ *
+ * @type {Lens}
+ */
 const lensBodyXpos = L.compose(L.prop('bodies'), L.index(0), L.prop('position'), L.index(0));
+
+/**
+ * The logger of the current worker.
+ *
+ * @type {Logger}
+ */
+let logger;
 
 /**
  * Responsible for simulating one simulation run.
@@ -49,6 +53,13 @@ const lensBodyXpos = L.compose(L.prop('bodies'), L.index(0), L.prop('position'),
  */
 export default class SimulationWorld extends Game {
 
+  /**
+   * Constructs a simulation world.
+   *
+   * @param {Object} parcourOptions The options for the parcour
+   * @param {Population} population The current population
+   * @param {Function} cb This callback is fired when the simulation is over
+   */
   constructor(parcourOptions, population, cb) {
     super({
       assetUrls: [texture('rock.jpg')],
@@ -59,19 +70,19 @@ export default class SimulationWorld extends Game {
         view: document.getElementById('viewport')
       },
       worldOptions: {
-        gravity
+        gravity: simulation.gravity
       }
     });
     logger = getLogger('SimulationWorld', parcourOptions.wokerId);
-    this.world.defaultContactMaterial.friction = friction;
-    this.world.defaultContactMaterial.frictionRelaxation = relaxation;
-    this.world.defaultContactMaterial.relaxation = relaxation;
-    this.world.defaultContactMaterial.stiffness = 10000;
-    this.world.defaultContactMaterial.frictionStifness = 10000;
+    this.world.defaultContactMaterial.friction = simulation.friction.friction;
+    this.world.defaultContactMaterial.frictionRelaxation = simulation.friction.relaxation;
+    this.world.defaultContactMaterial.frictionStifness = simulation.friction.stiffness;
+    this.world.defaultContactMaterial.relaxation = simulation.relaxation;
+    this.world.defaultContactMaterial.stiffness = simulation.stiffness;
     this.population = population;
     this.parcourOptions = parcourOptions;
     this.cb = cb;
-    this.isRenderingEnabled = render;
+    this.isRenderingEnabled = simulation.render;
     this.reset();
   }
 
@@ -80,26 +91,36 @@ export default class SimulationWorld extends Game {
    * Sets the time to 0.
    */
   reset() {
-    this.stepTime = stepTime;
-    this.runOver = false;
-    this.currentTime = 0;
-    this.tickCount = 0;
-    this.positionLastEvaluation = Map();
+    this.currentTime = WORLD_START_TIME;
     this.phenotypeToGenotype = Map();
+    this.positionLastEvaluation = Map();
+    this.runOver = false;
+    this.stepTime = simulation.stepTime;
+    this.tickCount = 0;
+    this.world.solver.iterations = simulation.solver.iterations;
+    this.world.solver.tolerance = simulation.solver.tolerance;
   }
 
+  /**
+   * Creates a new parcour for this world.
+   *
+   * @param {Object} parcour
+   */
   createParcour(parcour) {
     const parcourGenerator = new ParcourGenerator();
     parcourGenerator.createParcour(this, parcour);
-    if (!trackBestIndividual) {
+    if (!simulation.trackBestIndividual) {
       this.trackedBody = parcourGenerator.trackMe;
     }
   }
 
+  /**
+   * Draws the pheotypes of the current population.
+   */
   drawPhenotypes() {
     // Force evaluation of sequence
     let takeN;
-    if (solo) {
+    if (simulation.solo) {
       takeN = 1;
     } else {
       takeN = this.population.individuals.size;
@@ -111,13 +132,19 @@ export default class SimulationWorld extends Game {
       return individual;
     });
     info(logger, 'drawn ' + this.phenoTypes.size + ' phenoTypes');
-    if (trackBestIndividual) {
+    if (simulation.trackBestIndividual) {
       const trackedIndividual = this.phenoTypes.get(0);
       this.trackedBody = trackedIndividual.bodies[0];
     }
 
   }
 
+  /**
+   * Adds a new population to this world.
+   * The old population is removed and the world will be reset.
+   *
+   * @param {Population} population The new population
+   */
   addNewPopulation(population) {
     this.population = population;
     this.clear();
@@ -125,13 +152,16 @@ export default class SimulationWorld extends Game {
     this.drawPhenotypes();
   }
 
+  /**
+   * Evaluates the current population.
+   */
   evaluate() {
     let removeElements = List();
     this.phenoTypes.forEach((individual) => {
       const posLastEvaluation = this.positionLastEvaluation.get(individual);
       const posCurEvaluation = view(lensBodyXpos, individual);
       const delta = posCurEvaluation - posLastEvaluation;
-      if (timeOut && mustMovement >= delta) {
+      if (simulation.timeOut && simulation.mustMovement >= delta) {
         // Remove Individuals which are stuck from simulation
         removeElements = removeElements.push(individual);
         this.removeGameObject(individual);
@@ -144,7 +174,7 @@ export default class SimulationWorld extends Game {
     if (this.phenoTypes.size === 0) {
       // If there are no more individuals remaining in the simulation, end the run
       this.runOver = true;
-    } else if (trackBestIndividual) {
+    } else if (simulation.trackBestIndividual) {
       // Track always the individual which is leading
       const trackedIndividual = this.phenoTypes.maxBy((individual) => view(lensBodyXpos, individual));
       this.trackedBody = trackedIndividual.bodies[0];
@@ -178,12 +208,12 @@ export default class SimulationWorld extends Game {
 
     this.world.on('postStep', (event) => { // eslint-disable-line no-unused-vars
       this.tickCount++;
-      if (this.tickCount % evaluateAfterTickCount === 0) {
+      if (this.tickCount % simulation.evaluateAfterTickCount === 0) {
         // Perform Evulation after tickCount is reached
         this.evaluate();
       }
       this.currentTime += this.stepTime;
-      if (runDuration <= this.currentTime) {
+      if (simulation.runDuration <= this.currentTime) {
         this.evaluate();
         this.runOver = true;
         info(logger, 'Simulation run ended.');
@@ -191,10 +221,10 @@ export default class SimulationWorld extends Game {
 
         this.phenoTypes.forEach((individual) => {
 
-          if (this.currentTime === WORLD_START_TIME + stepTime) {
+          if (this.currentTime === WORLD_START_TIME + this.stepTime) {
             Engine.initialStep(individual);
           } else {
-            Engine.step(individual, this.currentTime);
+            Engine.step(individual, this);
           }
 
         });
@@ -203,8 +233,8 @@ export default class SimulationWorld extends Game {
   }
 
   /**
-  * Begins the world step / render loop
-  */
+   * Begins the world step / render loop
+   */
   run() {
 
     const self = this;
@@ -257,16 +287,12 @@ export default class SimulationWorld extends Game {
       const scaledPPU = ppu * deviceScale;
 
       containerPosition.x = ((trackedBodyOffset[0] + 1) * renderer.width * 0.5) - (trackedBodyPosition[0] * scaledPPU);
-      if (trackY) {
+      if (simulation.trackY) {
         containerPosition.y = ((trackedBodyOffset[1] + 1) * renderer.height * 0.5) + trackedBodyPosition[1] * scaledPPU;
       } else {
         containerPosition.y = ((0 + 1) * renderer.height * 0.5) + (0 * scaledPPU);
       }
     }
-  }
-
-  addGameObject(gameObject) {
-    this.gameObjects.push(gameObject);
   }
 
 }

@@ -101,7 +101,7 @@ function createInitalPopulation() {
     const initialPopulation = JSON.parse(populationStr);
     const shrinked =
       List(initialPopulation.individuals).sortBy((individual) => individual.fitness).reverse().take(populationSize);
-    generationCounter = initialPopulation.individuals;
+    generationCounter = initialPopulation.generationCount;
     return { generationCount: initialPopulation.generationCount, individuals: shrinked};
   } else {
     const initialPopulationGenerator = new InitialPopulationGenerator(

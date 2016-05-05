@@ -228,8 +228,7 @@ class SetAnglesTo extends Movement {
    * @return {Array<*>} A bounds list
    */
   static get bounds() {
-    const fullAngle = Math.PI * 2;
-    return [-fullAngle, fullAngle];
+    return [-Math.PI, Math.PI];
   }
 
   /**
@@ -477,6 +476,12 @@ export function getMovement(id) {
   return MovementIdMap[id];
 }
 
+/**
+ * Returs the predicate function by id.
+ *
+ * @param {String} predicateId The predicate id
+ * @return {function(...*): Boolean} The predicate
+ */
 function getMovementPredicate(predicateId) {
   switch (predicateId) {
     case 'mxa':

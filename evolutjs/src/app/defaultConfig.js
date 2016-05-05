@@ -82,15 +82,24 @@ const defaultConfig = {
     startMaxSlope: 0
   },
   simulation: {
-    evaluateAfterTickCount: 240,
-    friction: 1000,
+    evaluateAfterTickCount: 500,
+    friction: {
+      friction: 10,
+      relaxation: 16,
+      stiffness: 10000
+    },
     gravity: [0, EARTH_GRAVITY],
     mustMovement: 0.05,
     render: true,
-    relaxation: 4,
-    runDuration: 10,
+    relaxation: 16,
+    runDuration: 30,
     solo: false,
-    stepTime: 0.016,
+    solver: {
+      iterations: 20,
+      tolerance: 0
+    },
+    stepTime: 0.008,
+    stiffness: 10000,
     timeOut: true,
     trackY: false,
     trackBestIndividual: true

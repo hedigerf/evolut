@@ -49,9 +49,7 @@ const events = new Map();
  * @return {Boolean}
  */
 const concerns = curry(
-  (bodies, event) => {
-    return bodies.find((b) => event.bodyA === b || event.bodyB === b);
-  }
+  (bodies, event) => bodies.find((b) => event.bodyA === b || event.bodyB === b)
 );
 
 /**
