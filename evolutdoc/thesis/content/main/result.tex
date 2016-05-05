@@ -27,7 +27,7 @@
         \label{fig:graphFirst}
       \end{figure}
 
-  \subsubsection{Körper Punkte}
+  \subsubsection{Körper Punkte\label{subsub:bp}}
     Die Auswertung der Individuuen nach Ihrer Körperpunkte Anzahl ist ernüchternd (siehe Abbildung \ref{fig:graphBpFirst}).
     Bereits ab der 14. Generation exisitieren nur noch Individueen mit Vier Körper Punkten.
     Vieleicht ist das ebenfalls auf das fehlende Feedback zurück zuführen. Im besten Fall
@@ -50,7 +50,9 @@
       wieder abzunehmen beginnt. Jedoch ist auch hier wieder ein klarer, wenn auch nicht so starker Abwärtstrend zu erkennen.
       Eine weitere Vermutung, neben dem fehlenden Feedback der Engine, warum die Fitness wieder abzunehmen beginnt,
       ist die zu hohe Wahrscheinlichkeit der Mutation. In einem nächsten Versuch, muss getestet werden ob niedrigere Mutationswahrscheinlichkeiten
-      einen positiven Effekt auf die langfristie Fitness der Individuuen haben.
+      einen positiven Effekt auf die langfristie Fitness der Individuuen haben. Ab ca. der 2000. Generation beginnt die Fitness wieder rapide zu steigen,
+      jedoch ist dies durch ein Fehler der Engine zu erklären. Die Individueen verhacken sich im Boden und beginnen grosse Distanzen durch Hüpfbewegungen zurückzulegen.
+      Diesen Fehler kann man bereinigen indem man die Relaxation erhöt und die StepTime gleichzeitig verringert.
         \begin{figure}
           \input{graphics/fitness-graph-second-run-no-feedback}
           \caption{Bestes Indivuum und Durchschnittliches Individuum, Zweiter Versuch}
@@ -58,7 +60,10 @@
         \end{figure}
 
     \subsubsection{Körper Punkte}
-      (siehe Abbildung \ref{fig:graphBpSecond}).
+      Ein ähliches Bild ist zu beobachten, wie bei bei \ref{subsub:bp}.
+      Bereits ab der 9. Generation existieren nur noch Individuuen mit 7 Körper Punkten (siehe Abbildung \ref{fig:graphBpSecond}).
+      Um eine sinnvolle Aussage über die Körper Punkte zu formulieren, müsste man nicht nur am Anfang Indivduuen mit verschiedenen Körper Punkten generieren,
+      sondern auch während der Simulation, die Anzahl an Körper Punkten mutieren.
     \begin{figure}
       \input{graphics/fitness-graph-average-body-points-second-run-no-feedback}
       \caption{Durchschnittliches Individuum pro Anzahl Körper Punkte}
