@@ -13,8 +13,8 @@ const DEFAULT_BODY_MASS = 1;
 
 /**
  * Calculates polygon area
- * @param  {[Array<Number>]} vertices vertices
- * @return {[Number]}          [Area]
+ * @param  {Array<Number>} vertices vertices
+ * @return {Number}          [Area]
  */
 function calcPolygonArea(vertices) {
   let total = 0;

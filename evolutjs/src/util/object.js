@@ -33,7 +33,7 @@ export function freeze(object) {
  * and then passing the result to the next call.
  *
  * @function
- * @param {function(acc: *, value: *, property: String=): *} fn A reducer function. Takes as the third parameter the key
+ * @param {function(*, *, String=): *} fn A reducer function. Takes as the third parameter the key
  * @param {*} init The initial value
  * @param {Object} obj The object to be reduced
  * @return {*} The reduces result
@@ -56,7 +56,7 @@ export const reduce = curry(
  * which do and do not satisfy the predicate, respectively.
  *
  * @function
- * @param {function(elt: *): Boolean} pred Applied to every item in obj
+ * @param {function(*): Boolean} pred Applied to every item in obj
  * @param {Object} obj The object to be partitioned
  * @return {Array<Object<*>>} The head contains all items which fulfilled pred
  */

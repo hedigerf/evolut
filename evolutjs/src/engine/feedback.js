@@ -70,7 +70,7 @@ export default class Feedback {
   /**
    * @param {p2.World} world The world
    * @param {Phenotype} phenotype The phenotype
-   * @return {function(event: Object)}
+   * @return {function(Object)}
    */
   static step(world, phenotype) {
     return (event) => {

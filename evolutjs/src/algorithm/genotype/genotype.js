@@ -10,7 +10,7 @@ import { IdentifiableStatic } from '../../types/identifiable';
 import { SeedableStatic } from '../../types/seedable';
 
 /**
- * @typedef {function(T: PartialGenotype, option: Object): Object} PartialGenotypeProcessor
+ * @typedef {function(PartialGenotype, Object): Object} PartialGenotypeProcessor
  */
 
 /**
@@ -19,7 +19,7 @@ import { SeedableStatic } from '../../types/seedable';
  * of partial genotypes only accept their options at the top level of an object.
  *
  * @param {String} key The property name
- * @return {function(key: Object): Object} The option object
+ * @return {function(Object): Object} The option object
  */
 const extractOption = (key) => either(
   view(L.prop(key)),

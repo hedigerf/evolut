@@ -67,7 +67,7 @@ function mutate(genotype, rule) {
  * Returns a mutated genotype.
  *
  * @param {Array<MutationRule>} rules A list of mutation rules
- * @return {function(genotype: Genotype): Object} A mutation function
+ * @return {function(Genotype): Object} A mutation function
  */
 function applyMutationRules(rules) {
   return (genotype) => reduce(mutate, genotype, rules);

@@ -8,7 +8,7 @@
 /**
  * Y-combinator.
  *
- * @param {function(f: function, ...*): *} f
+ * @param {function(function, ...*): *} f
  * @return {function(...*)}
  */
 const Y = (f) => (...args) => f((...args) => Y(f)(...args), ...args);

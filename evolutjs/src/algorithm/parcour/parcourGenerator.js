@@ -46,9 +46,9 @@ export default class ParcourGenerator {
   }
   /**
    * Generates the parcour
-   * @param  {[type]} maxSlope [description]
-   * @param  {[type]} highestY [description]
-   * @return {List<Object>}          the generated parcour
+   * @param  {Number} maxSlope
+   * @param  {Number} highestY
+   * @return {List<Object>} The generated parcour
    */
   static generateParcour(maxSlope, highestY) {
     if (logger.isDebugEnabled()) {
