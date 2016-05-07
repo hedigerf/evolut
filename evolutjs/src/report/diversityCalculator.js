@@ -1,11 +1,12 @@
 import * as L from 'partial.lenses';
+import { add, divide, norm, square, subtract } from 'mathjs';
 import { lensBody, lensNthLeg } from  '../algorithm/genotype/lenses';
 import {lensMass as lensBodyMass, lensBodyPoints,
   lensBodyPointsCount, lensHipJointPositions } from  '../algorithm/individual/body';
 import {lensHeight, lensHeightFactor, lensMass, lensWidth}  from  '../algorithm/individual/leg';
+import { List, Range } from 'immutable';
 import { calcPolygonArea } from  '../algorithm/genotype/mass';
-import { List } from 'immutable';
-import { norm } from 'mathjs';
+import { isCompoundMovement } from '../engine/movement';
 import { view } from 'ramda';
 
 const lensBodyBodyPoints = L.compose(lensBody, lensBodyPoints);
@@ -20,7 +21,6 @@ const lensNthLegHeightFactor = (n) => L.compose(lensNthLeg(n), lensHeightFactor)
 const lensNthLegMass = (n) => L.compose(lensNthLeg(n), lensMass);
 const lensNthLegWidth = (n) => L.compose(lensNthLeg(n), lensWidth);
 
-
 export default class DiversityCalculator {
   /**
    * Calculates the streuung
@@ -28,9 +28,27 @@ export default class DiversityCalculator {
    * @return {[Number]}            the streuung
    */
   static calculate(population) {
+    const sumUp = (vectorSum, diversityVector) => add(vectorSum, diversityVector);
     const individuals = List(population.individuals);
-    individuals.map((individual) => this.createDiversityVector(individual));
-    return 0;
+    const diversityVectors = individuals.map((individual) => this.createDiversityVector(individual));
+    const zeroVector = List(Range(0, diversityVectors.get(0).length)).map(() => 0).toArray();
+    const sum = diversityVectors.reduce(sumUp, zeroVector);
+    const balanceVector = divide(sum, diversityVectors.size);
+    const subDiversityVectors = diversityVectors.map((diversityVector) => subtract(diversityVector, balanceVector));
+    const normSquaredDiversityVectors = subDiversityVectors.map((diversityVector) => square(norm(diversityVector)));
+    const punktStreuung = normSquaredDiversityVectors.reduce(sumUp, 0.0) / diversityVectors.size;
+    return punktStreuung;
+  }
+
+  static countMovements(movements, count) {
+    const newCount = List(movements).reduce(({countMovement, countCompound}, movement) => {
+      if (isCompoundMovement(movement)) {
+        return this.countMovements(List(movement.params), {countMovement, countCompound: countCompound + 1});
+      }
+      return {countMovement: countMovement + 1, countCompound};
+
+    }, count);
+    return newCount;
   }
 
   static createDiversityVector(individual) {
@@ -51,8 +69,8 @@ export default class DiversityCalculator {
     const legWidth4 = view(lensNthLegWidth(4), individual);
     const legMass4 = view(lensNthLegMass(4), individual);
 
-
-    return (
+    const {countMovement, countCompound} = this.countMovements(individual.movements, {countMovement: 0, countCompound: 0});
+    const objectVector =
       {
         bodyPointsArea: calcPolygonArea(view(lensBodyBodyPoints, individual)), // area of polygon
         bodyPointsCount: view(lensBodyBodyPointsCount, individual),
@@ -87,10 +105,11 @@ export default class DiversityCalculator {
         legHeightFactor6: legHeightFactor4,
         legWidth6: legWidth4,
         legMass6: legMass4,
-        countMovement: 1,
-        countCompoundMovement: 1
+        countMovement: countMovement,
+        countCompoundMovement: countCompound
 
-      }
-    );
+      };
+    const arrayVector =  Object.keys(objectVector).map((key) => objectVector[key]);
+    return arrayVector;
   }
 }

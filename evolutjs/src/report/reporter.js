@@ -71,7 +71,8 @@ export default class Reporter {
     const reportName = 'diversity_report';
     const pathToReport = this.createReportFile(reportName);
     const reporterFunction = (population) => {
-      const div = DiversityCalculator.calculate(population);
+      const diversity = DiversityCalculator.calculate(population);
+      this.appendToReport(pathToReport, this.createGraphCoordStr(population.generationCount, diversity));
     };
     return reporterFunction;
   }
