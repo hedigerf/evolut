@@ -5,7 +5,7 @@
  */
 
 import * as L from 'partial.lenses';
-import { aperture, compose, find, forEach, has, keys, memoize, nth, range, take, view, zip } from 'ramda';
+import { aperture, compose, curry, find, forEach, has, keys, memoize, nth, range, take, view, zip } from 'ramda';
 import { isCompoundMovement, resolveMovementDescriptor } from './movement';
 import { isEven, isOdd } from '../util/number';
 import { Sides, Types } from './lenses';
@@ -64,6 +64,52 @@ function isFeedbackKeyRegistered(phenotype) {
 }
 
 /**
+ * Returns a list of paired leg part indices.
+ * Cache the results of this function.
+ *
+ * @function
+ * @param {Number} [legCount=6] Number of legs
+ * @return {Array<Number>}
+ */
+const legPartIndices = memoize(
+  (legCount = 6) => {
+
+    const joints = 2;
+    const start = 2;
+    const end = start + legCount * joints;
+
+    const indices = aperture(joints, range(start, end));
+
+    return indices;
+  }
+);
+
+/**
+ * Transform the paired indices list to a single number
+ * [ [2, 3], [4, 5], ... ] -> [ [3], [5], ... ] -> [5] -> 5
+ *
+ *   first left leg pair
+ *   |       first right leg pair
+ *   |       |
+ * [ [2, 3], [4, 5], ... ]
+ *    |  |
+ *    |  shank
+ *    thigh
+ *
+ * @function
+ * @param {function(Number): Boolean} filterSide
+ * @param {function(Number): Boolean} filterType
+ * @param {Number} index
+ * @param {Array<Number>} indices
+ * @return {Number}
+ */
+const findLegPartIndex = curry(
+  (filterSide, filterType, index, indices) => compose(
+    take(1), filterIndex(filterType), nth(index), filterIndex(filterSide)
+  )(indices)
+);
+
+/**
  * Represents an engine.
  * It's responsibility is moving an phenotype's legs.
  * An engine consists of multiple movements.
@@ -98,24 +144,6 @@ export default class Engine {
   }
 
   /**
-   * Returns a list of paired leg part indices.
-   *
-   * @protected
-   * @param {Number} [legCount=6] Number of legs
-   * @return {Array<Number>}
-   */
-  static legPartIndices(legCount = 6) {
-
-    const joints = 2;
-    const start = 2;
-    const end = start + legCount * joints;
-
-    const indices = aperture(joints, range(start, end));
-
-    return indices;
-  }
-
-  /**
    * Returns the index to use in the body list of a phenotype.
    *
    * @param {LensDescriptor} descriptor The lens descriptor
@@ -126,16 +154,7 @@ export default class Engine {
     const [, filterSide] = find(isFirstEqual(side), zip(keys(Sides), bodyFilters));
     const [, filterType] = find(isFirstEqual(type), zip(keys(Types), bodyFilters));
 
-    // Transform the paired indices list to a single number
-    // [ [2, 3], [4, 5], ... ] -> [ [3], [5], ... ] -> [5] -> 5
-    const findBodyIndex = compose(
-      take(1),
-      filterIndex(filterType),
-      nth(index),
-      filterIndex(filterSide)
-    );
-
-    return findBodyIndex(this.legPartIndices());
+    return findLegPartIndex(filterSide, filterType, index, legPartIndices());
   }
 
   /**
@@ -226,25 +245,18 @@ export default class Engine {
    * @param {Phenotype} phenotype Applies the movement of this engine to this phenotype
    * @param {SimulationWorld} world The current world
    * @param {Object} [event] The event that caused the step
-   * @return {Phenotype}
    */
   static step(phenotype, world, event) { // eslint-disable-line no-unused-vars
 
     const movement = this.resolveCurrentMovement(phenotype);
+    const isMoved = movement(phenotype, world.currentTime);
 
-    if (isCompoundMovement(movement)) {
-      // this.registerFeedback(phenotype, world);
-    }
+    // this.registerFeedback(phenotype, world);
 
-    if (movement(phenotype, world.currentTime)) {
+    if (isMoved) {
       // this.unregisterFeedback(phenotype, world);
       phenotype.engine.current = this.nextState(phenotype);
     }
-
-    return phenotype;
   }
 
 }
-
-// Cache the results of this static functions.
-Engine.legPartIndices = memoize(Engine.legPartIndices);

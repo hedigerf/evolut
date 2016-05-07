@@ -4,7 +4,7 @@
  * @module engine/feedback
  */
 
-import { curry, props, when } from 'ramda';
+import { curry, when } from 'ramda';
 import Engine from './engine';
 
 /**
@@ -21,7 +21,9 @@ import Engine from './engine';
  * @enum {Number}
  */
 export const FeedbackType = {
-  Impact: 1
+  Impact: 1,
+  Ascent: 2,
+  Descent: 4
 };
 
 /**
@@ -51,16 +53,6 @@ const events = new Map();
 const concerns = curry(
   (bodies, event) => bodies.find((b) => event.bodyA === b || event.bodyB === b)
 );
-
-/**
- * Get the lower legs of a individual.
- *
- * @param {Individual} individual
- * @return {Array<p2.Body>}
- */
-export function getLowerLegs(individual) {
-  return props([3, 5, 7, 9, 11, 13], individual.bodies);
-}
 
 /**
  * Represents a feedback event.
@@ -103,6 +95,7 @@ export default class Feedback {
    * @return {Number}
    */
   static getEventType({ type }) {
+
     switch (type) {
 
       case FeedbackType.Impact:

@@ -5,7 +5,7 @@
  */
 
 import * as L from 'partial.lenses';
-import { lens } from 'ramda';
+import { lens, values } from 'ramda';
 import random from '../util/random';
 
 /**
@@ -67,8 +67,8 @@ export function makeRandomLensDescriptor() {
 
   const legs = 6;
 
-  const side = random.pick(Sides);
-  const type = random.pick(Types);
+  const side = random.pick(values(Sides));
+  const type = random.pick(values(Types));
   const leg = random.integer(0, legs / 2 - 1);
 
   return makeLensDescriptor(side, leg, type);

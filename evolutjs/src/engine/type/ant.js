@@ -12,62 +12,62 @@ import { makeLensDescriptor } from '../lenses';
 // Lens descriptors
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const lfh = makeLensDescriptor('left', 0, 'hip');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const lmh = makeLensDescriptor('left', 1, 'hip');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const lbh = makeLensDescriptor('left', 2, 'hip');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const lfk = makeLensDescriptor('left', 0, 'knee');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const lmk = makeLensDescriptor('left', 1, 'knee');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const lbk = makeLensDescriptor('left', 2, 'knee');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const rfh = makeLensDescriptor('right', 0, 'hip');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const rmh = makeLensDescriptor('right', 1, 'hip');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const rbh = makeLensDescriptor('right', 2, 'hip');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const rfk = makeLensDescriptor('right', 0, 'knee');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const rmk = makeLensDescriptor('right', 1, 'knee');
 
 /**
- * @type {lensDescriptor}
+ * @type {LensDescriptor}
  */
 const rbk = makeLensDescriptor('right', 2, 'knee');
 

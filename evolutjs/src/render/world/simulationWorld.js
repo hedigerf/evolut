@@ -118,13 +118,10 @@ export default class SimulationWorld extends Game {
    * Draws the pheotypes of the current population.
    */
   drawPhenotypes() {
-    // Force evaluation of sequence
-    let takeN;
-    if (simulation.solo) {
-      takeN = 1;
-    } else {
-      takeN = this.population.individuals.size;
-    }
+
+    const takeN = simulation.solo && 1 || this.population.individuals.size;
+
+    // Force evaluation of sequenc
     this.phenoTypes = this.population.individuals.take(takeN).map((genotype) => {
       const individual = new Individual(this, genotype);
       this.positionLastEvaluation = this.positionLastEvaluation.set(individual, view(lensBodyXpos, individual));
@@ -207,29 +204,38 @@ export default class SimulationWorld extends Game {
     this.currentTime = 0;
 
     this.world.on('postStep', (event) => { // eslint-disable-line no-unused-vars
+
       this.tickCount++;
       if (this.tickCount % simulation.evaluateAfterTickCount === 0) {
-        // Perform Evulation after tickCount is reached
+        // Perform evulation after tickCount is reached
         this.evaluate();
       }
+
       this.currentTime += this.stepTime;
       if (simulation.runDuration <= this.currentTime) {
+
         this.evaluate();
         this.runOver = true;
         info(logger, 'Simulation run ended.');
+
       } else {
-
-        this.phenoTypes.forEach((individual) => {
-
-          if (this.currentTime === WORLD_START_TIME + this.stepTime) {
-            Engine.initialStep(individual);
-          } else {
-            Engine.step(individual, this);
-          }
-
-        });
+        this.phenoTypes.forEach(this.performEngineStep, this);
       }
     });
+  }
+
+  /**
+   * Performs a step of the engine of an individual.
+   *
+   * @protected
+   * @param  {Individual} individual The individual
+   */
+  performEngineStep(individual) {
+    if (this.currentTime === WORLD_START_TIME + this.stepTime) {
+      Engine.initialStep(individual);
+    } else {
+      Engine.step(individual, this);
+    }
   }
 
   /**
@@ -242,12 +248,16 @@ export default class SimulationWorld extends Game {
 
     self.lastWorldStepTime = self.time();
 
+    /**
+     * Step forward in the simulation.
+     */
     function update() {
       if (!self.runOver) {
 
         if (!self.paused) {
-          const timeSinceLastCall = self.time() - self.lastWorldStepTime;
-          self.lastWorldStepTime = self.time();
+          const time = self.time();
+          const timeSinceLastCall = time - self.lastWorldStepTime;
+          self.lastWorldStepTime = time;
           self.world.step(self.stepTime, timeSinceLastCall, maxSubSteps);
         }
 
@@ -290,7 +300,7 @@ export default class SimulationWorld extends Game {
       if (simulation.trackY) {
         containerPosition.y = ((trackedBodyOffset[1] + 1) * renderer.height * 0.5) + trackedBodyPosition[1] * scaledPPU;
       } else {
-        containerPosition.y = ((0 + 1) * renderer.height * 0.5) + (0 * scaledPPU);
+        containerPosition.y = renderer.height * 0.5;
       }
     }
   }
