@@ -10,17 +10,65 @@ import { ANGLE_MAX, ANGLE_MIN } from '../../algorithm/individual/joint';
 import { makeLensDescriptor } from '../lenses';
 
 // Lens descriptors
+
+/**
+ * @type {lensDescriptor}
+ */
 const lfh = makeLensDescriptor('left', 0, 'hip');
+
+/**
+ * @type {lensDescriptor}
+ */
 const lmh = makeLensDescriptor('left', 1, 'hip');
+
+/**
+ * @type {lensDescriptor}
+ */
 const lbh = makeLensDescriptor('left', 2, 'hip');
+
+/**
+ * @type {lensDescriptor}
+ */
 const lfk = makeLensDescriptor('left', 0, 'knee');
+
+/**
+ * @type {lensDescriptor}
+ */
 const lmk = makeLensDescriptor('left', 1, 'knee');
+
+/**
+ * @type {lensDescriptor}
+ */
 const lbk = makeLensDescriptor('left', 2, 'knee');
+
+/**
+ * @type {lensDescriptor}
+ */
 const rfh = makeLensDescriptor('right', 0, 'hip');
+
+/**
+ * @type {lensDescriptor}
+ */
 const rmh = makeLensDescriptor('right', 1, 'hip');
+
+/**
+ * @type {lensDescriptor}
+ */
 const rbh = makeLensDescriptor('right', 2, 'hip');
+
+/**
+ * @type {lensDescriptor}
+ */
 const rfk = makeLensDescriptor('right', 0, 'knee');
+
+/**
+ * @type {lensDescriptor}
+ */
 const rmk = makeLensDescriptor('right', 1, 'knee');
+
+/**
+ * @type {lensDescriptor}
+ */
 const rbk = makeLensDescriptor('right', 2, 'knee');
 
 /**

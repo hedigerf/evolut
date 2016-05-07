@@ -13,8 +13,9 @@ const DEFAULT_BODY_MASS = 1;
 
 /**
  * Calculates polygon area
+ *
  * @param  {Array<Number>} vertices vertices
- * @return {Number}          [Area]
+ * @return {Number} Area
  */
 function calcPolygonArea(vertices) {
   let total = 0;
@@ -32,8 +33,14 @@ function calcPolygonArea(vertices) {
   return Math.abs(total);
 }
 
-function calcLegArea(leg) {
-  return leg.height * leg.width;
+/**
+ * Calculate area of a leg.
+ *
+ * @param {Leg} leg The leg
+ * @return {Number} Area
+ */
+function calcLegArea({ height, width }) {
+  return height * width;
 }
 
 /**

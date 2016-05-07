@@ -25,14 +25,14 @@ export const Orientation = {
  *
  * @type {Number}
  */
-export const ANGLE_MIN = -Math.PI / 3; // eslint-disable-line no-magic-numbers
+export const ANGLE_MIN = -Math.PI / 3;
 
 /**
  * Maximal angle in rad.
  *
  * @type {Number}
  */
-export const ANGLE_MAX = Math.PI / 3; // eslint-disable-line no-magic-numbers
+export const ANGLE_MAX = Math.PI / 3;
 
 /**
  * Lens for joint orientation information.
