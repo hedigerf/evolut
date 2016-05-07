@@ -58,7 +58,7 @@ function memoizationFor(obj) {
 }
 
 /**
- * @typedef {function(decorator: Object, property: String, object: Object)} Decorator
+ * @typedef {function(Object, String, Object)} Decorator
  */
 
 /**

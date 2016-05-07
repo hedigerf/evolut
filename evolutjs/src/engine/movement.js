@@ -130,7 +130,7 @@ class CompoundMovement extends Movement {
    * Apply the movemement to a phenotype.
    *
    * @protected
-   * @param {function(movements: Array<MovementDescriptor>): Boolean} compound
+   * @param {function(Array<MovementDescriptor>): Boolean} compound
    * @param {Array<MovementDescriptor>} movements
    * @param {Phenotype} phenotype The target phenotype
    * @param {Number} time The world time
