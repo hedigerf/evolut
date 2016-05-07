@@ -14,10 +14,10 @@ import Random  from 'random-js';
 
 const random = new Random(Random.engines.mt19937().autoSeed());
 
-const lensMass = L.prop('mass');
-const lensHeight = L.prop('height');
-const lensWidth = L.prop('width');
-const lensHeightFactor = L.prop('heightFactor');
+export const lensMass = L.prop('mass');
+export const lensHeight = L.prop('height');
+export const lensWidth = L.prop('width');
+export const lensHeightFactor = L.prop('heightFactor');
 
 
 const LEG_LOWER_LIMIT_HEIGHT = 0.6;

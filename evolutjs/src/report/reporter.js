@@ -1,6 +1,7 @@
 import { createTimePrefix, report } from '../util/path';
-import fs from 'graceful-fs';
 import { List, Range } from 'immutable';
+import DiversityCalculator from './diversityCalculator';
+import fs from 'graceful-fs';
 
 export default class Reporter {
 
@@ -66,11 +67,20 @@ export default class Reporter {
     return reporterFunction;
   }
 
+  static createDiversityReport() {
+    const reportName = 'diversity_report';
+    const pathToReport = this.createReportFile(reportName);
+    const reporterFunction = (population) => {
+      const div = DiversityCalculator.calculate(population);
+    };
+    return reporterFunction;
+  }
+
   static createReports() {
     const reportingFunctionList = List.of(
       this.createFitnessGraphAveragerReport('fitness_graph_average_report'),
       this.createFitnessGraphBestReport(), this.createGenotypeBlueprintReport(),
-      this.createFitnessGraphAveragerReportBodyPoints());
+      this.createFitnessGraphAveragerReportBodyPoints(), this.createDiversityReport());
     return (population) => {
       reportingFunctionList.forEach((reportingFunction) => reportingFunction(population));
     };
