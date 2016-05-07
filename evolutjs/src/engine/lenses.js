@@ -18,6 +18,26 @@ import random from '../util/random';
  */
 
 /**
+ * Available sides.
+ *
+ * @enum {String}
+ */
+export const Sides = {
+  Left: 'left',
+  Right: 'right'
+};
+
+/**
+ * Available sides.
+ *
+ * @enum {String}
+ */
+export const Types = {
+  Hip: 'hip',
+  Knee: 'knee'
+};
+
+/**
  * Lens for immutable-js data types.
  *
  * @function
@@ -45,12 +65,10 @@ export function makeLensDescriptor(side, index, type) {
  */
 export function makeRandomLensDescriptor() {
 
-  const sides = ['left', 'right'];
-  const types = ['hip', 'knee'];
   const legs = 6;
 
-  const side = random.pick(sides);
-  const type = random.pick(types);
+  const side = random.pick(Sides);
+  const type = random.pick(Types);
   const leg = random.integer(0, legs / 2 - 1);
 
   return makeLensDescriptor(side, leg, type);
