@@ -73,7 +73,7 @@ export default class SimulationWorld extends Game {
         gravity: simulation.gravity
       }
     });
-    logger = getLogger('SimulationWorld', parcourOptions.wokerId);
+    logger = getLogger('SimulationWorld', parcourOptions.workerId);
     this.world.defaultContactMaterial.friction = simulation.friction.friction;
     this.world.defaultContactMaterial.frictionRelaxation = simulation.friction.relaxation;
     this.world.defaultContactMaterial.frictionStifness = simulation.friction.stiffness;
@@ -199,6 +199,7 @@ export default class SimulationWorld extends Game {
   beforeRun() {
 
     info(logger, 'Preparing Simulation for Generation: ' + this.population.generationCount);
+
     this.createParcour(this.parcourOptions.parcour);
     this.drawPhenotypes();
     this.currentTime = 0;
@@ -259,6 +260,8 @@ export default class SimulationWorld extends Game {
           const timeSinceLastCall = time - self.lastWorldStepTime;
           self.lastWorldStepTime = time;
           self.world.step(self.stepTime, timeSinceLastCall, maxSubSteps);
+
+          // emit ascent/descent
         }
 
         if (self.isRenderingEnabled) {

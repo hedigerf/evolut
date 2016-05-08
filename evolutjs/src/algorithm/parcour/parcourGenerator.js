@@ -1,13 +1,29 @@
+/**
+ * Provides an implementation of a parcour generator.
+ *
+ * @module algorithm/parcour/parcourGenerator
+ */
+
 import { List, Range } from 'immutable';
 import log4js from 'log4js';
 import random from '../../util/random';
 
 const logger = log4js.getLogger('ParcourGenerator');
 
-
+/**
+ * Represents a parcour generator.
+ */
 export default class ParcourGenerator {
 
-  static createMontains(length, maxSlope, highestY) {
+  /**
+   * Creates mountains in a parcour.
+   *
+   * @param {Number} length
+   * @param {Number} maxSlope
+   * @param {Number} highestY
+   * @return {Object}
+   */
+  static createMountains(length, maxSlope, highestY) {
     const range = Range(0, length);
     const record = { lastY: 0, heights: List.of() };
     const res = range.reduce((result) => {
@@ -20,7 +36,7 @@ export default class ParcourGenerator {
   }
 
   /**
-   * Returns a height for an element in a height field
+   * Returns a height for an element in a height field.
    *
    * @param {Number} y Height field index
    * @param {Number} maxSlope
@@ -44,22 +60,23 @@ export default class ParcourGenerator {
     }
     return newY;
   }
+
   /**
-   * Generates the parcour
-   * @param  {Number} maxSlope
-   * @param  {Number} highestY
+   * Generates the parcour.
+   *
+   * @param {Number} maxSlope
+   * @param {Number} highestY
    * @return {List<Object>} The generated parcour
    */
   static generateParcour(maxSlope, highestY) {
     if (logger.isDebugEnabled()) {
       logger.debug('ParcourGenerator has started.');
     }
-    const mountain = this.createMontains(300, maxSlope , highestY);
+    const mountain = this.createMountains(300, maxSlope , highestY);
     if (logger.isDebugEnabled()) {
       logger.debug('Parcourgeneration ended.');
     }
     return [mountain];
   }
-
 
 }

@@ -13,24 +13,42 @@ import { texture } from '../../../util/path';
 const logger = log4js.getLogger('ParcourCreator');
 
 /**
- * Is able to generate a parcour
+ * Represents a parcour creator.
+ * It is responsible for creating a visual appeareance of a parocur.
  */
 export default class ParcourGenerator {
 
+  /**
+   * Creates a parcour generator instance.
+   */
   constructor() {
+
+    /**
+     * Width of each element.
+     *
+     * @protected
+     * @type {Number}
+     */
     this.elementWidth = 1;
   }
 
   /**
-  * Creates the Plane
+  * Creates the Plane.
   *
-  * @return {Array<Number>}
+  * @return {p2.Plane}
   */
   createPlane() {
     return new p2.Plane({});
   }
 
-  createMontains(heights) {
+  /**
+   * Creates a new height field.
+   *
+   * @protected
+   * @param  {Array<Number>} heights
+   * @return {p2.Heightfield}
+   */
+  createMountains(heights) {
     return new p2.Heightfield({
       heights,
       elementWidth: this.elementWidth,
@@ -38,13 +56,19 @@ export default class ParcourGenerator {
     });
   }
 
+  /**
+   * Create a parcour.
+   *
+   * @param {p2.World} world
+   * @param {Object} parcour
+   */
   createParcour(world, parcour) {
     if (logger.isDebugEnabled()) {
       logger.debug('ParcourCreator has started.');
     }
     const parcourGameObject = new GameObject(world);
 
-    parcour.forEach(({type, value}) => {
+    parcour.forEach(({ type, value }) => {
       if (type === 'mountain') {
         const bodyOptions = {
           collisionGroup: Math.pow(2, 0),
@@ -59,7 +83,7 @@ export default class ParcourGenerator {
         });
         // TODO change position after one object is added
         parcourGameObject.addBody(body);
-        parcourGameObject.addShape(body, this.createMontains(value), [0, 0], 0, bodyOptions, null, rockTexture);
+        parcourGameObject.addShape(body, this.createMountains(value), [0, 0], 0, bodyOptions, null, rockTexture);
       }
     });
 
@@ -67,6 +91,5 @@ export default class ParcourGenerator {
       logger.debug('ParcourCreator ended.');
     }
   }
-
 
 }

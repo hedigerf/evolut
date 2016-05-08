@@ -21,7 +21,7 @@ import Mutator from '../algorithm/mutation/mutator';
 import ParcourGenerator from '../algorithm/parcour/parcourGenerator';
 import Reporter from '../report/reporter';
 import TournamentBasedSelectionStrategy from '../algorithm/selection/tournamentBasedSelectionStrategy';
-
+import { Worker } from './ipc';
 
 const logger = getLogger('app', 'main');
 const index = 'file://' + appRoot + '/index.html';
@@ -46,7 +46,7 @@ let finishedWorkCounter = 0;
 let generationCounter = 1;
 let maxSlope = config('parcour.startMaxSlope');
 let highestY = config('parcour.startHighestY');
-
+let individuals = List();
 
 function startWorker() {
   const worker = new BrowserWindow({
@@ -71,7 +71,7 @@ function distributeWork(population, options, worker, index) {
   const end = (index + 1) * partialPopulationSize;
   const partialPopulation = population.individuals.slice(start, end);
   const stringified = partialPopulation.toArray().map((x) => JSON.stringify(x));
-  worker.webContents.send('receive-work', stringified, population.generationCount, options);
+  worker.webContents.send(Worker.Receive, stringified, population.generationCount, options);
 }
 
 function performSimulationPostprocessing(population) {
@@ -112,8 +112,7 @@ function createInitalPopulation() {
 
 }
 
-let individuals = List();
-ipcMain.on('work-finished', (event, individualsStringified, uuid) => {
+ipcMain.on(Worker.Finished, (event, individualsStringified, uuid) => {
   finishedWorkCounter++;
   debug(logger, 'received work finished from ' + uuid + '. finishedWorkCounter: ' + finishedWorkCounter);
   const partialPopulation = individualsStringified.map((x) => JSON.parse(x));
@@ -147,10 +146,8 @@ app.on('ready', () => {
     error(logger, err);
   });
   const workerRange = List(Range(0, workerCount));
-  workers = workerRange.map(() =>  startWorker());
+  workers = workerRange.map(() => startWorker());
   const initialPopulation = createInitalPopulation();
   const distributor = prepareDistributor(distributeInitialWork, initialPopulation);
   workers.forEach(distributor);
-
-
 });

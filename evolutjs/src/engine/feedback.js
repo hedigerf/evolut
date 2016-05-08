@@ -101,6 +101,12 @@ export default class Feedback {
       case FeedbackType.Impact:
         return 'impact';
 
+      case FeedbackType.Ascent:
+        return 'ascent';
+
+      case FeedbackType.Descent:
+        return 'descent';
+
     }
   }
 

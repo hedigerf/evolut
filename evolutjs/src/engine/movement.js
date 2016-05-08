@@ -571,7 +571,7 @@ export function makeRandomMovementDescriptor() {
  * @return {MovementDescriptor} The all movement descriptor
  */
 export function all(...params) {
-  return { id: 'all', params };
+  return { id: All.identifier, params };
 }
 
 /**
@@ -581,7 +581,7 @@ export function all(...params) {
  * @return {MovementDescriptor} The one movement descriptor
  */
 export function one(...params) {
-  return { id: 'one', params };
+  return { id: One.identifier, params };
 }
 
 /**
@@ -593,7 +593,7 @@ export function one(...params) {
  * @return {Boolean}
  */
 export function isCompoundMovement({ id }) {
-  return id === 'all' || id === 'one';
+  return id === All.identifier || id === One.identifier;
 }
 
 /**
