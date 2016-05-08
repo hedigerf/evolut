@@ -293,6 +293,15 @@
         \item Fitness Graph Best Report: Enthält Koordinaten um einen Graph über das beste Individum der Generation zu erstellen.
         \item Genotype Blue Print Report: Enthält pro Generation ein JSON das Informationen über die ganze Population enthält.
         \item Fitness Graph Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit Body Points Anzahl x.
+        \item Diversity Report: Enthält die Berechnung der Punktstreuung für jeweils eine Generation. Die Punktsteuung berechnet sich wie folgt:
+        \begin{itemize}
+          \item Erstellung von Vektoren der Genome. Jede Eigenschaft des Genoms wird in einen numerischen Wert konvertiert. \( V_d \)
+          \item Alle Vekotren werden summiert.  Die Summe wird als \(V_s\) bezeichnet.
+          \item Der Schwerpunktvektor wird gebildet: \( V_s / Anzahl(V_d) = V_{schwer} \)
+          \item Von jedem \(V_d\) wird \(V_{schwer}\) subtrahiert  \( V_d - V_{schwer}  = V_{d2} \)
+          \item Nun werden alle \(V_{d2}\) normiert, quadriert \( norm(V_{d2})^2 = d \)
+          \item Abschliessend werden alle \(d\) zusammengezählt und man erhält die Punktestreuung.
+        \end{itemize}
         Ansonsten gleich wie Fitness Graph Average Report.
       \end{itemize}
 
