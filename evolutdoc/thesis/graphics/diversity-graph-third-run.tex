@@ -1,0 +1,27 @@
+% !TEX root = ../main.tex
+
+\begin{tikzpicture}[scale=1.4]
+\begin{axis}[
+    title={Diversitaets Graph},
+    xlabel={Generation},
+    ylabel={Fitness},
+    xmin=0, xmax=13968,
+    ymin=0, ymax=90,
+    xtick={0,2000,4000,6000,8000,10000,12000},
+    ytick={0,15,30,45,60,75,90},
+    legend pos=north west,
+    ymajorgrids=true,
+    grid style=dashed,
+]
+
+\addplot[
+    color=red,
+    mark=none,
+    ]
+    coordinates {
+    (3, 3.5026691754659018)
+  };
+	\addlegendentry{Diversitaet}
+
+\end{axis}
+\end{tikzpicture}
