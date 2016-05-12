@@ -31,10 +31,10 @@ const defaultConfig = {
   mutation: {
     body: {
       bodyPoint: {
-        probability: 0.1
+        probability: 0.05
       },
       hipJoint: {
-        probability: 0.1
+        probability: 0.05
       }
     },
     engine: {
@@ -59,16 +59,16 @@ const defaultConfig = {
     leg: {
       height: {
         limit: 1.5,
-        probability: 0.1,
+        probability: 0.05,
         step: 0.05
       },
       heightFactor: {
-        probability: 0.1,
+        probability: 0.05,
         step: 0.05
       },
       width: {
         limit: 0.25,
-        probability: 0.1,
+        probability: 0.05,
         step: 0.01
       }
     }
