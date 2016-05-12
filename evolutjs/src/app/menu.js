@@ -4,8 +4,7 @@
  * @module app/menu
  */
 
-import { app } from 'electron';
-import Menu from 'menu';
+import { app, Menu } from 'electron';
 import { World } from './ipc';
 
 /**

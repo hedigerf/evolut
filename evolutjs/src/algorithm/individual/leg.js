@@ -17,13 +17,6 @@ export const lensHeight = L.prop('height');
 export const lensWidth = L.prop('width');
 export const lensHeightFactor = L.prop('heightFactor');
 
-/**
- * Lens to height factor.
- *
- * @type {Lens}
- */
-const lensHeightFactor = L.prop('heightFactor');
-
 const LEG_LOWER_LIMIT_HEIGHT = 0.6;
 const LEG_UPPER_LIMIT_HEIGHT = 0.8;
 const LEG_LOWER_LIMIT_HEIGHT_FACTOR = 0.4;

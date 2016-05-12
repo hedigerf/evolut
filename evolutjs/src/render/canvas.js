@@ -4,7 +4,9 @@
  * @module render/canvas
  */
 
-import canvasBuffer from 'electron-canvas-to-buffer';
+/* eslint-disable */
+
+// import canvasBuffer from 'electron-canvas-to-buffer';
 import fs from 'fs';
 import { image } from '../util/path';
 
@@ -16,7 +18,15 @@ import { image } from '../util/path';
  * @param {String} [mimeType='image/png'] The mime type of the saved file
 */
 export default function dumpCanvas(canvas, imageName, mimeType = 'image/png') {
+
+  return;
+
+  // Wait for an updated version of electron-canvas-to-buffer
+  // electron 1.0 changed the native-image api
+
+  /*
   const imagePath = image(imageName);
   const buffer = canvasBuffer(canvas, mimeType);
   fs.writeFile(imagePath, buffer);
+  */
 }
