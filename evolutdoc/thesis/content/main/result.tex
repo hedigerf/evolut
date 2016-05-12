@@ -74,3 +74,35 @@
       \caption{Durchschnittliches Individuum pro Anzahl Körper Punkte, Zweiter Versuch}
       \label{fig:graphBpSecond}
     \end{figure}
+
+    \section{Dritter Versuch, parameterierbare Steuerung ohne Feedback}
+
+      \subsection{Konfiguration}
+        \begin{table}[H]
+          \input{tables/simulation-parameters-third-run.tex}
+          \caption{Simulationsparameter, Zweiter Versuch}
+        \end{table}
+      \subsection{Auswertung}
+        Interessant zu beboachten beim Zweiten Versuch ist, das die Fitness der Individuuen erst ab der 1400. Generation (siehe Abbildung \ref{fig:graphSecond}).
+        wieder abzunehmen beginnt. Jedoch ist auch hier wieder ein klarer, wenn auch nicht so starker Abwärtstrend zu erkennen.
+        Eine weitere Vermutung, neben dem fehlenden Feedback der Engine, warum die Fitness wieder abzunehmen beginnt,
+        ist die zu hohe Wahrscheinlichkeit der Mutation. In einem nächsten Versuch, muss getestet werden ob niedrigere Mutationswahrscheinlichkeiten
+        einen positiven Effekt auf die langfristie Fitness der Individuuen haben. Ab ca. der 2000. Generation beginnt die Fitness wieder rapide zu steigen,
+        jedoch ist dies durch ein Fehler der Engine zu erklären. Die Individueen verhacken sich im Boden und beginnen grosse Distanzen durch Hüpfbewegungen zurückzulegen.
+        Diesen Fehler kann man bereinigen indem man die Relaxation erhöt und den Zeitschritt gleichzeitig verringert, diese beiden Parameter sind in \ref{sec:Konfiguration} beschrieben.
+          \begin{figure}
+            \input{graphics/fitness-graph-second-run-no-feedback}
+            \caption{Bestes Indivuum und Durchschnittliches Individuum, Zweiter Versuch}
+            \label{fig:graphThird}
+          \end{figure}
+
+      \subsubsection{Körper Punkte}
+        Ein ähliches Bild ist zu beobachten, wie bei bei \ref{subsub:bp}.
+        Bereits ab der 9. Generation existieren nur noch Individuuen mit 7 Körper Punkten (siehe Abbildung \ref{fig:graphBpSecond}).
+        Um eine sinnvolle Aussage über die Körper Punkte zu formulieren, müsste man nicht nur am Anfang Indivduuen mit verschiedenen Körper Punkten generieren,
+        sondern auch während der Simulation, die Anzahl an Körper Punkten mutieren.
+      \begin{figure}
+        \input{graphics/fitness-graph-average-body-points-second-run-no-feedback}
+        \caption{Durchschnittliches Individuum pro Anzahl Körper Punkte, Zweiter Versuch}
+        \label{fig:graphBpThird}
+      \end{figure}
