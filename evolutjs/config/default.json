@@ -22,6 +22,8 @@
   "simulation": {
     "evaluateAfterTickCount": 240,
     "mustMovement": 0.05,
+    "runDuration": 30,
+    "stepTime": 0.016,
     "timeOut": true,
     "trackY": false,
     "trackBestIndividual": true

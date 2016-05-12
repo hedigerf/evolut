@@ -15,6 +15,7 @@
 import p2 from 'p2';
 import PIXI from 'pixi.js';
 
+// Remove the hello message from pixi
 PIXI.utils._saidHello = true;
 
 /**

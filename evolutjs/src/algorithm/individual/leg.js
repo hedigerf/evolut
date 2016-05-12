@@ -10,15 +10,19 @@ import { compose, isNil, over, view, when } from 'ramda';
 import Foot from './foot';
 import { KneeJoint } from './joint';
 import { PartialGenotype } from '../genotype/genotype';
-import Random  from 'random-js';
-
-const random = new Random(Random.engines.mt19937().autoSeed());
+import random from '../../util/random';
 
 export const lensMass = L.prop('mass');
 export const lensHeight = L.prop('height');
 export const lensWidth = L.prop('width');
 export const lensHeightFactor = L.prop('heightFactor');
 
+/**
+ * Lens to height factor.
+ *
+ * @type {Lens}
+ */
+const lensHeightFactor = L.prop('heightFactor');
 
 const LEG_LOWER_LIMIT_HEIGHT = 0.6;
 const LEG_UPPER_LIMIT_HEIGHT = 0.8;
@@ -26,7 +30,6 @@ const LEG_LOWER_LIMIT_HEIGHT_FACTOR = 0.4;
 const LEG_UPPER_LIMIT_HEIGHT_FACTOR = 0.6;
 const LEG_LOWER_LIMIT_WIDTH = 0.1;
 const LEG_UPPER_LIMIT_WIDTH = 0.2;
-
 
 /**
  * Represents a leg of an indiviual.
@@ -37,7 +40,6 @@ const LEG_UPPER_LIMIT_WIDTH = 0.2;
  * @extends {PartialGenotype}
  */
 export default class Leg extends PartialGenotype {
-
 
   /**
    * Constructor of a Leg.

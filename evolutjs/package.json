@@ -1,6 +1,6 @@
 {
   "name": "evolut",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "Design of artificial animals with evolutionary algorithms",
   "private": true,
   "main": "main.js",
@@ -9,7 +9,6 @@
     "build": "electron-packager ./ --platform=all --arch=x64 --asar=true --ignore='node_modules/*' --ignore=doc --ignore=test --out=./dist",
     "doc": "jsdoc -d doc -r src",
     "lint": "eslint src/**/*.js lib/**/*.js test/**/*.js",
-    "esdoc": "esdoc -c .esdocrc",
     "start": "electron .",
     "start-dev": "electron --debug .",
     "test": "npm run lint && npm run assert"
@@ -59,7 +58,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-immutable": "^1.5.4",
-    "electron-packager": "^6.0.0",
+    "electron-packager": "^7.0.0",
     "electron-prebuilt": "0.37.7",
     "eslint": "^2.7.0",
     "eslint-config-standard": "^5.1.0",

@@ -58,10 +58,14 @@ function memoizationFor(obj) {
 }
 
 /**
+ * @typedef {function(Object, String, Object)} Decorator
+ */
+
+/**
  * Wraps a getter in a decorator.
  *
  * @function
- * @param {function(Object, String, Object)} decorator The decorator function
+ * @param {Decorator} decorator The decorator function
  * @param {String} property The property name
  * @param {Object} object The target
  */
@@ -80,7 +84,7 @@ export const decorateAccessor = curry(
  * Wraps a static getter in a decorator.
  *
  * @function
- * @param {function(Object, String, Object)} decorator The decorator function
+ * @param {Decorator} decorator The decorator function
  * @param {String} property The property name
  * @param {Object} object The target
  */

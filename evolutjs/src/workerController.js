@@ -1,12 +1,13 @@
 /**
  * Application controller module.
  *
- * @module applicationController
+ * @module workerController
  */
 
 /* eslint-env browser */
 
 import './app/config';
+import { Worker, World } from './app/ipc';
 import { createTimePrefix } from './util/path';
 import dumpCanvas from './render/canvas';
 import { getLogger } from './app/log';
@@ -17,41 +18,73 @@ import { List } from 'immutable';
 import SettingsPanel from './settings/settingsPanel';
 import SimulationWorld from './render/world/simulationWorld';
 import uuid from 'uuid';
-import { World } from './app/ipc';
 
+/**
+ * Worker id.
+ *
+ * @type {String}
+ */
 const workerId = uuid.v4();
-const logger = getLogger('woker', workerId);
 
+/**
+ * The configured logger for this worker.
+ *
+ * @type {Logger}
+ */
+const logger = getLogger('worker', workerId);
+
+/**
+ * The current simulation world of this worker.
+ *
+ * @type {SimulationWorld}
+ */
 let simulation = null;
 
+/**
+ * Sends the simulation results to the main process.
+ *
+ * @param {Population} population The population for this simulation
+ */
 function performSimulationPostprocessing(population) {
   const stringified = population.individuals.toArray().map((x) => JSON.stringify(x));
-  ipcRenderer.send('work-finished', stringified, workerId);
+  ipcRenderer.send(Worker.Finished, stringified, workerId);
 }
 
-ipcRenderer.on('receive-work', (event, individualsStringified, generationCount, { parcour }) => {
+/**
+ * IPC-Callback for the worker process when it receives work.
+ */
+ipcRenderer.on(Worker.Receive, (event, individualsStringified, generationCount, { parcour }) => {
+
   info(logger, 'received work');
+
   const individuals = individualsStringified.map((x) => JSON.parse(x));
-  const population = {individuals: List(individuals), generationCount};
+  const population = { individuals: List(individuals), generationCount };
+
   if (simulation === null) {
+
     jQuery(() => {
       simulation = new SimulationWorld(
         {
           parcour: JSON.parse(parcour),
-          wokerId: workerId
+          workerId
         }, population, performSimulationPostprocessing.bind(this));
+
       const settings = new SettingsPanel(simulation);
       settings.bindEvents();
 
       info(logger, 'worker sucessfully started.');
     });
+
   } else {
+
     simulation.addNewPopulation(population);
     simulation.createParcour(JSON.parse(parcour));
     info(logger, 'starting simulation for generation: ' + generationCount);
     simulation.run();
+
   }
 });
+
 /**
  * IPC-Callback for the main process's menu item 'Next Generation'.
  * Aborts the current run of the simulation and proceeds to the next.

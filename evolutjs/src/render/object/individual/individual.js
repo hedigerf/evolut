@@ -11,6 +11,8 @@ import p2 from 'p2';
 import Phenotype from './phenotype';
 import { randomColor } from '../../color';
 
+// Set the default relaxation from the configuration.
+// This must be done before a world is instantiated.
 p2.Equation.DEFAULT_RELAXATION = config('simulation.relaxation');
 
 /**
@@ -88,6 +90,8 @@ export default class Individual extends Phenotype {
     this.addBody(body);
     this.addShape(body, this.createBodyShape(genotype.body.bodyPoints), [0, 0], 0, bodyOptions, createBodyStyle());
 
+    genotype.body.bodyPoints.forEach((p) => this.createCircleShape(body, bodyOptions, p));
+
     // Mid
     this.createCenterOfMassPoint(body, bodyOptions);
 
@@ -102,9 +106,7 @@ export default class Individual extends Phenotype {
       const upperLegMass = (1 - leg.heightFactor) * leg.mass;
       const lowerLegMass = leg.heightFactor * leg.mass;
 
-      const legWidth =  leg.width;
-
-      const upperLegShape = new p2.Box({ width: legWidth, height: upperLegHeight });
+      const upperLegShape = new p2.Box({ width: leg.width, height: upperLegHeight });
       const upperLegBody = new p2.Body({
         mass: upperLegMass,
         position: [posX + (0.5 * pos), posY]
@@ -113,7 +115,7 @@ export default class Individual extends Phenotype {
       this.addShape(upperLegBody, upperLegShape, [0, 0], 0, bodyOptions, styleLeg);
 
       // Shank
-      const lowerLegShape = new p2.Box({ width: legWidth, height: lowerLegHeight });
+      const lowerLegShape = new p2.Box({ width: leg.width, height: lowerLegHeight });
       const lowerLegBody = new p2.Body({
         mass: lowerLegMass,
         position: [posX + (0.5 * pos), posY + upperLegHeight]
@@ -128,6 +130,9 @@ export default class Individual extends Phenotype {
       const knee = this.createRevoluteConstraint(upperLegBody, lowerLegBody,
         [0, -upperLegHeight / 2],
         [0, lowerLegHeight / 2]);
+
+      this.createLegPartCircleShape(upperLegShape, upperLegBody, bodyOptions);
+      this.createLegPartCircleShape(lowerLegShape, lowerLegBody, bodyOptions);
 
       return { hip, knee };
     };
@@ -181,6 +186,37 @@ export default class Individual extends Phenotype {
     this.addBody(midBody);
     this.addShape(midBody, shape, [0, 0], 0, bodyOptions, style);
     this.addConstraint(constraint);
+  }
+
+  /**
+   * Create a point around the center of mass of an individuals body.
+   *
+   * @param {p2.Body} body
+   * @param {Object} bodyOptions
+   * @param {Vector} position
+   */
+  createCircleShape(body, bodyOptions, position) {
+
+    const style = {
+      lineWidth: 1,
+      lineColor: randomColor(),
+      fillColor: randomColor()
+    };
+    const circleShape = new p2.Circle({ radius: 0.01 });
+
+    this.addShape(body, circleShape, position, 0, bodyOptions, style);
+  }
+
+  /**
+   * Create a point around the center of mass of an individuals body.
+   *
+   * @param {p2.Shape} shape
+   * @param {p2.Body} body
+   * @param {Object} bodyOptions
+   * @param {Vector} position
+   */
+  createLegPartCircleShape(shape, body, bodyOptions) {
+    shape.vertices.forEach((p) => this.createCircleShape(body, bodyOptions, p), this);
   }
 
   /**

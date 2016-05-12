@@ -7,46 +7,9 @@
  */
 
 import { path as appRoot } from 'app-root-path';
+import defaultConfig from './defaultConfig';
 import nconf from 'nconf';
 import path from 'path';
-
-/**
- * Average acceleration on earth.
- *
- * @type {Number}
- */
-const EARTH_GRAVITY = -9.81;
-
-/**
- * Default configuration
- *
- * @type {Object}
- * @property {Object} defaults.window
- * @property {Number} defaults.window.height
- * @property {Number} defaults.window.width
- * @property {Object} defaults.simulation
- * @property {Number} defaults.simulation.friction
- * @property {Array<Number>} defaults.simulation.gravity
- * @property {Boolean} defaults.simulation.render
- * @property {Number} defaults.simulation.runDuration
- * @property {Boolean} defaults.simulation.solo
- * @property {Number} defaults.simulation.stepTime
- */
-const defaults = {
-  window: {
-    height: 720,
-    width: 1280
-  },
-  simulation: {
-    friction: 1000,
-    gravity: [0, EARTH_GRAVITY],
-    render: true,
-    relaxation: 4,
-    runDuration: 3,
-    solo: false,
-    stepTime: 0.016
-  }
-};
 
 /**
  * Path to the default configuration file.
@@ -55,12 +18,19 @@ const defaults = {
  */
 const configPath = path.join(appRoot, 'config/default.json');
 
+/**
+ * Path to the mutation configuration file.
+ *
+ * @type {String}
+ */
+const mutationConfigPath = path.join(appRoot, 'config/mutation.json');
+
 // Load the configurations in the following order:
 // 1. Environment variables
 // 2. Process arguments
-// 3. Configuration file
+// 3. Configuration files (default, mutation)
 // 4. Defaults
-nconf.env().argv().file(configPath).defaults(defaults);
+nconf.env().argv().file(configPath).file('mutation', mutationConfigPath).defaults(defaultConfig);
 
 /**
  * Returns the value for a configuration key

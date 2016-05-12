@@ -6,7 +6,7 @@
  */
 
 import { allPass, always, anyPass, append, curry, keys, length, map, view } from 'ramda';
-import { makeRandomLensDescriptor, resolveLensDecriptor } from './constraintLenses';
+import { makeRandomLensDescriptor, resolveLensDecriptor } from './lenses';
 import { IdentifiableStatic } from '../types/identifiable';
 import random from '../util/random';
 
@@ -73,6 +73,7 @@ export function isMinAngle(constraint) {
  *
  * @abstract
  * @extends {IdentifiableStatic}
+ * @extends {MutatableStatic}
  */
 export class Movement extends IdentifiableStatic() {
 
@@ -82,6 +83,15 @@ export class Movement extends IdentifiableStatic() {
    * @return {Array<*>} A bounds list
    */
   static get bounds() {
+    return [];
+  }
+
+  /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
     return [];
   }
 
@@ -106,6 +116,15 @@ export class Movement extends IdentifiableStatic() {
  * @extends {Movement}
  */
 class CompoundMovement extends Movement {
+
+  /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
+    return [makeRandomMovementDescriptor()];
+  }
 
   /**
    * Apply the movemement to a phenotype.
@@ -209,8 +228,17 @@ class SetAnglesTo extends Movement {
    * @return {Array<*>} A bounds list
    */
   static get bounds() {
-    const fullRadAngle = Math.PI * 2;
-    return [-fullRadAngle, fullRadAngle];
+    return [-Math.PI, Math.PI];
+  }
+
+  /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
+    const bounds = this.bounds;
+    return [random.real(...bounds, true), random.real(...bounds, true)].sort();
   }
 
   /**
@@ -293,6 +321,15 @@ class SetMotor extends Movement {
   }
 
   /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
+    return [random.integer(...this.bounds)];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Boolean} state The state of a motor
@@ -340,6 +377,15 @@ class SetSpeedTo extends Movement {
   }
 
   /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
+    return [random.integer(...this.bounds)];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
    * @param {Number} speed The speed of a constraint
@@ -380,9 +426,18 @@ class Until extends Movement {
   }
 
   /**
+   * Returns a random set of parameters.
+   *
+   * @return {Array<*>} Randomized parameters
+   */
+  static get random() {
+    return [random.pick(this.bounds)];
+  }
+
+  /**
    * Apply the movemement to a phenotype.
    *
-   * @param {function(*, Number): Boolean} predId
+   * @param {String} predId
    * @param {Lens} lens The lens to a contraint
    * @param {Phenotype} phenotype The target phenotype
    * @param {Number} time The world time
@@ -411,10 +466,22 @@ const MovementIdMap = {
   [Until.identifier]: Until
 };
 
+/**
+ * Returns the movement class to corresponding to a movement id.
+ *
+ * @param {String} id A movement id
+ * @return {Movement} The movement
+ */
 export function getMovement(id) {
   return MovementIdMap[id];
 }
 
+/**
+ * Returs the predicate function by id.
+ *
+ * @param {String} predicateId The predicate id
+ * @return {function(...*): Boolean} The predicate
+ */
 function getMovementPredicate(predicateId) {
   switch (predicateId) {
     case 'mxa':
@@ -437,10 +504,11 @@ function getMovementPredicate(predicateId) {
  * @param {String} id The movement identifier
  * @param {LensDescriptor} lens The lens descriptor
  * @param {Array<*>} [params=[]] The optional paramerter list
+ * @param {FeedbackDescriptor} [feedback] The optional feedback descriptor
  * @return {MovementDescriptor} The movement descriptor
  */
-export function makeMovementDescriptor(id, lens, params = []) {
-  return { id, lens, params };
+export function makeMovementDescriptor(id, lens, params = [], feedback) {
+  return { id, lens, params, feedback };
 }
 
 /**
@@ -474,31 +542,7 @@ export function makeRandomMovementDescriptorId() {
  * @return {Array} A movement parameter list
  */
 export function makeRandomMovementDescriptorParams({ id }) {
-
-  if (isCompoundMovement({ id })) {
-    return [makeRandomMovementDescriptor()];
-  }
-
-  switch (id) {
-
-    case 'sta':
-      return [
-        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true),
-        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true)
-      ];
-
-    case 'sts':
-      return [
-        random.real(getMovement(id).bounds[0], getMovement(id).bounds[1], true)
-      ];
-
-    case 'stm':
-    case 'utl':
-      return [
-        random.pick(getMovement(id).bounds)
-      ];
-
-  }
+  return getMovement(id).random;
 }
 
 /**
@@ -511,7 +555,7 @@ export function makeRandomMovementDescriptor() {
   const id = makeRandomMovementDescriptorId();
   const params = makeRandomMovementDescriptorParams({ id });
 
-  if (isCompoundMovement({ id})) {
+  if (isCompoundMovement({ id })) {
     return makeCompoundMovementDescriptor(id, params);
   }
 
@@ -527,7 +571,7 @@ export function makeRandomMovementDescriptor() {
  * @return {MovementDescriptor} The all movement descriptor
  */
 export function all(...params) {
-  return { id: 'all', params };
+  return { id: All.identifier, params };
 }
 
 /**
@@ -537,7 +581,7 @@ export function all(...params) {
  * @return {MovementDescriptor} The one movement descriptor
  */
 export function one(...params) {
-  return { id: 'one', params };
+  return { id: One.identifier, params };
 }
 
 /**
@@ -549,7 +593,7 @@ export function one(...params) {
  * @return {Boolean}
  */
 export function isCompoundMovement({ id }) {
-  return id === 'all' || id === 'one';
+  return id === All.identifier || id === One.identifier;
 }
 
 /**

@@ -2,37 +2,27 @@
  * Provides mutation rules for an engine.
  *
  * @module algorithm/mutation/rules/engine
+ * @see algorithm/mutation/rule
  */
 
 import * as L from 'partial.lenses';
 import { compose, curry, defaultTo, evolve, ifElse, over, partial, range } from 'ramda';
-import {
-  getMovement,
-  isCompoundMovement,
-  makeRandomMovementDescriptor
-  // makeRandomMovementDescriptorId,
-  // makeRandomMovementDescriptorParams
-} from '../../../engine/movement';
-import MutationRule, { shouldMutate } from '../rule';
-// import { makeRandomLensDescriptor } from '../../../engine/constraintLenses';
+import { getMovement, isCompoundMovement, makeRandomMovementDescriptor } from '../../../engine/movement';
+import MutationRule from '../rule';
 import random from '../../../util/random';
 
 /**
  * Engine mutation probabilities.
  *
- * @typedef {Object} EngineMutationProbabilities
- * @property {Number} probability
- * @property {Object} engine
- * @property {Number} engine.add
- * @property {Number} engine.del
- * @property {Number} engine.movement
+ * @typedef {Object} EngineMutationOption
+ * @property {Number} add
+ * @property {Number} remove
  * @property {Object} lens
  * @property {Number} lens.index
  * @property {Number} lens.site
  * @property {Number} lens.type
  * @property {Object} movement
  * @property {Number} movement.id
- * @property {Number} movement.lens
  * @property {Number} movement.parameters
  */
 
@@ -57,6 +47,8 @@ const lensInitial = L.compose(lensDescriptor, L.prop('initial'));
  */
 const lensMovements = L.compose(lensDescriptor, L.prop('movements'));
 
+// TODO clean up the mess below
+
 const lensId = L.prop('id');
 const lensLens = L.prop('lens');
 const lensParams = L.prop('params');
@@ -77,15 +69,10 @@ const mutateCompoundMovement = curry(
   }
 );
 
-function mutateSingleId(probabilities, id) {
-  // nop
-  return id;
-}
-
 function mutateSingleLens(probabilities, lens) {
 
   const t = (p, c) => (v) => {
-    if (shouldMutate(p)) {
+    if (EngineMutationRule.prototype.shouldMutate(p)) {
       return random.pick(c);
     }
     return v;
@@ -106,33 +93,19 @@ function mutateSingleParams(probabilities, movement) {
     return movement;
   }
 
-  const StepMap = {
-    sta: 0.01,
-    sts: 0.1
-  };
-
-  const step = StepMap[movement.id];
+  const bounds = getMovement(movement.id).bounds;
 
   switch (movement.id) {
 
     case 'sta':
-      movement.params = [
-        movement.params[0] + random.real(-step, step),
-        movement.params[1] + random.real(-step, step)
-      ];
-      break;
-
     case 'sts':
-      movement.params = [
-        movement.params[0] + random.real(-step, step)
-      ];
+      const step = probabilities.movement[movement.id].step;
+      movement.params = movement.params.map((p, i) => EngineMutationRule.prototype.mutateNumeric(p, step, bounds[i]));
       break;
 
     case 'stm':
     case 'utl':
-      movement.params = [
-        random.pick(getMovement(movement.id).bounds)
-      ];
+      movement.params = [random.pick(bounds)];
       break;
 
   }
@@ -144,7 +117,6 @@ const mutateSingleMovement = curry(
   (probabilities, movement) => {
 
     const mutateSingle = compose(
-      // over(lensId, partial(mutateSingleId, [probabilities])),
       over(lensLens, partial(mutateSingleLens, [probabilities])),
       over(L.identity, partial(mutateSingleParams, [probabilities]))
     );
@@ -170,16 +142,13 @@ function mutateMovements(probabilities, movements) {
   const length = movements.length;
   const mutated = [];
 
-  const probabilityAdd = probabilities.engine.add / length;
-  const probabilityRemove = probabilities.engine.del / length;
-
   for (let i = 0; i < length; i++) {
 
-    if (shouldMutate(probabilityAdd)) {
+    if (EngineMutationRule.prototype.shouldMutate(probabilities.add)) {
       mutated.push(makeRandomMovementDescriptor());
     }
 
-    if (!shouldMutate(probabilityRemove)) {
+    if (!EngineMutationRule.prototype.shouldMutate(probabilities.remove)) {
       mutated.push(mutateMovement(movements[i]));
     }
 
@@ -187,6 +156,8 @@ function mutateMovements(probabilities, movements) {
 
   return mutated;
 }
+
+// TODO clean up the mess above
 
 /**
  * Represents a mutation rule for an engine.
@@ -196,53 +167,25 @@ function mutateMovements(probabilities, movements) {
 export default class EngineMutationRule extends MutationRule {
 
   /**
-   * Construct an engine mutation rule.
+   * Return the option transformation.
    *
-   * @param {EngineMutationProbabilities} [probabilities={}]
+   * @return {EngineMutationOption} The transformation
    */
-  constructor(probabilities) {
-
-    super(probabilities.probability);
-
-    /**
-     * Mutation probabilities.
-     *
-     * @type {EngineMutationProbabilities}
-     */
-    this.probabilities = this.initializeProbabilities(probabilities);
-  }
-
-  /**
-   * Initialize the probability property.
-   * All probabilities default to zero.
-   *
-   * @private
-   * @param  {EngineMutationProbabilities} probabilities
-   * @return {EngineMutationProbabilities}
-   */
-  initializeProbabilities(probabilities) {
-
-    const defaultZero = defaultTo(0);
-    const transformation = {
-      probability: defaultZero,
-      engine: {
-        add: defaultZero,
-        del: defaultZero,
-        movement: defaultZero
-      },
+  static get transformation() {
+    const defaultProbability = defaultTo(0.001);
+    return {
+      add: defaultProbability,
+      remove: defaultProbability,
       lens: {
-        index: defaultZero,
-        side: defaultZero,
-        type: defaultZero
+        index: defaultProbability,
+        side: defaultProbability,
+        type: defaultProbability
       },
       movement: {
-        id: defaultZero,
-        lens: defaultZero,
-        parameters: defaultZero
+        id: defaultProbability,
+        parameters: defaultProbability
       }
     };
-
-    return evolve(transformation, probabilities);
   }
 
   /**
@@ -254,13 +197,15 @@ export default class EngineMutationRule extends MutationRule {
    */
   mutate(genotype) {
 
-    const mutateDescriptor = partial(mutateMovements, [this.probabilities]);
+    const mutated = super.mutate(genotype);
+
+    const mutateDescriptor = partial(mutateMovements, [this.options]);
     const mutateEngine = compose(
       over(lensInitial, mutateDescriptor),
       over(lensMovements, mutateDescriptor)
     );
 
-    return mutateEngine(genotype);
+    return mutateEngine(mutated);
   }
 
 }

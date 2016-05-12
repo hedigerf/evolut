@@ -4,18 +4,8 @@
  * @module algorithm/mutation/rule
  */
 
+import { clone, evolve } from 'ramda';
 import random from '../../util/random';
-
-/**
- * Determine if this rule should be applied.
- *
- * @protected
- * @param {Number} probability The probability of a mutation
- * @return {Boolean} Should this mutation rule be applied
- */
-export function shouldMutate(probability) {
-  return probability >= random.real(0, 1, true);
-}
 
 /**
  * Represents a mutation rule for a mutator.
@@ -27,26 +17,19 @@ export default class MutationRule {
   /**
    * Construct a muation rule.
    *
-   * @param {Number} probability The probability a a genotype is mutated
-   * @param {Number} step The maximum difference to the current value
+   * @param {Object} [options={}] The mutation options
    */
-  constructor(probability, step) {
+  constructor(options = {}) {
+    this.options = evolve(this.constructor.transformation, options);
+  }
 
-    /**
-     * The probaility that this rule is applied.
-     *
-     * @protected
-     * @type {Number}
-     */
-    this.probability = probability;
-
-    /**
-     * The maximum step for this mutation.
-     *
-     * @protected
-     * @type {Number}
-     */
-    this.step = step;
+  /**
+   * Return the option transformation.
+   *
+   * @return {Object} The transformation
+   */
+  static get transformation() {
+    return {};
   }
 
   /**
@@ -57,7 +40,7 @@ export default class MutationRule {
    * @return {Genotype} The mutated genotype
    */
   mutate(genotype) {
-    return genotype;
+    return clone(genotype);
   }
 
   /**
@@ -65,10 +48,18 @@ export default class MutationRule {
    *
    * @param {Number} value The current value
    * @param {Number} step The maximum difference
+   * @param {Number} [limit] The limit to adhere to
    * @return {Number} The mutated value
    */
-  mutateNumeric(value, step) {
-    return value + random.real(-step, step, true);
+  mutateNumeric(value, step, limit) {
+    const result = value + random.real(-step, step, true);
+
+    if (result <= 0) {
+      return value;
+    } else if (limit && result > limit) {
+      return limit;
+    }
+    return result;
   }
 
   /**
@@ -79,20 +70,7 @@ export default class MutationRule {
    * @return {Boolean} Should this mutation rule be applied
    */
   shouldMutate(probability) {
-    return shouldMutate(probability);
-  }
-
-  /**
-   * Try to mutate a genotype with this rule.
-   *
-   * @param {Genotype} genotype The genotype to be mutated
-   * @return {Genotype} The mutated genotype
-   */
-  tryMutate(genotype) {
-    if (this.shouldMutate(this.probability)) {
-      return this.mutate(genotype);
-    }
-    return genotype;
+    return probability >= random.real(0, 1, true);
   }
 
 }

@@ -19,3 +19,13 @@ export const World = {
   ToggleRendering: 'world-toggle-rendering',
   SaveScreen: 'world-save-screen'
 };
+
+/**
+ * Worker ipc channel names.
+ *
+ * @enum {String}
+ */
+export const Worker = {
+  Finished: 'work-finished',
+  Receive: 'work-receive'
+};

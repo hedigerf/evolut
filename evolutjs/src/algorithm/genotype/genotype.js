@@ -7,6 +7,11 @@
 import * as L from 'partial.lenses';
 import { always, curry, either, ifElse, mapObjIndexed, merge, view } from 'ramda';
 import { IdentifiableStatic } from '../../types/identifiable';
+import { SeedableStatic } from '../../types/seedable';
+
+/**
+ * @typedef {function(PartialGenotype, Object): Object} PartialGenotypeProcessor
+ */
 
 /**
  * Extract the options for a certain key.
@@ -30,12 +35,10 @@ const extractOption = (key) => either(
  */
 const buildType = (T, option) => new T(option);
 
-const mutateType = (T, option) => T.mutate(option);
-
 /**
  * Seeds a partial genotype.
  *
- * @param {PartialGenotype} T The partial genotype
+ * @param {SeedableStatic} T The partial genotype
  * @param {Object} option The build options
  * @return {Object} The seed object
  */
@@ -52,7 +55,7 @@ const isPartialGenotype = (T) => PartialGenotype.prototype.isPrototypeOf(T.proto
 /**
  * Processes a genotype or maps an array or object.
  *
- * @param {function(PartialGenotype, Object): Object} operation
+ * @param {PartialGenotypeProcessor} operation
  * @param {Object} options
  * @param {PartialGenotype|Array|Object} type
  * @param {String} key
@@ -73,7 +76,7 @@ const processPartialGenotype = curry((operation, options, type, key) => {
  * Maps a part object with a given function.
  * A part object is a nested object containing partial genotypes.
  *
- * @param {function(PartialGenotype, Object): Object} operation
+ * @param {PartialGenotypeProcessor} operation
  * @param {Object} options
  * @param {Object} parts
  */
@@ -83,8 +86,10 @@ const processGenotypeParts = curry(
 
 /**
  * Base class of a genotype.
+ *
+ * @extends {SeedableStatic}
  */
-export default class Genotype {
+export default class Genotype extends SeedableStatic() {
 
   /**
    * Default genotype constructor.
@@ -92,6 +97,7 @@ export default class Genotype {
    * @param {Object} genotype The whole genotype as object
    */
   constructor(genotype) {
+    super();
     const built = this.constructor.build(genotype);
     for (const property in built) {
       this[property] = built[property];
@@ -138,16 +144,6 @@ export default class Genotype {
     return JSON.stringify(this);
   }
 
-  /**
-   * Mutates a genotype.
-   *
-   * @param {Object} options
-   * @return {Genotype}
-   */
-  mutate(options) {
-    return processGenotypeParts(mutateType, options, this.constructor.parts);
-  }
-
 }
 
 /**
@@ -156,7 +152,7 @@ export default class Genotype {
  * from the whole genotype.
  *
  * @extends {Genotype}
- * @extends {Identifiable}
+ * @extends {IdentifiableStatic}
  */
 export class PartialGenotype extends IdentifiableStatic(Genotype) {
 

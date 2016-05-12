@@ -4,177 +4,101 @@
  * @module algorithm/mutation/mutator
  */
 
-import {
-          calcSectorAngle,
-          calculatePolygonBounds,
-          calculateXStep,
-          generateHipJointPosition,
-          generateRandomPolygonPoint
-        }
-from '../individual/body';
+import { compose, reduce } from 'ramda';
+import BodyMutationRule from './rules/body';
+import config from '../../app/config';
 import EngineMutationRule from './rules/engine';
 import Individual from '../individual/individual';
-import inside from 'point-in-polygon';
-import Leg from '../individual/leg';
-import { List } from 'immutable';
+import LegMutationRule from './rules/leg';
 import Population from '../population/population';
-import random from '../../util/random';
-
-// Probabilities
-const PROBABILITY_BODY_POINT = 0.1;
-const PROBABILITY_HIP_JOINT = 0.1;
-const PROBABILITY_LEG_HEIGHT = 0.1;
-const PROBABILITY_LEG_HEIGHT_FACTOR = 0.1;
-const PROBABILITY_LEG_WIDTH = 0.1;
-
-
-// Mutation steps
-const MUTATION_STEP_LEG_HEIGHT = 0.05;
-const MUTATION_STEP_LEG_HEIGHT_FACTOR = 0.05;
-const MUTATION_STEP_LEG_WIDTH = 0.01;
-
-// Limits
-const LIMIT_LEG_HEIGHT = 1.5;
-const LIMIT_LEG_WIDTH = 0.25;
-
-const ruleEngine = new EngineMutationRule({
-  probability: 0.1,
-  engine: {
-    add: 0.01,
-    del: 0.01,
-    movement: 0.1
-  },
-  lens: {
-    index: 0.01,
-    side: 0.01,
-    type: 0.01
-  },
-  movement: {
-    id: 0.01,
-    lens: 0.01,
-    parameters: 0.1
-  }
-});
 
 /**
- * Represents a mutator for genotypes.
+ * Rule for a body mutation.
+ *
+ * @type {BodyMutationRule}
+ */
+const ruleBody = new BodyMutationRule(config('mutation:body'));
+
+/**
+ * Rule for a leg mutation.
+ *
+ * @type {LegMutationRule}
+ */
+const ruleLeg = new LegMutationRule(config('mutation:leg'));
+
+/**
+ * Mutation rule for an individual's engine.
+ *
+ * @type {EngineMutationRule}
+ */
+const ruleEngine = new EngineMutationRule(config('mutation:engine'));
+
+/**
+ * These rules are applied to a genotype.
+ * Each rule returns a mutated version where some part was modified.
+ *
+ * @type {Array<Mutation>}
+ */
+const rules = [ruleBody, ruleLeg, ruleEngine];
+
+/**
+ * Returns a new instance of an individual.
+ *
+ * @param {Object} genotype A genotype of an individual
+ * @return {Individual} An instatitated Individual
+ */
+function instantiate(genotype) {
+  return new Individual(genotype);
+}
+
+/**
+ * Returns a mutated genotype.
+ *
+ * @param {Genotype} genotype
+ * @param {MutationRule} rule
+ * @return {Genotype}
+ */
+function mutate(genotype, rule) {
+  return rule.mutate(genotype);
+}
+
+/**
+ * Applies a list of mutation rules to a genotype.
+ * Returns a mutated genotype.
+ *
+ * @param {Array<MutationRule>} rules A list of mutation rules
+ * @return {function(Genotype): Object} A mutation function
+ */
+function applyMutationRules(rules) {
+  return (genotype) => reduce(mutate, genotype, rules);
+}
+
+/**
+ * Returns a mutated individual.
+ *
+ * @function
+ * @param {Individual} genotype A genotype of an individual
+ * @return {Individual} An instatitated Individual
+ */
+const mutateGenotype = compose(instantiate, applyMutationRules(rules));
+
+/**
+ * Represents a mutator which mutates a selected population.
  */
 export default class Mutator {
 
   /**
-   * Mutates a given population
+   * Mutates a given population.
    *
-   * @param  {Population} population to be mutated
-   * @return {Population}            mutated population
+   * @param  {Population} population The population to be mutated
+   * @return {Population} The mutated population
    */
   mutate(population) {
-    const copied = population.individuals.map((toCopy) => new Individual(toCopy));
-    const offsprings = copied.map((individual) => {
 
-      const bodyPoints = this.tryMutateBodyPoints(individual.body.bodyPoints, individual.body.bodyPointsCount);
-      individual.body.bodyPoints = bodyPoints;
+    const offsprings = population.individuals.map(mutateGenotype);
+    const generationCount = population.generationCount + 1;
 
-
-      const hipJointPositions = this.tryMutateHipJoints(bodyPoints, individual.body.hipJointPositions);
-      individual.body.hipJointPositions = hipJointPositions;
-
-      const legs = this.tryMutateLegs(individual.legs);
-      individual.legs = legs;
-
-      individual = ruleEngine.tryMutate(individual);
-
-      const offspring = new Individual(individual);
-      // offspring.body.massFactor
-      return offspring;
-    });
-    return new Population(offsprings, population.generationCount + 1);
-  }
-
-  tryMutateBodyPoints(oldBodyPoints, bodyPointsCount) {
-    const sectorAngle = calcSectorAngle(bodyPointsCount);
-    const bodyPoints = oldBodyPoints.map((bodyPoint, index) => {
-
-      if (this.shouldMutate(PROBABILITY_BODY_POINT)) {
-        const startAngle = index * sectorAngle;
-        const endAngle = startAngle + sectorAngle;
-        const randomBodyPoint = generateRandomPolygonPoint(startAngle, endAngle);
-        return randomBodyPoint;
-      }
-
-      return bodyPoint;
-    });
-    return bodyPoints;
-  }
-
-  tryMutateHipJoints(bodyPoints, oldHipJointPositions) {
-    const polygon = List(bodyPoints);
-    const { minX, minY, maxX, maxY } = calculatePolygonBounds(polygon);
-    const hipJointPositions = oldHipJointPositions.map((hipJointPosition, index) => {
-      if (this.shouldMutate(PROBABILITY_HIP_JOINT)) {
-        return this.mutateHipJoint(minX, maxX, minY, maxY, bodyPoints, index);
-      }
-      if (!inside(hipJointPosition, bodyPoints)) {
-        return this.mutateHipJoint(minX, maxX, minY, maxY, bodyPoints, index);
-      }
-      return hipJointPosition;
-    });
-    return hipJointPositions;
-  }
-
-  tryMutateLegs(oldLegs) {
-    const oldLegList = List.of(oldLegs['0'], oldLegs['1'], oldLegs['2'], oldLegs['3'], oldLegs['4'], oldLegs['5']);
-    const legs = oldLegList.map((legDescriptor) => {
-      const leg = legDescriptor.leg;
-      const legHeight = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT),
-        this.mutateRealValue(leg.height, MUTATION_STEP_LEG_HEIGHT, LIMIT_LEG_HEIGHT), leg.height);
-      const legHeightFactor = this.ifElse(this.shouldMutate(PROBABILITY_LEG_HEIGHT_FACTOR),
-        this.mutateRealValue(leg.heightFactor, MUTATION_STEP_LEG_HEIGHT_FACTOR), leg.heightFactor);
-      const legWidth = this.ifElse(this.shouldMutate(PROBABILITY_LEG_WIDTH),
-        this.mutateRealValue(leg.width, MUTATION_STEP_LEG_WIDTH, LIMIT_LEG_WIDTH), leg.width);
-      return {
-        leg: new Leg(
-          {
-            mass: leg.mass,
-            height: legHeight,
-            heightFactor: legHeightFactor,
-            width: legWidth
-          }
-        ),
-        joint: legDescriptor.hipJoint
-      };
-    });
-    return { 0: legs.get(0), 1: legs.get(1), 2: legs.get(2), 3: legs.get(3), 4: legs.get(4), 5: legs.get(5) };
-  }
-
-  mutateRealValue(realValue, mutationStep, limit) {
-    const step = random.real(-mutationStep, mutationStep);
-    const res = realValue + step;
-    if (res <= 0) {
-      return realValue;
-    } else if (limit && res > limit) {
-      return limit;
-    }
-    return res;
-  }
-
-  mutateHipJoint(minX, maxX , minY , maxY, bodyPoints, index) {
-    const xStep = calculateXStep(minX, maxX);
-    const localMinX = minX + (index * xStep);
-    const localMaxX = minX + ((index + 1) * xStep);
-    return generateHipJointPosition(localMinX, localMaxX, minY, maxY, bodyPoints);
-  }
-
-  shouldMutate(probability) {
-    const discreteNumber = probability * 100;
-    const randomNumber = random.integer(1, 100);
-    return randomNumber <= discreteNumber;
-  }
-
-  ifElse(bool, valueA, valueB) {
-    if (bool) {
-      return valueA;
-    }
-    return valueB;
+    return new Population(offsprings, generationCount);
   }
 
 }
