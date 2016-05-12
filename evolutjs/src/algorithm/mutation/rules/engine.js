@@ -10,6 +10,7 @@ import { compose, curry, defaultTo, evolve, ifElse, over, partial, range } from 
 import { getMovement, isCompoundMovement, makeRandomMovementDescriptor } from '../../../engine/movement';
 import MutationRule from '../rule';
 import random from '../../../util/random';
+import { resolveLensDescriptor } from '../../../engine/lenses';
 
 /**
  * Engine mutation probabilities.
@@ -58,18 +59,18 @@ function mutateCompoundId() {
 }
 
 const mutateCompoundMovement = curry(
-  (probabilities, movement) => {
+  (probabilities, genotype, movement) => {
 
     const mutateCompound = compose(
       over(lensId, mutateCompoundId),
-      over(lensParams, partial(mutateMovements, [probabilities]))
+      over(lensParams, partial(mutateMovements, [probabilities, genotype]))
     );
 
     return mutateCompound(movement);
   }
 );
 
-function mutateSingleLens(probabilities, lens) {
+function mutateSingleLens(probabilities, genotype, lens) {
 
   const t = (p, c) => (v) => {
     if (EngineMutationRule.prototype.shouldMutate(p)) {
@@ -87,13 +88,22 @@ function mutateSingleLens(probabilities, lens) {
   return evolve(transformation, lens);
 }
 
-function mutateSingleParams(probabilities, movement) {
+function mutateSingleParams(probabilities, genotype, movement) {
 
   if (!movement.params || !movement.params.length) {
     return movement;
   }
 
   const bounds = getMovement(movement.id).bounds;
+
+  try {
+
+    const lensF = resolveLensDescriptor(movement.lens);
+    const part = view(lensF, genotype);
+
+  } catch (e) {
+    //
+  }
 
   switch (movement.id) {
 
@@ -114,11 +124,11 @@ function mutateSingleParams(probabilities, movement) {
 }
 
 const mutateSingleMovement = curry(
-  (probabilities, movement) => {
+  (probabilities, genotype, movement) => {
 
     const mutateSingle = compose(
-      over(lensLens, partial(mutateSingleLens, [probabilities])),
-      over(L.identity, partial(mutateSingleParams, [probabilities]))
+      over(lensLens, partial(mutateSingleLens, [probabilities, genotype])),
+      over(L.identity, partial(mutateSingleParams, [probabilities, genotype]))
     );
 
     return mutateSingle(movement);
@@ -129,14 +139,15 @@ const mutateSingleMovement = curry(
  * Mutate the initial movements.
  *
  * @param {Object<Number>} probabilities The probabilites
+ * @param {Genotype} genotype
  * @param {Array<MovementDescriptor>} movements The movements
  * @return {Array<MovementDescriptor>} The mutated movements
  */
-function mutateMovements(probabilities, movements) {
+function mutateMovements(probabilities, genotype, movements) {
 
   const mutateMovement = ifElse(isCompoundMovement,
-    mutateCompoundMovement(probabilities),
-    mutateSingleMovement(probabilities)
+    mutateCompoundMovement(probabilities, genotype),
+    mutateSingleMovement(probabilities, genotype)
   );
 
   const length = movements.length;
@@ -199,7 +210,7 @@ export default class EngineMutationRule extends MutationRule {
 
     const mutated = super.mutate(genotype);
 
-    const mutateDescriptor = partial(mutateMovements, [this.options]);
+    const mutateDescriptor = partial(mutateMovements, [this.options, mutated]);
     const mutateEngine = compose(
       over(lensInitial, mutateDescriptor),
       over(lensMovements, mutateDescriptor)

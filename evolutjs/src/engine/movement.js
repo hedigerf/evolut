@@ -6,7 +6,7 @@
  */
 
 import { allPass, always, anyPass, append, curry, keys, length, map, view } from 'ramda';
-import { makeRandomLensDescriptor, resolveLensDecriptor } from './lenses';
+import { makeRandomLensDescriptor, resolveLensDescriptor } from './lenses';
 import { IdentifiableStatic } from '../types/identifiable';
 import random from '../util/random';
 
@@ -622,5 +622,5 @@ function resolveMovementDescriptorArguments(id, lens, params) {
   if (isCompoundMovement({ id })) {
     return [params];
   }
-  return append(resolveLensDecriptor(lens), params);
+  return append(resolveLensDescriptor(lens), params);
 }

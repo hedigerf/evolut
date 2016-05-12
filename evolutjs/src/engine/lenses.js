@@ -80,7 +80,7 @@ export function makeRandomLensDescriptor() {
  * @param {LensDescriptor} descriptor
  * @return {Lens} The lens
  */
-export function resolveLensDecriptor({ side, index, type }) {
+export function resolveLensDescriptor({ side, index, type }) {
   return L.compose(
     L.prop('jointsMap'),
     immutableLens(side),

@@ -99,8 +99,6 @@ export default class LegMutationRule extends MutationRule {
 
     const mutateLegs = mapObjIndexed(({ hipJoint, leg }) => {
 
-      // TODO
-
       return {
         leg: new Leg({
           mass: leg.mass,
