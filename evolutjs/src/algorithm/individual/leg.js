@@ -12,26 +12,10 @@ import { KneeJoint } from './joint';
 import { PartialGenotype } from '../genotype/genotype';
 import random from '../../util/random';
 
-/**
- * Lens to mass.
- *
- * @type {Lens}
- */
-const lensMass = L.prop('mass');
-
-/**
- * Lens to height.
- *
- * @type {Lens}
- */
-const lensHeight = L.prop('height');
-
-/**
- * Lens to width.
- *
- * @type {Lens}
- */
-const lensWidth = L.prop('width');
+export const lensMass = L.prop('mass');
+export const lensHeight = L.prop('height');
+export const lensWidth = L.prop('width');
+export const lensHeightFactor = L.prop('heightFactor');
 
 /**
  * Lens to height factor.

@@ -43,14 +43,24 @@
       wird als Abstand zum oberen Ende des Oberschenkel definiert \(h_{t}\),
       andersrum gesagt ist das die Hoehe des Oberschenkels.
       Die Hoehe des Unterschenkels wird als \(h_{s}\) bezeichnet.
-      Ein Bein weisst eine Breite auf \(w_{l}\). Am Ende des Unterschenkels wird ein Stumpf angehaengt.
+      Ein Bein weisst eine Breite auf \(w_{l}\).
+      \\
+      \input{graphics/concept-leg}
 
       \subsubsection{Masse\label{subs:Masse}}
 
         Das ganze Individum weisst eine fixe Masse von 1 auf \(m = 0\).
-        Die Masse wird aber auf die einzelnen Koerpeteile verteilt.
-        \\
-        \input{graphics/concept-leg}
+        Die Masse wird anhand der Fläche der einzelnen Körperteile aufgeteilt.
+      \paragraph{Beispiel\label{par:MasseExample}}
+        Wenn die Fläche des Körpers Zwei Einheiten gross ist und die Beine jeweils eine Einheit,
+        erfolgt folgende Berechnung: \\
+        \(m = 1\) \\
+        \(A_{Bein} = 1\) \\
+        \(A_{Körper} = 2\) \\
+        \(A_{total} = A_{Bein} * 6 + A_{Körper} = 8 \) \\
+        \( x = m / A_{total} = 0.125 \) \\
+        \(m_{Bein} = x * A_{Bein} = 0.125\) \\
+        \(m_{Körper} = x * A_{Körper} = 0.25\) \\
 
     \subsection{Genotyp\label{sub:Genotype}}
 
@@ -121,6 +131,13 @@
       Sie legt fest, wann zum nächsten Zustand gewechselt werden kann.
       Unter einer Bewegung wird das Setzten der maximalen und minimalen Auslenkungswinkel oder auch
       das Warten auf einen Zustand eines Gelenkes verstanden.
+  \subsection{Notwendige Zusätzliche Implementierungen}
+    Die Physik Engine enthält mehrere Fehler, deren Korreketur ist nicht die Aufgabe dieser Bachelorarbeit.
+    Für die Erstellung des Terrains wird ein Höhenfeld von p2.js benutzt. Die Kollisionserkennung scheint wenig ausgereift zu sein
+    zwischen einem Polygon und dem Höhenfeld. Das hat zur Folge, dass die Individuuen häufig im Boden versinken. Das Problem kann
+    zum Teil umgangen werden, in dem kleine Kreise an die Ecken des Körpers jeweils gesetzt werden.
+    Kreise wurden auch an die Eckpunkte der Beinteile gesetzt, da die Physik Engine ebenfalls Schwierigkeiten hat die Kollision zwischen einem
+    Rechteck und einem Höhenfeld zu erkennen.
 
   \section{Auswahl des Evolutinären Algorithmus}
 
@@ -217,17 +234,28 @@
     Die Schwierigkeit des Parcour wird definiert durch die maximale Steigung und die höchste Position.
     Ebenso kann die Populationsgrösse definiert werden und wie viele Prozesse für die Simulation benutzt werden.
     Am sinnvollsten ist es, wenn die Anzahl der Prozesse, der Anzahl Kerne des Prozessors entspricht.
+    Die Relaxation, ein Parameter von p2.js, kann auch konfiguriert werden.
+    Der Paramter beschreibt die Anzahl von Zeitschritten um eine Konstraint Gleichung zu stabilisieren.
+    Die grösse des Zeitschritts lässt sich ebenfalls einstellen. Wenn man den Zeitschrit halbiert muss die Relaxation mit dem
+    Faktor 4 multipliziert werden.
 
 
 
 
   \section{Ablauf\label{sec:Ablauf}}
     Der Ablauf der Applikation setzt sich aus mehreren Komponenten zusammen.
-    Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen.
+    Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen (siehe Abbildung \ref{fig:hauptSimuProzesse}).
+    Unter \ref{sub:domMod} sind die jeweiligen Zusammenhänge der Klassen und Objekte ausführlicher beschrieben.
+    Abbildung \ref{fig:ablauf} beschreibt den generellen Ablauf als Flussdiagram.
     \begin{figure}[H]
-      \includegraphics[scale=0.5]{graphics/haupt_simulations_prozess}
+      \includegraphics[scale=0.45]{graphics/haupt_simulations_prozess}
       \caption{Haupt- und Simulationsprozess}
       \label{fig:hauptSimuProzesse}
+    \end{figure}
+    \begin{figure}[H]
+      \includegraphics[scale=0.45]{graphics/ablauf}
+      \caption{Ablauf der Simulation}
+      \label{fig:ablauf}
     \end{figure}
     \subsection{Initiale Polulation\label{sec:Initiale Polulation}}
 
@@ -265,6 +293,15 @@
         \item Fitness Graph Best Report: Enthält Koordinaten um einen Graph über das beste Individum der Generation zu erstellen.
         \item Genotype Blue Print Report: Enthält pro Generation ein JSON das Informationen über die ganze Population enthält.
         \item Fitness Graph Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit Body Points Anzahl x.
+        \item Diversity Report: Enthält die Berechnung der Punktstreuung für jeweils eine Generation. Die Punktsteuung berechnet sich wie folgt:
+        \begin{itemize}
+          \item Erstellung von Vektoren der Genome. Jede Eigenschaft des Genoms wird in einen numerischen Wert konvertiert. \( V_d \)
+          \item Alle Vekotren werden summiert.  Die Summe wird als \(V_s\) bezeichnet.
+          \item Der Schwerpunktvektor wird gebildet: \( V_s / Anzahl(V_d) = V_{schwer} \)
+          \item Von jedem \(V_d\) wird \(V_{schwer}\) subtrahiert  \( V_d - V_{schwer}  = V_{d2} \)
+          \item Nun werden alle \(V_{d2}\) normiert, quadriert \( norm(V_{d2})^2 = d \)
+          \item Abschliessend werden alle \(d\) zusammengezählt und man erhält die Punktestreuung.
+        \end{itemize}
         Ansonsten gleich wie Fitness Graph Average Report.
       \end{itemize}
 
@@ -295,3 +332,16 @@
     \subsection{Wiederholungen}
       Alle Schritte (ausser die Generierung der initialen Population) werden solange ausgeführt,
       bis ein zufriedenstellendes Resultat gefunden wird.
+    \subsection{Domänenmodel\label{sub:domMod}}
+      Das Domänenmodell beschreibt den Zusammenhang der verschiedenen Klassen und Objekten.
+      Abbildung \ref{fig:mainProcess} beschreibt den Haupt- und Abbildung \ref{fig:simulationProcess} den Simulationsprozess.
+      \begin{figure}[H]
+        \includegraphics[scale=0.6]{graphics/main_process}
+        \caption{Domänen Modell, Hauptprozess}
+        \label{fig:mainProcess}
+      \end{figure}
+      \begin{figure}[H]
+        \includegraphics[scale=0.6]{graphics/simulation_process}
+        \caption{Domänen Modell, Simulationsprozess}
+        \label{fig:simulationProcess}
+      \end{figure}

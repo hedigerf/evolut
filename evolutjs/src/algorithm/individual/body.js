@@ -19,28 +19,28 @@ const RADIUS = 1;
  *
  * @return {Lens}
  */
-const lensMass = L.prop('mass');
+export const lensMass = L.prop('mass');
 
 /**
  * Lens for body points information.
  *
  * @return {Lens}
  */
-const lensBodyPoints = L.prop('bodyPoints');
+export const lensBodyPoints = L.prop('bodyPoints');
 
 /**
  * Lens for body point count information.
  *
  * @return {Lens}
  */
-const lensBodyPointsCount = L.prop('bodyPointsCount');
+export const lensBodyPointsCount = L.prop('bodyPointsCount');
 
 /**
  * Lens for hip joint positions information.
  *
  * @return {Lens}
  */
-const lensHipJointPositions = L.prop('hipJointPositions');
+export const lensHipJointPositions = L.prop('hipJointPositions');
 /**
  * [Generates a random polygon point]
  *

@@ -17,7 +17,7 @@ const DEFAULT_BODY_MASS = 1;
  * @param  {Array<Number>} vertices vertices
  * @return {Number} Area
  */
-function calcPolygonArea(vertices) {
+export function calcPolygonArea(vertices) {
   let total = 0;
 
   for (let i = 0, l = vertices.length; i < l; i++) {
