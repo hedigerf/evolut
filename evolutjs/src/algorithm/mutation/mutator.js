@@ -10,10 +10,9 @@ import config from '../../app/config';
 import { distributeWork } from '../../app/app';
 import EngineMutationRule from './rules/engine';
 import Individual from '../individual/individual';
-import { Worker } from '../../app/ipc';
 import { ipcRenderer } from 'electron';
 import LegMutationRule from './rules/leg';
-import Population from '../population/population';
+import { Worker } from '../../app/ipc';
 
 
 /**
@@ -37,9 +36,6 @@ const ruleLeg = new LegMutationRule(config('mutation:leg'));
  */
 const ruleEngine = new EngineMutationRule(config('mutation:engine'));
 
-
-const workerCount = config('workers.count');
-
 /**
  * These rules are applied to a genotype.
  * Each rule returns a mutated version where some part was modified.
@@ -47,8 +43,6 @@ const workerCount = config('workers.count');
  * @type {Array<Mutation>}
  */
 const rules = [ruleBody, ruleLeg, ruleEngine];
-
-const workerRange = List(Range(0, workerCount));
 
 /**
  * Returns a new instance of an individual.
@@ -119,5 +113,6 @@ export default class Mutator {
 ipcRenderer.on(Worker.MutationReceive, (event, individualsStringified, generationCount, {  }) => {
   const individuals = individualsStringified.map((x) => JSON.parse(x));
   const offsprings = individuals.map(mutateGenotype);
-  ipcRenderer.send(Worker.MutationFinished, stringified, workerId);
+  const stringified = offsprings.map((x) => JSON.parse(x));
+  ipcRenderer.send(Worker.MutationFinished, stringified);
 });
