@@ -17,7 +17,6 @@ import fs from 'graceful-fs';
 import { getLogger } from './log.js';
 import InitialPopulationGenerator from '../algorithm/population/initialPopulationGenerator';
 import { load } from '../util/path';
-import Mutator from '../algorithm/mutation/mutator';
 import ParcourGenerator from '../algorithm/parcour/parcourGenerator';
 import Reporter from '../report/reporter';
 import TournamentBasedSelectionStrategy from '../algorithm/selection/tournamentBasedSelectionStrategy';
@@ -62,9 +61,11 @@ export function startWorker() {
   return worker;
 }
 
-function distributeInitialWork(initialPopulation, options, worker, index) {
+function distributeInitialWork(ipcQueue, initialPopulation, options, worker, index) {
+  info(logger, 'starting to distribute inital work...');
   worker.webContents.on('did-finish-load', () => {
-    distributeWork(Worker.Receive, initialPopulation, options, worker, index);
+    distributeWork(ipcQueue, initialPopulation, options, worker, index);
+    info(logger, 'inital work distributed.');
   });
 }
 /**
@@ -79,21 +80,20 @@ function distributeWork(ipcQueue, population, options, worker, index) {
   const start = index * partialPopulationSize;
   const end = (index + 1) * partialPopulationSize;
   const partialPopulation = population.individuals.slice(start, end);
+  info(logger, 'distribute work.. partial population size: ' + partialPopulation.size);
   const stringified = partialPopulation.toArray().map((x) => JSON.stringify(x));
   worker.webContents.send(ipcQueue, stringified, population.generationCount, options);
 }
 
 function performSimulationPostprocessing(population) {
-  info(logger, 'starting postprocessing');
+  info(logger, 'starting postprocessing with populationSize: ' + population.individuals.size);
   reporters(population);
   info(logger, 'reporting done');
   const selectionStrategy = new TournamentBasedSelectionStrategy(kTournamentBasedSelection);
   const selected = selectionStrategy.select(population);
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
   info(logger, 'selection done');
-
   mutate(selected);
-  debug(logger, 'mutation done.');
   ++generationCounter;
 }
 
@@ -104,7 +104,7 @@ function performSimulationPostprocessing(population) {
  */
 function mutate(population) {
   const distributor = curry(distributeWork)(Worker.MutationReceive, population, { });
-  this.workers.forEach(distributor);
+  workers.forEach(distributor);
 
 }
 
@@ -113,7 +113,9 @@ function prepareDistributor(distributeWork, population) {
   if (generationCounter % switchParcourAfterGeneration === 0) {
     parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
   }
-  const distributor = curry(distributeWork)(Worker.Receive, population, { parcour: JSON.stringify(parcour), maxSlope, highestY });
+  const distributor = curry(distributeWork)(
+    Worker.Receive, population, { parcour: JSON.stringify(parcour), maxSlope, highestY }
+  );
   return distributor;
 }
 
@@ -140,17 +142,18 @@ ipcMain.on(Worker.Finished, (event, individualsStringified, uuid) => {
   debug(logger, 'received work finished from ' + uuid + '. finishedWorkCounter: ' + finishedWorkCounter);
   const partialPopulation = individualsStringified.map((x) => JSON.parse(x));
   individuals = individuals.concat(partialPopulation);
-  if (finishedMutationWorkCounter % workerCount === 0) {
-    individuals = List();
+  if (finishedWorkCounter % workerCount === 0) {
     debug(logger, 'population complete again.');
     const population = { individuals, generationCount: generationCounter};
     performSimulationPostprocessing(population);
   }
 });
 
-ipcMain.on(Worker.MutationFinished, (event, individualsStringified) => {
+ipcMain.on(Worker.MutationFinished, (event, individualsStringified, uuid) => {
   finishedMutationWorkCounter++;
-  debug(logger, 'received work finished mutation finishedWorkCounter: ' + finishedWorkCounter);
+  debug(logger,
+    'received work finished mutation from ' + uuid + ' finishedMutationWorkCounter: ' + finishedMutationWorkCounter
+  );
   const partialPopulation = individualsStringified.map((x) => JSON.parse(x));
   individualsMutation = individuals.concat(partialPopulation);
   if (finishedMutationWorkCounter % workerCount === 0) {
@@ -160,7 +163,10 @@ ipcMain.on(Worker.MutationFinished, (event, individualsStringified) => {
       }
       highestY = highestY + highestYStep;
     }
-    const distributor = prepareDistributor(distributeWork, individualsMutation);
+    const distributor = prepareDistributor(distributeWork,
+       { individuals: individualsMutation, generationCount: generationCounter}
+     );
+    individuals = List(); // reset
     individualsMutation = List(); // reset
     workers.forEach(distributor);
   }

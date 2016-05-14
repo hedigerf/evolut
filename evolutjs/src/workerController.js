@@ -90,10 +90,13 @@ ipcRenderer.on(Worker.Receive, (event, individualsStringified, generationCount, 
  * IPC-Callback for the worker process when it receives work.
  */
 ipcRenderer.on(Worker.MutationReceive, (event, individualsStringified, generationCount, {  }) => {
+  info(logger, 'received mutation work.');
   const individuals = individualsStringified.map((x) => JSON.parse(x));
+  info(logger, 'starting to mutate population...');
   const offsprings = individuals.map(mutateGenotype);
-  const stringified = offsprings.map((x) => JSON.parse(x));
-  ipcRenderer.send(Worker.MutationFinished, stringified);
+  const stringified = offsprings.map((x) => JSON.stringify(x));
+  info(logger, 'ended mutating population, trying to send..');
+  ipcRenderer.send(Worker.MutationFinished, stringified, workerId);
 });
 
 

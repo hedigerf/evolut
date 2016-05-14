@@ -4,15 +4,12 @@
  * @module algorithm/mutation/mutator
  */
 
-import { clone, compose, curry, reduce } from 'ramda';
+import { clone, compose, reduce } from 'ramda';
 import BodyMutationRule from './rules/body';
 import config from '../../app/config';
-import { distributeWork } from '../../app/app';
 import EngineMutationRule from './rules/engine';
 import Individual from '../individual/individual';
-import { ipcRenderer } from 'electron';
 import LegMutationRule from './rules/leg';
-import { Worker } from '../../app/ipc';
 
 
 /**

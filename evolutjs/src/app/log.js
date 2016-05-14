@@ -22,8 +22,8 @@ function configure(uuid) {
       {
         type: 'file',
         filename: 'logs/evolutjs_' + uuid + '_full.log',
-        maxLogSize: 204800,
-        backups: 3
+        maxLogSize: 20480000,
+        backups: 10
       },
       {
         type: 'logLevelFilter',
