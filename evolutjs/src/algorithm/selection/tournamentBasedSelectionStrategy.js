@@ -22,7 +22,7 @@ export default class TournamentBasedSelectionStrategy extends SelectionStrategy 
     super(population);
     this.population = population;
     this.k = k;
-    info(logger, 'Torunament-based Selection k = ' + k);
+    info(logger, 'Torunament-based Selection k = ' + k + ' size: ' + population.individuals.size);
   }
 
   /**
