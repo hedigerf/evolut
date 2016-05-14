@@ -83,36 +83,4 @@ function applyMutationRules(rules) {
  * @param {Individual} genotype A genotype of an individual
  * @return {Individual} An instatitated Individual
  */
-const mutateGenotype = compose(instantiate, applyMutationRules(rules), clone);
-
-/**
- * Represents a mutator which mutates a selected population.
- */
-export default class Mutator {
-
-  constructor(workers) {
-    this.workers = workers;
-  }
-
-  /**
-   * Mutates a given population.
-   *
-   * @param  {Population} population The population to be mutated
-   */
-  mutate(population) {
-    const distributor = curry(distributeWork)(Worker.MutationReceive, population, { });
-    this.workers.forEach(distributor);
-
-  }
-
-}
-
-/**
- * IPC-Callback for the worker process when it receives work.
- */
-ipcRenderer.on(Worker.MutationReceive, (event, individualsStringified, generationCount, {  }) => {
-  const individuals = individualsStringified.map((x) => JSON.parse(x));
-  const offsprings = individuals.map(mutateGenotype);
-  const stringified = offsprings.map((x) => JSON.parse(x));
-  ipcRenderer.send(Worker.MutationFinished, stringified);
-});
+export const mutateGenotype = compose(instantiate, applyMutationRules(rules), clone);

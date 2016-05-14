@@ -15,6 +15,7 @@ import { info } from './util/logUtil';
 import { ipcRenderer } from 'electron';
 import jQuery from 'jquery';
 import { List } from 'immutable';
+import { mutateGenotype } from './algorithm/mutation/mutator';
 import SettingsPanel from './settings/settingsPanel';
 import SimulationWorld from './render/world/simulationWorld';
 import uuid from 'uuid';
@@ -84,6 +85,17 @@ ipcRenderer.on(Worker.Receive, (event, individualsStringified, generationCount, 
 
   }
 });
+
+/**
+ * IPC-Callback for the worker process when it receives work.
+ */
+ipcRenderer.on(Worker.MutationReceive, (event, individualsStringified, generationCount, {  }) => {
+  const individuals = individualsStringified.map((x) => JSON.parse(x));
+  const offsprings = individuals.map(mutateGenotype);
+  const stringified = offsprings.map((x) => JSON.parse(x));
+  ipcRenderer.send(Worker.MutationFinished, stringified);
+});
+
 
 /**
  * IPC-Callback for the main process's menu item 'Next Generation'.

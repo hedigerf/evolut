@@ -40,8 +40,6 @@ const limitSlope = config('parcour.limitSlope');
 const switchParcourAfterGeneration = config('algorithm.switchParcourAfterGeneration');
 const reporters = Reporter.createReports();
 
-const mutator = new Mutator();
-
 let parcour;
 let workers = null;
 let finishedWorkCounter = 0;
@@ -93,9 +91,21 @@ function performSimulationPostprocessing(population) {
   const selected = selectionStrategy.select(population);
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
   info(logger, 'selection done');
-  mutator.mutate(selected);
+
+  mutate(selected);
   debug(logger, 'mutation done.');
   ++generationCounter;
+}
+
+/**
+ * Mutates a given population.
+ *
+ * @param  {Population} population The population to be mutated
+ */
+function mutate(population) {
+  const distributor = curry(distributeWork)(Worker.MutationReceive, population, { });
+  this.workers.forEach(distributor);
+
 }
 
 function prepareDistributor(distributeWork, population) {
