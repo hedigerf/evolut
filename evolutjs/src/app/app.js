@@ -93,12 +93,13 @@ function performSimulationPostprocessing(population) {
   const selected = selectionStrategy.select(population);
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
   info(logger, 'selection done');
-  const mutated = mutator.mutate(selected);
+  mutator.mutate(selected);
   debug(logger, 'mutation done.');
-  mutated.generationCount = ++generationCounter;
+  ++generationCounter;
 }
 
 function prepareDistributor(distributeWork, population) {
+  population.generationCount = generationCounter;
   if (generationCounter % switchParcourAfterGeneration === 0) {
     parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
   }
