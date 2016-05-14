@@ -79,9 +79,10 @@ function performSimulationPostprocessing(population) {
   reporters(population);
   const selectionStrategy = new TournamentBasedSelectionStrategy(population, kTournamentBasedSelection);
   const selected = selectionStrategy.select();
+  debug(logger, 'selected individuals size: ' + selected.individuals.size);
   const mutator = new Mutator();
   const mutated = mutator.mutate(selected);
-  debug(logger, 'selected individuals size: ' + selected.individuals.size);
+  debug(logger, 'mutations done.');
   mutated.generationCount = ++generationCounter;
   return mutated;
 }
