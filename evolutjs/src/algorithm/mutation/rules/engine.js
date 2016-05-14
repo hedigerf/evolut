@@ -96,15 +96,6 @@ function mutateSingleParams(probabilities, genotype, movement) {
 
   const bounds = getMovement(movement.id).bounds;
 
-  try {
-
-    const lensF = resolveLensDescriptor(movement.lens);
-    const part = view(lensF, genotype);
-
-  } catch (e) {
-    //
-  }
-
   switch (movement.id) {
 
     case 'sta':
@@ -208,15 +199,13 @@ export default class EngineMutationRule extends MutationRule {
    */
   mutate(genotype) {
 
-    const mutated = super.mutate(genotype);
-
-    const mutateDescriptor = partial(mutateMovements, [this.options, mutated]);
+    const mutateDescriptor = partial(mutateMovements, [this.options, genotype]);
     const mutateEngine = compose(
       over(lensInitial, mutateDescriptor),
       over(lensMovements, mutateDescriptor)
     );
 
-    return mutateEngine(mutated);
+    return mutateEngine(genotype);
   }
 
 }

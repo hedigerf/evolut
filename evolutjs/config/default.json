@@ -1,10 +1,6 @@
 {
-  "window": {
-    "height": 1080,
-    "width": 1920
-  },
   "algorithm": {
-    "populationSize": 120,
+    "populationSize": 10,
     "loadPopulationFromFile": false,
     "switchParcourAfterGeneration": 1
   },
@@ -17,7 +13,7 @@
     "increaseDifficultyAfter": 100
   },
   "workers": {
-    "count": 8
+    "count": 1
   },
   "simulation": {
     "runDuration": 30,

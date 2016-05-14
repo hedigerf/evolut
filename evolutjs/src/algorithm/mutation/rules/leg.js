@@ -68,11 +68,9 @@ export default class LegMutationRule extends MutationRule {
    */
   mutate(genotype) {
 
-    const mutated = super.mutate(genotype);
+    genotype.legs = this.tryMutateLegs(genotype.legs);
 
-    mutated.legs = this.tryMutateLegs(mutated.legs);
-
-    return mutated;
+    return genotype;
   }
 
   /**

@@ -4,7 +4,7 @@
  * @module algorithm/mutation/mutator
  */
 
-import { compose, reduce } from 'ramda';
+import { clone, compose, reduce } from 'ramda';
 import BodyMutationRule from './rules/body';
 import config from '../../app/config';
 import EngineMutationRule from './rules/engine';
@@ -80,7 +80,7 @@ function applyMutationRules(rules) {
  * @param {Individual} genotype A genotype of an individual
  * @return {Individual} An instatitated Individual
  */
-const mutateGenotype = compose(instantiate, applyMutationRules(rules));
+const mutateGenotype = compose(instantiate, applyMutationRules(rules), clone);
 
 /**
  * Represents a mutator which mutates a selected population.
