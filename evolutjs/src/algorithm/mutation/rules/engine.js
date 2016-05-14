@@ -10,7 +10,6 @@ import { compose, curry, defaultTo, evolve, ifElse, over, partial, range } from 
 import { getMovement, isCompoundMovement, makeRandomMovementDescriptor } from '../../../engine/movement';
 import MutationRule from '../rule';
 import random from '../../../util/random';
-import { resolveLensDescriptor } from '../../../engine/lenses';
 
 /**
  * Engine mutation probabilities.

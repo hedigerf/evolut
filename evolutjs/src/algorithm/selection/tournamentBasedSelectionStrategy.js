@@ -14,47 +14,74 @@ import SelectionStrategy from './selectionStrategy';
 const logger = log4js.getLogger('TournamentBasedSelectionStrategy');
 
 /**
- * TournamentBasedSelectionStrategy
+ * Sort individuals by fitness.
+ *
+ * @function
+ * @param {Individual} a
+ * @param {Individual} b
+ * @return {Boolean}
+ */
+const sortByFitness = (a, b) => a.fitness > b.fitness;
+
+/**
+ * Choose random individuals from a population.
+ *
+ * @function
+ * @param {Population} population
+ * @return {function(): Individual}
+ */
+const chooseIndividuals = (population) => () => {
+
+  const randomIndex = random.integer(0, population.individuals.size - 1);
+  const chosenOne = population.individuals.get(randomIndex);
+
+  if (chosenOne === undefined) {
+    info(logger, 'undefined at ' + randomIndex);
+  }
+
+  return chosenOne;
+};
+
+/**
+ * Represents a tournament-based selection strategy.
+ *
+ * @extends {SelectionStrategy}
  */
 export default class TournamentBasedSelectionStrategy extends SelectionStrategy {
 
-  constructor(population, k) {
-    super(population);
-    this.population = population;
+  /**
+   * Constructs a tournament-based selection strategy.
+   *
+   * @param {Number} k The k individuals to choose
+   */
+  constructor(k) {
+    super();
     this.k = k;
-    info(logger, 'Torunament-based Selection k = ' + k + ' size: ' + population.individuals.size);
+    info(logger, 'tournament-based selection k = ' + k);
   }
 
   /**
    * Selects the new generation
    *
+   * @param {Population} population The population to choose from
    * @return {Population} The new population
    */
-  select() {
-    const runs = this.population.individuals.size;
+  select(population) {
 
-    const selectForRun = (/* runNr */) => {
+    const runs = population.individuals.size;
 
-      const chooseIndividuals = (/* kCount */) => {
-        const randomIndex = random.integer(0, this.population.individuals.size - 1);
-        // debug(logger, 'kCount: ' + kCount + ' randomIndex: ' + randomIndex);
-        const chosenOne = this.population.individuals.get(randomIndex);
-        if (chosenOne === undefined) {
-          info(logger, 'undefined at ' + randomIndex);
-        }
-        return chosenOne;
-      };
+    const choose = chooseIndividuals(population);
+    const selectForRun = () => {
 
-      // debug(logger, 'RunNr: ' + runNr);
-      const selectedIndividuals = Immutable.Range(1, this.k + 1).map(
-        chooseIndividuals);
-      const fittestIndividual = selectedIndividuals.max((individualA,
-        individualB) => individualA.fitness > individualB.fitness);
+      const selectedIndividuals = Immutable.Range(1, this.k + 1).map(choose);
+      const fittestIndividual = selectedIndividuals.max(sortByFitness);
+
       return fittestIndividual;
     };
-    const individuals = Immutable.Range(0, runs).map(selectForRun);
-    return new Population(Immutable.List(individuals), this.population.generationCount);
 
+    const individuals = Immutable.Range(0, runs).map(selectForRun);
+
+    return new Population(Immutable.List(individuals), population.generationCount);
   }
 
 }

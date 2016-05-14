@@ -77,12 +77,14 @@ function distributeWork(population, options, worker, index) {
 function performSimulationPostprocessing(population) {
   info(logger, 'starting postprocessing');
   reporters(population);
-  const selectionStrategy = new TournamentBasedSelectionStrategy(population, kTournamentBasedSelection);
-  const selected = selectionStrategy.select();
+  info(logger, 'reporting done');
+  const selectionStrategy = new TournamentBasedSelectionStrategy(kTournamentBasedSelection);
+  const selected = selectionStrategy.select(population);
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
+  info(logger, 'selection done');
   const mutator = new Mutator();
   const mutated = mutator.mutate(selected);
-  debug(logger, 'mutations done.');
+  debug(logger, 'mutation done.');
   mutated.generationCount = ++generationCounter;
   return mutated;
 }
