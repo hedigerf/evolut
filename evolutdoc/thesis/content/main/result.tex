@@ -9,100 +9,120 @@
 \section{Erster Versuch, parameterierbare Steuerung ohne Feedback}
 
   \subsection{Konfiguration}
+
     \begin{table}[H]
       \input{tables/simulation-parameters-first-run-no-feedback.tex}
       \caption{Simulationsparameter, Erster Versuch}
     \end{table}
 
   \subsection{Auswertung}
-    Es ist ein klarer aufwärts Trend zu erkennen bis etwa zur 1000. Generation (siehe Abbildung \ref{fig:graphFirst}).
-    Danach ist ein Abfall der Fitness bei den Individueen zu beobachten.
-    Die Vermutung dabei ist, das der Parcour zu schwierig ist und die Individueen
-    mit der grossen Steigung nicht mehr zurecht kommen. Die Ausreisser sind dadurch zu erklären,
-    das ein bestimmer Parcour sehr einfach für die Individuuen zu bewältigen war oder eben Ihnen Schwierigkeiten bereitet hat.
-    Es wird vermutet das die Implementation, des Feedbacksystem der Steuerung helfen wird.
-    Ausserdem muss für die nächste Simulation die Parameter des Parcours anderst konfiguriert werden.
+
+    Es ist ein klarer Aufwärtstrend zu erkennen bis etwa zur 1000. Generation (siehe Abbildung~\ref{fig:graphFirst}).
+    Danach ist ein Abfall der Fitness bei den Individuen zu beobachten.
+    Die Vermutung dabei ist, das der Parcours zu schwierig ist und die Individuen
+    mit der grossen Steigung nicht mehr zurecht kommen.
+    Die Ausreisser sind dadurch zu erklären,
+    dass ein bestimmter Parcours sehr einfach für die Individuen zu bewältigen war oder eben ihnen Schwierigkeiten bereitet hat.
+    Es wird vermutet das die Implementation des Feedbacksystems der Steuerung helfen wird.
+    Ausserdem müssen für die nächste Simulation die Parameter des Parcours anders konfiguriert werden.
     Der Zuwachs der Steigung sollte auf 0.01 limitiert werden und der Zuwachs des höchsten Punktes
-    sollte auf 0.02 gestellt werden.
+    sollte auf 0.02 gesetzt werden.
+
       \begin{figure}
         \input{graphics/fitness-graph-first-run-no-feedback}
-        \caption{Bestes Indivuum und Durchschnittliches Individuum, Erster Versuch}
-        \label{fig:graphFirst}
+        \caption{Bestes Indivuum und Durchschnittliches Individuum, Erster Versuch\label{fig:graphFirst}}
       \end{figure}
 
-  \subsubsection{Körper Punkte\label{subsub:bp}}
-    Die Auswertung der Individuuen nach Ihrer Körperpunkte Anzahl ist ernüchternd (siehe Abbildung \ref{fig:graphBpFirst}).
-    Bereits ab der 14. Generation exisitieren nur noch Individueen mit Vier Körper Punkten.
-    Vieleicht ist das ebenfalls auf das fehlende Feedback zurück zuführen. Im besten Fall
-    wurden die Individuuen mit mehr als Vier Körper Punkten der initialen Population unvorteilhaft generiert.
-    Eine weitere Simulation muss zeigen ob Vier Körper Punkten am geeignetsten sind für die bewältigung,
-    der Problemstellung.
-  \begin{figure}
-    \input{graphics/fitness-graph-average-body-points-first-run-no-feedback}
-    \caption{Durchschnittliches Individuum pro Anzahl Körper Punkte, Erster Versuch}
-    \label{fig:graphBpFirst}
-  \end{figure}
+    \subsubsection{Körperpunkte\label{subsub:bp}}
+
+      Die Auswertung der Individuen nach der Anzahl ihrer Körperpunkte ist ernüchternd (siehe Abbildung~\ref{fig:graphBpFirst}).
+      Bereits ab der 14. Generation exisitieren nur noch Individuen mit vier Körperpunkten.
+      Vielleicht ist dies ebenfalls auf das fehlende Feedback zurückzuführen.
+      Im besten Fall wurden die Individuen mit mehr als vier Körperpunkten der initialen Population unvorteilhaft generiert.
+      Eine weitere Simulation wird zeigen,
+      ob vier Körperpunkten am geeignetesten sind für die Bewältigung der Problemstellung.
+
+      \begin{figure}
+        \input{graphics/fitness-graph-average-body-points-first-run-no-feedback}
+        \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, Erster Versuch\label{fig:graphBpFirst}}
+      \end{figure}
 
   \section{Zweiter Versuch, parameterierbare Steuerung ohne Feedback}
 
     \subsection{Konfiguration}
+
       \begin{table}[H]
         \input{tables/simulation-parameters-second-run-no-feedback.tex}
         \caption{Simulationsparameter, Zweiter Versuch}
       \end{table}
+
     \subsection{Auswertung}
-      Interessant zu beboachten beim Zweiten Versuch ist, das die Fitness der Individuuen erst ab der 1400. Generation (siehe Abbildung \ref{fig:graphSecond}).
-      wieder abzunehmen beginnt. Jedoch ist auch hier wieder ein klarer, wenn auch nicht so starker Abwärtstrend zu erkennen.
+
+      Interessant zu beboachten ist beim zweiten Versuch,
+      dass die Fitness der Individuen erst ab der 1400\@. Generation (siehe Abbildung~\ref{fig:graphSecond})
+      wieder abzunehmen beginnt.
+      Jedoch ist auch hier wieder ein klarer, wenn auch nicht so starker Abwärtstrend zu erkennen.
       Eine weitere Vermutung, neben dem fehlenden Feedback der Engine, warum die Fitness wieder abzunehmen beginnt,
-      ist die zu hohe Wahrscheinlichkeit der Mutation. In einem nächsten Versuch, muss getestet werden ob niedrigere Mutationswahrscheinlichkeiten
-      einen positiven Effekt auf die langfristie Fitness der Individuuen haben. Ab ca. der 2000. Generation beginnt die Fitness wieder rapide zu steigen,
-      jedoch ist dies durch ein Fehler der Engine zu erklären. Die Individueen verhacken sich im Boden und beginnen grosse Distanzen durch Hüpfbewegungen zurückzulegen.
-      Diesen Fehler kann man bereinigen indem man die Relaxation erhöt und den Zeitschritt gleichzeitig verringert, diese beiden Parameter sind in \ref{sec:Konfiguration} beschrieben.
+      ist die zu hohe Wahrscheinlichkeit der Mutation.
+      In einem nächsten Versuch muss getestet werden,
+      ob niedrigere Mutationswahrscheinlichkeiten einen positiven Effekt auf die langfristie Fitness der Individuuen haben.
+      Ab ca\@. der 2000\@. Generation beginnt die Fitness wieder rapide zu steigen,
+      jedoch ist dies durch einen Fehler der Engine zu erklären.
+      Die Individuen verhaken sich im Boden und beginnen grosse Distanzen durch Hüpfbewegungen zurückzulegen.
+      Dieser Fehler kann bereinigt werden indem die Relaxation erhöt und gleichzeitig der Zeitschritt verringert wird,
+      diese Parameter sind in~\ref{sec:Konfiguration} beschrieben.
+
         \begin{figure}
           \input{graphics/fitness-graph-second-run-no-feedback}
-          \caption{Bestes Indivuum und Durchschnittliches Individuum, Zweiter Versuch}
-          \label{fig:graphSecond}
+          \caption{Bestes Indivuum und Durchschnittliches Individuum, Zweiter Versuch\label{fig:graphSecond}}
         \end{figure}
 
-    \subsubsection{Körper Punkte}
-      Ein ähliches Bild ist zu beobachten, wie bei bei \ref{subsub:bp}.
-      Bereits ab der 9. Generation existieren nur noch Individuuen mit 7 Körper Punkten (siehe Abbildung \ref{fig:graphBpSecond}).
-      Um eine sinnvolle Aussage über die Körper Punkte zu formulieren, müsste man nicht nur am Anfang Indivduuen mit verschiedenen Körper Punkten generieren,
-      sondern auch während der Simulation, die Anzahl an Körper Punkten mutieren.
-    \begin{figure}
-      \input{graphics/fitness-graph-average-body-points-second-run-no-feedback}
-      \caption{Durchschnittliches Individuum pro Anzahl Körper Punkte, Zweiter Versuch}
-      \label{fig:graphBpSecond}
-    \end{figure}
+      \subsubsection{Körperpunkte}
+
+        Ein ähnliches Bild ist zu beobachten, wie bei bei~\ref{subsub:bp}.
+        Bereits ab der 9\@. Generation existieren nur noch Individuuen mit 7 Körperpunkten (siehe Abbildung~\ref{fig:graphBpSecond}).
+
+        Damit eine Aussage über den Einfluss der Körperpunkte getroffen werden kann,
+        müsste während der ganzen Simulation die Anzahl der Körperpunkte mutiert werden.
+        Stattdessen wird zu Beginn der Simulation die Anzahl der Körperpunkte für die Individuen festgelegt.
+
+        \begin{figure}
+          \input{graphics/fitness-graph-average-body-points-second-run-no-feedback}
+          \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, Zweiter Versuch\label{fig:graphBpSecond}}
+        \end{figure}
 
     \section{Dritter Versuch, parameterierbare Steuerung ohne Feedback}
 
       \subsection{Konfiguration}
+
         \begin{table}[H]
           \input{tables/simulation-parameters-third-run.tex}
           \caption{Simulationsparameter, Zweiter Versuch}
         \end{table}
+
       \subsection{Auswertung}
-        Interessant zu beboachten beim Zweiten Versuch ist, das die Fitness der Individuuen erst ab der 1400. Generation (siehe Abbildung \ref{fig:graphSecond}).
+
+        Interessant zu beboachten beim Zweiten Versuch ist, das die Fitness der Individuuen erst ab der 1400. Generation (siehe Abbildung~\ref{fig:graphSecond}).
         wieder abzunehmen beginnt. Jedoch ist auch hier wieder ein klarer, wenn auch nicht so starker Abwärtstrend zu erkennen.
         Eine weitere Vermutung, neben dem fehlenden Feedback der Engine, warum die Fitness wieder abzunehmen beginnt,
         ist die zu hohe Wahrscheinlichkeit der Mutation. In einem nächsten Versuch, muss getestet werden ob niedrigere Mutationswahrscheinlichkeiten
-        einen positiven Effekt auf die langfristie Fitness der Individuuen haben. Ab ca. der 2000. Generation beginnt die Fitness wieder rapide zu steigen,
+        einen positiven Effekt auf die langfristie Fitness der Individuuen haben. Ab ca\@. der 2000. Generation beginnt die Fitness wieder rapide zu steigen,
         jedoch ist dies durch ein Fehler der Engine zu erklären. Die Individueen verhacken sich im Boden und beginnen grosse Distanzen durch Hüpfbewegungen zurückzulegen.
-        Diesen Fehler kann man bereinigen indem man die Relaxation erhöt und den Zeitschritt gleichzeitig verringert, diese beiden Parameter sind in \ref{sec:Konfiguration} beschrieben.
-          \begin{figure}
-            \input{graphics/fitness-graph-second-run-no-feedback}
-            \caption{Bestes Indivuum und Durchschnittliches Individuum, Zweiter Versuch}
-            \label{fig:graphThird}
-          \end{figure}
+        Diesen Fehler kann man bereinigen indem man die Relaxation erhöt und den Zeitschritt gleichzeitig verringert, diese beiden Parameter sind in~\ref{sec:Konfiguration} beschrieben.
 
-      \subsubsection{Körper Punkte}
-        Ein ähliches Bild ist zu beobachten, wie bei bei \ref{subsub:bp}.
-        Bereits ab der 9. Generation existieren nur noch Individuuen mit 7 Körper Punkten (siehe Abbildung \ref{fig:graphBpSecond}).
-        Um eine sinnvolle Aussage über die Körper Punkte zu formulieren, müsste man nicht nur am Anfang Indivduuen mit verschiedenen Körper Punkten generieren,
-        sondern auch während der Simulation, die Anzahl an Körper Punkten mutieren.
-      \begin{figure}
-        \input{graphics/fitness-graph-average-body-points-second-run-no-feedback}
-        \caption{Durchschnittliches Individuum pro Anzahl Körper Punkte, Zweiter Versuch}
-        \label{fig:graphBpThird}
-      \end{figure}
+        \begin{figure}
+          \input{graphics/fitness-graph-second-run-no-feedback}
+          \caption{Bestes Indivuum und Durchschnittliches Individuum, Zweiter Versuch\label{fig:graphThird}}
+        \end{figure}
+
+        \subsubsection{Körperpunkte}
+
+          Ein ähliches Bild ist zu beobachten, wie bei bei~\ref{subsub:bp}.
+          Bereits ab der 9\@. Generation existieren nur noch Individuen mit 7 Körperpunkten (siehe Abbildung~\ref{fig:graphBpSecond}).
+          Um eine sinnvolle Aussage über die Körperpunkte zu formulieren, müsste man nicht nur am Anfang Indivduuen mit verschiedenen Körperpunkten generieren,
+          sondern auch während der Simulation, die Anzahl an Körperpunkten mutieren.
+
+          \begin{figure}
+            \input{graphics/fitness-graph-average-body-points-second-run-no-feedback}
+            \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, Zweiter Versuch\label{fig:graphBpThird}}
+          \end{figure}
