@@ -4,13 +4,17 @@
  * @module algorithm/mutation/mutator
  */
 
-import { clone, compose, reduce } from 'ramda';
+import { clone, compose, curry, reduce } from 'ramda';
 import BodyMutationRule from './rules/body';
 import config from '../../app/config';
+import { distributeWork } from '../../app/app';
 import EngineMutationRule from './rules/engine';
 import Individual from '../individual/individual';
+import { Worker } from '../../app/ipc';
+import { ipcRenderer } from 'electron';
 import LegMutationRule from './rules/leg';
 import Population from '../population/population';
+
 
 /**
  * Rule for a body mutation.
@@ -33,6 +37,9 @@ const ruleLeg = new LegMutationRule(config('mutation:leg'));
  */
 const ruleEngine = new EngineMutationRule(config('mutation:engine'));
 
+
+const workerCount = config('workers.count');
+
 /**
  * These rules are applied to a genotype.
  * Each rule returns a mutated version where some part was modified.
@@ -40,6 +47,8 @@ const ruleEngine = new EngineMutationRule(config('mutation:engine'));
  * @type {Array<Mutation>}
  */
 const rules = [ruleBody, ruleLeg, ruleEngine];
+
+const workerRange = List(Range(0, workerCount));
 
 /**
  * Returns a new instance of an individual.
@@ -87,18 +96,28 @@ const mutateGenotype = compose(instantiate, applyMutationRules(rules), clone);
  */
 export default class Mutator {
 
+  constructor(workers) {
+    this.workers = workers;
+  }
+
   /**
    * Mutates a given population.
    *
    * @param  {Population} population The population to be mutated
-   * @return {Population} The mutated population
    */
   mutate(population) {
+    const distributor = curry(distributeWork)(Worker.MutationReceive, population, { });
+    this.workers.forEach(distributor);
 
-    const offsprings = population.individuals.map(mutateGenotype);
-    const generationCount = population.generationCount + 1;
-
-    return new Population(offsprings, generationCount);
   }
 
 }
+
+/**
+ * IPC-Callback for the worker process when it receives work.
+ */
+ipcRenderer.on(Worker.MutationReceive, (event, individualsStringified, generationCount, {  }) => {
+  const individuals = individualsStringified.map((x) => JSON.parse(x));
+  const offsprings = individuals.map(mutateGenotype);
+  ipcRenderer.send(Worker.MutationFinished, stringified, workerId);
+});

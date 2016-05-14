@@ -27,5 +27,7 @@ export const World = {
  */
 export const Worker = {
   Finished: 'work-finished',
-  Receive: 'work-receive'
+  Receive: 'work-receive',
+  MutationReceive: 'mutation-receive',
+  MutationFinished: 'mutation-finished'
 };

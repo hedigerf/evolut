@@ -40,6 +40,8 @@ const limitSlope = config('parcour.limitSlope');
 const switchParcourAfterGeneration = config('algorithm.switchParcourAfterGeneration');
 const reporters = Reporter.createReports();
 
+const mutator = new Mutator();
+
 let parcour;
 let workers = null;
 let finishedWorkCounter = 0;
@@ -48,7 +50,7 @@ let maxSlope = config('parcour.startMaxSlope');
 let highestY = config('parcour.startHighestY');
 let individuals = List();
 
-function startWorker() {
+export function startWorker() {
   const worker = new BrowserWindow({
     width: config('window:width'),
     height: config('window:height')
@@ -62,16 +64,23 @@ function startWorker() {
 
 function distributeInitialWork(initialPopulation, options, worker, index) {
   worker.webContents.on('did-finish-load', () => {
-    distributeWork(initialPopulation, options, worker, index);
+    distributeWork(Worker.Receive, initialPopulation, options, worker, index);
   });
 }
-
-function distributeWork(population, options, worker, index) {
+/**
+ * DistributesWork to Queues
+ * @param  {[type]} ipcQueue   [description]
+ * @param  {[type]} population [description]
+ * @param  {[type]} options    [description]
+ * @param  {[type]} worker     [description]
+ * @param  {[type]} index      [description]
+ */
+function distributeWork(ipcQueue, population, options, worker, index) {
   const start = index * partialPopulationSize;
   const end = (index + 1) * partialPopulationSize;
   const partialPopulation = population.individuals.slice(start, end);
   const stringified = partialPopulation.toArray().map((x) => JSON.stringify(x));
-  worker.webContents.send(Worker.Receive, stringified, population.generationCount, options);
+  worker.webContents.send(ipcQueue, stringified, population.generationCount, options);
 }
 
 function performSimulationPostprocessing(population) {
@@ -82,7 +91,6 @@ function performSimulationPostprocessing(population) {
   const selected = selectionStrategy.select(population);
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
   info(logger, 'selection done');
-  const mutator = new Mutator();
   const mutated = mutator.mutate(selected);
   debug(logger, 'mutation done.');
   mutated.generationCount = ++generationCounter;
@@ -93,7 +101,7 @@ function prepareDistributor(distributeWork, population) {
   if (generationCounter % switchParcourAfterGeneration === 0) {
     parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
   }
-  const distributor = curry(distributeWork)(population, { parcour: JSON.stringify(parcour), maxSlope, highestY });
+  const distributor = curry(distributeWork)(Worker.Receive, population, { parcour: JSON.stringify(parcour), maxSlope, highestY });
   return distributor;
 }
 
@@ -124,6 +132,7 @@ ipcMain.on(Worker.Finished, (event, individualsStringified, uuid) => {
     debug(logger, 'population complete again.');
     const population = { individuals, generationCount: generationCounter};
     const mutated = performSimulationPostprocessing(population);
+    // start mutation finished
     // reset list
     individuals = List();
     if (generationCounter % increaseDifficultyAfter === 0) {
@@ -134,7 +143,20 @@ ipcMain.on(Worker.Finished, (event, individualsStringified, uuid) => {
     }
     const distributor = prepareDistributor(distributeWork, mutated);
     workers.forEach(distributor);
+    // end mutation finished
   }
+});
+
+ipcMain.on(Worker.MutationFinished, (event, individualsStringified) => {
+  individuals = List();
+  if (generationCounter % increaseDifficultyAfter === 0) {
+    if (maxSlope < limitSlope) {
+      maxSlope = maxSlope + maxSlopeStep;
+    }
+    highestY = highestY + highestYStep;
+  }
+  const distributor = prepareDistributor(distributeWork, mutated);
+  workers.forEach(distributor);
 });
 
 app.on('window-all-closed', () =>  {
