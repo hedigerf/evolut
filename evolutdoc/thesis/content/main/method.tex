@@ -279,8 +279,9 @@
 
     \subsection{Initiale Population\label{sec:Initiale Polulation}}
 
-      Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse wird auf 100 festgelegt,
-      um eine breite Diversität zu erhalten.
+      Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewhält werden.
+      Pro Simulationsprozess können etwa 15 Individuuen flüssig berechnet werden.
+      Dies bedeutet das die optimale Populationsgrösse  \( Anzahl(CPU Kerne) * 15 \) beträgt.
       Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
       Die Verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
