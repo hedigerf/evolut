@@ -12,7 +12,19 @@ import { List } from 'immutable';
 import { PartialGenotype } from '../genotype/genotype';
 import random from '../../util/random';
 
+/**
+ * Default radius.
+ *
+ * @type {Number}
+ */
 const RADIUS = 1;
+
+/**
+ * Tolerance for sector angles.
+ *
+ * @type {Number}
+ */
+const TOLERANCE = 0.0001;
 
 /**
  * Lens for body mass information.
@@ -41,63 +53,71 @@ export const lensBodyPointsCount = L.prop('bodyPointsCount');
  * @return {Lens}
  */
 export const lensHipJointPositions = L.prop('hipJointPositions');
+
 /**
- * [Generates a random polygon point]
+ * Generates a random polygon point.
  *
- * @param  {Number} startAngle [the start angle]
- * @param  {Number} endAngle   [the end angle]
- * @return {Array}            [the coordinates]
+ * @param {Number} startAngle [the start angle]
+ * @param {Number} endAngle   [the end angle]
+ * @return {Array} The coordinates
  */
 export function generateRandomPolygonPoint(startAngle, endAngle) {
+
   const r = random.real(0, RADIUS);
   const angle = random.real(startAngle, endAngle);
   const x = r * Math.cos(angle);
   const y = r * Math.sin(angle);
-  const coords = [x, y];
-  return coords;
+
+  return [x, y];
 }
 /**
- * Calculates how big a sector angle is
+ * Calculates how big a sector angle is.
  *
- * @param  {Number} pointCount [how much points the body has]
- * @return {Number}            [sector angle]
+ * @param  {Number} pointCount How much points the body has
+ * @return {Number} Sector angle
  */
 export function calcSectorAngle(pointCount) {
   return  Math.PI * 2 / pointCount;
 }
 /**
- * [Calculates the bounds of the polygon]
+ * Calculates the bounds of the polygon
  *
- * @param  {List<Number>} polygon [the polygon]
- * @return {Object}         [Object containing bounds]
+ * @param {List<Number>} polygon The polygon
+ * @return {Object} Object containing bounds
  */
 export function calculatePolygonBounds(polygon) {
-  const minX = polygon.minBy((p) => p[0])[0];
-  const minY = polygon.minBy((p) => p[1])[1];
-  const maxX = polygon.maxBy((p) => p[0])[0];
-  const maxY = polygon.maxBy((p) => p[1])[1];
+
+  const first = (p) => p[0];
+  const second = (p) => p[1];
+
+  const minX = polygon.minBy(first)[0];
+  const minY = polygon.minBy(second)[1];
+  const maxX = polygon.maxBy(first)[0];
+  const maxY = polygon.maxBy(second)[1];
+
   return { minX, minY, maxX, maxY };
 }
 
 /**
- * [Calculates the xStep]
+ * Calculates the step in x direction.
  *
- * @param  {Number} minX [description]
- * @param  {Number} maxX [description]
- * @return {Number}      [xStep]
+ * @param {Number} minX
+ * @param {Number} maxX
+ * @return {Number}
  */
 export function calculateXStep(minX, maxX) {
   return (Math.abs(minX) + Math.abs(maxX)) / 3;
 }
+
 /**
- * Generates a HipJointPosition
+ * Generates the position a hip join.
  *
- * @param  {Number} minX         [description]
- * @param  {Number} maxX         [description]
- * @param  {Number} minY         [description]
- * @param  {Number} maxY         [description]
- * @param  {Array<Number>} polygonArray [description]
- * @return {Number}             HipJointPosition
+ * @param {Number} minX
+ * @param {Number} maxX
+ * @param {Number} minY
+ * @param {Number} maxY
+ * @param {Array<Number>} polygonArray
+ * @return {Number} The position of the hip join
  */
 export function generateHipJointPosition(minX, maxX, minY, maxY, polygonArray) {
   let p = [random.real(minX, maxX), random.real(minY, maxY)];
@@ -108,6 +128,7 @@ export function generateHipJointPosition(minX, maxX, minY, maxY, polygonArray) {
   }
   return p;
 }
+
 /**
  * Represents the body of an individual's genotype.
  *
@@ -120,7 +141,9 @@ export default class Body extends PartialGenotype {
    *
    * @param {Object} options
    * @param {Number} options.mass
-   * @param {Seq<Point>} options.bodyPoints
+   * @param {Array<Point>} options.bodyPoints
+   * @param {Number} options.bodyPointsCount
+   * @param {Array<Point>} options.hipJointPositions
    */
   constructor(options) {
 
@@ -170,7 +193,9 @@ export default class Body extends PartialGenotype {
    *
    * @param {Object} options
    * @param {Number} options.mass
-   * @param {Number} options.bodyPoints
+   * @param {Array<Point>} options.bodyPoints
+   * @param {Number} options.bodyPointsCount
+   * @param {Array<Point>} options.hipJointPositions
    * @return {Object}
    */
   static seed(options) {
@@ -189,8 +214,8 @@ export default class Body extends PartialGenotype {
   }
 
   /**
-   * Generate a list of polygon points and ensure that
-   * they are in counter-clockwise order, and form a simple polygon.
+   * Generates a list of polygon points and ensures that
+   * they are in counter-clockwise order and form a simple polygon.
    *
    * @param {Number} points Number of points.
    * @return {Array}
@@ -204,37 +229,37 @@ export default class Body extends PartialGenotype {
     const polygonArray = polygon.toArray();
     return polygonArray;
   }
+
   /**
-   * [Generates all positions of the hip joints]
+   * Generates all positions of the hip joints.
    *
-   * @param  {Array<Number>} polygonArray [Array containing all points of the polygon]
-   * @return {Array<Number>}              [hip joint positions]
+   * @param {Array<Number>} polygonArray Array containing all points of the polygon
+   * @return {Array<Number>} Hip joint positions
    */
   static seedHipJointPositions(polygonArray) {
 
     const polygon = List(polygonArray);
     const { minX, minY, maxX, maxY } = calculatePolygonBounds(polygon);
     const xStep = calculateXStep(minX, maxX);
-
-    const mins = List.of(minX, minX + xStep, minX + xStep * 2);
-    // const mins = List.of(minX, minX, minX);
-
-    const hipJointPositions = mins.map((min) => generateHipJointPosition(min, min + xStep, minY, maxY, polygonArray));
+    const firstStep = minX + xStep;
+    const mins = List.of(minX, firstStep, firstStep * 2);
+    const hipJointPositions = mins.map((min) => generateHipJointPosition(min, firstStep, minY, maxY, polygonArray));
 
     return hipJointPositions.toArray();
   }
+
   /**
-   * [Generates a random polygon]
+   * Generates a random polygon.
    *
-   * @param  {Number} startAngle  [the start angle]
-   * @param  {Number} endAngle    [the end angle]
-   * @param  {Number} sectorAngle [angle of one sector]
-   * @param  {list<Number>} acc         [accumulator]
-   * @return {list<Number>}             [list of polygon points]
+   * @param {Number} startAngle The start angle
+   * @param {Number} endAngle Tthe end angle
+   * @param {Number} sectorAngle [angle of one sector
+   * @param {list<Number>} acc The accumulator
+   * @return {list<Number>} List of polygon points
    */
   static generateRandomPolygon(startAngle, endAngle, sectorAngle, acc) {
     const coords = generateRandomPolygonPoint(startAngle, endAngle);
-    if (endAngle >= Math.PI * 2 - 0.0001) {
+    if (endAngle >= Math.PI * 2 - TOLERANCE) {
       return acc.push(coords);
     }
     return this.generateRandomPolygon(endAngle, endAngle + sectorAngle, sectorAngle, acc.push(coords));
