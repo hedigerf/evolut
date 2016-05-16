@@ -88,3 +88,5 @@ evolutdoc/protocol/*.pdf
 *.tdo
 *.toc
 evolutdoc/thesis/main.pdf
+evolutdoc/tmp/*
+main.auxlock
