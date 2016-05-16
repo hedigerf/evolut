@@ -247,7 +247,7 @@
     nach jeder Generation neu generiert Bei der Evaluation auf Evolvierbarkeit
     wird der Parcours nur dann neu generiert, wenn sich die Schwierigkeit des Parcours ändert.
     Die Schwierigkeit des Parcours wird definiert durch die maximale Steigung und die höchste Position.
-    Ebenso kann die Populationsgrösse definiert werden und wie viele Prozesse für die Simulation benutzt werden.
+    Ebenso kann die Populationsgrösse definiert werden und wie viele Prozesse für die Simulation und Mutation benutzt werden.
     Am sinnvollsten ist es, wenn die Anzahl der Prozesse, der Anzahl Kerne des Prozessors entspricht.
     Die Relaxation, ein Parameter von p2.js, kann auch konfiguriert werden.
     Der Parameter beschreibt die Anzahl von Zeitschritten um eine Konstraint Gleichung zu stabilisieren.
@@ -352,6 +352,7 @@
       Solch eine Limit wurde jeweils für die Länge und Breite der Beine aufgestellt.
       Die Position eines Beins wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
       dass ein Bein ausserhalb des Körper ist, wird die Position zufällig neu bestimmt.
+      Die Mutation läuft wie die Simulation parellel ab, das heisst, sie kann von mehreren Kernen in einem Prozessor profitieren.
 
     \subsection{Wiederholungen}
 
