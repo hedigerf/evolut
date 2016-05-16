@@ -121,9 +121,67 @@
     Ebenso wird der Ober- mit dem Unterschenkel mit solch einem Constraint verbunden.
     Auf allen Revolute Contraint wird ein Rotationsmotor für die Bewegung definiert.
 
-  \subsection{Engine\label{sub:Engine}}
+  \subsection{Motor\label{sub:Engine}}
 
-    Die Bewegungs-Engine kontrolliert die Bewegung eines Phenotyps
+    Der Bewegungsablauf wird durch einen ``joint-driven'' Bewegungsmotor realisiert.
+    Der Bewegungsmotor kontrolliert die Bewegung eines Phenotyps indem die Motoren der Hüft- und
+    Knie-Gelenke kontrolliert werden.
+
+    \subsubsection{Bewegungen\label{subsub:EngineMovements}}
+
+      Dem stehen verschiedene Kategorien von Bewegungen zur Verfügung.
+      Es wird unterschieden zwischen:
+
+      \begin{itemize}
+        \item Einfache~\ref{EngineMovementsSimple}
+        \item Zusammengesetzte~\ref{EngineMovementsCompound}
+        \item Prädikate~\ref{EngineMovementsPredicates}
+      \end{itemize}
+
+      \paragraph{Einfache Bewegung\label{EngineMovementsSimple}}
+
+        Einfache Bewegungen werden dadurch charakterisiert,
+        dass sie einen Parameter einer Extremität des Phenotyps verändern.
+        \\
+        Verschiedene Arten stehen dabei zur Verfügung:
+        \begin{itemize}
+          \item Winkelgeschwindigkeit setzten
+          \item Winkel setzten
+          \item Winkel sperren
+        \end{itemize}
+
+        \subparagraph{Winkelgeschwindigkeit setzten\label{subpar:EngineMovementsSimpleSTS}}
+
+          In dieser Bewegung setzt der Motor die Winkelgeschwindigkeit eines Gelenk-Motors.
+          Dabei wird die Invariante für die maximale Winkelgeschwindigkeit berücksichtigt.
+          \\
+          \[\omega_{Max} = 1\frac{rad}{s}\]
+
+
+        % invarianten
+
+      \paragraph{Zusammengesetzte Bewegung\label{EngineMovementsCompound}}
+
+        Zusammengesetzte Bewegungen gruppieren eine beliebige Anzahl von Bewegungen.
+        Dabei spielt es keine Rolle, von welchem Typ die Bewegung ist.
+        Die ganze Gruppe der Bewegungen wird in einem Schritt der Physik-Engine ausgeführt.
+        Damit können Bewegungen parallel abgearbeitet werden.
+        \\
+        Als Auswertungsfunktionen stehen zwei Typen zur Verfügung:
+        \begin{itemize}
+          \item Alle \\
+            Alle Teil-Bewegungen in dieser Gruppe müssen erfolgreich ausgeführt worden sein.
+          \item Eine \\
+            Nur eine einzige Bewegung in dieser Gruppe muss erfolgreich ausgeführt worden sein.
+        \end{itemize}
+
+      \paragraph{Prädikate\label{EngineMovementsPredicates}}
+
+    //
+    //
+
+    Die Bewegungs-Engine kontrolliert die Bewegung eines Phenotyps.
+
     Konkreter werden die Hüft- und Knie-Gelenke und deren Motoren kontrolliert.
     Dabei definiert eine Bewegung z.B. wann ein Winkel eines Gelenkes gehalten werden muss
     oder wann der Motor des Gelenkes in welche Richtung in Bewegung gesetzt werden soll.
