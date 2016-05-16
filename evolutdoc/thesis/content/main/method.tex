@@ -43,13 +43,14 @@
       eines welches es mit dem Körper verbindet,
       das andere welches Ober- mit Unterschenkel verbindet.
       Als Vereinfachung wird die Höhe des Gelenkes 0 gesetzt  \(h_{a} = 0\)
-      Das Bein weisst eine Höhe \(h_{l}\) auf. Die Position des Gelenkes,welches die beiden Beinschenkel verbindet,
-      wird als Abstand zum oberen Ende des Oberschenkel definiert \(h_{t}\),
-      andersherum gesagt ist das die Höhe des Oberschenkels.
-      Die Höhe des Unterschenkels wird als \(h_{s}\) bezeichnet.
-      Ein Bein weisst eine Breite auf \(w_{l}\).
+      Das Bein weisst eine Höhe \(h_{l}\) auf. Die Gelenke verbinden jeweils den Körper mit dem Gelenk und Ober- mit
+      Unterschenkel. Es wird ein Höhenfaktor \(hf\) bestimmt, welcher die Höhe des Unterschenkels definiert.
+      Die Breite des Beines wird mit \(w_{l}\) bezeichnet.
       \\
-      \input{graphics/concept-leg}
+      \begin{figure}[H]
+        \includegraphics[scale=1]{graphics/leg}
+        \caption{Konzept Bein\label{fig:conceptLeg}}
+      \end{figure}
 
       \subsubsection{Masse\label{subs:Masse}}
 
@@ -249,7 +250,7 @@
     nach jeder Generation neu generiert Bei der Evaluation auf Evolvierbarkeit
     wird der Parcours nur dann neu generiert, wenn sich die Schwierigkeit des Parcours ändert.
     Die Schwierigkeit des Parcours wird definiert durch die maximale Steigung und die höchste Position.
-    Ebenso kann die Populationsgrösse definiert werden und wie viele Prozesse für die Simulation benutzt werden.
+    Ebenso kann die Populationsgrösse definiert werden und wie viele Prozesse für die Simulation und Mutation benutzt werden.
     Am sinnvollsten ist es, wenn die Anzahl der Prozesse, der Anzahl Kerne des Prozessors entspricht.
     Die Relaxation, ein Parameter von p2.js, kann auch konfiguriert werden.
     Der Parameter beschreibt die Anzahl von Zeitschritten um eine Konstraint Gleichung zu stabilisieren.
@@ -354,6 +355,7 @@
       Solch eine Limit wurde jeweils für die Länge und Breite der Beine aufgestellt.
       Die Position eines Beins wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
       dass ein Bein ausserhalb des Körper ist, wird die Position zufällig neu bestimmt.
+      Die Mutation läuft wie die Simulation parellel ab, das heisst, sie kann von mehreren Kernen in einem Prozessor profitieren.
 
     \subsection{Wiederholungen}
 
