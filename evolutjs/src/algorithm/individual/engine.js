@@ -29,7 +29,9 @@ export default class Engine extends PartialGenotype {
    * Default constructor for an engine.
    *
    * @param {Object} options
-   * @param {String} options.descriptor
+   * @param {Object} options.descriptor
+   * @param {Array<MovementDescriptor>} options.descriptor.initial
+   * @param {Array<MovementDescriptor>} options.descriptor.movements
    */
   constructor(options) {
 
@@ -56,7 +58,9 @@ export default class Engine extends PartialGenotype {
    * Returns a randomly seeded version of a genotype.
    *
    * @param {Object} options
-   * @param {String} options.descriptor
+   * @param {Object} options.descriptor
+   * @param {Array<MovementDescriptor>} options.descriptor.initial
+   * @param {Array<MovementDescriptor>} options.descriptor.movements
    * @return {Object}
    */
   static seed(options) {

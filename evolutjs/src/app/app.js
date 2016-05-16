@@ -1,5 +1,5 @@
 /**
- * Defines the main application menu.
+ * Defines the main application.
  * Runs within the main process.
  * The spawned window run each in a separate render process.
  *
@@ -22,8 +22,15 @@ import Reporter from '../report/reporter';
 import TournamentBasedSelectionStrategy from '../algorithm/selection/tournamentBasedSelectionStrategy';
 import { Worker } from './ipc';
 
-const logger = getLogger('app', 'main');
+/**
+ * Main application html file.
+ * All workers (BrowserWindow) load this file.
+ *
+ * @type {String}
+ */
 const index = 'file://' + appRoot + '/index.html';
+
+const logger = getLogger('app', 'main');
 const workerCount = config('workers.count');
 const populationSize = config('algorithm.populationSize');
 const partialPopulationSize = populationSize / workerCount;
@@ -112,6 +119,13 @@ function mutate(population) {
   workers.forEach(distributor);
 }
 
+/**
+ * Prepares a distribution function.
+ *
+ * @param {function} distributeWork
+ * @param {Population} population
+ * @return {function}
+ */
 function prepareDistributor(distributeWork, population) {
   population.generationCount = generationCounter;
   if (generationCounter % switchParcourAfterGeneration === 0) {
@@ -123,25 +137,55 @@ function prepareDistributor(distributeWork, population) {
   return distributor;
 }
 
+/**
+ * Creates an initial population.
+ *
+ * @return {Population}
+ */
 function createInitalPopulation() {
   if (loadPopulationFromFile) {
-    const pathToFile = load('population.json');
-    const populationStr = fs.readFileSync(pathToFile).toString();
-    const initialPopulation = JSON.parse(populationStr);
-    const shrinked = List(initialPopulation.individuals)
-      .sortBy((individual) => individual.fitness)
-      .reverse()
-      .take(populationSize);
-    generationCounter = initialPopulation.generationCount;
-    return { generationCount: initialPopulation.generationCount, individuals: shrinked};
-  } else {
-    const initialPopulationGenerator = new InitialPopulationGenerator(
-      Range(bodyPointsMin, bodyPointsMax + 1), populationSize);
-    const initialPopulation = initialPopulationGenerator.generateInitialPopulation();
-    return initialPopulation;
+    return loadInitialPopulationFromFile();
   }
+  return createRandomInitialPopulation();
 }
 
+/**
+ * Loads the initial population from the predefined file 'population.json'.
+ * This file is located within the assets folder.
+ *
+ * @return {Population}
+ */
+function loadInitialPopulationFromFile() {
+
+  const pathToFile = load('population.json');
+  const populationStr = fs.readFileSync(pathToFile).toString();
+  const initialPopulation = JSON.parse(populationStr);
+
+  const shrinked = List(initialPopulation.individuals)
+    .sortBy((individual) => individual.fitness)
+    .reverse()
+    .take(populationSize);
+  generationCounter = initialPopulation.generationCount;
+
+  return { generationCount: initialPopulation.generationCount, individuals: shrinked};
+}
+
+/**
+ * Creates a random initial population.
+ *
+ * @return {Population}
+ */
+function createRandomInitialPopulation() {
+
+  const bounds = Range(bodyPointsMin, bodyPointsMax + 1);
+  const initialPopulationGenerator = new InitialPopulationGenerator(bounds, populationSize);
+
+  return initialPopulationGenerator.generateInitialPopulation();
+}
+
+/**
+ * Handles the event when a worker has finished simulation it's partial population.
+ */
 ipcMain.on(Worker.Finished, (event, individualsStringified, uuid) => {
   finishedWorkCounter++;
   debug(logger, 'received work finished from ' + uuid + '. finishedWorkCounter: ' + finishedWorkCounter);
@@ -154,6 +198,9 @@ ipcMain.on(Worker.Finished, (event, individualsStringified, uuid) => {
   }
 });
 
+/**
+ * Handles the event when a worker has finished mutating it's partial population.
+ */
 ipcMain.on(Worker.MutationFinished, (event, individualsStringified, uuid) => {
   finishedMutationWorkCounter++;
   debug(logger,
@@ -173,18 +220,26 @@ ipcMain.on(Worker.MutationFinished, (event, individualsStringified, uuid) => {
     const options = { individuals: individualsMutation, generationCount: generationCounter};
     const distributor = prepareDistributor(distributeWork, options);
     workers.forEach(distributor);
-    individuals = List(); // reset
-    individualsMutation = List(); // reset
-  }
 
+    // Reset
+    individuals = List();
+    individualsMutation = List();
+  }
 });
 
+/**
+ * Defines the behaviour when all windows are closed.
+ * On platforms which run mac osx (darwin) the application should not quit.
+ */
 app.on('window-all-closed', () =>  {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
+/**
+ * The main application entry point.
+ */
 app.on('ready', () => {
   process.on('uncaughtException', (err) => {
     error(logger, 'an exception happened.');

@@ -1,22 +1,35 @@
 /**
- * Initialize loggin.
+ * Initialize logging.
  *
  * @module app/log
  */
 
+import { ifElse, isNil, once } from 'ramda';
 import log4js from 'log4js';
-import { once } from 'ramda';
 
-const configureOnce = once((uuid) => {
-  if (!uuid) {
-    throw 'Loger cant be configured, missing uuid';
-  }
-  configure(uuid);
-});
+/**
+ * Throws an exception.
+ *
+ * @throws {Error}
+ */
+function throwMissingUUIDException() {
+  throw new Error('Logger can\'t be configured, missing uuid');
+}
 
-// Load default configuration
+/**
+ * Runs the configuratio of a logger only once.
+ *
+ * @function
+ * @param {String} uuid
+ */
+const configureOnce = once(ifElse(isNil, throwMissingUUIDException, configure));
+
+/**
+ * Load default configuration
+ *
+ * @param {String} uuid The logger id
+ */
 function configure(uuid) {
-
   log4js.configure({
     appenders: [
       {
@@ -45,12 +58,16 @@ function configure(uuid) {
     },
     replaceConsole: true
   });
-
 }
 
-
+/**
+ * Return a configured instance of a logger.
+ *
+ * @param {String} name The logger name
+ * @param {String} uuid The logger id
+ * @return {Logger}
+ */
 export function getLogger(name, uuid) {
   configureOnce(uuid);
   return log4js.getLogger(name);
-
 }

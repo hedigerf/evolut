@@ -36,7 +36,7 @@ const ruleEngine = new EngineMutationRule(config('mutation:engine'));
  * These rules are applied to a genotype.
  * Each rule returns a mutated version where some part was modified.
  *
- * @type {Array<Mutation>}
+ * @type {Array<MutationRule>}
  */
 const rules = [ruleBody, ruleLeg, ruleEngine];
 
@@ -76,7 +76,7 @@ function applyMutationRules(rules) {
  * Returns a mutated individual.
  *
  * @function
- * @param {Individual} genotype A genotype of an individual
- * @return {Individual} An instatitated Individual
+ * @param {Genotype} genotype A genotype of an individual
+ * @return {Genotype} An instatitated Individual
  */
 export const mutateGenotype = compose(instantiate, applyMutationRules(rules), clone);

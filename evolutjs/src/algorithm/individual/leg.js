@@ -25,6 +25,18 @@ const LEG_LOWER_LIMIT_WIDTH = 0.1;
 const LEG_UPPER_LIMIT_WIDTH = 0.2;
 
 /**
+ * @function
+ * @param {Number} a Lower bound
+ * @param {Number} b Upper bound
+ * @return {function(Number): Number}
+ */
+const orRandom = (a, b) => when(isNil, () => random.real(a, b));
+
+const orRandomHeight = orRandom(LEG_LOWER_LIMIT_HEIGHT, LEG_UPPER_LIMIT_HEIGHT);
+const orRandomHeightFactor = orRandom(LEG_LOWER_LIMIT_HEIGHT_FACTOR, LEG_UPPER_LIMIT_HEIGHT_FACTOR);
+const orRandomWidth = orRandom(LEG_LOWER_LIMIT_WIDTH, LEG_UPPER_LIMIT_WIDTH);
+
+/**
  * Represents a leg of an indiviual.
  * A leg is made of a thigh and a shank. These are connected by a knee joint.
  * The leg itself is connected to the body of an indiviudal by another joint.
@@ -38,9 +50,9 @@ export default class Leg extends PartialGenotype {
    * Constructor of a Leg.
    *
    * @param {Object} options
-   * @param {Number} options.massFactor
    * @param {Number} options.height
    * @param {Number} options.heightFactor
+   * @param {Number} options.width
    */
   constructor(options) {
 
@@ -98,19 +110,12 @@ export default class Leg extends PartialGenotype {
    * Returns a randomly seeded version of a leg.
    *
    * @param {Object} options
-   * @param {Number} options.massFactor
    * @param {Number} options.height
    * @param {Number} options.heightFactor
+   * @param {Number} options.width
    * @return {Object}
    */
   static seed(options) {
-    const orRandomHeight = when(isNil, () => random.real(LEG_LOWER_LIMIT_HEIGHT, LEG_UPPER_LIMIT_HEIGHT));
-    const orRandomHeightFactor = when(isNil, () =>
-      random.real(LEG_LOWER_LIMIT_HEIGHT_FACTOR, LEG_UPPER_LIMIT_HEIGHT_FACTOR));
-
-    const orRandomWidth = when(isNil, () => {
-      return random.real(LEG_LOWER_LIMIT_WIDTH, LEG_UPPER_LIMIT_WIDTH);
-    });
 
     const setter = compose(
       over(lensHeight, orRandomHeight),

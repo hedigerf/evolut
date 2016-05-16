@@ -1,6 +1,6 @@
 {
   "name": "evolut",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Design of artificial animals with evolutionary algorithms",
   "private": true,
   "main": "main.js",
@@ -68,6 +68,6 @@
     "mocha": "^2.4.5"
   },
   "engines": {
-    "node": ">=5.0.0"
+    "electron": ">=1.0.0"
   }
 }
