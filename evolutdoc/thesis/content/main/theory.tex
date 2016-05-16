@@ -6,15 +6,15 @@
 
 \chapter{Grundlagen}
 
-In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbeitet.
+In diesem Kapitel werden die Grundlagen zu evolutionären Algorithmen aufgearbeitet.
 
-\section{Natural Evoltions vs Artifical}
+\section{Natural Evolution vs Artifical}
 
-  Natürliche Evolution hat kein vordefiniertes Ziel und ist ein sogennanter open-ended Anpassungsprozess.
+  Natürliche Evolution hat kein vordefiniertes Ziel und ist ein sogenannter open-ended Anpassungsprozess.
   Artifizielle Evolution jedoch ist ein Optimierungsprozess,
   welcher versucht Lösungen zu vordefinierten Problem zu finden~\cite[S.1]{book:bioInspired}.
   \\
-  Das Ziel ist ein optimal angepasstes Individuum zu finden, weshalb artifizeille Evolution verwendet wird.
+  Das Ziel ist ein optimal angepasstes Individuum zu finden, weshalb artifizielle Evolution verwendet wird.
 
   \subsection{Intelligent Design\label{sub:IntelligentDesign}}
 
@@ -22,29 +22,29 @@ In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbei
 
 \section{Artifical Evolution}
 
-  \subsection{Schritte eines Evolutinären Algorithmus\label{sub:stepsEvAlgo}}
+  \subsection{Schritte eines evolutionären Algorithmus\label{sub:stepsEvAlgo}}
 
     Nach~\cite[S.16 - 29]{book:bioInspired}:
     \\
 
-    \subsubsection{Genetische Repräsenation}
+    \subsubsection{Genetische Repräsentation}
 
-    Der erste Schritt bei der Definition eines Evolutionären Alogrithmus ist die Auswahl der genetischen Repräsentation.
-    Nicht alle Arten von Evolutionären Algorithmen harmonieren mit jeder Repräsentation.
+    Der erste Schritt bei der Definition eines evolutionären Algorithmus ist die Auswahl der genetischen Repräsentation.
+    Nicht alle Arten von evolutionären Algorithmen harmonieren mit jeder Repräsentation.
 
       \paragraph{Diskrete Repräsentation\label{par:GeneticRepresentationDiscrete}}
 
         Bei der diskreten Repräsentation wird das Genom als binären String dargestellt [0111110].
-        Dieser binäre String kann anschliessend zu einem Phenotyp übersetzt werden.
-        Zum Beispiel kann eine Bitsequenz, direkt zu einer Zahl als Phenotyp übersetzt werden [0011] -> 3.
-        Ebenfalls kann eine diskrete Repäsentation eine Folge von beliebigen Zeichen annehmen [ABCDEF].
-        D. Floreano und C. Mattiussi bringen dazu ein gutes Beispiel anhand des Travelling Sales Man Problemes an~\cite[S.18]{book:bioInspired}:
+        Dieser binäre String kann anschliessend zu einem Phänotyp übersetzt werden.
+        Zum Beispiel kann eine Bitsequenz, direkt zu einer Zahl als Phänotyp übersetzt werden [0011] -> 3.
+        Ebenfalls kann eine diskrete Repräsentation eine Folge von beliebigen Zeichen annehmen [ABCDEF].
+        D. Floreano und C. Mattiussi bringen dazu ein gutes Beispiel anhand des Travelling Sales Man Problems an~\cite[S.18]{book:bioInspired}:
         Jeder Buchstabe in der Sequenz repräsentiert dabei einen Ort, welchen es zu besuchen gilt.
 
       \paragraph{Reale Werte Repräsentation\label{par:GeneticRepresentationReal}}
 
         Weiter kann die Reale Werte Repräsentation gewählt werden.
-        Das Genom wird hierbei durch reele Zahlen repräsentiert.
+        Das Genom wird hierbei durch reelle Zahlen repräsentiert.
         Beispielsweisse kann die optimale Position eines Zimmers (beste Flächennutzung) in einem Haus
         durch reale Zahlen dargestellt werden.
 
@@ -52,7 +52,7 @@ In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbei
 
         Das zu evolvierende Objekt kann durch einen Baum dargestellt werden.
         \\
-        Baum Repräsenationen (siehe Abbidlung~\ref{fig:baum}) werden vorallem bei der genetischen Programmierung eingesetzt.
+        Baum Repräsentationen (siehe Abbildung~\ref{fig:baum}) werden vor allem bei der genetischen Programmierung eingesetzt.
         \begin{figure}[H]
           \Tree[.A [.B [.C eins ] [.D zwei ] ].B [.E {3 und 4} ] ].A
           \caption{Darstellung eines Baumes\label{fig:baum}}
@@ -66,40 +66,40 @@ In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbei
 
     \subsubsection{Fitness Funktion}
 
-      Mit Hilfe der Fintess Funktion lassen sich Individuen beurteilen,
-      wie gut geeiget Ihre Gene sind um die Problemstellung zu bewältigen.
+      Mit Hilfe der Fitness Funktion lassen sich Individuen beurteilen,
+      wie gut geeignet Ihre Gene sind um die Problemstellung zu bewältigen.
       In der natürlichen Evolution ist die Fitness des Tieres, wie viele Nachkommen es erzeugen kann.
-      In der technischen Welt jedoch muss der Anwendenr sie jeweils selber definieren und
+      In der technischen Welt jedoch muss der Anwender sie jeweils selber definieren und
       nach seiner Problemstellung anpassen.
 
     \subsubsection{Selektionsoperation}
 
-      Eine Selektionsoperation hilft einem möglichst gutgeignete Indivduen einer Generation zu selektieren.
+      Eine Selektionsoperation hilft einem möglichst gut geeignete Individuen einer Generation zu selektieren.
       Die Selektierten bilden die Basis für die nächste Generation.
       Eine grosse Herausforderung beim Selektieren ist die Erhaltung der Diversität.
 
       \paragraph{Selektionsdruck}
 
-        Als Selektionsdruck wird der Prozensatz der Individuen der aktuellen Generation,
+        Als Selektionsdruck wird der Prozentsatz der Individuen der aktuellen Generation,
         welche man verwendet um Nachkommen zu erzeugen, bezeichnet.
         Dabei werden am nur die fittesten Individuen selektiert.
         Zum Beispiel bei 10 Individuen werden nur die 4 selektiert, welche den höchsten Fitnesswert aufweisen.
         Selektion nach Selektionsdruck hat den Nachteil, dass die Diversität schnell verloren geht.
 
-      \paragraph{Proportionle Selektion}
+      \paragraph{Proportionale Selektion}
 
-        Bei der proportionalen Selektion wählt man die Reproduktionsrate proportinal zur Fitness.
+        Bei der proportionalen Selektion wählt man die Reproduktionsrate proportional zur Fitness.
         Proportionale Selektion funktioniert schlecht wenn alle Individuen sehr ähnliche Fitnesswerte aufweisen oder es nur wenige/einen Ausreisser gibt.
 
       \paragraph{Rang-basierte Selektion}
 
-        Es wird zuerst eine Rangliste erstellt und dann werden die Reproduktionswahrscheinlichkeiten proporional zum Rang zugeordnet.
+        Es wird zuerst eine Rangliste erstellt und dann werden die Reproduktionswahrscheinlichkeiten proportional zum Rang zugeordnet.
         Diese Selektionsstrategy hat den Vorteil gegenüber der proportionalen Selektion,
-        das es nicht darauf ankommt wie unterschiedlich die Individuen sind.
+        dass es nicht darauf ankommt wie unterschiedlich die Individuen sind.
 
-      \paragraph{Truncated Rang-basierte Selektion}
+      \paragraph{Gekürzte Rang-basierte Selektion}
 
-        Ähnlich wie die Rang-basierte Seleketion.
+        Ähnlich wie die Rang-basierte Selektion.
         Es werden jedoch nur die besten Individuen zur Reproduktion selektiert und
         jedes Individuum produziert die gleiche Anzahl Nachkommen.
 
@@ -109,13 +109,13 @@ In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbei
         das Individuum mit dem höchsten Fitnesswert erzeugt ein Nachkommen.
         Dies wird solange wiederholt bis man wieder so viele Nachkommen hat,
         wie die Ursprüngliche Generation Individuen hatte.
-        Ein grosser Vorteil von Turniert-basierter Seleketion ist die gute Balanace zwischen
+        Ein grosser Vorteil von Turniert-basierter Selektion ist die gute Balance zwischen
         Selektionsdruck und genetischer Diversität.
 
     \subsubsection{Rekombinationsfunktion}
 
         Bei der Rekombination werden jeweils Zwei Individuen selektiert und
-        deren Genpaare werden rekombiniert (untereinander vertauscht).
+        deren Gen-Paare werden rekombiniert (untereinander vertauscht).
         Rekombination ist nicht bei jeder Problemstellung hilfreich,
         es muss von Fall zu Fall neu bewertet werden ob sie eingesetzt wird.
 
@@ -133,7 +133,7 @@ In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbei
 
           Die Gene werden an \(n\) zufälligen Stellen vertauscht, nur Anwendbar auf Reale Werte Repräsentationen.
 
-        \paragraph{Arithmetic Crossiver}
+        \paragraph{Arithmetic Crossover}
 
           Der Durschnitt von den Genen an \(n\) zufälligen Positionen wird gebildet.
           Aus diesem Durchschnitt wird dann ein Nachkomme erzeugt.
@@ -152,7 +152,7 @@ In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbei
     \subsubsection{Mutationsfunktion}
 
       Mutationen operieren direkt auf dem Individuum.
-      Positonen eines Genomes werden mit einer bestimmten Wahrscheinlichkeit \(p_{m}\) mutiert.
+      Positionen eines Genoms werden mit einer bestimmten Wahrscheinlichkeit \(p_{m}\) mutiert.
       Es ist jedoch Vorsicht geboten, da gewisse Lösungen durch Mutationen verloren gehen können.
 
       \paragraph{Binäre Repräsentationen}
@@ -171,23 +171,23 @@ In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbei
 
         Gewisse Teilabschnitte des Baumes werden mutiert.
 
-    Genetische Representation: Erbgutdaten, genetic encoding
+    Genetische Repräsentation: Erbgutdaten, genetic encoding
     \\
-    Phenotyp: Aussehen des Individum -> Manifestation. In unserem Fall die 6-Beinigen Kreaturen als Pixelgrafik.
+    Phänotyp: Aussehen des Individuums -> Manifestation. In unserem Fall die 6-Beinigen Kreaturen als Pixelgrafik.
     \\
-    Initialisieren -> Simulieren -> Selection -> Rekombination -> Mutation -> Analyse
+    Initialisieren -> Simulieren -> Selektion -> Rekombination -> Mutation -> Analyse
     \\
-    Simulieren bis Analayse solange wiederholen bis zufrieden mit Resultat
+    Simulieren bis Analyse solange wiederholen bis zufrieden mit Resultat
 
   \subsection{Arten von evolutionären Algorithmen\label{sub:artenEvAlgos}}
 
-    Es gibt insgesammt 4 Arten von evolutionären Algorithmen:
-    Genetische Algorithmen, Genetische Programmierung, Evolutinionäre Programmierung
-    und Evolutionäre Strategien.
+    Es gibt insgesamt 4 Arten von evolutionären Algorithmen:
+    Genetische Algorithmen, Genetische Programmierung, evolutionäre Programmierung
+    und evolutionäre Strategien.
 
     \subsubsection{Genetische Algorithmen\label{item:genAlgo}}
 
-      Die Genetische Algorithmen arbeiten mit binären Genom Repräsentationen.
+      Die Genetischen Algorithmen arbeiten mit binären Genom Repräsentationen.
       Es wird sowohl Rekombination als auch Mutation eingesetzt.
 
     \subsubsection{Genetische Programmierung\label{item:genProg}}
@@ -197,11 +197,11 @@ In diesem Kapitel werden die Grundlagen zu Evolutionären Algorithmen aufgearbei
 
     \subsubsection{Evolutionäre Programmierung\label{item:evProg}}
 
-      Bei der Evolutinären Programmierung wird ausschliesslich Mutation eingesetzt.
+      Bei der evolutionären Programmierung wird ausschliesslich Mutation eingesetzt.
       Das Genom wird durch reale Werte repräsentiert. Als Selektionsoperator wird
       oft Turnier-basierte Selektion eingesetzt.
 
     \subsubsection{Evolutionäre Strategien\label{item:evStrat}}
 
-        Ähnlich wie Evolutionäre Programmierung, aber die Varianz der Verteilung,
+        Ähnlich wie evolutionäre Programmierung, aber die Varianz der Verteilung,
         welche für die Mutation gebraucht wird ist genetische codiert.
