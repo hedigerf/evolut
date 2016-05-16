@@ -125,84 +125,64 @@
 
     Der Bewegungsablauf wird durch einen ``joint-driven'' Bewegungsmotor realisiert.
     Der Bewegungsmotor kontrolliert die Bewegung eines Phenotyps indem die Motoren der Hüft- und
-    Knie-Gelenke kontrolliert werden.
+    Knie-Gelenke gesteuert werden.
 
     \subsubsection{Bewegungen\label{subsub:EngineMovements}}
 
-      Dem stehen verschiedene Kategorien von Bewegungen zur Verfügung.
+      Dem Motor stehen verschiedene Kategorien von Bewegungen zur Verfügung.
       Es wird unterschieden zwischen:
 
       \begin{itemize}
-        \item Einfache~\ref{EngineMovementsSimple}
-        \item Zusammengesetzte~\ref{EngineMovementsCompound}
-        \item Prädikate~\ref{EngineMovementsPredicates}
+        \item Einfache
+        \item Zusammengesetzte
+        \item Prädikate
       \end{itemize}
 
       \paragraph{Einfache Bewegung\label{EngineMovementsSimple}}
 
         Einfache Bewegungen werden dadurch charakterisiert,
-        dass sie einen Parameter einer Extremität des Phenotyps verändern.
+        dass sie einen Parameter einer Extremität des Phänotyps verändern.
         \\
-        Verschiedene Arten stehen dabei zur Verfügung:
-        \begin{itemize}
-          \item Winkelgeschwindigkeit setzten
-          \item Winkel setzten
-          \item Winkel sperren
-        \end{itemize}
-
-        \subparagraph{Winkelgeschwindigkeit setzten\label{subpar:EngineMovementsSimpleSTS}}
-
-          In dieser Bewegung setzt der Motor die Winkelgeschwindigkeit eines Gelenk-Motors.
-          Dabei wird die Invariante für die maximale Winkelgeschwindigkeit berücksichtigt.
-          \\
-          \[\omega_{Max} = 1\frac{rad}{s}\]
-
-
-        % invarianten
+        Veränderbar sind die minimalen und maximalen Winkel eines Gelenkes und die Winkelgeschwindigkeit des
+        Gelenk-Motors. Der Winkel des Gelenkes kann ebenfalls fixiert werden.
+        \\
+        Die maximale Winkelgeschwindigkeit des Gelenk-Motors ist limitiert.
+        Dies stellt sicher, dass die vorhandene Kraft eines Phänotyps nach oben limitiert wird.
+        \[ \omega_{\max} = 1\frac{rad}{s}\]
+        \\
+        Der minimale Winkel \(\alpha \) und der maximale Winkel \(\beta \) des Gelenks sind definiert als:
+        \[ \alpha, \beta \in \mathbb{R}, -\pi \leq \alpha < \beta \leq \pi \]
 
       \paragraph{Zusammengesetzte Bewegung\label{EngineMovementsCompound}}
 
-        Zusammengesetzte Bewegungen gruppieren eine beliebige Anzahl von Bewegungen.
-        Dabei spielt es keine Rolle, von welchem Typ die Bewegung ist.
+        Zusammengesetzte Bewegungen gruppieren eine beliebige Anzahl von Bewegungen zu einer einzigen.
+        Dabei spielt es keine Rolle, von welchem Typ ein Element ist.
         Die ganze Gruppe der Bewegungen wird in einem Schritt der Physik-Engine ausgeführt.
         Damit können Bewegungen parallel abgearbeitet werden.
         \\
-        Als Auswertungsfunktionen stehen zwei Typen zur Verfügung:
+        Es stehen zwei Auswertungsfunktionen zur Verfügung:
         \begin{itemize}
-          \item Alle \\
-            Alle Teil-Bewegungen in dieser Gruppe müssen erfolgreich ausgeführt worden sein.
-          \item Eine \\
-            Nur eine einzige Bewegung in dieser Gruppe muss erfolgreich ausgeführt worden sein.
+          \item \textbf{Alle}. Jede Teil-Bewegungen in dieser Gruppe muss erfolgreich ausgeführt worden sein.
+          \item \textbf{Eine}. Nur eine einzige Bewegung in dieser Gruppe muss erfolgreich ausgeführt worden sein.
         \end{itemize}
 
       \paragraph{Prädikate\label{EngineMovementsPredicates}}
 
-    //
-    //
+        Eine Prädikat-Bewegung gilt als ausgeführt, wenn sie das spezifizierte Prädikat erfüllt.
+        Hierfür stehen mehrere Prädikate wie maximaler oder minimaler Winkel erreicht zur Verfügung.
 
-    Die Bewegungs-Engine kontrolliert die Bewegung eines Phenotyps.
+    \subsubsection{Ablauf}
 
-    Konkreter werden die Hüft- und Knie-Gelenke und deren Motoren kontrolliert.
-    Dabei definiert eine Bewegung z.B. wann ein Winkel eines Gelenkes gehalten werden muss
-    oder wann der Motor des Gelenkes in welche Richtung in Bewegung gesetzt werden soll.
-    \\
-    Der Zustand des Bewegungsablaufs wird auf dem Phenotyp festgehalten.
-    Es wird gespeichert welche die aktuelle Bewegung ist.
-    Die Implementation der Bewegungs-Engine ist eine Finite State Machine (FSM),
-    die in gewissen Zuständen stehen bleiben kann.
-    \\
-    Jedes Individuum verfügt über einen eigenen Bewegungsablauf.
-    Der Bewegungsablauf ist eine Liste von parametrisierten Bewegungen
-    Dieser wird in die Bewegungs-Engine eingespeist.
+      Der Zustand des Bewegungsablaufs wird auf dem Phenotyp festgehalten.
+      Es wird gespeichert welche die aktuelle Bewegung ist.
+      Die Implementation der Bewegungs-Engine ist eine Finite State Machine (FSM),
+      die in gewissen Zuständen stehen bleiben kann.
+      \\
+      Jedes Individuum verfügt über einen eigenen Bewegungsablauf.
+      Der Bewegungsablauf ist eine Liste von parametrisierten Bewegungen
+      Dieser wird in die Bewegungs-Engine eingespeist.
 
-    % TODO
-
-    \subsubsection{Bewegung\label{subsub:EngineMovement}}
-
-      Eine Bewegung ist ein Zustand der Bewegungs-Engine.
-      Sie legt fest, wann zum nächsten Zustand gewechselt werden kann.
-      Unter einer Bewegung wird das Setzten der maximalen und minimalen Winkel oder auch
-      das Warten auf einen Zustand eines Gelenkes verstanden.
+      % TODO
 
   \subsection{Notwendige Zusätzliche Implementierungen}
 
