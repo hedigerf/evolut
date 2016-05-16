@@ -49,15 +49,19 @@ let highestY = config('parcour.startHighestY');
 let individuals = List();
 let individualsMutation = List();
 
+/**
+ * Creates a new worker in a browser window.
+ *
+ * @return {BrowserWindow} The browser window where the worker resides
+ */
 export function startWorker() {
   const worker = new BrowserWindow({
     width: config('window:width'),
     height: config('window:height')
   });
   worker.loadURL(index);
-  worker.on('closed', () => {
-    app.exit(0);
-  });
+  worker.on('closed', () => app.exit(0));
+
   return worker;
 }
 
@@ -69,12 +73,13 @@ function distributeInitialWork(ipcQueue, initialPopulation, options, worker, ind
   });
 }
 /**
- * DistributesWork to Queues
- * @param  {[type]} ipcQueue   [description]
- * @param  {[type]} population [description]
- * @param  {[type]} options    [description]
- * @param  {[type]} worker     [description]
- * @param  {[type]} index      [description]
+ * Distributes work to a worker on a queue.
+ *
+ * @param {String} ipcQueue
+ * @param {Population} population
+ * @param {Object} options
+ * @param {BrowserWindow} worker
+ * @param {Number} index
  */
 function distributeWork(ipcQueue, population, options, worker, index) {
   const start = index * partialPopulationSize;
@@ -100,12 +105,11 @@ function performSimulationPostprocessing(population) {
 /**
  * Mutates a given population.
  *
- * @param  {Population} population The population to be mutated
+ * @param {Population} population The population to be mutated
  */
 function mutate(population) {
   const distributor = curry(distributeWork)(Worker.MutationReceive, population, { });
   workers.forEach(distributor);
-
 }
 
 function prepareDistributor(distributeWork, population) {
@@ -124,8 +128,10 @@ function createInitalPopulation() {
     const pathToFile = load('population.json');
     const populationStr = fs.readFileSync(pathToFile).toString();
     const initialPopulation = JSON.parse(populationStr);
-    const shrinked =
-      List(initialPopulation.individuals).sortBy((individual) => individual.fitness).reverse().take(populationSize);
+    const shrinked = List(initialPopulation.individuals)
+      .sortBy((individual) => individual.fitness)
+      .reverse()
+      .take(populationSize);
     generationCounter = initialPopulation.generationCount;
     return { generationCount: initialPopulation.generationCount, individuals: shrinked};
   } else {
@@ -134,7 +140,6 @@ function createInitalPopulation() {
     const initialPopulation = initialPopulationGenerator.generateInitialPopulation();
     return initialPopulation;
   }
-
 }
 
 ipcMain.on(Worker.Finished, (event, individualsStringified, uuid) => {
@@ -155,20 +160,21 @@ ipcMain.on(Worker.MutationFinished, (event, individualsStringified, uuid) => {
     'received work finished mutation from ' + uuid + ' finishedMutationWorkCounter: ' + finishedMutationWorkCounter
   );
   const partialPopulation = individualsStringified.map((x) => JSON.parse(x));
-  individualsMutation = individuals.concat(partialPopulation);
+  individualsMutation = individualsMutation.concat(partialPopulation);
   if (finishedMutationWorkCounter % workerCount === 0) {
+
     if (generationCounter % increaseDifficultyAfter === 0) {
       if (maxSlope < limitSlope) {
         maxSlope = maxSlope + maxSlopeStep;
       }
       highestY = highestY + highestYStep;
     }
-    const distributor = prepareDistributor(distributeWork,
-       { individuals: individualsMutation, generationCount: generationCounter}
-     );
+
+    const options = { individuals: individualsMutation, generationCount: generationCounter};
+    const distributor = prepareDistributor(distributeWork, options);
+    workers.forEach(distributor);
     individuals = List(); // reset
     individualsMutation = List(); // reset
-    workers.forEach(distributor);
   }
 
 });

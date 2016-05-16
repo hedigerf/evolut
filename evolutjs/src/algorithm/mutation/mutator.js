@@ -11,7 +11,6 @@ import EngineMutationRule from './rules/engine';
 import Individual from '../individual/individual';
 import LegMutationRule from './rules/leg';
 
-
 /**
  * Rule for a body mutation.
  *
