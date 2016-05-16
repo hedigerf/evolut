@@ -109,7 +109,7 @@
         Die folgende Abbildung~\ref{fig:kp} zeigt die Punkte eines Individuum mit 6 Körperpunkten:
         \\
         \begin{figure}[H]
-          \input{./graphics/unit-circle-body-points}
+          \input{graphics/unit-circle-body-points}
           \caption{Berechnung Körperpunkt veranschaulicht\label{fig:kp}}
         \end{figure}
 
@@ -121,30 +121,68 @@
     Ebenso wird der Ober- mit dem Unterschenkel mit solch einem Constraint verbunden.
     Auf allen Revolute Contraint wird ein Rotationsmotor für die Bewegung definiert.
 
-  \subsection{Engine\label{sub:Engine}}
+  \subsection{Motor\label{sub:Engine}}
 
-    Die Bewegungs-Engine kontrolliert die Bewegung eines Phenotyps
-    Konkreter werden die Hüft- und Knie-Gelenke und deren Motoren kontrolliert.
-    Dabei definiert eine Bewegung z.B. wann ein Winkel eines Gelenkes gehalten werden muss
-    oder wann der Motor des Gelenkes in welche Richtung in Bewegung gesetzt werden soll.
-    \\
-    Der Zustand des Bewegungsablaufs wird auf dem Phenotyp festgehalten.
-    Es wird gespeichert welche die aktuelle Bewegung ist.
-    Die Implementation der Bewegungs-Engine ist eine Finite State Machine (FSM),
-    die in gewissen Zuständen stehen bleiben kann.
-    \\
-    Jedes Individuum verfügt über einen eigenen Bewegungsablauf.
-    Der Bewegungsablauf ist eine Liste von parametrisierten Bewegungen
-    Dieser wird in die Bewegungs-Engine eingespeist.
+    Der Bewegungsablauf wird durch einen ``joint-driven'' Bewegungsmotor realisiert.
+    Der Bewegungsmotor kontrolliert die Bewegung eines Phenotyps indem die Motoren der Hüft- und
+    Knie-Gelenke gesteuert werden.
 
-    % TODO
+    \subsubsection{Bewegungen\label{subsub:EngineMovements}}
 
-    \subsubsection{Bewegung\label{subsub:EngineMovement}}
+      Dem Motor stehen verschiedene Kategorien von Bewegungen zur Verfügung.
+      Es wird unterschieden zwischen:
 
-      Eine Bewegung ist ein Zustand der Bewegungs-Engine.
-      Sie legt fest, wann zum nächsten Zustand gewechselt werden kann.
-      Unter einer Bewegung wird das Setzten der maximalen und minimalen Winkel oder auch
-      das Warten auf einen Zustand eines Gelenkes verstanden.
+      \begin{itemize}
+        \item Einfache
+        \item Zusammengesetzte
+        \item Prädikate
+      \end{itemize}
+
+      \paragraph{Einfache Bewegung\label{EngineMovementsSimple}}
+
+        Einfache Bewegungen werden dadurch charakterisiert,
+        dass sie einen Parameter einer Extremität des Phänotyps verändern.
+        \\
+        Veränderbar sind die minimalen und maximalen Winkel eines Gelenkes und die Winkelgeschwindigkeit des
+        Gelenk-Motors. Der Winkel des Gelenkes kann ebenfalls fixiert werden.
+        \\
+        Die maximale Winkelgeschwindigkeit des Gelenk-Motors ist limitiert.
+        Dies stellt sicher, dass die vorhandene Kraft eines Phänotyps nach oben limitiert wird.
+        \[ \omega_{\max} = 1\frac{rad}{s}\]
+        \\
+        Der minimale Winkel \(\alpha \) und der maximale Winkel \(\beta \) des Gelenks sind definiert als:
+        \[ \alpha, \beta \in \mathbb{R}, -\pi \leq \alpha < \beta \leq \pi \]
+
+      \paragraph{Zusammengesetzte Bewegung\label{EngineMovementsCompound}}
+
+        Zusammengesetzte Bewegungen gruppieren eine beliebige Anzahl von Bewegungen zu einer einzigen.
+        Dabei spielt es keine Rolle, von welchem Typ ein Element ist.
+        Die ganze Gruppe der Bewegungen wird in einem Schritt der Physik-Engine ausgeführt.
+        Damit können Bewegungen parallel abgearbeitet werden.
+        \\
+        Es stehen zwei Auswertungsfunktionen zur Verfügung:
+        \begin{itemize}
+          \item \textbf{Alle}. Jede Teil-Bewegungen in dieser Gruppe muss erfolgreich ausgeführt worden sein.
+          \item \textbf{Eine}. Nur eine einzige Bewegung in dieser Gruppe muss erfolgreich ausgeführt worden sein.
+        \end{itemize}
+
+      \paragraph{Prädikate\label{EngineMovementsPredicates}}
+
+        Eine Prädikat-Bewegung gilt als ausgeführt, wenn sie das spezifizierte Prädikat erfüllt.
+        Hierfür stehen mehrere Prädikate wie maximaler oder minimaler Winkel erreicht zur Verfügung.
+
+    \subsubsection{Ablauf}
+
+      Der Zustand des Bewegungsablaufs wird auf dem Phenotyp festgehalten.
+      Es wird gespeichert welche die aktuelle Bewegung ist.
+      Die Implementation der Bewegungs-Engine ist eine Finite State Machine (FSM),
+      die in gewissen Zuständen stehen bleiben kann.
+      \\
+      Jedes Individuum verfügt über einen eigenen Bewegungsablauf.
+      Der Bewegungsablauf ist eine Liste von parametrisierten Bewegungen
+      Dieser wird in die Bewegungs-Engine eingespeist.
+
+      % TODO
 
   \subsection{Notwendige Zusätzliche Implementierungen}
 
@@ -286,7 +324,7 @@
       Die Verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
 
-    \subsection{Parcours Generierung\label{sec:Parcour Generierung}}
+    \subsection{Parcours-Generierung\label{sec:Parcour Generierung}}
 
       Der Parcours wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcours generiert.
       Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours,

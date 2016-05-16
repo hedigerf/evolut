@@ -4,9 +4,7 @@
 
 % !TEX root = ./main.tex
 
-%\documentclass[10pt,a4paper]{report}
 \documentclass[12pt,paper=a4,bibliography=totocnumbered,listof=numbered,DIV=calc,oneside,captions=tableheading,headinclude]{scrbook}
-%footinclude
 
 \usepackage[utf8]{inputenc}
 \usepackage[left=3cm,right=3cm,top=2cm,bottom=2cm]{geometry}
@@ -40,20 +38,18 @@
 \usepackage{tkz-euclide}
 \usepackage{url}
 \usepackage{wallpaper}
+
+% Speed up build process
+% Uses externalization feature of tikz
 \usetikzlibrary{external}
 \tikzexternalize[shell escape=-enable-write18,optimize command away=\includepdf, prefix=tmp/]
-%\tikzexternalize[shell escape=-enable-write18,optimize command away=\includepdf]
 
 \titleformat{\paragraph}[hang]{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{0.5em}
 
-\hypersetup{
-  colorlinks=false,
-  pdfborder={0 0 0 [0 0]}
-}
+\hypersetup{colorlinks=false,pdfborder={0 0 0 [0 0]}}
 
 \usetkzobj{all}
 
 % dev dependency
-\usepackage{lipsum}
 \usepackage{todonotes}

@@ -6,10 +6,10 @@
 
 import * as L from 'partial.lenses';
 import { aperture, compose, curry, find, forEach, has, keys, memoize, nth, range, take, view, zip } from 'ramda';
-import { isCompoundMovement, resolveMovementDescriptor } from './movement';
 import { isEven, isOdd } from '../util/number';
 import { Sides, Types } from './lenses';
 import Feedback from './feedback';
+import { resolveMovementDescriptor } from './movement';
 
 /**
  * All registered feedbacks.

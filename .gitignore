@@ -73,6 +73,7 @@ evolutdoc/protocol/*.pdf
 # Generated Latex Files
 #
 *.aux
+*.auxlock
 *.bbl
 *.blg
 *.dvi
@@ -85,8 +86,8 @@ evolutdoc/protocol/*.pdf
 *.out
 *.snm
 *.synctex.gz
+*.synctex.gz(busy)
 *.tdo
 *.toc
 evolutdoc/thesis/main.pdf
 evolutdoc/thesis/tmp/*figure*
-main.auxlock
