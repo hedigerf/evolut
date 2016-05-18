@@ -35,7 +35,7 @@
         als ein Individuum mit weniger Körperpunkten.
         Die Vermutung dabei ist, dass durch die komplexere Form des Individuums,
         die Balance besser gehalten werden kann.
-        Ob dies zutrifft wird im Kapitel~\ref{chap:Resulate} diskutiert.
+        Ob dies zutrifft wird im Kapitel~\ref{chap:Resultate} diskutiert.
 
     \subsection{Beine\label{sub:Beine}}
 
@@ -222,7 +222,7 @@
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
 
-    Zur Auswahl standen mehrere Programmiersprachen und Physik Engines.
+    Zur Auswahl standen mehrere Programmiersprachen und Physik-Engines.
     Die Evaluationskriterien dabei waren:
     \begin{itemize}
       \item Platform-Interoperabilität (Linux, Windows Mac OS X)
@@ -253,7 +253,7 @@
     Um Javascript und p2.js ohne Browser zu betreiben wird electron eingesetzt.
     Electron ist node.js und Google Chrome vereint in einer Standalone-Anwendung.
     Mit Hilfe von Node.js lassen sich alle I/0-Zugriffe regeln und es kann auf den
-    Node Package Manager zur Abhängigkeitsverwaltung von anderen Bibliotheken zurück gegriffen werden.
+    Node Package Manager zur Abhängigkeitsverwaltung von anderen Bibliotheken zurückgegriffen werden.
     Auch lässt sich unter bestimmten Umständen Javascript schneller ausführen unter Node.js als in einem Browser.
 
     \subsection{Programmierparadigma\label{sub:TechnologyParadigma}}
@@ -266,7 +266,7 @@
 
         Prozedurale Programme bestehen aus einer Folge von Befehlen,
         die vorgeben wann was ausgeführt wird.
-        Die Daten und die Routinen die mit diesen arbeiten sind voneinander getrennt.
+        Die Daten und die Routinen die mit diesen arbeiten, sind voneinander getrennt.
 
       \subsubsection{Objekt-Orientiert\label{subsub:TechnologyParadigmaObjectOriented}}
 
@@ -295,7 +295,7 @@
     Ebenso kann die Populationsgrösse definiert werden und wie viele Prozesse für die Simulation und Mutation benutzt werden.
     Am sinnvollsten ist es, wenn die Anzahl der Prozesse, der Anzahl Kerne des Prozessors entspricht.
     Die Relaxation, ein Parameter von p2.js, kann auch konfiguriert werden.
-    Der Parameter beschreibt die Anzahl von Zeitschritten um eine Konstraint Gleichung zu stabilisieren.
+    Der Parameter beschreibt die Anzahl von Zeitschritten um eine Constraint Gleichung zu stabilisieren.
     Die Grösse des Zeitschritts lässt sich ebenfalls einstellen.
     Wenn man den Zeitschritt halbiert muss die Relaxation mit dem
     Faktor 4 multipliziert werden.
@@ -393,12 +393,12 @@
       Bei der Mutation wird über jede Eigenschaft des Individuums iteriert und
       diese wird mit einer bestimmten Wahrscheinlichkeit (PROBABILITY) und um einen bestimmten Wert (STEP) verändert.
       PROBABILITY kann Werte zwischen 0 und 1 annehmen, STEP hat keine Einschränkungen.
-      Nachdem für jedes Attribut diese Werte definiert worden sind, kann die Mutation statt finden.
+      Nachdem für jedes Attribut diese Werte definiert worden sind, kann die Mutation stattfinden.
       Grenzen wurden definiert, um nicht gewinnbringende Lösung zu verhindern.
-      Solch eine Limit wurde jeweils für die Länge und Breite der Beine aufgestellt.
+      Solch ein Limit wurde jeweils für die Länge und Breite der Beine aufgestellt.
       Die Position eines Beins wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
-      dass ein Bein ausserhalb des Körper ist, wird die Position zufällig neu bestimmt.
-      Die Mutation läuft wie die Simulation parellel ab, das heisst, sie kann von mehreren Kernen in einem Prozessor profitieren.
+      dass ein Bein ausserhalb des Körpers ist, wird die Position zufällig neu bestimmt.
+      Die Mutation läuft wie die Simulation parallel ab, das heisst, sie kann von mehreren Kernen in einem Prozessor profitieren.
 
     \subsection{Wiederholungen}
 
