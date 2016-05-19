@@ -6,16 +6,19 @@
 
 \chapter{Einleitung}
 
-  \todo[inline]{Einleitung schreiben}
+Evolutionäre Algorithmen helfen Problemstellung zu lösen, welche sonst nicht ohne so mathematisch lösbar sind.
+Das heisst, dass der Problemraum zu gross für gängige mathematische Lösungsvorgehen ist.
+Diese Arbeit hat sich das Ziel gesetzt, sechs Beinige Individuen und ihre Steuerung zu evolvieren.
 
 \section{Ausgangslage}
 
+Das notwendig theoretisch Wissen zur Bewältigung dieser Arbeit wurde mit Hilfe von den Buechern
+Bio-inspired artificial intelligence: theories, methods, and technologies \cite[]{book:bioInspired} und
+Evolutinäre Algorithmen \cite[]{book:evAlgo} erarbeitet.
   \todo[inline]{Nennt bestehende Arbeiten/Literatur zum Thema -> Literaturrecherche}
   \todo[inline]{Stand der Technik: Bisherige Lösungen des Problems und deren Grenzen}
 
 \section{Zielsetzung}
-
-  \todo[inline]{Fast ganzer Text muss umgeschrieben in Requirments werden. Erste Sätze als Einleitung  der Zielsetzung lassen.}
 
   Als Mass für die Fitness wird eine Funktion der Zeit verwendet, welche das Tier braucht,
   um einen gegebenen Parcours zurückzulegen.
@@ -57,12 +60,12 @@
       Es muss mehr als nur einen Parcours für die Evolution der Individuen geben,
       ansonsten werden die Individuen nur auf den einen Parcours evolviert.
       Als Start-Parcours sollte ein möglichst einfach zu bewältigender Parcours dienen.
-      Es kann in späteren Iterationen wieder auf einen einfacheren Parcours zurückgegriffen werden.
-      Der Parcours sollte möglichst zufällig generiert werden.
+      Die Schwierigkeit des Parcours soll mit zunehmenden Generationen steigen und zufällig generiert werden.
 
-    \subsubsection{Ober Grenze für die totale aufgewandte Energie}
+    \subsubsection{Obergrenze für die totale aufgewandte Energie}
 
       Damit das Problem nicht trivial gelöst werden kann
       und ein Individuum einfach ins Unendliche beschleunigt werden kann,
       wird der Anspruch nach einer Obergrenze für die total aufgewandte Energie gestellt.
-      Somit muss die abgebende Leistung beschränkt werden.
+      Somit muss die abgebende Leistung beschränkt werden. Es werden Limiten eingeführt,
+      um dieses Problem zu lösen.
