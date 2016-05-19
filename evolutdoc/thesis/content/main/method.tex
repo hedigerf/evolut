@@ -94,19 +94,22 @@
 
       \subsubsection{Generierung Körperpunkte\label{subsub:GenotypGenerierungKörperpunkte}}
 
-        Es werden Körper mit 4--8 Punkten generiert. Dazu wird der Einheitskreis in 4--8 Sektoren unterteilt
-        Der Winkel eines Sektors entspricht \(\pi / Anzahl Punkte\).
+        Es werden Körper mit 4--8 Punkten generiert.
+        Dazu wird der Einheitskreis in 4--8 Sektoren unterteilt
+        Der Winkel eines Sektors entspricht \( 2 * \pi / Anzahl Punkte\).
         \\
-        Anschliessend wird in jedem Kreissektor mit Hilfe von Polar Koordinaten ein Punkt bestimmt.
+        Anschliessend wird in jedem Kreissektor ein Punkt bestimmt.
+        Die Koordinaten des Punkts sind in Polarform, was eine leicht leserliche Darstellung erlaubt.
         \\
-        \( r = random (0, 1), winkel = random(startSektorWinkel, endeSektorWinkel ) \)
+        \( r = random (0, 1), winkel = random(startSektorWinkel, endeSektorWinkel) \)
         Anschliessend werden die Polarkoordinaten in kartesische Koordinaten transformiert.
         Die Punkte verbunden, ergeben den Körper des Individuum.
         \\
-        Zuerst wurde ein Ansatz mit einem Quadrat evaluiert, bei diesem stellte sich jedoch die zufällige Bestimmung
-        der Punkte als viel schwerer als mit einem Einheitskreis heraus. Der Nachteil unserer gewählten
-        Ansatzes ist, dass eine quadratische Form nur angenähert werden kann.
-        Die folgende Abbildung~\ref{fig:kp} zeigt die Punkte eines Individuum mit 6 Körperpunkten:
+        Als erstes wurde ein Ansatz mit einem Quadrat evaluiert.
+        Es hat sich jedoch herausgestellt,
+        dass das zufällige Bestimmen der Punkte im Einheitskreis einfacher lösbar ist.
+        Der Nachteil dieses Ansatzes ist, dass eine quadratische Form nur angenähert werden kann.
+        Die folgende Abbildung~\ref{fig:kp} zeigt die Form eines Individuums mit 6 Körperpunkten.
         \\
         \begin{figure}[H]
           \input{graphics/unit-circle-body-points}
@@ -115,11 +118,13 @@
 
   \subsection{Phenotyp\label{sub:Phenotyp}}
 
-    Der Phenotyp stell die Repräsentation des Genotyps in der Physik Engine dar.
-    Er setzt sich aus mehreren geometrischen Figuren zusammen. Die Beine des Individuums
-    werden mit Hilfe eines sogenannten Revolute Contraint an den Körper gebunden.
-    Ebenso wird der Ober- mit dem Unterschenkel mit solch einem Constraint verbunden.
-    Auf allen Revolute Contraint wird ein Rotationsmotor für die Bewegung definiert.
+    Der Phenotyp stell die Repräsentation des Genotyps in der Physik-Engine dar.
+    Er setzt sich aus mehreren geometrischen Figuren zusammen.
+    Die Beine des Individuums werden mit Hilfe eines sogenannten ``revolute contraint'' an den Körper gebunden.
+    Ebenso wird der Ober- mit dem Unterschenkel verbunden.
+    Ein ``revolute constraint'' ist ein Gelenk mit der Einschränkung,
+    dass der Winkel zwischen den verbundenen Objekten innerhalb eines definierten Bereiches liegen muss.
+    Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird zum eine Bewegung in Gang zu setzten.
 
   \subsection{Motor\label{sub:Engine}}
 
@@ -168,32 +173,48 @@
 
       \paragraph{Prädikate\label{EngineMovementsPredicates}}
 
+        Dies Art der Bewegung führt keine Änderung am Zustand des Phänotyps durch.
+        Nur der Zustand eines Attributes des Gelenkes wird geprüft.
+        \\
         Eine Prädikat-Bewegung gilt als ausgeführt, wenn sie das spezifizierte Prädikat erfüllt.
         Hierfür stehen mehrere Prädikate wie maximaler oder minimaler Winkel erreicht zur Verfügung.
 
     \subsubsection{Ablauf}
 
-      Der Zustand des Bewegungsablaufs wird auf dem Phenotyp festgehalten.
-      Es wird gespeichert welche die aktuelle Bewegung ist.
-      Die Implementation der Bewegungs-Engine ist eine Finite State Machine (FSM),
-      die in gewissen Zuständen stehen bleiben kann.
-      \\
+      Die Implementation des Bewegungsmotors ist eine ``finite state machine'' (FSM).
+      Der Zustand des Bewegungsablaufs wird auf dem Phänotyp festgehalten.
+      Es wird gespeichert, welche die aktuelle Bewegung ist.
       Jedes Individuum verfügt über einen eigenen Bewegungsablauf.
-      Der Bewegungsablauf ist eine Liste von parametrisierten Bewegungen
-      Dieser wird in die Bewegungs-Engine eingespeist.
+      \\
+      Der Bewegungsablauf ist eine Liste von parametrisierbaren Bewegungen.
+      Im Bewegungsmotor wird das jeweilige aktuelle Element verarbeitet
+      während die Physik-Engine einen Zeitschritt ausführt.
 
-      % TODO
+    \subsubsection{Feedback}
 
-  \subsection{Notwendige Zusätzliche Implementierungen}
+      Zur weiteren Verbesserung des Bewegungsablaufs kann der Motor auf Rückmeldungen aus der Simulations-
+      Welt zurückgreifen.
+      Dabei können Kollisionen von Extremitäten mit dem Boden abgefangen und verarbeitet werden.
+      \\
+      Damit der Bewegungsmotor dynamisch auf Änderungen des Untergrundes reagieren kann,
+      muss zusätzlich eine Rückmeldung an den Motor erfolgen, wenn sich die Art des Untergrundes ändert
+      oder wenn ein Anstieg oder Abstieg bevorsteht.
+      \\
 
-    Die Physik Engine enthält mehrere Fehler, deren Korrektur ist nicht die Aufgabe dieser Bachelorarbeit.
+  \subsection{Notwendige zusätzliche Implementierungen}
+
+    Die Physik-Engine enthält mehrere Fehler, deren Korrektur nicht die Aufgabe dieser Bachelorarbeit ist.
     Für die Erstellung des Terrains wird ein Höhenfeld von p2.js benutzt.
-    Die Kollisionserkennung scheint wenig ausgereift zu sein
-    zwischen einem Polygon und dem Höhenfeld. Das hat zur Folge, dass die Individuen häufig im Boden versinken.
-    Das Problem kann teilweise umgangen werden, in dem kleine Kreise an die Ecken des Körpers jeweils gesetzt werden.
-    Kreise wurden auch an die Eckpunkte der Beinteile gesetzt,
-    da die Physik Engine ebenfalls Schwierigkeiten hat die Kollision
-    zwischen einem Rechteck und einem Höhenfeld zu erkennen.
+    Die Kollisionserkennung zwischen einem Höhenfeld und einem Polygon funktioniert nicht einwandfrei.
+    Manche Polygonecken werden nicht berücksichtigt in der Kollision.
+    Das hat zur Folge, dass die Individuen im Boden einsinken.
+    \\
+    Kollisionen mit einem Höhenfeld werden am besten erkannt mit Kreisen.
+    Deshalb werden kleine Kreise mit vernachlässigbarer Masse an den Ecken des Körpers und der Beine angebracht.
+    Dies verbessert die Kollisionserkennung zwischen den Phänotypen und dem Untergrund
+    und behebt das Problem mit dem Einsinken teilweise.
+    \\
+    Diese Optimierungen gehen zu Lasten eines erhöhten Rechenaufwands.
 
   \section{Auswahl des Evolutionären Algorithmus}
 
@@ -210,7 +231,8 @@
     Das Austauschen der Genen, Rekombination, macht keinen Sinn wenn man Individuen das Laufen beibringt.
     Man stelle sich dazu vor, man tausche das Gen welches den Körper definiert, mit dem der Beine.
     Dies stellt schon den ersten Indikator dafür da,
-    dass Evolutionäre Programmierung eingesetzt werden kann. Ein weiteres Kriterium ist die genetische Repräsentation.
+    dass Evolutionäre Programmierung eingesetzt werden kann.
+    Ein weiteres Kriterium ist die genetische Repräsentation.
     Da unser Individuum sich aus Punkten im einem Koordinatensystem,
     verschiedene Winkel und einem Antrieb (Motor) definiert, wird die reale Werte Repräsentation eingesetzt.
     Eine Baumrepräsentation oder binäre Repräsentation erscheint hier wenig gewinnbringend.
