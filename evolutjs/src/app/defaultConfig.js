@@ -39,7 +39,7 @@ const defaultConfig = {
     },
     engine: {
       add: 0.005,
-      remove: 0.001,
+      remove: 0.005,
       lens: {
         index: 0.01,
         side: 0.01,
