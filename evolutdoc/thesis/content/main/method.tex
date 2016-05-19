@@ -20,11 +20,10 @@
 
     \subsection{Körper\label{sub:Körper}}
 
-      Die erste Frage welche sich stellt ist wie kann der Körper am besten beschrieben werden?
+      Die erste Frage, welche sich stellt ist wie der Körper beschrieben werden kann?
       \\
       Der Körper setzt sich aus verschiedenen Punkten auseinander.
-      Die mindest- Anzahl solcher Punkte wird auf 4 in einem ersten Schritt festgelegt.
-      \\
+      Die Mindestanzahl solcher Punkte wird auf 4 in einem ersten Schritt festgelegt.
       Die Obergrenze bei 8.
       Dies gibt dem Körper eine polygon-artige Figur.
 
@@ -39,13 +38,15 @@
 
     \subsection{Beine\label{sub:Beine}}
 
-      Insgesamt weissen die Individuen 6 Beine auf. Ein Beinpaar ist symmetrisch. Ein Bein hat jeweils 2 Gelenke,
-      eines welches es mit dem Körper verbindet,
+      Insgesamt weissen die Individuen 6 Beine auf.
+      Ein Beinpaar ist symmetrisch.
+      Ein Bein hat jeweils 2 Gelenke, eines welches es mit dem Körper verbindet,
       das andere welches Ober- mit Unterschenkel verbindet.
-      Als Vereinfachung wird die Höhe des Gelenkes 0 gesetzt  \(h_{a} = 0\)
-      Das Bein weisst eine Höhe \(h_{l}\) auf. Die Gelenke verbinden jeweils den Körper mit dem Gelenk und Ober- mit
-      Unterschenkel. Es wird ein Höhenfaktor \(hf\) bestimmt, welcher die Höhe des Unterschenkels definiert.
-      Die Breite des Beines wird mit \(w_{l}\) bezeichnet.
+      Als Vereinfachung wird die Höhe des Gelenkes 0 gesetzt \(h_{a} = 0\).
+      Das Bein weisst eine Höhe \(h_{l}\) auf.
+      Die Gelenke verbinden jeweils den Körper mit dem Gelenk und Ober- mitUnterschenkel.
+      Es wird ein Höhenfaktor \(hf\) bestimmt, welcher die Höhe des Unterschenkels definiert.
+      Die Breite des Beines wird als \(w_{l}\) bezeichnet.
       \\
       \begin{figure}[H]
         \includegraphics[scale=1]{graphics/leg}
@@ -54,10 +55,12 @@
 
       \subsubsection{Masse\label{subs:Masse}}
 
-        Das ganze Individuum weisst eine fixe Masse von 1 auf \(m = 0\).
+        Das ganze Individuum weisst eine konstante Masse von 1 auf \(m = 0\).
         Die Masse wird anhand der Fläche der einzelnen Körperteile aufgeteilt.
+
       \paragraph{Beispiel\label{par:MasseExample}}
-        Wenn die Fläche des Körpers Zwei Einheiten gross ist und die Beine jeweils eine Einheit,
+
+        Wenn die Fläche des Körpers zwei Einheiten gross ist und die Beine jeweils eine Einheit,
         erfolgt folgende Berechnung:
         \\
         \\
@@ -82,15 +85,15 @@
         und beliebige Kombinationen aus vorhandenen Teil-Genotypen innerhalb eines Genotyps zu bilden,
         ohne dass die Implementation der seed-Funktion angepasst werden muss.
 
-        \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
+      \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
 
-          Die initiale Population wird zufällig erstellt. Dieser Vorgang wird Seeding genannt.
-          Dabei wird eine Anzahl von Individuen zufällig generiert.
-          Unter gewissen Umständen ist es jedoch hilfreich gewisse Parameter nicht zufällig generieren zu lassen
-          sondern mit einem fixen Wert zu initialisieren.
-          Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
-          Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp separat mit
-          spezifizierten Werten zu initialisieren.
+        Das zufällige erstellen eines Genotypen wird ``seeding'' genannt.
+        Zu Beginn der Simulation wird die initale Population mit zufällig generierten Individuen erstellt.
+        Dabei ist es hilfreich manche Parameter nicht zufällig generieren zu lassen,
+        sondern mit einem fixen Wert zu initialisieren.
+        Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
+        Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp separat mit
+        spezifizierten Werten zu initialisieren.
 
       \subsubsection{Generierung Körperpunkte\label{subsub:GenotypGenerierungKörperpunkte}}
 
