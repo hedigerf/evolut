@@ -3,7 +3,7 @@
 %
 
 % !TEX root = ../../main.tex
-\chapter{Resultate\label{chap:Resulate}}
+\chapter{Resultate\label{chap:Resultate}}
 
 \section{Erster Versuch, parametrisierbare Steuerung ohne Feedback}
 
@@ -80,7 +80,7 @@
 
         Ein ähnliches Bild ist zu beobachten, wie bei bei~\ref{subsub:bp}.
         Bereits ab der 9\@. Generation existieren nur noch Individuen mit 7 Körperpunkten (siehe Abbildung~\ref{fig:graphBpSecond}).
-
+        Dieses Phänomen kann als evolutionary frozen Accident bezeichnet werden.
         Damit eine Aussage über den Einfluss der Körperpunkte getroffen werden kann,
         müsste während der ganzen Simulation die Anzahl der Körperpunkte mutiert werden.
         Stattdessen wird momentan nur zu Beginn der Simulation die Anzahl der Körperpunkte für die Individuen festgelegt.
@@ -100,7 +100,10 @@
         \end{table}
 
       \subsection{Auswertung}
-
+        Leider dauert es mit dieser Version der Applikation sehr lange eine Generation zu evolvieren.
+        Darum beschränkt sich dieser Versuch nur auf xxxx Generationen, damit Performance Optimierungen implementiert werden können.
+        Die Individuen haben bei diesem Versuch, eine Art rollende Bewegung entwickelt.
+        Sie können die guten Fitnesswerte halten, obwohl der Parcour immer schwerer wird (siehe Abbildung \ref{fig:graphThird}).
 
 
         \begin{figure}
@@ -110,13 +113,18 @@
 
         \subsubsection{Körperpunkte}
 
-          \begin{figure}
-            \input{graphics/fitness-graph-average-body-points-second-run-no-feedback}
-            \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, Zweiter Versuch\label{fig:graphBpThird}}
-          \end{figure}
+          Auf eine Diskussion der Körperpunkte wird verzichtet.
+          Die notwendigen Schritte für eine sinvolle Evaluation wurden unter \ref{subsub:bpScnd} beschrieben.
 
         \subsubsection{Diversität}
+          Ab dieser Simulation ist endlich der Diversitätsreport verfügbar. Wie in \ref{fig:graphDivThird} zu sehen ist,
+          ist die Diversität kurz auf einem hohen Niveau, da am Anfang alles völlig zufällig generiert wird.
+          Durch die nachfolgenden Selektionen sinkt sie, da mit hoher wahrscheinlichkeit nur leistungsstarke Individuen
+          bei der Tunier-basierten Selektion gewinnen. Interessant zu beobachten ist,
+          das die Diversität ab der 400. Generation wieder zu steigen beginnt.
+          Die Vermutung dabei ist, dass sich immer mehr verschiedene Individuen mit einer
+          guten Fitness finden lassen.
         \begin{figure}
           \input{graphics/diversity-graph-third-run}
-          \caption{Diversität pro Generation, Dritter Versuch\label{fig:graphBpThird}}
+          \caption{Diversität pro Generation, Dritter Versuch\label{fig:graphDivThird}}
         \end{figure}

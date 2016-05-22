@@ -5,9 +5,9 @@
  * @see algorithm/mutation/rule
  */
 
-import * as L from 'partial.lenses';
-import { compose, curry, defaultTo, evolve, ifElse, over, partial, range } from 'ramda';
+import { defaultTo, range, values } from 'ramda';
 import { getMovement, isCompoundMovement, makeRandomMovementDescriptor } from '../../../engine/movement';
+import { Sides, Types } from '../../../engine/lenses';
 import MutationRule from '../rule';
 import random from '../../../util/random';
 
@@ -26,65 +26,27 @@ import random from '../../../util/random';
  * @property {Number} movement.parameters
  */
 
-/**
- * Lens to the movement descriptors.
- *
- * @type {Lens}
- */
-const lensDescriptor = L.compose(L.prop('engine'), L.prop('descriptor'));
+function mutateCompoundMovement(probabilities, genotype, movement) {
 
-/**
- * Lens to the initial movement descriptor.
- *
- * @type {Lens}
- */
-const lensInitial = L.compose(lensDescriptor, L.prop('initial'));
+  movement.id = random.pick(['all', 'one']);
+  movement.params = mutateMovements(probabilities, genotype, movement.params);
 
-/**
- * Lens to the movements movement descriptor.
- *
- * @type {Lens}
- */
-const lensMovements = L.compose(lensDescriptor, L.prop('movements'));
-
-// TODO clean up the mess below
-
-const lensId = L.prop('id');
-const lensLens = L.prop('lens');
-const lensParams = L.prop('params');
-
-function mutateCompoundId() {
-  return random.pick(['all', 'one']);
+  return movement;
 }
-
-const mutateCompoundMovement = curry(
-  (probabilities, genotype, movement) => {
-
-    const mutateCompound = compose(
-      over(lensId, mutateCompoundId),
-      over(lensParams, partial(mutateMovements, [probabilities, genotype]))
-    );
-
-    return mutateCompound(movement);
-  }
-);
 
 function mutateSingleLens(probabilities, genotype, lens) {
 
-  const t = (p, c) => (v) => {
-    if (EngineMutationRule.prototype.shouldMutate(p)) {
-      return random.pick(c);
-    }
-    return v;
-  };
+  if (EngineMutationRule.prototype.shouldMutate(probabilities.lens.index)) {
+    lens.index = random.pick(range(0, 3));
+  }
+  if (EngineMutationRule.prototype.shouldMutate(probabilities.lens.side)) {
+    lens.side = random.pick(values(Sides));
+  }
+  if (EngineMutationRule.prototype.shouldMutate(probabilities.lens.type)) {
+    lens.type = random.pick(values(Types));
+  }
 
-  const transformation = {
-    index: t(probabilities.lens.index, range(0, 3)),
-    side: t(probabilities.lens.side, ['left', 'right']),
-    type: t(probabilities.lens.type, ['hip', 'knee'])
-  };
-
-  return evolve(transformation, lens);
+  return lens;
 }
 
 function mutateSingleParams(probabilities, genotype, movement) {
@@ -113,17 +75,10 @@ function mutateSingleParams(probabilities, genotype, movement) {
   return movement;
 }
 
-const mutateSingleMovement = curry(
-  (probabilities, genotype, movement) => {
-
-    const mutateSingle = compose(
-      over(lensLens, partial(mutateSingleLens, [probabilities, genotype])),
-      over(L.identity, partial(mutateSingleParams, [probabilities, genotype]))
-    );
-
-    return mutateSingle(movement);
-  }
-);
+function mutateSingleMovement(probabilities, genotype, movement) {
+  movement.lens = mutateSingleLens(probabilities, genotype, movement.lens);
+  return mutateSingleParams(probabilities, genotype, movement);
+}
 
 /**
  * Mutate the initial movements.
@@ -135,11 +90,6 @@ const mutateSingleMovement = curry(
  */
 function mutateMovements(probabilities, genotype, movements) {
 
-  const mutateMovement = ifElse(isCompoundMovement,
-    mutateCompoundMovement(probabilities, genotype),
-    mutateSingleMovement(probabilities, genotype)
-  );
-
   const length = movements.length;
   const mutated = [];
 
@@ -150,15 +100,21 @@ function mutateMovements(probabilities, genotype, movements) {
     }
 
     if (!EngineMutationRule.prototype.shouldMutate(probabilities.remove)) {
-      mutated.push(mutateMovement(movements[i]));
-    }
 
+      const movement = movements[i];
+      let mutatedMovement;
+
+      if (isCompoundMovement(movement)) {
+        mutatedMovement = mutateCompoundMovement(probabilities, genotype, movement);
+      } else {
+        mutatedMovement = mutateSingleMovement(probabilities, genotype, movement);
+      }
+      mutated.push(mutatedMovement);
+    }
   }
 
   return mutated;
 }
-
-// TODO clean up the mess above
 
 /**
  * Represents a mutation rule for an engine.
@@ -198,13 +154,12 @@ export default class EngineMutationRule extends MutationRule {
    */
   mutate(genotype) {
 
-    const mutateDescriptor = partial(mutateMovements, [this.options, genotype]);
-    const mutateEngine = compose(
-      over(lensInitial, mutateDescriptor),
-      over(lensMovements, mutateDescriptor)
-    );
+    const descriptor = genotype.engine.descriptor;
 
-    return mutateEngine(genotype);
+    descriptor.initial = mutateMovements(this.options, genotype, descriptor.initial);
+    descriptor.movements = mutateMovements(this.options, genotype, descriptor.movements);
+
+    return genotype;
   }
 
 }
