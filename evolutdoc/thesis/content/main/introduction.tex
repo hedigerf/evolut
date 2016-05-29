@@ -19,48 +19,42 @@ Evolutinäre Algorithmen \cite[]{book:evAlgo} erarbeitet.
   \todo[inline]{Stand der Technik: Bisherige Lösungen des Problems und deren Grenzen}
 
 \section{Zielsetzung}
+  Das Ziel dieser Arbeit ist sechsbeinigen künstlichen Tieren, mit Hilfe eines evolutionären Alogirthmus, das Gehen zu lernen.
+  Um dieses Ziel zu erreichen, soll eine Applikation erstellt werden, welche den evolutinären Algorithmus implementiert.
+  Die Applikation muss ebenfalls die Möglichbeit bieten, eine Simulation durchzuführen.
+  Es soll nicht nur die Steuerung der Beine evolviert werden (Gehen lernen), sodern auch die Form des Körpers und die Abmassung der Beine.
 
-  Als Mass für die Fitness wird eine Funktion der Zeit verwendet, welche das Tier braucht,
-  um einen gegebenen Parcours zurückzulegen.
-  Dabei müssen Individuen berücksichtigt werden, die den Parcours nicht vollständig ablaufen können.
-  Die Fitnessfunktion berücksichtigt in diesem Fall die zurückgelegte Strecke.
-  \\
-  Als Randbedingungen vorgegeben sind:
-  \begin{enumerate}
-    \item Forderung einer physikalisch sinnvollen Bewegung
-    \item Obere Grenze für die total aufgewandte Energie
-    \item Beschränkung der abgegebenen Leistung
-  \end{enumerate}
-  Damit die Forderung nach einer physikalischen Bewegung erfüllt werden kann,
-  wird die Bewegung mit Hilfe einer Physik-Engine simuliert.
-  Diese Engine wird von den Studierenden ausgewählt und kann als Blackbox verwendet werden.
-
+  \begin{comment}
+    Als Mass für die Fitness wird eine Funktion der Zeit verwendet, welche das Tier braucht,
+    um einen gegebenen Parcours zurückzulegen.
+    Dabei müssen Individuen berücksichtigt werden, die den Parcours nicht vollständig ablaufen können.
+    Die Fitnessfunktion berücksichtigt in diesem Fall die zurückgelegte Strecke.
+    \\
+    Als Randbedingungen vorgegeben sind:
+    \begin{enumerate}
+      \item Forderung einer physikalisch sinnvollen Bewegung
+      \item Obere Grenze für die total aufgewandte Energie
+      \item Beschränkung der abgegebenen Leistung
+    \end{enumerate}
+    Damit die Forderung nach einer physikalischen Bewegung erfüllt werden kann,
+    wird die Bewegung mit Hilfe einer Physik-Engine simuliert.
+    Diese Engine wird von den Studierenden ausgewählt und kann als Blackbox verwendet werden.
+  \end{comment}
   \subsection{Requirements}
 
-    \subsubsection{Fitness Funktion}
-
-      Als Mass für die Fitness wird eine Funktion der Zeit, welche das Tier braucht,
-      um einen gegebenen Parcours zurückzulegen, verwendet.
-      Dabei müssen Individuen berücksichtigt werden,
-      die den Parcours nicht vollständig ablaufen können.
-      Die Fitnessfunktion berücksichtigt in diesem Fall die zurückgelegte Strecke.
-      Wenn eine Sortierung nach dem höchsten Fitnesswert erfolgt,
-      ist ein Individuum mit einer Funktion der Zeit immer höher zu rangieren,
-      als ein Individuum welcher die zurückgelegte Streckte berücksichtigt.
-
-      \paragraph{Vereinfachung}
-
-        Es hat sich herausgestellt, dass eine Vereinfachung der Fitnessfunktion wenig Nachteile mit sich bringt.
-        Darum wird nur die zurückgelegte Strecke der Tiere nach einer fixen Zeit als Fitnessfunktion berücksichtigt.
-        Diese Vereinfachung wurde im Meeting vom 03.03.2016 mit dem Betreuer Prof\. Dr\. Rudolf Füchslin besprochen
-        und als sinnvoll gewertet.
-
-    \subsubsection{Parcours}
-
+    \subsubsection{Fitnessfunktion}
+      In frühen Generation kann es vorkommen, dass die künstlichen Tiere sich keinen einzigen Schritt weit
+      fortbewegen können. Die Zeit, welche ein Individuum für die Bewältigung eines Parcours (\vref{subsub:parcours}) brauchen würde, wäre somit unendlich.
+      Um dieses Problem zu umgehen, wird als Mass für die Fitness die zurückgelegte Strecke verwendet.
+      Für die Bewältigung des Parcours steht dem Individuum eine fixe Anzahl Zeiteinheiten zur Verfügung.
+      
+    \subsubsection{Parcours\label{subsub:parcours}}
       Es muss mehr als nur einen Parcours für die Evolution der Individuen geben,
       ansonsten werden die Individuen nur auf den einen Parcours evolviert.
       Als Start-Parcours sollte ein möglichst einfach zu bewältigender Parcours dienen.
       Die Schwierigkeit des Parcours soll mit zunehmenden Generationen steigen und zufällig generiert werden.
+
+
 
     \subsubsection{Obergrenze für die totale aufgewandte Energie}
 

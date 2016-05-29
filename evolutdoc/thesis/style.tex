@@ -4,10 +4,11 @@
 
 % !TEX root = ./main.tex
 
-\documentclass[12pt,paper=a4,bibliography=totocnumbered,listof=numbered,DIV=calc,oneside,captions=tableheading,headinclude]{scrbook}
+\documentclass[12pt,paper=a4,bibliography=totocnumbered,listof=numbered,DIV=calc,oneside,captions=tableheading,headinclude,ngerman]{scrbook}
 
 \usepackage[utf8]{inputenc}
 \usepackage[left=3cm,right=3cm,top=2cm,bottom=2cm]{geometry}
+\setcounter{secnumdepth}{3}
 
 \usepackage[nswissgerman]{babel}
 
@@ -22,7 +23,6 @@
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{helvet}
-\usepackage{hyperref}
 \usepackage{hyphsubst}
 \usepackage{listings}
 \usepackage{lmodern}
@@ -37,7 +37,25 @@
 \usepackage{titlesec}
 \usepackage{tkz-euclide}
 \usepackage{url}
+\usepackage{verbatim}
 \usepackage{wallpaper}
+
+% dont change order from here
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\makeatletter
+\def\curtlabtype{}% << define temporary variable
+\let\@old@cref@vref\cref@vref% << save cleveref's definition
+\def\cref@vref#1#2{% << modify cleveref's definition
+\cref@gettype{#2}{\curtlabtype}% << get type of label
+\@old@cref@vref{#1}{#2}}% << call original macro
+\vref@addto\extrasngerman{% << modify varioref macros
+\def\reftextfaraway#1{% << only change far away references
+\ifthenelse{\equal{\curtlabtype}{chapter}}{ab Seite}{auf
+Seite}~\pageref{#1}}}%
+\makeatother
+% from now one you can change the order again
 
 % Speed up build process
 % Uses externalization feature of tikz
