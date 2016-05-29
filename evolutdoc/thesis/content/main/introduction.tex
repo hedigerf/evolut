@@ -19,7 +19,7 @@ Evolutinäre Algorithmen \cite[]{book:evAlgo} erarbeitet.
   \todo[inline]{Stand der Technik: Bisherige Lösungen des Problems und deren Grenzen}
 
 \section{Zielsetzung}
-  Das Ziel dieser Arbeit ist sechsbeinigen künstlichen Tieren, mit Hilfe eines evolutionären Alogirthmus, das Gehen zu lernen.
+  Das Ziel dieser Arbeit ist sechsbeinigen künstlichen Tieren, mit Hilfe eines evolutionären Alogirthmus, in einer zweidimensionalen Umgebung das Gehen zu lernen.
   Um dieses Ziel zu erreichen, soll eine Applikation erstellt werden, welche den evolutinären Algorithmus implementiert.
   Die Applikation muss ebenfalls die Möglichbeit bieten, eine Simulation durchzuführen.
   Es soll nicht nur die Steuerung der Beine evolviert werden (Gehen lernen), sodern auch die Form des Körpers und die Abmassung der Beine.
@@ -43,17 +43,23 @@ Evolutinäre Algorithmen \cite[]{book:evAlgo} erarbeitet.
   \subsection{Requirements}
 
     \subsubsection{Fitnessfunktion}
-      In frühen Generation kann es vorkommen, dass die künstlichen Tiere sich keinen einzigen Schritt weit
+      In frühen Generation kann es vorkommen, dass die künstlichen Tiere sich keinen einzigen Schritt weit während der Simulation
       fortbewegen können. Die Zeit, welche ein Individuum für die Bewältigung eines Parcours (\vref{subsub:parcours}) brauchen würde, wäre somit unendlich.
       Um dieses Problem zu umgehen, wird als Mass für die Fitness die zurückgelegte Strecke verwendet.
       Für die Bewältigung des Parcours steht dem Individuum eine fixe Anzahl Zeiteinheiten zur Verfügung.
-      
-    \subsubsection{Parcours\label{subsub:parcours}}
-      Es muss mehr als nur einen Parcours für die Evolution der Individuen geben,
-      ansonsten werden die Individuen nur auf den einen Parcours evolviert.
-      Als Start-Parcours sollte ein möglichst einfach zu bewältigender Parcours dienen.
-      Die Schwierigkeit des Parcours soll mit zunehmenden Generationen steigen und zufällig generiert werden.
 
+    \subsubsection{Parcours\label{subsub:parcours}}
+      Die Individuen müssen während der Simulation eine Strecke zurücklegen.
+      Diese Strecke und ihre Begebnheiten werden als Parcours bezeichnet.
+      \vref{fig:scetchParcours} zeigt eine Skizze des Parcours.
+      Mit zunehmenden Generationen soll die Schwierigkeit des Parcours steigen.
+      Als Schwierigkeit kann man die maximale Steigung des Parcours bezeichnen.
+      Der Parcours soll zufällig generiert werden.
+
+      \begin{figure}[H]
+        \includegraphics[scale=1]{graphics/scetch_parcours}
+        \caption{Skizze Parcour\label{fig:scetchParcours}}
+      \end{figure}
 
 
     \subsubsection{Obergrenze für die totale aufgewandte Energie}
