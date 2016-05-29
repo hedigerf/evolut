@@ -128,7 +128,7 @@ function mutate(population) {
  */
 function prepareDistributor(distributeWork, population) {
   population.generationCount = generationCounter;
-  if (generationCounter % switchParcourAfterGeneration === 0) {
+  if (!parcour || (generationCounter % switchParcourAfterGeneration === 0)) {
     parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
   }
   const distributor = curry(distributeWork)(
