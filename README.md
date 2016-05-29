@@ -1,5 +1,7 @@
 # evolut
 
+Design of artificial animals with evolutionary alogrithms.
+
 ## Headless
 
 On linux systems the rendering can be done in a headless client.

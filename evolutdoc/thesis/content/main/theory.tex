@@ -35,24 +35,25 @@ In diesem Kapitel werden die Grundlagen zu evolutionären Algorithmen aufgearbei
       \paragraph{Diskrete Repräsentation\label{par:GeneticRepresentationDiscrete}}
 
         Bei der diskreten Repräsentation wird das Genom als binären String dargestellt [0111110].
-        Dieser binäre String kann anschliessend zu einem Phänotyp übersetzt werden.
+        Dieser binäre String kann anschliessend in einen Phänotyp übersetzt werden.
         Zum Beispiel kann eine Bitsequenz, direkt zu einer Zahl als Phänotyp übersetzt werden [0011] -> 3.
         Ebenfalls kann eine diskrete Repräsentation eine Folge von beliebigen Zeichen annehmen [ABCDEF].
         D. Floreano und C. Mattiussi bringen dazu ein gutes Beispiel anhand des Travelling Sales Man Problems an~\cite[S.18]{book:bioInspired}:
         Jeder Buchstabe in der Sequenz repräsentiert dabei einen Ort, welchen es zu besuchen gilt.
 
-      \paragraph{Reale Werte Repräsentation\label{par:GeneticRepresentationReal}}
+      \paragraph{Reale-Werte-Repräsentation\label{par:GeneticRepresentationReal}}
 
         Weiter kann die Reale Werte Repräsentation gewählt werden.
         Das Genom wird hierbei durch reelle Zahlen repräsentiert.
         Beispielsweisse kann die optimale Position eines Zimmers (beste Flächennutzung) in einem Haus
         durch reale Zahlen dargestellt werden.
 
-      \paragraph{Baum Repräsentationen\label{par:GeneticRepresentationTree}}
+      \paragraph{Baum-Repräsentationen\label{par:GeneticRepresentationTree}}
 
         Das zu evolvierende Objekt kann durch einen Baum dargestellt werden.
         \\
         Baum Repräsentationen (siehe Abbildung~\ref{fig:baum}) werden vor allem bei der genetischen Programmierung eingesetzt.
+        \todo[inline]{warum}
         \begin{figure}[H]
           \Tree[.A [.B [.C eins ] [.D zwei ] ].B [.E {3 und 4} ] ].A
           \caption{Darstellung eines Baumes\label{fig:baum}}
@@ -64,10 +65,10 @@ In diesem Kapitel werden die Grundlagen zu evolutionären Algorithmen aufgearbei
       Wichtig bei der Erstellung einer Population dabei ist, möglichst diverse Individuen zu erstellen,
       damit man sich nicht schon von Anfang an viele mögliche Lösung verspielt.
 
-    \subsubsection{Fitness Funktion}
+    \subsubsection{Fitness-Funktion}
 
-      Mit Hilfe der Fitness Funktion lassen sich Individuen beurteilen,
-      wie gut geeignet Ihre Gene sind um die Problemstellung zu bewältigen.
+      Mit Hilfe der Fitness-Funktion lassen sich Individuen beurteilen,
+      wie gut geeignet ihre Gene sind um die Problemstellung zu bewältigen.
       In der natürlichen Evolution ist die Fitness des Tieres, wie viele Nachkommen es erzeugen kann.
       In der technischen Welt jedoch muss der Anwender sie jeweils selber definieren und
       nach seiner Problemstellung anpassen.
