@@ -54,6 +54,14 @@
 \def\reftextfaraway#1{% << only change far away references
 \ifthenelse{\equal{\curtlabtype}{chapter}}{ab Seite}{auf
 Seite}~\pageref{#1}}}%
+\renewcommand*\cref@vref[2]{%
+  \expandafter\ifx\csname r@#2\endcsname\relax % <<<<<<<< test if label is defined
+  \else
+    \cref@gettype{#2}{\curtlabtype}%
+  \fi
+  \@old@cref@vref{#1}{#2}%
+}
+
 \makeatother
 % from now one you can change the order again
 

@@ -16,7 +16,7 @@
 
   \subsection{Auswertung}
 
-    Es ist ein klarer Aufwärtstrend zu erkennen bis etwa zur 1000. Generation (siehe Abbildung~\ref{fig:graphFirst}).
+    Es ist ein klarer Aufwärtstrend zu erkennen bis etwa zur 1000. Generation (siehe Abbildung~\vref{fig:graphFirst}).
     Danach ist ein Abfall der Fitness bei den Individuen zu beobachten.
     Die Vermutung dabei ist, das der Parcours zu schwierig ist und die Individuen
     mit der grossen Steigung nicht mehr zurechtkommen.
@@ -34,7 +34,7 @@
 
     \subsubsection{Körperpunkte\label{subsub:bp}}
 
-      Die Auswertung der Individuen nach der Anzahl ihrer Körperpunkte ist ernüchternd (siehe Abbildung~\ref{fig:graphBpFirst}).
+      Die Auswertung der Individuen nach der Anzahl ihrer Körperpunkte ist ernüchternd (siehe Abbildung~\vref{fig:graphBpFirst}).
       Bereits ab der 14. Generation existieren nur noch Individuen mit vier Körperpunkten.
       Vielleicht ist dies ebenfalls auf das fehlende Feedback zurückzuführen.
       Im besten Fall wurden die Individuen mit mehr als vier Körperpunkten der initialen Population unvorteilhaft generiert.
@@ -58,7 +58,7 @@
     \subsection{Auswertung}
 
       Interessant zu beobachten ist beim zweiten Versuch,
-      dass die Fitness der Individuen erst ab der 1400\@. Generation (siehe Abbildung~\ref{fig:graphSecond})
+      dass die Fitness der Individuen erst ab der 1400\@. Generation (siehe Abbildung~\vref{fig:graphSecond})
       wieder abzunehmen beginnt.
       Jedoch ist auch hier wieder ein klarer, wenn auch nicht so starker Abwärtstrend zu erkennen.
       Eine weitere Vermutung, neben dem fehlenden Feedback der Engine, warum die Fitness wieder abzunehmen beginnt,
@@ -69,7 +69,7 @@
       jedoch ist dies durch einen Fehler der Engine zu erklären.
       Die Individuen verhaken sich im Boden und beginnen grosse Distanzen durch Hüpfbewegungen zurückzulegen.
       Dieser Fehler kann bereinigt werden indem die Relaxation erhöht und gleichzeitig der Zeitschritt verringert wird,
-      diese Parameter sind in~\ref{sec:Konfiguration} beschrieben.
+      diese Parameter sind in~\vref{sec:Konfiguration} beschrieben.
 
         \begin{figure}
           \input{graphics/fitness-graph-second-run-no-feedback}
@@ -78,8 +78,8 @@
 
       \subsubsection{Körperpunkte\label{subsub:bpScnd}}
 
-        Ein ähnliches Bild ist zu beobachten, wie bei bei~\ref{subsub:bp}.
-        Bereits ab der 9\@. Generation existieren nur noch Individuen mit 7 Körperpunkten (siehe Abbildung~\ref{fig:graphBpSecond}).
+        Ein ähnliches Bild ist zu beobachten, wie bei bei~\vref{subsub:bp}.
+        Bereits ab der 9\@. Generation existieren nur noch Individuen mit 7 Körperpunkten (siehe Abbildung~\vref{fig:graphBpSecond}).
         Dieses Phänomen kann als evolutionary frozen Accident bezeichnet werden.
         Damit eine Aussage über den Einfluss der Körperpunkte getroffen werden kann,
         müsste während der ganzen Simulation die Anzahl der Körperpunkte mutiert werden.
@@ -103,7 +103,7 @@
         Leider dauert es mit dieser Version der Applikation sehr lange eine Generation zu evolvieren.
         Darum beschränkt sich dieser Versuch nur auf xxxx Generationen, damit Performance Optimierungen implementiert werden können.
         Die Individuen haben bei diesem Versuch, eine Art rollende Bewegung entwickelt.
-        Sie können die guten Fitnesswerte halten, obwohl der Parcour immer schwerer wird (siehe Abbildung \ref{fig:graphThird}).
+        Sie können die guten Fitnesswerte halten, obwohl der Parcour immer schwerer wird (siehe Abbildung \vref{fig:graphThird}).
 
 
         \begin{figure}
@@ -114,10 +114,10 @@
         \subsubsection{Körperpunkte}
 
           Auf eine Diskussion der Körperpunkte wird verzichtet.
-          Die notwendigen Schritte für eine sinvolle Evaluation wurden unter \ref{subsub:bpScnd} beschrieben.
+          Die notwendigen Schritte für eine sinvolle Evaluation wurden unter \vref{subsub:bpScnd} beschrieben.
 
         \subsubsection{Diversität}
-          Ab dieser Simulation ist endlich der Diversitätsreport verfügbar. Wie in \ref{fig:graphDivThird} zu sehen ist,
+          Ab dieser Simulation ist endlich der Diversitätsreport verfügbar. Wie in \vref{fig:graphDivThird} zu sehen ist,
           ist die Diversität kurz auf einem hohen Niveau, da am Anfang alles völlig zufällig generiert wird.
           Durch die nachfolgenden Selektionen sinkt sie, da mit hoher wahrscheinlichkeit nur leistungsstarke Individuen
           bei der Tunier-basierten Selektion gewinnen. Interessant zu beobachten ist,
