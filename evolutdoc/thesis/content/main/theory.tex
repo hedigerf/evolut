@@ -93,7 +93,7 @@
       die rechenintensivste Teilaufgabe eines evolutionären Algorithmus~\cite[S.22]{book:bioInspired}.
 
     \subsection{Diversität\label{sub:diversity}}
-      Die Diversität einer Population von Individuen beschreibt wie verschieden die verschiedenen Individuen zueinander sind.
+      Die Diversität einer Population von Individuen beschreibt wie verschieden die Individuen zueinander sind.
       Durch diese Kennzahl alleine lässt sich jedoch noch keine Aussage über die Diversität treffen.
       Erst wenn mehrere Generationen von Populationen vorhanden sind, kann diese Kennzahl benutzt werden um die Diversität zu beurteilen.
       Eine nummerisch grössere Zahl deutet darauf hin das die Individuen divers sind.
@@ -115,9 +115,10 @@
 
         Bei der proportionalen Selektion wählt man die Reproduktionsrate proportional zur Fitness.
         D. Floreano und C. Mattiussi~\cite[S.23]{book:bioInspired} beschreiben die Proportionale Selektion als Rouletterad,
-        in dem jedes Individuum ein Stück des Rouletterad für sich beanspruchen (\vref{fig:rouletteWheel}).
+        in dem jedes Individuum ein Stück des Rouletterad für sich beanspruchen~(\vref{fig:rouletteWheel}).
         Das Stück welches sie beanspruchen, ist so gross, wie ihre Fitness im Vergleich zu der Fitness ihrer Konkurrenten.
         Das Individuum mit der grössten Fitness wird auch das grösste Stück des Rouletterads für sich beanspruchen und hat somit die grösste Wahrscheinlichkeit Nachkommen zu erzeugen.
+        Wenn die Population \(N\) Indivduen gross ist, wird das Rad \(N\) mal gedreht um die Nachkommen zu bestimmen.
         Proportionale Selektion funktioniert schlecht wenn alle Individuen sehr ähnliche Fitnesswerte aufweisen oder es nur wenige/einen Ausreisser gibt.
         Denn dann haben alle Individuen die gleiche Chance selektiert zu werden.
 
@@ -133,18 +134,25 @@
         %%%%%%%%%%%%!!!!!%%%%%%%%%%%%%%%%% BIS HIER KORIGIERT %%%%%%%%%%%%%%%%%%%%%%%%!!!!!%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        
+
       \subsubsection{Rang-basierte Selektion}
 
         Es wird zuerst eine Rangliste erstellt und dann werden die Reproduktionswahrscheinlichkeiten proportional zum Rang zugeordnet.
-        Diese Selektionsstrategy hat den Vorteil gegenüber der proportionalen Selektion,
-        dass es nicht darauf ankommt wie unterschiedlich die Individuen sind.
+        Anstatt das Rouletterad~(\vref{fig:rouletteWheel}) nach Fitness der Individuen zu unterteilen, wird es anhand des Ranges unterteilt.
+        Diese Selektionsstrategie hat den Vorteil gegenüber der proportionalen Selektion,
+        dass die Fitness der Indivdueen ähnlich sein darf, jedoch wird mit hoher Wahrscheinlichkeit immer noch das besere selektiert werden.
 
       \subsubsection{Gekürzte Rang-basierte Selektion}
 
-        Ähnlich wie die Rang-basierte Selektion.
-        Es werden jedoch nur die besten Individuen zur Reproduktion selektiert und
-        jedes Individuum produziert die gleiche Anzahl Nachkommen.
+        Es wird eine Rangeliste wird für die Individuen der Population erstellt.
+        Anstatt alle Individuen zu berücksichtigen werden nur die besten der Rangliste selektiert und diese produzieren Nachkommen (\vref{fig:truncated_rank_based_selection}).
+        \begin{center}
+          \begin{figure}[H]
+            \includegraphics[scale=0.7]{graphics/truncated_rank_based_selection}
+            \caption{Schritte einer gekürzten rang-basierten Selektion \label{fig:truncated_rank_based_selection}}
+          \end{figure}
+        \end{center}
+
 
       \subsubsection{Turnier-basierte Selektion\label{par:Turnier}}
 
