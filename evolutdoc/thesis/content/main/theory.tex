@@ -155,66 +155,74 @@
         Selektionsdruck und genetischer Diversität, da alle Individuen in der Population die gleiche Wahrscheinlichkeit haben, für das Turnier selektiert zu werden.
         Somit können auch Indivduen mit niedrigem Fitnesswert ein Turnier gewinnen.
 
+    \subsection{Rekombinationsfunktion}
+
+        Bei der Rekombination werden jeweils zwei Individuen selektiert und
+        deren Gen-Paare werden rekombiniert (untereinander vertauscht).
+        \vref{fig:crossOver} veranschaulicht diesen Prozess.
+        Nicht bei jedem Typ von evolutinären Algorithmen~(\vref{sub:artenEvAlgos}) und jeder Problemstellung ist Rekombination sinnvoll.
+        Man nehme das Beispiel von einem Haus: Die Gene der Türen mit den Genen der Fenster zu vertauschen ergibt keinen Sinn.
+
+        \begin{figure}[H]
+          \includegraphics[scale=0.3, center]{graphics/morgan_crossover}
+          \caption{Illustration des Crossover \cite[]{WikipediaEN:crossOver} \label{fig:crossOver}}
+        \end{figure}
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%% Achtung evtl bilder von https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm) und für aritmetic selber zeichnen
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \subsubsection{One-Point Crossover}
+
+          Es wird ein zufälliger Cross-Over Punkt bestimmt an dem die Gene des Paares vertauscht werden ( a) \vref{sub:artenEvAlgos}).
+          Anwendbar ist diese Strategie bei Diskreten- und Realen-Werten-Repräsentationen.
+
+        \subsubsection{Multi-Point Crossover}
+
+          Funktioniert gleich wie One-Point Crossover, jedoch werden mehrere Punkte bestimmt und
+          zwischen diesen Punkten werden dann die Gene ausgetauscht.
+
+        \subsubsection{Uniform Crossover}
+
+          Die Gene werden an \(n\) zufälligen Stellen vertauscht ( b) \vref{fig:crossTypes}).
+
+        \subsubsection{Arithmetic Crossover}
+
+          Der Durschnitt von den Genen an \(n\) zufälligen Positionen wird gebildet.
+          Aus diesem Durchschnitt wird dann ein Nachkomme erzeugt ( c) \vref{fig:crossTypes}).
+          Da arithmetische Operationen nur auf Zahlen anwendbar sind,
+          kann dieser Crossover nur bei Reale-Werte-Repräsentationen verwendet werden.
+
+        \subsubsection{Sequenzen}
+
+          Bei Sequenzen gilt es die Regel zu erhalten, dass alle Einträge nur einmal vorkommen dürfen.
+          Es wird ein Multi-Point Crossover durchgeführt unter Einhaltung der oben genannten Regel ( d) \vref{fig:crossTypes}).
+
+        \subsubsection{Bäume}
+
+          Bei Bäumen wird ein zufälliger Teil des Baumes, mit einem anderen Teil eines Baumes, von einem fremden Individuum vertauscht ( e) \vref{fig:crossTypes}).
+
+        \begin{figure}[H]
+          \includegraphics[scale=0.5, center]{graphics/crossover_types}
+          \caption{Typen von Crossovers}\cite[S.27]{book:bioInspired} \label{fig:crossTypes}}
+        \end{figure}
+        
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%!!!!!%%%%%%%%%%%%%%%%% BIS HIER KORIGIERT %%%%%%%%%%%%%%%%%%%%%%%%!!!!!%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    \subsection{Rekombinationsfunktion}
-
-        Bei der Rekombination werden jeweils Zwei Individuen selektiert und
-        deren Gen-Paare werden rekombiniert (untereinander vertauscht).
-        \vref{fig:crossOver} veranschaulicht diesen Prozess.
-        Rekombination ist nicht bei jeder Problemstellung hilfreich,
-        es muss von Fall zu Fall neu bewertet werden ob sie eingesetzt wird.
-
-        \begin{figure}[H]
-          \includegraphics[scale=0.4, center]{graphics/morgan_crossover}
-          \caption{Illustration des Crossover \cite[]{WikipediaEN:crossOver} \label{fig:crossOver}}
-        \end{figure}
-
-        \subsubsection{One-Point Crossover}
-
-          Es wird ein zufälliger Cross-Over Punkt bestimmt an dem die Gene des Paares vertauscht werden.
-          Anwendbar ist diese Strategie bei Diskreten und Reale Werte Repräsentationen.
-
-        \subsubsection{Multi-Point Crossover}
-
-          Im Prinzip gleich wie One-Point Crossover, jedoch werden mehrere Punkte bestimmt und
-          zwischen diesen Punkten werden dann die Gene ausgetauscht.
-
-        \subsubsection{Uniform Crossover}
-
-          Die Gene werden an \(n\) zufälligen Stellen vertauscht, nur Anwendbar auf Reale Werte Repräsentationen.
-
-        \subsubsection{Arithmetic Crossover}
-
-          Der Durschnitt von den Genen an \(n\) zufälligen Positionen wird gebildet.
-          Aus diesem Durchschnitt wird dann ein Nachkomme erzeugt.
-          Ebenfalls nur anwendbar auf Reale Werte Repräsentationen.
-
-        \subsubsection{Sequenzen}
-
-          Bei Sequenzen gilt es die Regel zu erhalten, dass alle Einträge nur einmal vorkommen dürfen.
-          Wir erinnern uns an das Beispiel vom Travelling Sales Man~\vref{par:GeneticRepresentationDiscrete}.
-          Es wird sozusagen eine Unique Version von  Multi-Point Crossover angewendet.
-
-        \subsubsection{Bäume}
-
-          Bei Bäumen wird ein zufälliger Teil des Baumes mit einem des anderen Nachkommens vertauscht.
-
     \subsection{Mutationsfunktion}
 
       Mutationen operieren direkt auf dem Individuum.
       Positionen eines Genoms werden mit einer bestimmten Wahrscheinlichkeit \(p_{m}\) mutiert.
       Es ist jedoch Vorsicht geboten, da gewisse Lösungen durch Mutationen verloren gehen können.
+      Darum sollten Mutationswahrscheinlichkeiten klein gewählt werden, da sonst keine gewinnbringende Evolution statt finden kann.
 
       \subsubsection{Binäre Repräsentationen}
 
         Wenn die Repräsentation aus binären Werten besteht, werden die Bits geflippt (oder nur bestimmte Segmente).
 
-      \subsubsection{Reale Werte Repräsentationen}
+      \subsubsection{Reale-Werte-Repräsentationen}
 
         Es wird ein zufälliger Wert aus einer Gaus Verteilung \(N(0,\sigma)\) addiert.
 
@@ -226,13 +234,6 @@
 
         Gewisse Teilabschnitte des Baumes werden mutiert.
 
-    Genetische Repräsentation: Erbgutdaten, genetic encoding
-    \\
-    Phänotyp: Aussehen des Individuums -> Manifestation. In unserem Fall die 6-Beinigen Kreaturen als Pixelgrafik.
-    \\
-    Initialisieren -> Simulieren -> Selektion -> Rekombination -> Mutation -> Analyse
-    \\
-    Simulieren bis Analyse solange wiederholen bis zufrieden mit Resultat
 
   \subsection{Arten von evolutionären Algorithmen\label{sub:artenEvAlgos}}
 
