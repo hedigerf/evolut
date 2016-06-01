@@ -155,6 +155,7 @@
         Selektionsdruck und genetischer Diversität, da alle Individuen in der Population die gleiche Wahrscheinlichkeit haben, für das Turnier selektiert zu werden.
         Somit können auch Indivduen mit niedrigem Fitnesswert ein Turnier gewinnen.
 
+
     \subsection{Rekombinationsfunktion}
 
         Bei der Rekombination werden jeweils zwei Individuen selektiert und
@@ -168,11 +169,11 @@
           \caption{Illustration des Crossover \cite[]{WikipediaEN:crossOver} \label{fig:crossOver}}
         \end{figure}
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %%% Achtung evtl bilder von https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm) und für aritmetic selber zeichnen
+        %% https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm) evtl bilder mit diesen ersetzten%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         \subsubsection{One-Point Crossover}
 
-          Es wird ein zufälliger Cross-Over Punkt bestimmt an dem die Gene des Paares vertauscht werden ( a) \vref{sub:artenEvAlgos}).
+          Es wird ein zufälliger Cross-Over Punkt bestimmt an dem die Gene des Paares vertauscht werden ( a) \vref{fig:crossType}).
           Anwendbar ist diese Strategie bei Diskreten- und Realen-Werten-Repräsentationen.
 
         \subsubsection{Multi-Point Crossover}
@@ -201,16 +202,14 @@
           Bei Bäumen wird ein zufälliger Teil des Baumes, mit einem anderen Teil eines Baumes, von einem fremden Individuum vertauscht ( e) \vref{fig:crossTypes}).
 
         \begin{figure}[H]
-          \includegraphics[scale=0.5, center]{graphics/crossover_types}
-          \caption{Typen von Crossovers}\cite[S.27]{book:bioInspired} \label{fig:crossTypes}}
+          \includegraphics[scale=0.7, center]{graphics/crossover_types}
+          \caption{Typen von Crossovers\cite[S.27]{book:bioInspired} \label{fig:crossTypes}}
         \end{figure}
-        
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%!!!!!%%%%%%%%%%%%%%%%% BIS HIER KORIGIERT %%%%%%%%%%%%%%%%%%%%%%%%!!!!!%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
     \subsection{Mutationsfunktion}
 
       Mutationen operieren direkt auf dem Individuum.
