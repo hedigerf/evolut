@@ -122,18 +122,10 @@
         Proportionale Selektion funktioniert schlecht wenn alle Individuen sehr ähnliche Fitnesswerte aufweisen oder es nur wenige/einen Ausreisser gibt.
         Denn dann haben alle Individuen die gleiche Chance selektiert zu werden.
 
-        \begin{center}
-          \begin{figure}[H]
-            \includegraphics[scale=0.4]{graphics/roulettewheel}
-            \caption{Rhouletterad der proportionalen Seleketion \cite[S.24]{book:bioInspired} \label{fig:rouletteWheel}}
-          \end{figure}
-        \end{center}
-
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %%%%%%%%%%%%!!!!!%%%%%%%%%%%%%%%%% BIS HIER KORIGIERT %%%%%%%%%%%%%%%%%%%%%%%%!!!!!%%%%%%%%%%%%%%%%%%%%%%
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \begin{figure}[H]
+          \includegraphics[scale=0.4, center]{graphics/roulettewheel}
+          \caption{Rhouletterad der proportionalen Seleketion \cite[S.24]{book:bioInspired} \label{fig:rouletteWheel}}
+        \end{figure}
 
       \subsubsection{Rang-basierte Selektion}
 
@@ -146,29 +138,41 @@
 
         Es wird eine Rangeliste wird für die Individuen der Population erstellt.
         Anstatt alle Individuen zu berücksichtigen werden nur die besten der Rangliste selektiert und diese produzieren Nachkommen (\vref{fig:truncated_rank_based_selection}).
-        \begin{center}
-          \begin{figure}[H]
-            \includegraphics[scale=0.7]{graphics/truncated_rank_based_selection}
-            \caption{Schritte einer gekürzten rang-basierten Selektion \label{fig:truncated_rank_based_selection}}
-          \end{figure}
-        \end{center}
+
+        \begin{figure}[H]
+          \includegraphics[scale=0.7, center]{graphics/truncated_rank_based_selection}
+          \caption{Schritte einer gekürzten rang-basierten Selektion \label{fig:truncated_rank_based_selection}}
+        \end{figure}
 
 
       \subsubsection{Turnier-basierte Selektion\label{par:Turnier}}
 
-        Es werden \(k\) zufällig ausgewählte Individuen selektiert,
-        das Individuum mit dem höchsten Fitnesswert erzeugt ein Nachkommen.
+        Es werden \(k\) zufällig ausgewählte Individuen selektiert, diese Individuen tragen untereinander ein Turnier aus.
+        Das Turnier gewinnt jenes Individuum, welches den höchsten Fitnesswert aufweist.
         Dies wird solange wiederholt bis man wieder so viele Nachkommen hat,
         wie die Ursprüngliche Generation Individuen hatte.
         Ein grosser Vorteil von Turniert-basierter Selektion ist die gute Balance zwischen
-        Selektionsdruck und genetischer Diversität.
+        Selektionsdruck und genetischer Diversität, da alle Individuen in der Population die gleiche Wahrscheinlichkeit haben, für das Turnier selektiert zu werden.
+        Somit können auch Indivduen mit niedrigem Fitnesswert ein Turnier gewinnen.
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%!!!!!%%%%%%%%%%%%%%%%% BIS HIER KORIGIERT %%%%%%%%%%%%%%%%%%%%%%%%!!!!!%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     \subsection{Rekombinationsfunktion}
 
         Bei der Rekombination werden jeweils Zwei Individuen selektiert und
         deren Gen-Paare werden rekombiniert (untereinander vertauscht).
+        \vref{fig:crossOver} veranschaulicht diesen Prozess.
         Rekombination ist nicht bei jeder Problemstellung hilfreich,
         es muss von Fall zu Fall neu bewertet werden ob sie eingesetzt wird.
+
+        \begin{figure}[H]
+          \includegraphics[scale=0.4, center]{graphics/morgan_crossover}
+          \caption{Illustration des Crossover \cite[]{WikipediaEN:crossOver} \label{fig:crossOver}}
+        \end{figure}
 
         \subsubsection{One-Point Crossover}
 
