@@ -27,10 +27,10 @@
     Der Zuwachs der Steigung sollte auf 0.01 limitiert werden und der Zuwachs des höchsten Punktes
     sollte auf 0.02 gesetzt werden.
 
-      \begin{figure}
-        \input{graphics/fitness-graph-first-run-no-feedback}
-        \caption{Bestes Individuum und Durchschnittliches Individuum, Erster Versuch\label{fig:graphFirst}}
-      \end{figure}
+    \begin{figure}
+      \input{graphics/fitness-graph-first-run-no-feedback}
+      \caption{Bestes Individuum und Durchschnittliches Individuum, Erster Versuch\label{fig:graphFirst}}
+    \end{figure}
 
     \subsubsection{Körperpunkte\label{subsub:bp}}
 
@@ -71,10 +71,10 @@
       Dieser Fehler kann bereinigt werden indem die Relaxation erhöht und gleichzeitig der Zeitschritt verringert wird,
       diese Parameter sind in~\vref{sec:Konfiguration} beschrieben.
 
-        \begin{figure}
-          \input{graphics/fitness-graph-second-run-no-feedback}
-          \caption{Bestes Individuum und Durchschnittliches Individuum, Zweiter Versuch\label{fig:graphSecond}}
-        \end{figure}
+      \begin{figure}
+        \input{graphics/fitness-graph-second-run-no-feedback}
+        \caption{Bestes Individuum und Durchschnittliches Individuum, Zweiter Versuch\label{fig:graphSecond}}
+      \end{figure}
 
       \subsubsection{Körperpunkte\label{subsub:bpScnd}}
 
@@ -100,11 +100,11 @@
         \end{table}
 
       \subsection{Auswertung}
+
         Leider dauert es mit dieser Version der Applikation sehr lange eine Generation zu evolvieren.
         Darum beschränkt sich dieser Versuch nur auf xxxx Generationen, damit Performance Optimierungen implementiert werden können.
         Die Individuen haben bei diesem Versuch, eine Art rollende Bewegung entwickelt.
-        Sie können die guten Fitnesswerte halten, obwohl der Parcour immer schwerer wird (siehe Abbildung \vref{fig:graphThird}).
-
+        Sie können die guten Fitnesswerte halten, obwohl der Parcour immer schwerer wird (siehe Abbildung~\vref{fig:graphThird}).
 
         \begin{figure}
           \input{graphics/fitness-graph-third-run}
@@ -114,17 +114,18 @@
         \subsubsection{Körperpunkte}
 
           Auf eine Diskussion der Körperpunkte wird verzichtet.
-          Die notwendigen Schritte für eine sinvolle Evaluation wurden unter \vref{subsub:bpScnd} beschrieben.
+          Die notwendigen Schritte für eine sinvolle Evaluation wurden unter~\vref{subsub:bpScnd} beschrieben.
 
         \subsubsection{Diversität}
-          Ab dieser Simulation ist endlich der Diversitätsreport verfügbar. Wie in \vref{fig:graphDivThird} zu sehen ist,
+          Ab dieser Simulation ist endlich der Diversitätsreport verfügbar. Wie in~\vref{fig:graphDivThird} zu sehen ist,
           ist die Diversität kurz auf einem hohen Niveau, da am Anfang alles völlig zufällig generiert wird.
           Durch die nachfolgenden Selektionen sinkt sie, da mit hoher wahrscheinlichkeit nur leistungsstarke Individuen
           bei der Tunier-basierten Selektion gewinnen. Interessant zu beobachten ist,
           das die Diversität ab der 400. Generation wieder zu steigen beginnt.
           Die Vermutung dabei ist, dass sich immer mehr verschiedene Individuen mit einer
           guten Fitness finden lassen.
-        \begin{figure}
-          \input{graphics/diversity-graph-third-run}
-          \caption{Diversität pro Generation, Dritter Versuch\label{fig:graphDivThird}}
-        \end{figure}
+
+          \begin{figure}
+            \input{graphics/diversity-graph-third-run}
+            \caption{Diversität pro Generation, Dritter Versuch\label{fig:graphDivThird}}
+          \end{figure}

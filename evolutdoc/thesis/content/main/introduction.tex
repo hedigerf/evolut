@@ -57,16 +57,18 @@
     wird die Bewegung mit Hilfe einer Physik-Engine simuliert.
     Diese Engine wird von den Studierenden ausgewählt und kann als Blackbox verwendet werden.
 
-\section{Zielsetzung}
-  Das Ziel dieser Arbeit ist sechsbeinigen künstlichen Tieren, mit Hilfe eines evolutionären Alogirthmus, in einer zweidimensionalen Umgebung das Gehen zu lernen.
-  Die Individuuen sollen sich immer besser an ihre Umgebung anpassen.
-  Um dieses Ziel zu erreichen, soll eine Applikation erstellt werden, welche den evolutinären Algorithmus implementiert.
-  Die Applikation muss ebenfalls die Möglichbeit bieten, eine Simulation durchzuführen.
-  Es soll nicht nur die Steuerung der Beine evolviert werden (Gehen lernen), sodern auch die Form des Körpers und die Abmassung der Beine.
+  \section{Zielsetzung}
+
+    Das Ziel dieser Arbeit ist sechsbeinigen künstlichen Tieren, mit Hilfe eines evolutionären Alogirthmus, in einer zweidimensionalen Umgebung das Gehen zu lernen.
+    Die Individuuen sollen sich immer besser an ihre Umgebung anpassen.
+    Um dieses Ziel zu erreichen, soll eine Applikation erstellt werden, welche den evolutinären Algorithmus implementiert.
+    Die Applikation muss ebenfalls die Möglichbeit bieten, eine Simulation durchzuführen.
+    Es soll nicht nur die Steuerung der Beine evolviert werden (Gehen lernen), sodern auch die Form des Körpers und die Abmassung der Beine.
 
   \section{Anforderungen}
 
     \subsection{Fitnessfunktion}
+
       Die Fitness ist ein Mass mit derer sich die Anpassung der Individuuen an ihre Umgebung messen lässt.
       In frühen Generation kann es vorkommen, dass die künstlichen Tiere sich keinen einzigen Schritt weit während der Simulation
       fortbewegen können. Die Zeit, welche ein Individuum für die Bewältigung eines Parcours (\vref{subsub:parcours}) brauchen würde, wäre somit unendlich.
@@ -74,6 +76,7 @@
       Für die Bewältigung des Parcours steht dem Individuum eine fixe Anzahl Zeiteinheiten zur Verfügung.
 
     \subsection{Parcours\label{subsub:parcours}}
+
       Die Individuen müssen während der Simulation eine Strecke zurücklegen.
       Diese Strecke und ihre Begebenheiten werden als Parcours bezeichnet.
       \vref{fig:scetchParcours} zeigt eine Skizze des Parcours.
@@ -82,12 +85,12 @@
       Der Parcours soll zufällig generiert werden.
 
       \begin{figure}[H]
-        \includegraphics[scale=1]{graphics/scetch_parcours}
+        \input{graphics/concept-parcours}
         \caption{Skizze Parcour\label{fig:scetchParcours}}
       \end{figure}
 
-
     \subsection{Limiten}
+
       Limiten verhindern das der Parcours durch triviale Lösungen wie z.B. unendlich grosse Beine bewältigt werden kann.
       Ebenfalls schränken sie den Lösungsraum ein und helfen gewinnbringende Lösungen zu finden.
       Für folgende Komponenten werden Limiten eingeführt:
@@ -101,6 +104,7 @@
       \end{itemize}
 
     \section{Projektmanagement}
+
       Die verschiedenen Arbeitspackete werden eine Woche im vorraus geplant.
       Dieses Vorgehen wird auch als rollende Planung bezeichnet.
       Ein Projektvorgehensmodell wird nicht benutzt, jedoch ist eine Projektplanung mit Hilfe von MS Project 2016

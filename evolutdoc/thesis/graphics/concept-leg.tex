@@ -4,60 +4,51 @@
 
 % !TEX root = ../main.tex
 
-\begin{tikzpicture}[scale=0.4]
+\begin{tikzpicture}[scale=\textwidth/12cm]
 
-  %def
-  \tkzInit[xmin=-15,xmax=12,ymin=-6,ymax=12]
-  \tkzDrawXY[noticks]
-  \tkzDefPoints{-6/4/C1, 2/1/C2,0.205/6.548/A,-3/-2/B}
+  % Draw rectangles
+  \coordinate (A) at (1,0);
+  \coordinate (B) at (1.5,1.8);
 
-  %drawing
-  \tkzDrawPoints(A,B)
-  \tkzDrawSegments[gray](C1,C2)
-  \tkzDrawSegments[red](C2,A C2,B)
-  \tkzDrawSegments[blue](C1,A C1,B)
-  \tkzDrawCircle(C1,A)
-  \tkzDrawCircle(C2,A)
-  % notation
-  \tkzLabelPoints(C2)
-  \tkzLabelPoints[left](C1)
-  \tkzLabelPoints[above](A)
-  \tkzLabelPoints[below](B)
-  \tkzMarkSegment[color=blue,pos=.5,mark=||](C1,B)
-  \tkzMarkSegment[color=red,pos=.5,mark=|](B,C2)
-  \tkzMarkSegment[color=blue,pos=.5,mark=||](C1,A)
-  \tkzMarkSegment[color=red,pos=.5,mark=|](A,C2)
-  \tkzMarkRightAngle[size=0.7](C1,A,C2)
-  \tkzMarkRightAngle[size=0.7](C1,B,C2)
-  \tkzLabelCircle[above left](C1,A)(180){$K_1$}
-  \tkzLabelCircle[right](C2,A)(-60){$K_2$}
+  \draw (A) rectangle (B);
 
-\end{tikzpicture}
+  \coordinate (C) at (1,1.8);
+  \coordinate (D) at (1.5,4);
 
-\todo[inline]{Draw foot}
-\begin{tikzpicture}[scale=0.4]
+  \draw (C) rectangle (D);
 
-  \tkzInit[xmin=-1,xmax=11,ymin=-1,ymax=21]
-  \tkzClip
+  % Draw hip joint
+  \draw [red,thick] (1.25,4) circle [x radius=0.3cm, y radius=0.05cm] node [text=black, above] {$j_h$};
 
-  \tkzDefPoint(0,0){O}
-  \tkzDefPoint(7,0){A}
-  \tkzDefPoint(0,20){H}
-  \tkzDefPoint(0,6){Hj}
-  \tkzDefPoint(0,1){Hf}
-  \tkzDefPoint(7,1){Hfm}
-  \tkzDefPoint(7,20){J1}
-  \tkzDefPoint(7,11){J2}
-  \tkzDefPoint(10,20){N}
+  % Draw knee joint
+  \draw [red,thick] (1.25,1.8) circle [x radius=0.3cm, y radius=0.05cm] node [text=black, above] {$j_k$};
 
-  \tkzDrawPoints(J1,J2)
-  \tkzDefSquare(O,N) \tkzGetPoints{C}{D}
-  \tkzDrawSegments[gray](A,J2)
-  \tkzDrawSegments[gray](J2,J1)
+  % Draw height
+  \coordinate (H0) at (0,0);
+  \coordinate (HL) at (0,2);
+  \coordinate (H1) at (0,4);
 
-  % Foot
-  \tkzDrawArc[angles](Hfm,A)(180,360) \tkzGetPoints{Hfr}{Hfl}
-  \tkzDrawSegments(Hfr,Hfl)
-  \tkzLabelPoints(Hfm,C,D)
+  \draw [<->] (H0) -- (HL) node [left] {$h_l$} -- (H1);
+
+  % Draw height shank
+  \coordinate (HS0) at (2.5,0);
+  \coordinate (HS) at (2.5,0.9);
+  \coordinate (HS1) at (2.5,1.8);
+
+  \draw [<->] (HS0) -- (HS) node [text width=2cm ,right] {$h_s$} -- (HS1);
+
+  % Draw height thigh
+  \coordinate (HT0) at (2.5,1.8);
+  \coordinate (HT) at (2.5,2.95);
+  \coordinate (HT1) at (2.5,4);
+
+  \draw [<->] (HT0) -- (HT) node [text width=2cm ,right] {$h_t$} -- (HT1);
+
+  % Draw width
+  \coordinate (W0) at (1,-0.5);
+  \coordinate (WL) at (1.25,-0.5);
+  \coordinate (W1) at (1.5,-0.5);
+
+  \draw [<->] (W0) -- (WL) node [below] {$w_l$} -- (W1);
 
 \end{tikzpicture}
