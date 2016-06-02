@@ -24,18 +24,22 @@
       Als Individuum wird die zu evolvierende künstliche Kreatur bezeichnet.
       Ein Individuum hat einen zugehörigen Genotyp~(\vref{sub:genotyp}) und dessen Phänotyp~(\vref{sub:phenotyp}).
     \subsection{Genotyp\label{sub:genotyp}}
-        Das genetische Material eines Individuums wird als Genotyp bezeichnet~\cite[S.5]{book:bioInspired}.
-        Es beeinhaltet alle wichtigen Informationen zur Reproduktion des Individuums.
-        Das Genom ist eine Repräsentation des Genotyps.
+      Das genetische Material eines Individuums wird als Genotyp bezeichnet~\cite[S.5]{book:bioInspired}.
+      Es beeinhaltet alle wichtigen Informationen zur Reproduktion des Individuums.
+    \subsection{Genom\label{sub:genom}}
+      Das Genom ist eine Repräsentation des Genotyps.
+      Es beinhaltet nur reine Werte, jedoch keine Information was diese bedeuten.
+      Erst durch den Geno- und Phäntoyp werden den Werten einen Sinn gegeben.
+
     \subsection{Phänotyp\label{sub:phenotyp}}
-        Der Genotyp kann zu einem Phänotyp abgebildet werden.
-        In einer künstlichen Umgebung (wie der Pixelwelt des Computers) kann man sagen,
-        dass der Phänotyp die Pixelrepräsentation des Genotyps ist.
-        Wenn der Genotyp die Länge und Breite eines Rechtecks beschreibt, so ist das grafisch gezeichnete Rechteck auf dem Monitor der Phänotyp~(\vref{fig:genoPheno}).
-        \begin{figure}[H]
-          \includegraphics[scale=1]{graphics/genotyp_phenotyp}
-          \caption{Genotyp und Phänotyp\label{fig:genoPheno}}
-        \end{figure}
+      Der Genotyp kann zu einem Phänotyp abgebildet werden.
+      In einer künstlichen Umgebung (wie der Pixelwelt des Computers) kann man sagen,
+      dass der Phänotyp die Pixelrepräsentation des Genotyps ist.
+      Wenn der Genotyp die Länge und Breite eines Rechtecks beschreibt, so ist das grafisch gezeichnete Rechteck auf dem Monitor der Phänotyp~(\vref{fig:genoPheno}).
+      \begin{figure}[H]
+        \includegraphics[scale=1]{graphics/genotyp_phenotyp}
+        \caption{Genotyp und Phänotyp\label{fig:genoPheno}}
+      \end{figure}
 
     %% in bioInspired wird genetic repärsentation erwähnt
     \subsection{Genetische Repräsentation}
@@ -46,24 +50,29 @@
 
       \subsubsection{Diskrete Repräsentation\label{par:GeneticRepresentationDiscrete}}
 
-        Bei der diskreten Repräsentation wird das Genom als binären String dargestellt [0111110].
+        Bei der diskreten Repräsentation kann das Genom als binären String dargestellt [0111110] werden.
         Dieser binäre String kann anschliessend in einen Phänotyp übersetzt werden.
         Zum Beispiel kann eine Bitsequenz, direkt zu einer Zahl als Phänotyp übersetzt werden [0011] -> 3.
         Ebenfalls kann eine diskrete Repräsentation eine Folge von beliebigen Zeichen annehmen [ABCDEF].
+        Wenn eine diskrete Repräsentation nur einzigartige Werte beinhaltet, spricht man von einer Sequenz.
         D. Floreano und C. Mattiussi bringen dazu ein gutes Beispiel anhand des Travelling Sales Man Problems an:
         Jeder Buchstabe in der Sequenz repräsentiert dabei einen Ort, welchen es zu besuchen gilt~(\vref{fig:travelling})~\cite[S.18]{book:bioInspired}.
 
         \begin{figure}[H]
-          \includegraphics[scale=1]{graphics/discret_representation}
+          \includegraphics[scale=0.9]{graphics/discret_representation}
           \caption{Beispiel Diskrete Repräsentation \cite[S.18]{book:bioInspired} \label{fig:travelling}}
         \end{figure}
 
       \subsubsection{Reale-Werte-Repräsentation\label{par:GeneticRepresentationReal}}
 
         Weiter kann die Reale-Werte-Repräsentation gewählt werden.
-        Das Genom wird hierbei durch reelle Zahlen repräsentiert.
+        Das Genom~(\vref{fig:real_value_representation}) wird hierbei durch reelle Zahlen repräsentiert.
         Beispielsweisse kann die optimale Position eines Zimmers (beste Flächennutzung) in einem Haus
         durch reale Zahlen dargestellt werden.
+        \begin{figure}[H]
+          \includegraphics[scale=1]{graphics/real_value_representation}
+          \caption{Beispiel Reale-Werte-Repräsentation \label{fig:real_value_representation}}
+        \end{figure}
 
       \subsubsection{Baum-Repräsentationen\label{par:GeneticRepresentationTree}}
 
@@ -204,7 +213,7 @@
           \includegraphics[scale=0.7, center]{graphics/crossover_types}
           \caption{Typen von Crossovers\cite[S.27]{book:bioInspired} \label{fig:crossTypes}}
         \end{figure}
-      
+
 
     \subsection{Mutationsfunktion}
 
