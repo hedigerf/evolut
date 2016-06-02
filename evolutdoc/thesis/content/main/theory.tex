@@ -138,7 +138,7 @@
 
       \subsubsection{Rang-basierte Selektion}
 
-        Es wird zuerst eine Rangliste erstellt und dann werden die Reproduktionswahrscheinlichkeiten proportional zum Rang zugeordnet.
+        Es wird zuerst eine Rangliste nach Fitness erstellt und dann werden die Reproduktionswahrscheinlichkeiten proportional zum Rang zugeordnet.
         Anstatt das Rouletterad~(\vref{fig:rouletteWheel}) nach Fitness der Individuen zu unterteilen, wird es anhand des Ranges unterteilt.
         Diese Selektionsstrategie hat den Vorteil gegenüber der proportionalen Selektion,
         dass die Fitness der Indivdueen ähnlich sein darf, jedoch wird mit hoher Wahrscheinlichkeit immer noch das besere selektiert werden.
@@ -156,7 +156,7 @@
 
       \subsubsection{Turnier-basierte Selektion\label{par:Turnier}}
 
-        Es werden \(k\) zufällig ausgewählte Individuen selektiert, diese Individuen tragen untereinander ein Turnier aus.
+        Es werden \(k\) zufällig ausgewählte Individuen selektiert, diese Individuen tragen untereinander ein Turnier (\vref{fig:tournament_based}) aus.
         Das Turnier gewinnt jenes Individuum, welches den höchsten Fitnesswert aufweist.
         Dies wird solange wiederholt bis man wieder so viele Nachkommen hat,
         wie die Ursprüngliche Generation Individuen hatte.
@@ -164,6 +164,10 @@
         Selektionsdruck und genetischer Diversität, da alle Individuen in der Population die gleiche Wahrscheinlichkeit haben, für das Turnier selektiert zu werden.
         Somit können auch Indivduen mit niedrigem Fitnesswert ein Turnier gewinnen.
 
+        \begin{figure}[H]
+          \includegraphics[scale=1, center]{graphics/tournament_based}
+          \caption{Turnier-basierte-Selektion \label{fig:tournament_based}}
+        \end{figure}
 
     \subsection{Rekombinationsfunktion}
 
