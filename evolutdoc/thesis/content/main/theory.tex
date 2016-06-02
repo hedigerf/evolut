@@ -230,14 +230,20 @@
 
     \subsection{Mutationsfunktion}
 
-      Mutationen operieren direkt auf dem Individuum.
-      Positionen eines Genoms werden mit einer bestimmten Wahrscheinlichkeit \(p_{m}\) mutiert.
+      Mutationen operieren auf dem Genotyp des Individuums.
+      Die Positionen eines Genoms werden mit einer bestimmten Wahrscheinlichkeit \(p_{m}\) mutiert.
       Es ist jedoch Vorsicht geboten, da gewisse Lösungen durch Mutationen verloren gehen können.
       Darum sollten Mutationswahrscheinlichkeiten klein gewählt werden, da sonst keine gewinnbringende Evolution statt finden kann.
 
       \subsubsection{Binäre Repräsentationen}
 
-        Wenn die Repräsentation aus binären Werten besteht, werden die Bits geflippt (oder nur bestimmte Segmente).
+        Wenn die Repräsentation aus binären Werten besteht, werden die Bits invertiert (oder nur bestimmte Segmente).
+        Invertieren bedeutet, dass aus einem 0 eine 1 wird und umgekehrt.
+
+        \begin{figure}[H]
+          \includegraphics[scale=1, center]{graphics/mutation_binary_flip}
+          \caption{Invertieren der Bits \label{fig:mutation_binary_flip}}
+        \end{figure}
 
       \subsubsection{Reale-Werte-Repräsentationen}
 
