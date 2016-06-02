@@ -8,6 +8,8 @@
 
   \section{Design der Individuen}
 
+    Der Ansatz für das Design der Individuen wird angelehnt an \Glspl{Hexapod}, ein Unterstamm der Gliederfüsser.
+
     \subsection{Körper\label{sub:DesignBody}}
 
       Die erste Frage welche sich stellt ist, wie der Körper beschrieben werden kann.
@@ -34,8 +36,18 @@
 
     \subsection{Beine\label{sub:Beine}}
 
-      Insgesamt weissen die Individuen 6 Beine auf.
+      % Begründung warum 6?
+      % Zitat
+      Insgesamt weisen die Individuen 6 Beine auf.
       Ein Beinpaar ist symmetrisch.
+
+      % analog zur natur
+      % simplifikation -> kein fuss
+
+      Ein Bein ist am Körper mittels eines Hüftgelenkes angebracht.
+      Für die Position des Hüftgelenkes existiert nur die Bedinung,
+      dass das Gelenk innerhalb der Körperfläche angebracht sein muss.
+      \\
       Ein Bein hat jeweils 2 Gelenke, eines welches es mit dem Körper verbindet,
       das andere welches Ober- mit Unterschenkel verbindet.
       Als Vereinfachung wird die Höhe des Gelenkes 0 gesetzt \(h_{a} = 0\).
@@ -170,8 +182,8 @@
           \\
           Es stehen zwei Auswertungsfunktionen zur Verfügung:
           \begin{itemize}
-            \item \textbf{Alle}. Jede Teil-Bewegungen in dieser Gruppe muss erfolgreich ausgeführt worden sein.
-            \item \textbf{Eine}. Nur eine einzige Bewegung in dieser Gruppe muss erfolgreich ausgeführt worden sein.
+            \item \textbf{Alle}: Jede Teil-Bewegungen in dieser Gruppe muss erfolgreich ausgeführt worden sein.
+            \item \textbf{Eine}: Nur eine einzige Bewegung in dieser Gruppe muss erfolgreich ausgeführt worden sein.
           \end{itemize}
 
         \paragraph{Prädikate\label{EngineMovementsPredicates}}
@@ -225,7 +237,7 @@
     \begin{itemize}
       \item Genetische Programmierung~\ref{item:genProg}
       \item Genetischer Algorithmus~\ref{item:genAlgo}
-      \item Evolutionäre Strategie~\ref{item:evStart}
+      \item Evolutionäre Strategie~\ref{item:evStrat}
       \item Evolutionäre Programmierung~\ref{item:evProg}
     \end{itemize}
     Um die Problemstellung zu lösen, wurde entschieden Evolutionäre Programmierung einzusetzen

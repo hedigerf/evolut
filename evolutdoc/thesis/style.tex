@@ -70,6 +70,14 @@
 %
 
 %
+% Glossaries must be used after hyperref.
+% Ensures that the links are referenced.
+%
+\usepackage[acronym,nopostdot,nomain,toc]{glossaries}
+\makenoidxglossaries{}
+\input{content/glossary}
+
+%
 % Speed up build process
 % Uses externalization feature of tikz
 %
@@ -87,8 +95,10 @@
 %
 \hypersetup{colorlinks=false,pdfborder={0 0 0 [0 0]}}
 
+%
+% Tikz and pgf options
+%
 \pgfplotsset{compat=1.10}
-
 \usetkzobj{all}
 
 % dev dependency
