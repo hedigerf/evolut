@@ -73,8 +73,10 @@
 % Glossaries must be used after hyperref.
 % Ensures that the links are referenced.
 %
-\usepackage[acronym,nopostdot,nomain,toc]{glossaries}
+\usepackage[nopostdot,toc,translate=babel]{glossaries}
 \makenoidxglossaries{}
+% Translate 'see'
+\renewcommand*{\seename}{siehe}
 \input{content/glossary}
 
 %
