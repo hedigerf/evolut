@@ -34,15 +34,16 @@
       das andere welches Ober- mit Unterschenkel verbindet.
       Als Vereinfachung wird die Höhe des Gelenkes 0 gesetzt \(h_{a} = 0\).
       Das Bein weisst eine Höhe \(h_{l}\) auf.
+      % TODO h_t, h_s, j_k, j_h
       Die Gelenke verbinden jeweils den Körper mit dem Gelenk und Ober- mitUnterschenkel.
-      Es wird ein Höhenfaktor \(hf\) bestimmt, welcher die Höhe des Unterschenkels definiert.
+      Es wird ein Höhenfaktor \(h_f\) bestimmt, welcher die Höhe des Unterschenkels definiert.
       Die Breite des Beines wird als \(w_{l}\) bezeichnet.
-      \\
+
       \begin{figure}[H]
-        \includegraphics[scale=1]{graphics/leg}
+        \centering
+        \input{graphics/concept-leg}
         \caption{Konzept Bein\label{fig:conceptLeg}}
       \end{figure}
-      \todo[inline]{tikz grafik}
 
       \subsubsection{Masse\label{subs:Masse}}
 
@@ -110,9 +111,9 @@
           \caption{Berechnung Körperpunkt veranschaulicht\label{fig:kp}}
         \end{figure}
 
-    \subsection{Phenotyp\label{sub:Phenotyp}}
+    \subsection{Phänotyp\label{sub:Phenotyp}}
 
-      Der Phenotyp stell die Repräsentation des Genotyps in der Physik-Engine dar.
+      Der Phänotyp stell die Repräsentation des Genotyps in der Physik-Engine dar.
       Er setzt sich aus mehreren geometrischen Figuren zusammen.
       Die Beine des Individuums werden mit Hilfe eines sogenannten ``revolute contraint'' an den Körper gebunden.
       Ebenso wird der Ober- mit dem Unterschenkel verbunden.
@@ -125,7 +126,7 @@
       \todo[inline]{Bewegung mit Bildern darstellen}
 
       Der Bewegungsablauf wird durch einen ``joint-driven'' Bewegungsmotor realisiert.
-      Der Bewegungsmotor kontrolliert die Bewegung eines Phenotyps indem die Motoren der Hüft- und
+      Der Bewegungsmotor kontrolliert die Bewegung eines Phänotyps indem die Motoren der Hüft- und
       Knie-Gelenke gesteuert werden.
 
       \subsubsection{Bewegungen\label{subsub:EngineMovements}}
@@ -359,7 +360,7 @@
       Nachdem eine neue Population und ein neuer Parcours erstellt worden ist.
       Muss eine Simulation durchgeführt werden um den Fitnesswert der Individuen zu bestimmen.
       Die Verantwortliche Klasse ist die SimulationWorld.
-      Zuerst muss jeder Genotyp zu einem Phenotyp abgebildet werden.
+      Zuerst muss jeder Genotyp zu einem Phänotyp abgebildet werden.
       Anschliessend muss der Parcours aus dem Blueprint erstellt werden.
       Erst dann kann mit der Simulation begonnen werden.
       Die Simulation merkt sich zu jedem Individuum die Position.
