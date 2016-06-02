@@ -8,14 +8,20 @@
 
   \section{Design der Individuen}
 
-    \subsection{Körper\label{sub:Körper}}
+    \subsection{Körper\label{sub:DesignBody}}
 
-      Die erste Frage, welche sich stellt ist wie der Körper beschrieben werden kann?
+      Die erste Frage welche sich stellt ist, wie der Körper beschrieben werden kann.
       \\
-      Der Körper setzt sich aus verschiedenen Punkten auseinander.
+      Ein Körper eines Individuums wird mit einem Polygon aus n Punkten gebildet.
       Die Mindestanzahl solcher Punkte wird auf 4 in einem ersten Schritt festgelegt.
       Die Obergrenze bei 8.
       Dies gibt dem Körper eine polygon-artige Figur.
+
+      \begin{figure}[H]
+        \centering
+        \input{graphics/concept-body}
+        \caption{Konzept Körper\label{fig:ConceptBodyPoints}}
+      \end{figure}
 
       \subsubsection{Hypothese Körperpunkte\label{subsub:hypoKp}}
 
@@ -24,7 +30,7 @@
         als ein Individuum mit weniger Körperpunkten.
         Die Vermutung dabei ist, dass durch die komplexere Form des Individuums,
         die Balance besser gehalten werden kann.
-        Ob dies zutrifft wird im Kapitel~\ref{chap:Resultate} diskutiert.
+        Die Resultate werden im Kapitel~\ref{chap:Resultate} diskutiert.
 
     \subsection{Beine\label{sub:Beine}}
 
@@ -73,15 +79,15 @@
         Deshalb wurde der Genotyp in Teil-Genotypen unterteilt.
         Ein Teil-Genotyp repräsentiert dabei eine beliebige Eigenschaft des Individuums.
         Weiter können Teil-Genotypen wiederum in verschiedene weitere Teile aufgespalten werden.
-        Damit entsteht die Möglichkeit Individuen nach einem dynamisch generierten Bauplan zu erstellen
+        Damit entsteht die Möglichkeit, Individuen nach einem dynamisch generierten Bauplan zu erstellen
         und beliebige Kombinationen aus vorhandenen Teil-Genotypen innerhalb eines Genotyps zu bilden,
         ohne dass die Implementation der seed-Funktion angepasst werden muss.
 
       \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
 
-        Das zufällige erstellen eines Genotypen wird ``seeding'' genannt.
+        Das zufällige Erstellen eines Genotyps wird ``seeding'' genannt.
         Zu Beginn der Simulation wird die initale Population mit zufällig generierten Individuen erstellt.
-        Dabei ist es hilfreich manche Parameter nicht zufällig generieren zu lassen,
+        Dabei ist es Hilfreich manche Parameter nicht zufällig generieren zu lassen,
         sondern mit einem fixen Wert zu initialisieren.
         Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
         Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp separat mit
@@ -338,7 +344,7 @@
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewhält werden.
       Pro Simulationsprozess können etwa 15 Individuuen flüssig berechnet werden.
       Dies bedeutet das die optimale Populationsgrösse  \( Anzahl(CPU Kerne) * 15 \) beträgt.
-      Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~\ref{sub:Körper} generiert.
+      Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~\ref{sub:DesignBody} generiert.
       Die Verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
 

@@ -40,7 +40,10 @@
 \usepackage{verbatim}
 \usepackage{wallpaper}
 \usepackage[export]{adjustbox}
+
+%
 % dont change order from here
+%
 \usepackage{varioref}
 \usepackage{hyperref}
 \usepackage{cleveref}
@@ -52,8 +55,7 @@
 \@old@cref@vref{#1}{#2}}% << call original macro
 \vref@addto\extrasngerman{% << modify varioref macros
 \def\reftextfaraway#1{% << only change far away references
-\ifthenelse{\equal{\curtlabtype}{chapter}}{ab Seite}{auf
-Seite}~\pageref{#1}}}%
+\ifthenelse{\equal{\curtlabtype}{chapter}}{ab Seite}{auf Seite}~\pageref{#1}}}%
 \renewcommand*\cref@vref[2]{%
   \expandafter\ifx\csname r@#2\endcsname\relax % <<<<<<<< test if label is defined
   \else
@@ -63,17 +65,26 @@ Seite}~\pageref{#1}}}%
 }
 
 \makeatother
+%
 % from now one you can change the order again
+%
 
+%
 % Speed up build process
 % Uses externalization feature of tikz
+%
 \usetikzlibrary{external}
 \tikzexternalize[shell escape=-enable-write18,optimize command away=\includepdf, prefix=tmp/]
 
+%
 % Paragraph styling
+%
 \titleformat{\paragraph}[hang]{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{0.5em}
 
+%
+% Set link styling
+%
 \hypersetup{colorlinks=false,pdfborder={0 0 0 [0 0]}}
 
 \pgfplotsset{compat=1.10}
