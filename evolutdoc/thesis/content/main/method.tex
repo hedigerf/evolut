@@ -8,20 +8,43 @@
 
   \section{Design der Individuen}
 
-    Der Ansatz für das Design der Individuen wird angelehnt an \Glspl{Hexapod}, ein Unterstamm der Gliederfüsser.
+    Der Ansatz für das Design der Individuen wird angelehnt an \Glspl{Hexapod}.
+    Insbesondere für die Bewegung werden Ameisen als Vorbild verwendet.
+    Diese nutzen eine einfache Art der Fortbewegung.
 
     \subsection{Körper\label{sub:DesignBody}}
 
-      Die erste Frage welche sich stellt ist, wie der Körper beschrieben werden kann.
+      Der Körper einer Ameise ist in mehrere Abschnitte unterteilt.
+      Ein Abschnitt ist jeweils zuständig für eine bestimmte Aufgabe.
+      Am Kopf sind sowohl Sinnesorgane als auch die Kieferzangen vorhanden.
+      Dieser Teil des Ameisenkörpers übernimmt die Aufgabe der Nahrungsaufnahme und Verarbeitung von Sinnesreizen,
+      die von den Augen und Fühlern erfasst werden.
+      Im Hinterteil ist der Verdauungstrakt lokalisiert.
       \\
-      Ein Körper eines Individuums wird mit einem Polygon aus n Punkten gebildet.
-      Die Mindestanzahl solcher Punkte wird auf 4 in einem ersten Schritt festgelegt.
-      Die Obergrenze bei 8.
-      Dies gibt dem Körper eine polygon-artige Figur.
+      Diese Unterteilung in spezialisierte Abschnitte des Körpers wird nicht übernommen.
+      Da die artifiziell generierten Tiere weder Nahrungsaufnahme und -verarbeitung,
+      noch visuelle Sinneswahrnehmung haben.
+      Ebenfalls soll die Form des Körpers frei evolvierbar bleiben.
+      Deshalb wird als Vereinfachung der Körper als Polygon mit n Punkte beschrieben.
+      \\
+      Als Einschränkung wird festgelegt, dass ein Polygon aus minimal 4 und maximal 8 Punkte generiert wird.
+      Diese Bedingung beschränkt sowohl den Rechenaufwand der Berechnung des Körpers während der Simulation,
+      als auch in der Mutationsphase.
+      Weiter wird festgelegt, dass das Polygon ein \gls{SimplePolygon} sein muss.
+      Ohne diese Bedingung könnten Körper generiert werden, deren Kanten sich überkreuzen.
+      Solche Körper werden als ungültig erachtet, da diese in der Natur nicht vorkommen.
 
       \begin{figure}[H]
         \centering
-        \input{graphics/concept-body}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \input{graphics/concept-body-n6}
+          \caption{6 Punkte\label{fig:ConceptBodyPoints6}}
+        \end{subfigure}
+        \qquad
+        \begin{subfigure}[b]{0.3\textwidth}
+          \input{graphics/concept-body-n8}
+          \caption{8 Punkte\label{fig:ConceptBodyPoints8}}
+        \end{subfigure}
         \caption{Konzept Körper\label{fig:ConceptBodyPoints}}
       \end{figure}
 
@@ -65,7 +88,7 @@
 
       \subsubsection{Masse\label{subs:Masse}}
 
-        Das ganze Individuum weisst eine konstante Masse von 1 auf \(m = 0\).
+        Das ganze Individuum weist eine konstante Masse von 1 auf \(m = 0\).
         Die Masse wird anhand der Fläche der einzelnen Körperteile aufgeteilt.
 
       \paragraph{Beispiel\label{par:MasseExample}}
@@ -133,7 +156,7 @@
 
       Der Phänotyp stell die Repräsentation des Genotyps in der Physik-Engine dar.
       Er setzt sich aus mehreren geometrischen Figuren zusammen.
-      Die Beine des Individuums werden mit Hilfe eines sogenannten ``revolute contraint'' an den Körper gebunden.
+      Die Beine des Individuums werden mit Hilfe eines sogenannten ``revolute constraint'' an den Körper gebunden.
       Ebenso wird der Ober- mit dem Unterschenkel verbunden.
       Ein ``revolute constraint'' ist ein Gelenk mit der Einschränkung,
       dass der Winkel zwischen den verbundenen Objekten innerhalb eines definierten Bereiches liegen muss.
