@@ -8,12 +8,13 @@
 
   \section{Design der Individuen}
 
+    Der Ansatz für das Design der Individuen ist an \Glspl{Hexapod} angelehnt.
+    Dabei sind viele Eigenschaften der Ameise in den Entwurf eingeflossen.
+    Sie bieten mit ihren 6 Beinen eine gute Kombination aus Stabilität und Einfachheit der Steuerung.
+
     \subsection{Körper\label{sub:DesignBody}}
 
-      Der Ansatz für das Design der Individuen ist an \Glspl{Hexapod} angelehnt.
-      Sie bieten mit ihren 6 Beinen eine gute Kombination aus Stabilität und Einfachheit der Steuerung.
-      \\
-      Ebenfalls soll die Form des Körpers frei evolvierbar bleiben.
+      Die Form des Körpers soll frei evolvierbar sein.
       Deshalb wird der Körper eines Individuums als Polygon mit n Punkten beschrieben.
       \\
       Als Einschränkung wird festgelegt, dass ein Polygon aus minimal 4 und maximal 8 Punkte generiert wird.
@@ -47,29 +48,24 @@
 
     \subsection{Beine\label{sub:Beine}}
 
-      %Da als Grundkonzept ein \gls{Hexapod} verwendet wird, wird die auch die Eigenschaft übernommen,
-    %dass das Individuum 6 Beine besitzt.
-      %Mit 6 Beinen
-
-      % TODO warum
-      %%\\
-      %Der Aufbau der Beine
-
-      % analog zur natur
-      % simplifikation -> kein fuss
-
-      Ein Bein ist am Körper mittels eines Hüftgelenkes angebracht.
-      Für die Position des Hüftgelenkes existiert nur die Bedinung,
-      dass das Gelenk innerhalb der Körperfläche angebracht sein muss.
+      Da als Grundkonzept ein \gls{Hexapod} verwendet wird, wird auch die Eigenschaft übernommen,
+      dass das Individuum 6 Beine besitzt.
+      Analog zu einer Ameise werden die Beine in 3 symmetrische Beinpaare aufgeteilt.
       \\
-      Ein Bein hat jeweils 2 Gelenke, eines welches es mit dem Körper verbindet,
-      das andere welches Ober- mit Unterschenkel verbindet.
-      Als Vereinfachung wird die Höhe des Gelenkes 0 gesetzt \(h_{a} = 0\).
-      Das Bein weisst eine Höhe \(h_{l}\) auf.
-      % TODO h_t, h_s, j_k, j_h
-      Die Gelenke verbinden jeweils den Körper mit dem Gelenk und Ober- mitUnterschenkel.
-      Es wird ein Höhenfaktor \(h_f\) bestimmt, welcher die Höhe des Unterschenkels definiert.
-      Die Breite des Beines wird als \(w_{l}\) bezeichnet.
+      Technisch bietet sich die Möglichkeit die Beine nicht in Paare zu gliedern und asymmetrisch am Körper anzubringen.
+      Doch in der Natur existiert eine solche Anordnung nicht, weshalb darauf verzichtet wird.
+      \\
+      Ein Bein ist unterteilt in Oberschenkel \(T\) und Unterschenkel \(S\).
+      Die Höhe \(h_{l}\) und Breite \(w_{l}\) des Beins sind limitiert.
+      Andernfalls ist anzunehmen, dass ungewünschte Resultate entstehen~\vref{sub:IntroReqLimit}.
+      \\
+      Im Genom bestimmt der Wert des Höhenfaktors \(h_{f}\)
+      wie das Verhältnis der Länge von Unterschenkel \(h_{s}\) zu Oberschenkel \(h_{t}\) ist.
+      Die Schenkel sind durch das Kniegelenk \(j_{k}\) miteinander verbunden.
+      Mit dem Hüfgelenk \(j_{h}\) wird das Bein mit dem Körper verbunden.
+      Für die Position des Hüftgelenkes existiert die Bedinung,
+      dass das Gelenk innerhalb der Körperfläche angebracht sein muss.
+      Zur Vereinfachung wird die Höhe jedes Gelenkes auf 0 festgelegt.
 
       \begin{figure}[H]
         \centering
@@ -77,24 +73,24 @@
         \caption{Konzept Bein\label{fig:conceptLeg}}
       \end{figure}
 
-      \subsubsection{Masse\label{subsub:Masse}}
+      \subsubsection{Masse\label{subsub:Mass}}
 
-        Das ganze Individuum weist eine konstante Masse von 1 auf \(m = 0\).
-        Die Masse wird anhand der Fläche der einzelnen Körperteile aufgeteilt.
+        Das ganze Individuum hat eine konstante Masse \(m\) von 1.
+        Diese Masse wird auf die einzelnen Körperteile aufgeteilt.
+        Als Verteilschlüssel dient die Fläche eines Teiles.
 
-      \paragraph{Beispiel\label{par:MasseExample}}
+        \paragraph{Beispiel\label{par:MassExample}}
 
-        Wenn die Fläche des Körpers zwei Einheiten gross ist und die Beine jeweils eine Einheit,
-        erfolgt folgende Berechnung:
-        \\
-        \\
-        \(m = 1\) \\
-        \(A_{Bein} = 1\) \\
-        \(A_{Körper} = 2\) \\
-        \(A_{total} = A_{Bein} * 6 + A_{Körper} = 8 \) \\
-        \( x = m / A_{total} = 0.125 \) \\
-        \(m_{Bein} = x * A_{Bein} = 0.125\) \\
-        \(m_{Körper} = x * A_{Körper} = 0.25\) \\
+          Sei die Fläche eines Körpers \(a_{b} = 2 \) und die eines Beines jeweils \(a_{l} = 1\),
+          dann werden die Massen \(m_{b}\) und \(m_{l}\) wie folgt berechnet:
+
+          \begin{gather*}
+            m = 1, a_{l} = 1, a_{b} = 2 \\
+            a = a_{l} * 6 + a_{b} = 8 \\
+            x = m / a = 0.125 \\
+            m_{l} = x * a_{l} = 0.125 \\
+            m_{b} = x * a_{b} = 0.25
+          \end{gather*}
 
     \subsection{Genotyp\label{sub:Genotype}}
 
@@ -147,17 +143,20 @@
 
     \subsection{Phänotyp\label{sub:Phenotyp}}
 
+      % TODO
+
       Der Phänotyp stell die Repräsentation des Genotyps in der Physik-Engine dar.
       Er setzt sich aus mehreren geometrischen Figuren zusammen.
-      Die Beine des Individuums werden mit Hilfe eines sogenannten ``revolute constraint'' an den Körper gebunden.
-      Ebenso wird der Ober- mit dem Unterschenkel verbunden.
-      Ein ``revolute constraint'' ist ein Gelenk mit der Einschränkung,
-      dass der Winkel zwischen den verbundenen Objekten innerhalb eines definierten Bereiches liegen muss.
+      Die Beine des Individuums werden mit Hilfe eines Drehgelenks an den Körper gebunden.
       Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird zum eine Bewegung in Gang zu setzten.
+
+    % =====================================================================
+    % MOTOR
+    % =====================================================================
 
     \subsection{Motor\label{sub:Engine}}
 
-      Der Bewegungsablauf wird durch einen ``joint-driven'' Bewegungsmotor realisiert.
+      Der Bewegungsablauf wird durch einen \gls{JointDriven} Bewegungsmotor realisiert.
       Der Bewegungsmotor kontrolliert die Bewegung eines Phänotyps indem die Motoren der Hüft- und
       Knie-Gelenke gesteuert werden.
 
@@ -299,6 +298,10 @@
         oder wenn ein Anstieg oder Abstieg bevorsteht.
         \\
 
+    % =====================================================================
+    % /MOTOR
+    % =====================================================================
+
     \subsection{Notwendige zusätzliche Implementierungen}
 
       Die Physik-Engine enthält mehrere Fehler, deren Korrektur nicht die Aufgabe dieser Bachelorarbeit ist.
@@ -436,12 +439,13 @@
     Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen~(\vref{fig:hauptSimuProzesse}).
     In~\vref{sub:domMod} sind die jeweiligen Zusammenhänge der Klassen und Objekte ausführlicher beschrieben.
     \vref{fig:ablauf} beschreibt den generellen Ablauf als Flussdiagramm
+
     \begin{figure}[H]
-      \includegraphics[scale=0.45]{graphics/haupt_simulations_prozess}
+      \includegraphics[scale=0.45,center]{graphics/haupt_simulations_prozess}
       \caption{Haupt- und Simulationsprozess\label{fig:hauptSimuProzesse}}
     \end{figure}
     \begin{figure}[H]
-      \includegraphics[scale=0.45]{graphics/ablauf}
+      \includegraphics[scale=0.45,center]{graphics/ablauf}
       \caption{Ablauf der Simulation\label{fig:ablauf}}
     \end{figure}
 
@@ -460,7 +464,7 @@
       Der Parcours wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcours generiert.
       Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours,
       dass heisst es werden höhere Steigungen und Punkte mit höheren Y-Koordinaten vorkommen.
-      \vref{fig:parcours1}, \vref{fig:parcours2} und \vref{fig:parcours3} zeigen wie der Parcours mit zunehmenden Generationen schwieriger wird.
+      \vref{fig:parcours1},~\vref{fig:parcours2} und~\vref{fig:parcours3} zeigen wie der Parcours mit zunehmenden Generationen schwieriger wird.
       Dazu muss eine Klasse erstellt werden (ParcourGenerator),
       welche mit Hilfe von Obergrenzen von Werten einen Parcours generieren kann.
       Wie unter~\ref{sec:Konfiguration} erwähnt,
@@ -561,10 +565,10 @@
       Das Domänenmodell beschreibt den Zusammenhang der verschiedenen Klassen und Objekten.
       Abbildung~\ref{fig:mainProcess} beschreibt den Haupt- und Abbildung~\ref{fig:simulationProcess} den Simulationsprozess.
       \begin{figure}[H]
-        \includegraphics[scale=0.6]{graphics/main_process}
+        \includegraphics[scale=0.6,center]{graphics/main_process}
         \caption{Domänen Modell, Hauptprozess\label{fig:mainProcess}}
       \end{figure}
       \begin{figure}[H]
-        \includegraphics[scale=0.6]{graphics/simulation_process}
+        \includegraphics[scale=0.6,center]{graphics/simulation_process}
         \caption{Domänen Modell, Simulationsprozess\label{fig:simulationProcess}}
       \end{figure}
