@@ -258,26 +258,28 @@
 
     Es stehen 4 Typen von Evolutionäre Algorithmen zur Auswahl:
     \begin{itemize}
-      \item Genetische Programmierung~\ref{item:genProg}
-      \item Genetischer Algorithmus~\ref{item:genAlgo}
-      \item Evolutionäre Strategie~\ref{item:evStrat}
-      \item Evolutionäre Programmierung~\ref{item:evProg}
+      \item Genetische Algorithmen~(GA)~(\vref{item:genAlgo})
+      \item Genetische Programmierung~(GP)~(\vref{item:genProg})
+      \item Evolutionäre Programmierung~(EP)~(\vref{item:evProg})
+      \item Evolutionäre Strategien~(ES)~(\vref{item:evStrat})
     \end{itemize}
-    Um die Problemstellung zu lösen, wurde entschieden Evolutionäre Programmierung einzusetzen
-    Warum Evolutionäre Programmierung eingesetzt wird, wird nachfolgend erläutert.
-    Das Austauschen der Genen, Rekombination, macht keinen Sinn wenn man Individuen das Laufen beibringt.
-    Man stelle sich dazu vor, man tausche das Gen welches den Körper definiert, mit dem der Beine.
+    %Um die Problemstellung zu lösen, wurde entschieden Evolutionäre Programmierung einzusetzen
+    Das Austauschen der Genen (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
+    Man stelle sich dazu vor, dass das Gen welches den Körper definiert, wird mit dem des Motors vertauscht.
+    Rekombination kann für die Verwendung somit ausgeschlossen werden.
     Dies stellt schon den ersten Indikator dafür da,
     dass Evolutionäre Programmierung eingesetzt werden kann.
     Ein weiteres Kriterium ist die genetische Repräsentation.
     Da unser Individuum sich aus Punkten im einem Koordinatensystem,
-    verschiedene Winkel und einem Antrieb (Motor) definiert, wird die reale Werte Repräsentation eingesetzt.
-    Eine Baumrepräsentation oder binäre Repräsentation erscheint hier wenig gewinnbringend.
+    verschiedene Winkel und einem Antrieb (Motor) definiert, wird die Reale-Werte-Repräsentation eingesetzt.
+    Eine Baumrepräsentation oder binäre Repräsentation erscheint hier wenig hilfreich.
     Ein Punkt ist nichts anderes als zwei reale Werte,
     ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
-    Die Problemstellung würde wahrscheinlich anders bewältigt werden,
+    Die Problemstellung würde wahrscheinlich anderst bewältigt werden,
     würde es hier um reale Kreaturen gehen und nicht nur um virtuelle Roboter,
     welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
+    Die Genetik ist in diesem Falle also vernachläsigbar.
+    Schlussendlich wurde entschiedendie Problemstellung, auf Grund der gelieferten Argumente, mit evolutionärer Programmierung zu lösen.
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
 
