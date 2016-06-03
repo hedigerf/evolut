@@ -8,24 +8,13 @@
 
   \section{Design der Individuen}
 
-    Der Ansatz für das Design der Individuen wird angelehnt an \Glspl{Hexapod}.
-    Insbesondere für die Bewegung werden Ameisen als Vorbild verwendet.
-    Diese nutzen eine einfache Art der Fortbewegung.
-
     \subsection{Körper\label{sub:DesignBody}}
 
-      Der Körper einer Ameise ist in mehrere Abschnitte unterteilt.
-      Ein Abschnitt ist jeweils zuständig für eine bestimmte Aufgabe.
-      Am Kopf sind sowohl Sinnesorgane als auch die Kieferzangen vorhanden.
-      Dieser Teil des Ameisenkörpers übernimmt die Aufgabe der Nahrungsaufnahme und Verarbeitung von Sinnesreizen,
-      die von den Augen und Fühlern erfasst werden.
-      Im Hinterteil ist der Verdauungstrakt lokalisiert.
+      Der Ansatz für das Design der Individuen ist an \Glspl{Hexapod} angelehnt.
+      Sie bieten mit ihren 6 Beinen eine gute Kombination aus Stabilität und Einfachheit der Steuerung.
       \\
-      Diese Unterteilung in spezialisierte Abschnitte des Körpers wird nicht übernommen.
-      Da die artifiziell generierten Tiere weder Nahrungsaufnahme und -verarbeitung,
-      noch visuelle Sinneswahrnehmung haben.
       Ebenfalls soll die Form des Körpers frei evolvierbar bleiben.
-      Deshalb wird als Vereinfachung der Körper als Polygon mit n Punkte beschrieben.
+      Deshalb wird der Körper eines Individuums als Polygon mit n Punkten beschrieben.
       \\
       Als Einschränkung wird festgelegt, dass ein Polygon aus minimal 4 und maximal 8 Punkte generiert wird.
       Diese Bedingung beschränkt sowohl den Rechenaufwand der Berechnung des Körpers während der Simulation,
@@ -51,18 +40,20 @@
       \subsubsection{Hypothese Körperpunkte\label{subsub:hypoKp}}
 
         Es wird die Hypothese aufgestellt,
-        dass sich ein Individuum mit 8 Körperpunkten schneller durch den Parcours bewegen kann,
+        dass sich ein Individuum mit 8 Körperpunkten schneller durch den Parcours bewegt,
         als ein Individuum mit weniger Körperpunkten.
-        Die Vermutung dabei ist, dass durch die komplexere Form des Individuums,
-        die Balance besser gehalten werden kann.
-        Die Resultate werden im Kapitel~\ref{chap:Resultate} diskutiert.
+        Die Vermutung dabei ist, dass durch die komplexere Form des Individuums die Balance besser gehalten werden kann.
+        Im Kapitel~\ref{chap:Resultate} werden die Resultate diskutiert.
 
     \subsection{Beine\label{sub:Beine}}
 
-      % Begründung warum 6?
-      % Zitat
-      Insgesamt weisen die Individuen 6 Beine auf.
-      Ein Beinpaar ist symmetrisch.
+      Da als Grundkonzept ein \gls{Hexapod} verwendet wird, wird die auch die Eigenschaft übernommen,
+      dass das Individuum 6 Beine besitzt.
+      Mit 6 Beinen
+
+      % TODO warum
+      \\
+      Der Aufbau der Beine
 
       % analog zur natur
       % simplifikation -> kein fuss
@@ -86,7 +77,7 @@
         \caption{Konzept Bein\label{fig:conceptLeg}}
       \end{figure}
 
-      \subsubsection{Masse\label{subs:Masse}}
+      \subsubsection{Masse\label{subsub:Masse}}
 
         Das ganze Individuum weist eine konstante Masse von 1 auf \(m = 0\).
         Die Masse wird anhand der Fläche der einzelnen Körperteile aufgeteilt.
@@ -119,6 +110,8 @@
         ohne dass die Implementation der seed-Funktion angepasst werden muss.
 
       \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
+
+        % glossar
 
         Das zufällige Erstellen eines Genotyps wird ``seeding'' genannt.
         Zu Beginn der Simulation wird die initale Population mit zufällig generierten Individuen erstellt.
@@ -168,6 +161,9 @@
       Der Bewegungsmotor kontrolliert die Bewegung eines Phänotyps indem die Motoren der Hüft- und
       Knie-Gelenke gesteuert werden.
 
+      %
+      % All movements
+      %
       \begin{figure}[H]
         \centering
 
