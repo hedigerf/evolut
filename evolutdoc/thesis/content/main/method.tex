@@ -143,17 +143,20 @@
 
     \subsection{Phänotyp\label{sub:Phenotyp}}
 
+      % TODO
+
       Der Phänotyp stell die Repräsentation des Genotyps in der Physik-Engine dar.
       Er setzt sich aus mehreren geometrischen Figuren zusammen.
-      Die Beine des Individuums werden mit Hilfe eines sogenannten ``revolute constraint'' an den Körper gebunden.
-      Ebenso wird der Ober- mit dem Unterschenkel verbunden.
-      Ein ``revolute constraint'' ist ein Gelenk mit der Einschränkung,
-      dass der Winkel zwischen den verbundenen Objekten innerhalb eines definierten Bereiches liegen muss.
+      Die Beine des Individuums werden mit Hilfe eines Drehgelenks an den Körper gebunden.
       Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird zum eine Bewegung in Gang zu setzten.
+
+    % =====================================================================
+    % MOTOR
+    % =====================================================================
 
     \subsection{Motor\label{sub:Engine}}
 
-      Der Bewegungsablauf wird durch einen ``joint-driven'' Bewegungsmotor realisiert.
+      Der Bewegungsablauf wird durch einen \gls{JointDriven} Bewegungsmotor realisiert.
       Der Bewegungsmotor kontrolliert die Bewegung eines Phänotyps indem die Motoren der Hüft- und
       Knie-Gelenke gesteuert werden.
 
@@ -294,6 +297,10 @@
         muss zusätzlich eine Rückmeldung an den Motor erfolgen, wenn sich die Art des Untergrundes ändert
         oder wenn ein Anstieg oder Abstieg bevorsteht.
         \\
+
+    % =====================================================================
+    % /MOTOR
+    % =====================================================================
 
     \subsection{Notwendige zusätzliche Implementierungen}
 
