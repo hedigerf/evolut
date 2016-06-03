@@ -51,21 +51,21 @@
       Da als Grundkonzept ein \gls{Hexapod} verwendet wird, wird auch die Eigenschaft übernommen,
       dass das Individuum 6 Beine besitzt.
       Analog zu einer Ameise werden die Beine in 3 symmetrische Beinpaare aufgeteilt.
+      \\
       Technisch bietet sich die Möglichkeit die Beine nicht in Paare zu gliedern und asymmetrisch am Körper anzubringen.
-      Doch in der Natur existiert eine solche Anordnung nicht, weshalb darauf verzichtet wurde.
+      Doch in der Natur existiert eine solche Anordnung nicht, weshalb darauf verzichtet wird.
       \\
-      Ein Bein ist am Körper mittels eines Hüftgelenkes angebracht.
-      Für die Position des Hüftgelenkes existiert nur die Bedinung,
+      Ein Bein ist unterteilt in Oberschenkel \(T\) und Unterschenkel \(S\).
+      Die Höhe \(h_{l}\) und Breite \(w_{l}\) des Beins sind limitiert.
+      Andernfalls ist anzunehmen, dass ungewünschte Resultate entstehen~\vref{sub:IntroReqLimit}.
+      \\
+      Im Genom bestimmt der Wert des Höhenfaktors \(h_{f}\)
+      wie das Verhältnis der Länge von Unterschenkel \(h_{s}\) zu Oberschenkel \(h_{t}\) ist.
+      Die Schenkel sind durch das Kniegelenk \(j_{k}\) miteinander verbunden.
+      Mit dem Hüfgelenk \(j_{h}\) wird das Bein mit dem Körper verbunden.
+      Für die Position des Hüftgelenkes existiert die Bedinung,
       dass das Gelenk innerhalb der Körperfläche angebracht sein muss.
-      \\
-      Ein Bein hat jeweils 2 Gelenke, eines welches es mit dem Körper verbindet,
-      das andere welches Ober- mit Unterschenkel verbindet.
-      Als Vereinfachung wird die Höhe des Gelenkes 0 gesetzt \(h_{a} = 0\).
-      Das Bein weisst eine Höhe \(h_{l}\) auf.
-      % TODO h_t, h_s, j_k, j_h
-      Die Gelenke verbinden jeweils den Körper mit dem Gelenk und Ober- mitUnterschenkel.
-      Es wird ein Höhenfaktor \(h_f\) bestimmt, welcher die Höhe des Unterschenkels definiert.
-      Die Breite des Beines wird als \(w_{l}\) bezeichnet.
+      Zur Vereinfachung wird die Höhe jedes Gelenkes auf 0 festgelegt.
 
       \begin{figure}[H]
         \centering
@@ -73,24 +73,24 @@
         \caption{Konzept Bein\label{fig:conceptLeg}}
       \end{figure}
 
-      \subsubsection{Masse\label{subsub:Masse}}
+      \subsubsection{Masse\label{subsub:Mass}}
 
-        Das ganze Individuum weist eine konstante Masse von 1 auf \(m = 0\).
-        Die Masse wird anhand der Fläche der einzelnen Körperteile aufgeteilt.
+        Das ganze Individuum hat eine konstante Masse \(m\) von 1.
+        Diese Masse wird auf die einzelnen Körperteile aufgeteilt.
+        Als Verteilschlüssel dient die Fläche eines Teiles.
 
-      \paragraph{Beispiel\label{par:MasseExample}}
+        \paragraph{Beispiel\label{par:MassExample}}
 
-        Wenn die Fläche des Körpers zwei Einheiten gross ist und die Beine jeweils eine Einheit,
-        erfolgt folgende Berechnung:
-        \\
-        \\
-        \(m = 1\) \\
-        \(A_{Bein} = 1\) \\
-        \(A_{Körper} = 2\) \\
-        \(A_{total} = A_{Bein} * 6 + A_{Körper} = 8 \) \\
-        \( x = m / A_{total} = 0.125 \) \\
-        \(m_{Bein} = x * A_{Bein} = 0.125\) \\
-        \(m_{Körper} = x * A_{Körper} = 0.25\) \\
+          Sei die Fläche eines Körpers \(a_{b} = 2 \) und die eines Beines jeweils \(a_{l} = 1\),
+          dann werden die Massen \(m_{b}\) und \(m_{l}\) wie folgt berechnet:
+
+          \begin{gather*}
+            m = 1, a_{l} = 1, a_{b} = 2 \\
+            a = a_{l} * 6 + a_{b} = 8 \\
+            x = m / a = 0.125 \\
+            m_{l} = x * a_{l} = 0.125 \\
+            m_{b} = x * a_{b} = 0.25
+          \end{gather*}
 
     \subsection{Genotyp\label{sub:Genotype}}
 

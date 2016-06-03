@@ -4,17 +4,19 @@
 
 % !TEX root = ../main.tex
 
-\begin{tikzpicture}[scale=\textwidth/12cm]
+\begin{tikzpicture}[scale=\textwidth/12cm,trim right=(HS)]
 
   % Draw shank
   \coordinate (A) at (1,0);
   \coordinate (B) at (1.5,1.8);
   \draw (A) rectangle (B);
+  \draw (1.25,0.9) node {S};
 
   % Draw thigh
   \coordinate (C) at (1,1.8);
   \coordinate (D) at (1.5,4);
   \draw (C) rectangle (D);
+  \draw (1.25,2.95) node {T};
 
   % Draw hip joint
   \draw [blue,thick] (1.25,4) circle [x radius=0.3cm, y radius=0.05cm] node [text=black, above] {$j_h$};
