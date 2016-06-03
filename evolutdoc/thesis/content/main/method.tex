@@ -328,8 +328,8 @@
     \end{itemize}
     %Um die Problemstellung zu lösen, wurde entschieden Evolutionäre Programmierung einzusetzen
     Das Austauschen der Genen (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
-    Man stelle sich dazu vor, dass das Gen welches den Körper definiert, wird mit dem des Motors vertauscht.
-    Rekombination kann für die Verwendung somit ausgeschlossen werden.
+    Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird.
+    So kann keine sinnvolle Evolution statt finde. Rekombination kann für die Verwendung somit ausgeschlossen werden.
     Dies stellt schon den ersten Indikator dafür da,
     dass Evolutionäre Programmierung eingesetzt werden kann.
     Ein weiteres Kriterium ist die genetische Repräsentation.
@@ -453,8 +453,8 @@
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewhält werden.
       Pro Simulationsprozess können etwa 15 Individuuen flüssig berechnet werden.
       Dies bedeutet das die optimale Populationsgrösse  \( Anzahl(CPU Kerne) * 15 \) beträgt.
-      Dieser Wert wurde durch mehrere Versüche mit verschiedenen CPUs gefunden.
-      Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~\ref{sub:DesignBody} generiert.
+      Dieser Wert wurde durch mehrere Versüche mit unterschiedlichen CPUs gefunden.
+      Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~(\vref{sub:DesignBody}) generiert.
       Die Verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
 
@@ -462,7 +462,8 @@
 
       Der Parcours wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcours generiert.
       Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours,
-      das heisst es werden höhere Steigungen und ein höherer Punkt vorkommen.
+      dass heisst es werden höhere Steigungen und Punkte mit höheren Y-Koordinaten vorkommen.
+      \vref{fig:parcours1}, \vref{fig:parcours2} und \vref{fig:parcours3} zeigen wie der Parcours mit zunehmenden Generationen schwieriger wird.
       Dazu muss eine Klasse erstellt werden (ParcourGenerator),
       welche mit Hilfe von Obergrenzen von Werten einen Parcours generieren kann.
       Wie unter~\ref{sec:Konfiguration} erwähnt,
@@ -471,7 +472,27 @@
       Der Parcours wird im ParcourGenerator generiert (Haupt Prozess) und
       von den jeweiligen Worker mit Hilfe vom ParcourCreator in der Physik Engine erstellt.
 
-    \subsection{Simulation\label{sec:simulation}}
+      \vspace{1cm}
+
+      \begin{figure}[H]
+        \centering
+        \input{graphics/parcours-1}
+        \caption{flacher Start-Parcour 1. Generation\label{fig:parcours1}}
+      \end{figure}
+
+      \begin{figure}[H]
+        \centering
+        \input{graphics/parcours-2}
+        \caption{Parcour 100. Generation\label{fig:parcours2}}
+      \end{figure}
+
+      \begin{figure}[H]
+        \centering
+        \input{graphics/parcours-3}
+        \caption{Parcour 1000. Generation\label{fig:parcours3}}
+      \end{figure}
+
+      \subsection{Simulation\label{sec:simulation}}
 
       Nachdem eine neue Population und ein neuer Parcours erstellt worden ist.
       Muss eine Simulation durchgeführt werden um den Fitnesswert der Individuen zu bestimmen.
