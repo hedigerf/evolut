@@ -535,7 +535,7 @@
       Turnierbasierte-Selektion hat den Vorteil, dass die Diversität erhalten bleibt,
       bei gleichzeitig guter Selektion der fittesten Individuen.
       Auf Grund der Empfehlung von D. Floreano und C. Mattiussi und der Erhaltung der Diversität wurde entschieden, Turnierbasierte-Selektion einzusetzen.
-
+        %%%streichen
       \subsubsection{Hypothese Selektionsstrategie\label{sub:Hypothese Selektionsstrategie}}
 
         Es wird die Hypothese aufgestellt,
@@ -550,15 +550,15 @@
       diese wird mit einer bestimmten Wahrscheinlichkeit (PROBABILITY) und um einen bestimmten Wert (STEP) verändert.
       PROBABILITY kann Werte zwischen 0 und 1 annehmen, STEP hat keine Einschränkungen.
       Nachdem für jedes Attribut diese Werte definiert worden sind, kann die Mutation stattfinden.
-      Limiten~(\vref{}) wurden definiert, um nicht gewinnbringende Lösung zu verhindern.
+      Limiten~(\vref{sub:IntroReqLimit}) wurden definiert, um nicht gewinnbringende Lösung zu verhindern.
       Die Position eines Beins wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
       dass ein Bein ausserhalb des Körpers ist, wird die Position zufällig neu bestimmt.
-      Die Mutation läuft wie die Simulation parallel ab, das heisst, sie kann von mehreren Kernen in einem Prozessor profitieren.
+      Die Mutation läuft wie die Simulation parallel ab, das heisst, sie kann von mehreren CPU-Kernen profitieren.
 
     \subsection{Wiederholungen}
 
       Alle Schritte (ausser die Generierung der initialen Population) werden solange ausgeführt,
-      bis ein zufriedenstellendes Resultat gefunden wird.
+      bis der Anwender der Applikation entscheidet, die Applikation zu beenden.
 
     \subsection{Domänenmodel\label{sub:domMod}}
 
