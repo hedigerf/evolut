@@ -520,7 +520,7 @@
       Die Simulation merkt sich zu jedem Individuum die Position.
       Individuen welche sich während 4 Sekunden kaum bewegt haben,
       werden aus der Simulation entfernt und ihr Fitnesswert wird abgespeichert.
-      Die Simulation kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden.
+      Die Simulation kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
       Es wird dann jeweils für \( Populationsgrösse / Anzahl Simulationsprozesse \) Individuen eine eigene Simulation erstellt.
       Die Kommunikation zwischen Simulationsprozessen und Hauptprozess erfolgt über asynchrones Messaging.
 
@@ -532,8 +532,9 @@
       \begin{itemize}
         \item Fitness Graph Average Report: Enthält Koordinaten um einen Graph über die durchschnittliche Fitness pro Generation zu erstellen.
         \item Fitness Graph Best Report: Enthält Koordinaten um einen Graph über das beste Individuum der Generation zu erstellen.
-        \item Genotype Blue Print Report: Enthält pro Generation ein JSON das Informationen über die ganze Population enthält.
+        \item Genotype Blue Print Report: Enthält pro Generation ein \gls{JSON} das Informationen über die ganze Population enthält.
         \item Fitness Graph Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit Body Points Anzahl x.
+              Ansonsten gleich wie der Fitness Graph Average Report.
         \item Diversity Report: Enthält die Berechnung der Punktstreuung für jeweils eine Generation. Die Punktstreuung berechnet sich wie folgt:
         \begin{itemize}
           \item Erstellung von Vektoren der Genome. Jede Eigenschaft des Genoms wird in einen numerischen Wert konvertiert. \( V_d \)
@@ -543,21 +544,20 @@
           \item Nun werden alle \(V_{d2}\) normiert, quadriert \( norm{(V_{d2})}^2 = d \)
           \item Abschliessend werden alle \(d\) zusammengezählt und durch \(Anzahl(V_d)\) dividiert. So erhält man ein Mass für die Punktestreuung.
         \end{itemize}
-        Ansonsten gleich wie Fitness Graph Average Report.
       \end{itemize}
 
     \subsection{Selektion\label{sec:Selektion}}
-
-      Als Selektionsstrategie wird tournament-based selection eingesetzt~\ref{par:Turnier}.
-      turnierbasierte Selektion hat den Vorteil, dass die Diversität erhalten bleibt,
+      D. Floreano und C. Mattiussi~\cite[S.33]{book:bioInspired} schreiben, dass Turnierbasierte-Selektion oft bei evolutinärer Programmierung eingesetzt wird.
+      Turnierbasierte-Selektion hat den Vorteil, dass die Diversität erhalten bleibt,
       bei gleichzeitig guter Selektion der fittesten Individuen.
-
+      Auf Grund der Empfehlung von D. Floreano und C. Mattiussi und der Erhaltung der Diversität wurde entschieden, Turnierbasierte-Selektion einzusetzen.
+        %%%streichen
       \subsubsection{Hypothese Selektionsstrategie\label{sub:Hypothese Selektionsstrategie}}
 
         Es wird die Hypothese aufgestellt,
-        dass turnierbasierte Selektion die besseren Resultate liefert im Vergleich zu den folgenden Selektionsstrategien: X und Y.
-        Um dies zu validieren werden die Selektionsstrategien X und Y implementiert und anschliessend analysiert.
-        Ob dies zutrifft wird in Kapitel~\ref{chap:Resultate} diskutiert.
+        dass turnierbasierte Selektion die besseren Resultate liefert im Vergleich zu den folgenden Selektionsstrategien: Rangbasierte Selektion und proportionale Selektion.
+        Um dies zu validieren ist es erforderlich die Selektionsstrategien rangbasierte Selektion und proportionale Selektion zu implementieren.
+        Ob dies zutrifft wird in Kapitel~\ref{chap:Diskussion} diskutiert.
 
     \subsection{Mutation\label{sec:Mutation}}
 
@@ -566,16 +566,15 @@
       diese wird mit einer bestimmten Wahrscheinlichkeit (PROBABILITY) und um einen bestimmten Wert (STEP) verändert.
       PROBABILITY kann Werte zwischen 0 und 1 annehmen, STEP hat keine Einschränkungen.
       Nachdem für jedes Attribut diese Werte definiert worden sind, kann die Mutation stattfinden.
-      Grenzen wurden definiert, um nicht gewinnbringende Lösung zu verhindern.
-      Solch ein Limit wurde jeweils für die Länge und Breite der Beine aufgestellt.
+      Limiten~(\vref{sub:IntroReqLimit}) wurden definiert, um nicht gewinnbringende Lösung zu verhindern.
       Die Position eines Beins wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
       dass ein Bein ausserhalb des Körpers ist, wird die Position zufällig neu bestimmt.
-      Die Mutation läuft wie die Simulation parallel ab, das heisst, sie kann von mehreren Kernen in einem Prozessor profitieren.
+      Die Mutation läuft wie die Simulation parallel ab, das heisst, sie kann von mehreren CPU-Kernen profitieren.
 
     \subsection{Wiederholungen}
 
       Alle Schritte (ausser die Generierung der initialen Population) werden solange ausgeführt,
-      bis ein zufriedenstellendes Resultat gefunden wird.
+      bis der Anwender der Applikation entscheidet, die Applikation zu beenden.
 
     \subsection{Domänenmodel\label{sub:domMod}}
 
