@@ -322,26 +322,35 @@
   \section{Konfiguration\label{sec:Konfiguration}}
 
     Die Applikation lässt sich mit diversen Parametern konfigurieren.
-    Es werden nur die wichtigsten hier diskutiert.
-    Es kann ausgewählt werden, ob die allgemeine Lösung gefunden werden kann oder
-    ob auf Evolvierbarkeit evolviert wird. Bei der allgemeinen Lösung wird der Parcours
-    nach jeder Generation neu generiert Bei der Evaluation auf Evolvierbarkeit
+    Es wird eine Konfigurationstabelle~(\vref{tbl:simulation-parameters-general}) eingeführt,
+    welche auch im Kapitel Resultate~(\vref{chap:Resultate}) vewendet wird,
+    um die jeweilige Konfiguration der Simulation zu diskutieren. In der Konfigurationstabelle werden nur die Parameter erwähnt,
+    welche relevant für den Algorithmus sind. Bei der allgemeinen Lösung wird der Parcours
+    nach jeder Generation neu generiert. Bei der Evaluation auf Evolvierbarkeit
     wird der Parcours nur dann neu generiert, wenn sich die Schwierigkeit des Parcours ändert.
-    Die Schwierigkeit des Parcours wird definiert durch die maximale Steigung und die höchste Position.
-    Ebenso kann die Populationsgrösse definiert werden und wie viele Prozesse für die Simulation und Mutation benutzt werden.
-    Am sinnvollsten ist es, wenn die Anzahl der Prozesse, der Anzahl Kerne des Prozessors entspricht.
-    Die Relaxation, ein Parameter von p2.js, kann auch konfiguriert werden.
-    Der Parameter beschreibt die Anzahl von Zeitschritten um eine Constraint Gleichung zu stabilisieren.
-    Die Grösse des Zeitschritts lässt sich ebenfalls einstellen.
-    Wenn man den Zeitschritt halbiert muss die Relaxation mit dem
-    Faktor 4 multipliziert werden.
+
+    \begin{table}[H]
+      \input{tables/simulation-parameters-general.tex}
+      \caption{Konfigurationstabelle Simulation\label{tbl:simulation-parameters-general}}
+    \end{table}
+
+    \subsection{Technische Parameter}
+      Ein wichtiger technischer Parameter ist die Anzahl der eingesetzten Simulationsprozesse~(\vref{sec:Ablauf}).
+      Durch die Erhöhung dieses Parameters kann von mehreren CPU-Kernen profitiert, somit lässt sich die Simulatiom~(\vref{sec:simulation}) und Mutation~(\vref{sec:Mutation}) parallelisieren.
+      Optimal ist es diesen Wert auf die Anzahl verfügbarer CPU-Kerne zu setzen.
+      Die Grösse des Zeitschritts~\cite{bullet:steppingTheWorld} der Physik-Engine lässt sich ebenfalls einstellen.
+      %Wenn man den Zeitschritt halbiert muss die Relaxation mit dem Faktor 4 multipliziert werden.
+      Die Relaxation kann auch konfiguriert werden. Der Parameter beschreibt die Anzahl von Zeitschritten um eine Constraint-Gleichung~\cite{gamedev:constraints} zu stabilisieren.
+      Die Stiffness ist der letzte wichtige technische Parameter. Man kann sich die Stiffness als Steifheit einer Feder vorstellen.
+      Sie beschreibt wie steif alle Element der Simulation sich verhalten sollen.
+
 
   \section{Ablauf\label{sec:Ablauf}}
 
     Der Ablauf der Applikation setzt sich aus mehreren Komponenten zusammen.
-    Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen (siehe Abbildung~\ref{fig:hauptSimuProzesse}).
-    Unter~\ref{sub:domMod} sind die jeweiligen Zusammenhänge der Klassen und Objekte ausführlicher beschrieben.
-    Abbildung~\ref{fig:ablauf} beschreibt den generellen Ablauf als Flussdiagramm
+    Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen~(\vref{fig:hauptSimuProzesse}).
+    In~\vref{sub:domMod} sind die jeweiligen Zusammenhänge der Klassen und Objekte ausführlicher beschrieben.
+    \vref{fig:ablauf} beschreibt den generellen Ablauf als Flussdiagramm
     \begin{figure}[H]
       \includegraphics[scale=0.45]{graphics/haupt_simulations_prozess}
       \caption{Haupt- und Simulationsprozess\label{fig:hauptSimuProzesse}}
@@ -356,6 +365,7 @@
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewhält werden.
       Pro Simulationsprozess können etwa 15 Individuuen flüssig berechnet werden.
       Dies bedeutet das die optimale Populationsgrösse  \( Anzahl(CPU Kerne) * 15 \) beträgt.
+      Dieser Wert wurde durch mehrere Versüche mit verschiedenen CPUs gefunden.
       Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~\ref{sub:DesignBody} generiert.
       Die Verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
@@ -373,7 +383,7 @@
       Der Parcours wird im ParcourGenerator generiert (Haupt Prozess) und
       von den jeweiligen Worker mit Hilfe vom ParcourCreator in der Physik Engine erstellt.
 
-    \subsection{Simulation}
+    \subsection{Simulation\label{sec:simulation}}
 
       Nachdem eine neue Population und ein neuer Parcours erstellt worden ist.
       Muss eine Simulation durchgeführt werden um den Fitnesswert der Individuen zu bestimmen.
