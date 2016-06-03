@@ -322,26 +322,28 @@
 
     Es stehen 4 Typen von Evolutionäre Algorithmen zur Auswahl:
     \begin{itemize}
-      \item Genetische Programmierung~\ref{item:genProg}
-      \item Genetischer Algorithmus~\ref{item:genAlgo}
-      \item Evolutionäre Strategie~\ref{item:evStrat}
-      \item Evolutionäre Programmierung~\ref{item:evProg}
+      \item Genetische Algorithmen~(GA)~(\vref{item:genAlgo})
+      \item Genetische Programmierung~(GP)~(\vref{item:genProg})
+      \item Evolutionäre Programmierung~(EP)~(\vref{item:evProg})
+      \item Evolutionäre Strategien~(ES)~(\vref{item:evStrat})
     \end{itemize}
-    Um die Problemstellung zu lösen, wurde entschieden Evolutionäre Programmierung einzusetzen
-    Warum Evolutionäre Programmierung eingesetzt wird, wird nachfolgend erläutert.
-    Das Austauschen der Genen, Rekombination, macht keinen Sinn wenn man Individuen das Laufen beibringt.
-    Man stelle sich dazu vor, man tausche das Gen welches den Körper definiert, mit dem der Beine.
+    %Um die Problemstellung zu lösen, wurde entschieden Evolutionäre Programmierung einzusetzen
+    Das Austauschen der Genen (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
+    Man stelle sich dazu vor, dass das Gen welches den Körper definiert, wird mit dem des Motors vertauscht.
+    Rekombination kann für die Verwendung somit ausgeschlossen werden.
     Dies stellt schon den ersten Indikator dafür da,
     dass Evolutionäre Programmierung eingesetzt werden kann.
     Ein weiteres Kriterium ist die genetische Repräsentation.
     Da unser Individuum sich aus Punkten im einem Koordinatensystem,
-    verschiedene Winkel und einem Antrieb (Motor) definiert, wird die reale Werte Repräsentation eingesetzt.
-    Eine Baumrepräsentation oder binäre Repräsentation erscheint hier wenig gewinnbringend.
+    verschiedene Winkel und einem Antrieb (Motor) definiert, wird die Reale-Werte-Repräsentation eingesetzt.
+    Eine Baumrepräsentation oder binäre Repräsentation erscheint hier wenig hilfreich.
     Ein Punkt ist nichts anderes als zwei reale Werte,
     ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
-    Die Problemstellung würde wahrscheinlich anders bewältigt werden,
+    Die Problemstellung würde wahrscheinlich anderst bewältigt werden,
     würde es hier um reale Kreaturen gehen und nicht nur um virtuelle Roboter,
     welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
+    Die Genetik ist in diesem Falle also vernachläsigbar.
+    Schlussendlich wurde entschieden die Problemstellung, auf Grund der gelieferten Argumente, mit evolutionärer Programmierung zu lösen.
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
 
@@ -357,13 +359,13 @@
 
     % Ignore punctuation warning on '.NET'
     % chktex-file 26
-    Als erstes wurde F\# und diverse populäre .NET Physics Engines wie Farseer Physics,
+    Als erstes wurde F\# und diverse populäre .NET Physik-Engines wie Farseer Physics,
     Physics 2D und Digital Rune Engine evaluiert.
     F\# ist eine funktionale Sprache die mit einer sauberen Syntax und einem der besten Typensystem überhaupt besticht.
     Jedoch gestaltete sich die Konfiguration und Platform-Interoperablität sehr schwierig.
-    Dies lag nicht an den Physics Engines selber, sondern an der Open Source Implementierung Mono Game.
+    Dies lag nicht an den Physics Engines selber, sondern an der Open-Source-Implementierung Mono Game.
     Eine plattformübergreifende Konfiguration,
-    damit mit allen oben genannten Betriebssystemen entwickelt werden kann,
+    so dass mit allen oben genannten Betriebssystemen entwickelt werden kann,
     konnte nicht erstellt werden.
     \\
     Als zweite Möglichkeit wurde Javascript und die Physics Engine Matter.js und p2.js in Betracht gezogen.
@@ -373,7 +375,7 @@
     Da Javascript ursprünglich eine Webtechnologie ist und auf allen Plattformen problemlos läuft,
     wurde das Kriterium der Platform-Interoperabilität ohne zusätzliche Konfiguration erfüllt.
     Matter.js wirkte noch nicht so ausgereift wie p2.js und wies viele Fehler auf.
-    Um Javascript und p2.js ohne Browser zu betreiben wird electron eingesetzt.
+    Um Javascript und p2.js ohne Browser zu betreiben wird Electron eingesetzt.
     Electron ist node.js und Google Chrome vereint in einer Standalone-Anwendung.
     Mit Hilfe von Node.js lassen sich alle I/0-Zugriffe regeln und es kann auf den
     Node Package Manager zur Abhängigkeitsverwaltung von anderen Bibliotheken zurückgegriffen werden.
