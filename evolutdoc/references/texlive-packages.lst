@@ -1,7 +1,12 @@
 texlive
-texlive-IEEEtran
+texlive-adjustbox
+texlive-cleveref
 texlive-babel-german
+texlive-glossaries
+texlive-pst-graphicx
 texlive-hyphen-german
+texlive-IEEEtran
+texlive-imakeidx
 texlive-lipsum
 texlive-pgfplots
 texlive-qtree
