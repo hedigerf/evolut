@@ -8,12 +8,13 @@
 
   \section{Design der Individuen}
 
+    Der Ansatz für das Design der Individuen ist an \Glspl{Hexapod} angelehnt.
+    Dabei sind viele Eigenschaften der Ameise in den Entwurf eingeflossen.
+    Sie bieten mit ihren 6 Beinen eine gute Kombination aus Stabilität und Einfachheit der Steuerung.
+
     \subsection{Körper\label{sub:DesignBody}}
 
-      Der Ansatz für das Design der Individuen ist an \Glspl{Hexapod} angelehnt.
-      Sie bieten mit ihren 6 Beinen eine gute Kombination aus Stabilität und Einfachheit der Steuerung.
-      \\
-      Ebenfalls soll die Form des Körpers frei evolvierbar bleiben.
+      Die Form des Körpers soll frei evolvierbar sein.
       Deshalb wird der Körper eines Individuums als Polygon mit n Punkten beschrieben.
       \\
       Als Einschränkung wird festgelegt, dass ein Polygon aus minimal 4 und maximal 8 Punkte generiert wird.
@@ -47,17 +48,12 @@
 
     \subsection{Beine\label{sub:Beine}}
 
-      Da als Grundkonzept ein \gls{Hexapod} verwendet wird, wird die auch die Eigenschaft übernommen,
+      Da als Grundkonzept ein \gls{Hexapod} verwendet wird, wird auch die Eigenschaft übernommen,
       dass das Individuum 6 Beine besitzt.
-      Mit 6 Beinen
-
-      % TODO warum
+      Analog zu einer Ameise werden die Beine in 3 symmetrische Beinpaare aufgeteilt.
+      Technisch bietet sich die Möglichkeit die Beine nicht in Paare zu gliedern und asymmetrisch am Körper anzubringen.
+      Doch in der Natur existiert eine solche Anordnung nicht, weshalb darauf verzichtet wurde.
       \\
-      Der Aufbau der Beine
-
-      % analog zur natur
-      % simplifikation -> kein fuss
-
       Ein Bein ist am Körper mittels eines Hüftgelenkes angebracht.
       Für die Position des Hüftgelenkes existiert nur die Bedinung,
       dass das Gelenk innerhalb der Körperfläche angebracht sein muss.
