@@ -152,7 +152,7 @@
         \smallskip
 
         Die folgende Abbildung~\ref{fig:kp} zeigt die Form eines Individuums mit 6 Körperpunkten.
-
+        \\
         \begin{figure}[H]
           \centering
           \input{graphics/unit-circle-body-points}
@@ -161,137 +161,102 @@
 
     \subsection{Phänotyp\label{sub:Phenotyp}}
 
-      Aus den realen Werten des Genotyps wird der Phänotyp in der Physik-Engine erstellt.
-      Dieser Prozess wird auch als Abbilden des Genotyps auf einen Phäntotyp bezeichnet (\vref{sub:introPhenotyp}).
-      Der Phänotyp setzt sich aus mehreren geometrischen Figuren und Gelenken (\Glspl{Constraint}) zusammen.
+      Aus den reallen Werten des Genotyps wird der Phänotyp in der Physik-Engine erstellt.
+      Dieser Prozess wird auch als abbilden des Genotyps auf einen Phäntotyp bezeichnet (\vref{sub:introPhenotyp}).
+      Er setzt sich aus mehreren geometrischen Figuren und Constraints~\cite{gamedev:constraints} zusammen, welche die Physik-Engine anbietet.
       Die Beine des Individuums werden mit Hilfe eines Drehgelenks an den Körper gebunden.
       Mit Hilfe von Constraints wird diese Bindung an den Körper erreicht.
+      Ein Constraint hat die Funktion 2 Objekte in einer Physik-Engine einzuschränken~\cite{gamedev:constraints}.
       Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird um eine Bewegung in Gang zu setzten.
+
+  % =====================================================================
+  % MOTOR
+  % =====================================================================
 
   \section{Motor\label{sec:Engine}}
 
-    Der Motor sorgt zusammen mit den Informationen zum Bewegungsablauf im Phänotyp für Bewegung eines Individuums.
-    Im Genotyp ist verankert, wann eine Bewegung vom Motor ausgeführt wird.
-    Diese Informationen werden im Prozess übernommen, wo der Genotyp auf den Phänotyp abgebildet wird.
-    Zusätzlich ist auf dem Phänotyp festgehalten, in welchem Zustand sich die Bewegung befindet.
 
-    \subsection{Funktionsprinzip}
 
-      % Der Bewegungsablauf wird durch einen \gls{JointDriven} Bewegungsmotor realisiert.
 
-      Mit den Informationen des Phänotyps kann der Motor den gesamten Bewegungsablauf kontrollieren.
-      Der Motor überwacht die Übergänge zwischen einzelnen Bewegugnen oder zusammengefassten Bewegungen. % ref
-      Nach jedem Übergang zu einer neuen Bewegung, führt der Motor diese aus und prüft,
-      ob der Zustand gewechselt werden muss.
-      Ein Zustandswechsel ist gleichzusetzten mit eine neue Bewegung auszuführen.
-      \\
-      Eine Bewegung wird durch mehrere Attribute beschrieben, welche der Motor interpretiert.
-      Anschliessend setzt der Motor die entsprechenden Anweisungen
-      \\
-      Das Funktionsprinzip des Motors ist ein \acrfull{fsm}.
-      Dabei repräsentieren die (zusammengefassten) Bewegungen die Zustände des Motors.
+    % vorgabe ameise
+    % zentrales element mit ablauf liste
+    % hexapod -> 2 tripod
 
-    \subsection{Vorgegebene Bewegung}
+    % Motor
+    % Motor steuer bewegungen des indidivuums
 
-      Die Individuen der initialen Population~\vref{sec:InitialPolulation} besitzen eine vorgegebene Bewegung.
-      Der Grund dafür ist, dass damit die Wahrscheinlichkeit,
-      dass die Evolution lauffähige Individuen hervorbring steigt.
-      \\
-      Die vorgegebene Bewegung ist den Ameisen nachempfunden, aufgrund der Einfachheit und Stabilität. 
-      Eine Ameise bewegt pro Schritt immer 3 Beine.
-      Alternierend wird pro Seite 1 oder 2 Beine verwendet und nach vorne bewegt.
-      Diese Bewegung erlaubt es der Ameise stets stabil zu stehen, da ein Dreibein immer stabil steht.
-      \\
-      Mit dem vorgegebenen Muster werden die Bewegungen für eine Seite erstellt.
-      Anschliessend können die Bewegungen für die andere Körperseite mit kleinen Anpassungen übernommen werden.
+    Der Bewegungsablauf wird durch einen \gls{JointDriven} Bewegungsmotor realisiert.
+    Der Bewegungsmotor kontrolliert die Bewegung eines Phänotyps indem die Motoren der Hüft- und
+    Knie-Gelenke gesteuert werden.
 
-      \begin{enumerate}
+    %
+    % All movements
+    %
+    \begin{figure}[H]
+      \centering
 
-        \setcounter{enumi}{-1}
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/00}
+        \caption{\label{fig:ConceptMovement00}}
+      \end{subfigure}
+      \hspace{\fill}
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/05}
+        \caption{\label{fig:ConceptMovement05}}
+      \end{subfigure}
+      \hspace{\fill}
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/10}
+        \caption{\label{fig:ConceptMovement10}}
+      \end{subfigure}
 
-        \item Der Motor setzt die Beine und Gelenke in ihre Ausgangsposition (\vref{fig:ConceptMovement00})
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/15}
+        \caption{\label{fig:ConceptMovement15}}
+      \end{subfigure}
+      \hspace{\fill}
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/20}
+        \caption{\label{fig:ConceptMovement20}}
+      \end{subfigure}
+      \hspace{\fill}
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/30}
+        \caption{\label{fig:ConceptMovement30}}
+      \end{subfigure}
 
-        \item In der ersten Phase werden die Beine der linken Seite bis zum maximalen Winkel bewegt
-          (\vref{fig:ConceptMovement10}).
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/35}
+        \caption{\label{fig:ConceptMovement35}}
+      \end{subfigure}
+      \hspace{\fill}
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/36}
+        \caption{\label{fig:ConceptMovement36}}
+      \end{subfigure}
+      \hspace{\fill}
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/40}
+        \caption{\label{fig:ConceptMovement40}}
+      \end{subfigure}
 
-        \item Alle rechten Beine schieben nun den Körper nach vorne (\vref{fig:ConceptMovement15}) bis der minimale
-          Winkel des Hüftgelenks erreicht wurde (\vref{fig:ConceptMovement20}).
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/45}
+        \caption{\label{fig:ConceptMovement45}}
+      \end{subfigure}
+      \hspace{\fill}
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/50}
+        \caption{\label{fig:ConceptMovement50}}
+      \end{subfigure}
+      \hspace{\fill}
+      \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\linewidth,center]{graphics/movement/55}
+        \caption{\label{fig:ConceptMovement55}}
+      \end{subfigure}
 
-        \item Die linken Beine werden nun gestreckt (\vref{fig:ConceptMovement30}).
-
-        \item Anschliessend werden die rechten Beine nach vorne bewegt
-          (\vref{fig:ConceptMovement35} und (\vref{fig:ConceptMovement36}))
-          bis zum maximalen Winkel (\vref{fig:ConceptMovement40}).
-          Der Bewegungsablauf wird gespiegelt für die Beine der anderen Körperseite vollzogen.
-
-      \end{enumerate}
-
-      \begin{figure}[H]
-        \centering
-
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/00}
-          \caption{\label{fig:ConceptMovement00}}
-        \end{subfigure}
-        \hspace{\fill}
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/05}
-          \caption{\label{fig:ConceptMovement05}}
-        \end{subfigure}
-        \hspace{\fill}
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/10}
-          \caption{\label{fig:ConceptMovement10}}
-        \end{subfigure}
-
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/15}
-          \caption{\label{fig:ConceptMovement15}}
-        \end{subfigure}
-        \hspace{\fill}
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/20}
-          \caption{\label{fig:ConceptMovement20}}
-        \end{subfigure}
-        \hspace{\fill}
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/30}
-          \caption{\label{fig:ConceptMovement30}}
-        \end{subfigure}
-
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/35}
-          \caption{\label{fig:ConceptMovement35}}
-        \end{subfigure}
-        \hspace{\fill}
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/36}
-          \caption{\label{fig:ConceptMovement36}}
-        \end{subfigure}
-        \hspace{\fill}
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/40}
-          \caption{\label{fig:ConceptMovement40}}
-        \end{subfigure}
-
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/45}
-          \caption{\label{fig:ConceptMovement45}}
-        \end{subfigure}
-        \hspace{\fill}
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/50}
-          \caption{\label{fig:ConceptMovement50}}
-        \end{subfigure}
-        \hspace{\fill}
-        \begin{subfigure}[b]{0.3\textwidth}
-          \includegraphics[width=\linewidth,center]{graphics/movement/55}
-          \caption{\label{fig:ConceptMovement55}}
-        \end{subfigure}
-
-        \caption{Bewegungsablauf im Zeitraffer\label{fig:ConceptMovement}}
-
-      \end{figure}
+      \caption{Bewegungsablauf\label{fig:ConceptMovementPhase12}}
+    \end{figure}
 
     \subsubsection{Bewegungen\label{subsub:EngineMovements}}
 
@@ -368,38 +333,30 @@
 
   \section{Auswahl des Evolutionären Algorithmus}
 
-    Es stehen 4 Typen von evolutionären Algorithmen zur Auswahl:
-
+    Es stehen 4 Typen von Evolutionäre Algorithmen zur Auswahl:
     \begin{itemize}
       \item Genetische Algorithmen~(GA)~(\vref{item:genAlgo})
       \item Genetische Programmierung~(GP)~(\vref{item:genProg})
       \item Evolutionäre Programmierung~(EP)~(\vref{item:evProg})
       \item Evolutionäre Strategien~(ES)~(\vref{item:evStrat})
     \end{itemize}
-
     %Um die Problemstellung zu lösen, wurde entschieden Evolutionäre Programmierung einzusetzen
-
-    % TODO konkretisieren und plaudern entfernen
-
     Das Austauschen der Genen (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
-    Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird. % form
+    Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird.
     So kann keine sinnvolle Evolution statt finde. Rekombination kann für die Verwendung somit ausgeschlossen werden.
     Dies stellt schon den ersten Indikator dafür da,
     dass Evolutionäre Programmierung eingesetzt werden kann.
-    \\
     Ein weiteres Kriterium ist die genetische Repräsentation.
     Da unser Individuum sich aus Punkten im einem Koordinatensystem,
     verschiedene Winkel und einem Antrieb (Motor) definiert, wird die Reale-Werte-Repräsentation eingesetzt.
-    \\
-    Eine Baumrepräsentation oder binäre Repräsentation erscheint hier wenig hilfreich. % form
-    Ein Punkt ist nichts anderes als zwei reale Werte, % form
+    Eine Baumrepräsentation oder binäre Repräsentation erscheint hier wenig hilfreich.
+    Ein Punkt ist nichts anderes als zwei reale Werte,
     ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
     Die Problemstellung würde wahrscheinlich anderst bewältigt werden,
     würde es hier um reale Kreaturen gehen und nicht nur um virtuelle Roboter,
     welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
-    Die Genetik ist in diesem Falle also vernachlässigbar.
-    Schlussendlich wurde entschieden die Problemstellung, auf Grund der gelieferten Argumente,
-    mit evolutionärer Programmierung zu lösen.
+    Die Genetik ist in diesem Falle also vernachläsigbar.
+    Schlussendlich wurde entschieden die Problemstellung, auf Grund der gelieferten Argumente, mit evolutionärer Programmierung zu lösen.
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
 
@@ -511,7 +468,7 @@
     Die Applikation lässt sich mit diversen Parametern konfigurieren.
     Es wird eine Konfigurationstabelle~(\vref{tbl:simulation-parameters-general}) eingeführt,
     welche auch im Kapitel Resultate~(\vref{chap:Resultate}) vewendet wird,
-    um die jeweilige Konfiguration der Simulation fest. In der Konfigurationstabelle werden nur die Parameter erwähnt,
+    um die jeweilige Konfiguration der Simulation festzuhalten. In der Konfigurationstabelle werden nur die Parameter erwähnt,
     welche relevant für den Algorithmus sind. Bei der allgemeinen Lösung wird der Parcours
     nach jeder Generation neu generiert. Bei der Evaluation auf Evolvierbarkeit
     wird der Parcours nur dann neu generiert, wenn sich die Schwierigkeit des Parcours ändert.
@@ -521,9 +478,9 @@
       \caption{Konfigurationstabelle Simulation\label{tbl:simulation-parameters-general}}
     \end{table}
 
-    \subsection{Technische Parameter}
+    \subsection{Technische Parameter\label{sub:techParams}}
       Ein wichtiger technischer Parameter ist die Anzahl der eingesetzten Simulationsprozesse~(\vref{sec:Ablauf}).
-      Durch die Erhöhung dieses Parameters kann von mehreren CPU-Kernen profitiert, somit lässt sich die Simulatiom~(\vref{sec:simulation}) und Mutation~(\vref{sec:Mutation}) parallelisieren.
+      Durch die Erhöhung dieses Parameters kann von mehreren CPU-Kernen profitiert, somit lässt sich die Simulation~(\vref{sec:simulation}) und Mutation~(\vref{sec:Mutation}) parallelisieren.
       Optimal ist es diesen Wert auf die Anzahl verfügbarer CPU-Kerne zu setzen.
       Die Grösse des Zeitschritts~\cite{bullet:steppingTheWorld} der Physik-Engine lässt sich ebenfalls einstellen.
       %Wenn man den Zeitschritt halbiert muss die Relaxation mit dem Faktor 4 multipliziert werden.
@@ -534,8 +491,10 @@
 
   \section{Ablauf\label{sec:Ablauf}}
 
-    Der Ablauf der Applikation setzt sich aus mehreren Komponenten zusammen.
+    Die Applikation setzt sich aus mehreren Komponenten zusammen.
     Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen~(\vref{fig:hauptSimuProzesse}).
+    Während es nur eine Instanz vom Hauptprozess gibt, ist die Anzahl Simulationsprozesse frei wählbar (\vref{sub:techParams}).
+    Die Kommunikation zwischen Simulationsprozessen und Hauptprozess erfolgt über asynchrones Messaging.
     In~\vref{sub:domMod} sind die jeweiligen Zusammenhänge der Klassen und Objekte ausführlicher beschrieben.
     \vref{fig:ablauf} beschreibt den generellen Ablauf als Flussdiagramm
 
@@ -548,14 +507,13 @@
       \caption{Ablauf der Simulation\label{fig:ablauf}}
     \end{figure}
 
-    \subsection{Initiale Population\label{sec:InitialPolulation}}
+    \subsection{Initiale Population\label{sec:Initiale Polulation}}
 
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewhält werden.
       Pro Simulationsprozess können etwa 15 Individuuen flüssig berechnet werden.
-      % TODO warum nur 15?
       Dies bedeutet das die optimale Populationsgrösse  \( Anzahl(CPU Kerne) * 15 \) beträgt.
       Dieser Wert wurde durch mehrere Versüche mit unterschiedlichen CPUs gefunden.
-      Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~(\vref{sub:DesignBody}) generiert.
+      Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~(\vref{sub:DesignBody}) zufällig generiert.
       Die Verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
 
@@ -565,13 +523,9 @@
       Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours,
       dass heisst es werden höhere Steigungen und Punkte mit höheren Y-Koordinaten vorkommen.
       \vref{fig:parcours1},~\vref{fig:parcours2} und~\vref{fig:parcours3} zeigen wie der Parcours mit zunehmenden Generationen schwieriger wird.
-      Dazu muss eine Klasse erstellt werden (ParcourGenerator),
-      welche mit Hilfe von Obergrenzen von Werten einen Parcours generieren kann.
-      Wie unter~\ref{sec:Konfiguration} erwähnt,
-      wird je nach Einstellung der Parcours nach jeder Generation neu generiert oder er wird wiederverwendet
-      bis ein Abbruchkriterium eintritt.
-      Der Parcours wird im ParcourGenerator generiert (Haupt Prozess) und
-      von den jeweiligen Worker mit Hilfe vom ParcourCreator in der Physik Engine erstellt.
+      Der ParcourGenerator ist die Verantwortliche Klasse in Javascript,welche mit Hilfe von Obergrenzen von Werten einen Parcours generieren kann.
+      Wie unter~\ref{sec:Konfiguration} erwähnt, wird je nach Einstellung der Parcours nach jeder Generation neu generiert (allgemeine Lösung) oder er wird wiederverwendet (evolieren auf Evolvierbarkeit).
+      Der Parcours wird im ParcourGenerator generiert (Hauptprozess) und von den jeweiligen Simulationsprozessen mit Hilfe vom ParcourCreator in der Physik-Engine erstellt.
 
       \vspace{1cm}
 
@@ -606,14 +560,13 @@
       werden aus der Simulation entfernt und ihr Fitnesswert wird abgespeichert.
       Die Simulation kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
       Es wird dann jeweils für \( Populationsgrösse / Anzahl Simulationsprozesse \) Individuen eine eigene Simulation erstellt.
-      Die Kommunikation zwischen Simulationsprozessen und Hauptprozess erfolgt über asynchrones Messaging.
 
-      % TODO Gossar: asynchronous message-passing
+      % TODO Glossar: asynchronous message-passing
 
     \subsection{Reporting\label{subsec:Reporting}}
 
       Das Reporting-Modul hilft nach einer Simulation alle wichtigen Daten festzuhalten.
-      Mithilfe einer Funktion die eine Population als Parameter entgegennimmt,
+      Mithilfe einer Funktion welche eine Population als Parameter entgegennimmt,
       werden die Reports erstellt. Es existieren folgende Typen von Reports:
       \begin{itemize}
         \item Fitness Graph Average Report: Enthält Koordinaten um einen Graph über die durchschnittliche Fitness pro Generation zu erstellen.
@@ -661,9 +614,7 @@
     \subsection{Domänenmodel\label{sub:domMod}}
 
       Das Domänenmodell beschreibt den Zusammenhang der verschiedenen Klassen und Objekten.
-      Abbildung~\ref{fig:mainProcess} beschreibt den Hauptprozess
-      und Abbildung~\ref{fig:simulationProcess} den Simulationsprozess.
-
+      Abbildung~\ref{fig:mainProcess} beschreibt den Haupt- und Abbildung~\ref{fig:simulationProcess} den Simulationsprozess.
       \begin{figure}[H]
         \includegraphics[scale=0.6,center]{graphics/main_process}
         \caption{Domänen Modell, Hauptprozess\label{fig:mainProcess}}

@@ -5,6 +5,9 @@
 % !TEX root = ../../main.tex
 \chapter{Resultate\label{chap:Resultate}}
 
+Zu den Versuchen 1-3 gibt es keine Bilder der Individuen, da es sonst den Rahmen dieser Arbeit sprengen würde.
+Versuch 4 mit den vielversprechendsten Resultaten ist ausführlich mit Bilder der Indivduen dokumentiert.
+
 \section{Erster Versuch, parametrisierbare Steuerung ohne Feedback}
 
   \subsection{Konfiguration}
@@ -164,6 +167,9 @@
             \caption{Bestes Individuum und Durchschnittliches Individuum, Vierter Versuch\label{fig:graphFourth}}
           \end{figure}
 
+          Wie in \vref{fig:gen200} erkennbar, haben sich die Individuen zu einer Art Rolle entwickelt.
+          Diese Art von Fortbewgung ist nicht optimal und setzt sich fort bis etwa zur 3000. Generation.
+
           \begin{figure}[H]
             \centering
             \begin{subfigure}[b]{0.45\textwidth}
@@ -184,6 +190,10 @@
             \end{subfigure}
             \caption{200. Generation \label{fig:gen200}}
           \end{figure}
+
+          Etwa ab der 3000. Generation haben sich die Individuen zu Hüpfer entwickelt.
+          Sie fixieren alle Beine ausser eines, welches sie benutzen um sich vom Boden abzustossen~(\vref{fig:gen3000}).
+          Diese Art von Fortbewegung bringt eine bessere Fitness ein, wie in \vref{fig:graphFourth} erkennbar ist.
 
           \begin{figure}[H]
             \centering
@@ -206,6 +216,9 @@
             \caption{3000. Generation \label{fig:gen3000}}
           \end{figure}
 
+          Mit zunehmender Schwierigkeit des Parcours scheint das Hüpfen nicht mehr die richtige Art von Fortbewegung zu sein.
+          Die Individuen bleiben häufig in Bergen und Tälern stecken~(\vref{fig:gen7000}).
+
           \begin{figure}[H]
             \centering
             \begin{subfigure}[b]{0.45\textwidth}
@@ -227,6 +240,11 @@
             \caption{7000. Generation \label{fig:gen7000}}
           \end{figure}
 
+          Die Individuen haben sich zu Rudern entwickelt wie in \vref{fig:gen11000} zu sehen ist.
+          Die Masse der anderen Beinpaare, welche nicht für die Ruderbewegung gebraucht werden, ist sichbar kleiner geworden.
+          Bei der Analyse dieser Generation ist ein Fehler aufgefallen. Die Individuen werden nach 4 Sekunden bei denen sie sich nicht in X-Richtung fortbewegen entfernt.
+          Der Wert sollte aber höher sein, da es in späteren Generationen und zunehmender Parcours Schwierigkeit sein kann, dass die Indivduen lange an einer Stelle aufhalten, um einen Berg zu erklimmen.
+          Um diese Vermutung zu validieren wird die Endpopulation aus dem 4. Lauf im 6. Lauf~(\vref{sec:sixthSimulation}) weiter evolviert.
           \begin{figure}[H]
             \centering
             \begin{subfigure}[b]{0.45\textwidth}
@@ -260,3 +278,7 @@
               \input{graphics/diversity-graph-fourth-run}
               \caption{Diversität pro Generation, Dritter Versuch\label{fig:graphDivFourth}}
             \end{figure}
+
+    \section{Fünfter Versuch, parametrisierbare Steuerung ohne Feedback}
+
+    \section{Sechster Versuch, weiterführung Lauf 4 \label{sec:sixthSimulation}}
