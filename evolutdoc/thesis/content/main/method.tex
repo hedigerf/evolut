@@ -152,7 +152,7 @@
         \smallskip
 
         Die folgende Abbildung~\ref{fig:kp} zeigt die Form eines Individuums mit 6 Körperpunkten.
-        \\
+
         \begin{figure}[H]
           \centering
           \input{graphics/unit-circle-body-points}
@@ -174,19 +174,22 @@
 
   \section{Motor\label{sec:Engine}}
 
-
-
+    Der Motor bildet zusammen mit den Informationen zum Bewegungsablauf im Phänotyp die Bewegung eines Individuums.
+    Im Genotyp ist verankert, wann und welche Bewegung vom Motor ausgeführt wird.
+    Diese Informationen werden im Prozess übernommen, wo der Genotyp auf den Phänotyp abgebildet wird.
+    Zusätzlich ist auf dem Phänotyp festgehalten, in welchem Zustand sich die Bewegung befindet.
+    \\
+    Mit diesen Informationen ist es dem Motor möglich, die Bewegung vollständig zu kontrollieren.
+    Der
+    \\
+    Die Individuen der initialen Population~\vref{sec:InitialPolulation} besitzen eine vorgegebene Bewegung.
+    Diese ist der Bewegung von Ameisen nachempfunden. Die Art und Weise,
+    wie sich Ameisen fortbewegen ist für \Glspl{Hexapod} eine
 
     % vorgabe ameise
     % zentrales element mit ablauf liste
     % hexapod -> 2 tripod
-
-    % Motor
-    % Motor steuer bewegungen des indidivuums
-
-    Der Bewegungsablauf wird durch einen \gls{JointDriven} Bewegungsmotor realisiert.
-    Der Bewegungsmotor kontrolliert die Bewegung eines Phänotyps indem die Motoren der Hüft- und
-    Knie-Gelenke gesteuert werden.
+    % Der Bewegungsablauf wird durch einen \gls{JointDriven} Bewegungsmotor realisiert.
 
     %
     % All movements
@@ -332,30 +335,38 @@
 
   \section{Auswahl des Evolutionären Algorithmus}
 
-    Es stehen 4 Typen von Evolutionäre Algorithmen zur Auswahl:
+    Es stehen 4 Typen von evolutionären Algorithmen zur Auswahl:
+
     \begin{itemize}
       \item Genetische Algorithmen~(GA)~(\vref{item:genAlgo})
       \item Genetische Programmierung~(GP)~(\vref{item:genProg})
       \item Evolutionäre Programmierung~(EP)~(\vref{item:evProg})
       \item Evolutionäre Strategien~(ES)~(\vref{item:evStrat})
     \end{itemize}
+
     %Um die Problemstellung zu lösen, wurde entschieden Evolutionäre Programmierung einzusetzen
+
+    % TODO konkretisieren und plaudern entfernen
+
     Das Austauschen der Genen (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
-    Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird.
+    Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird. % form
     So kann keine sinnvolle Evolution statt finde. Rekombination kann für die Verwendung somit ausgeschlossen werden.
     Dies stellt schon den ersten Indikator dafür da,
     dass Evolutionäre Programmierung eingesetzt werden kann.
+    \\
     Ein weiteres Kriterium ist die genetische Repräsentation.
     Da unser Individuum sich aus Punkten im einem Koordinatensystem,
     verschiedene Winkel und einem Antrieb (Motor) definiert, wird die Reale-Werte-Repräsentation eingesetzt.
-    Eine Baumrepräsentation oder binäre Repräsentation erscheint hier wenig hilfreich.
-    Ein Punkt ist nichts anderes als zwei reale Werte,
+    \\
+    Eine Baumrepräsentation oder binäre Repräsentation erscheint hier wenig hilfreich. % form
+    Ein Punkt ist nichts anderes als zwei reale Werte, % form
     ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
     Die Problemstellung würde wahrscheinlich anderst bewältigt werden,
     würde es hier um reale Kreaturen gehen und nicht nur um virtuelle Roboter,
     welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
-    Die Genetik ist in diesem Falle also vernachläsigbar.
-    Schlussendlich wurde entschieden die Problemstellung, auf Grund der gelieferten Argumente, mit evolutionärer Programmierung zu lösen.
+    Die Genetik ist in diesem Falle also vernachlässigbar.
+    Schlussendlich wurde entschieden die Problemstellung, auf Grund der gelieferten Argumente,
+    mit evolutionärer Programmierung zu lösen.
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
 
@@ -504,7 +515,7 @@
       \caption{Ablauf der Simulation\label{fig:ablauf}}
     \end{figure}
 
-    \subsection{Initiale Population\label{sec:Initiale Polulation}}
+    \subsection{Initiale Population\label{sec:InitialPolulation}}
 
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewhält werden.
       Pro Simulationsprozess können etwa 15 Individuuen flüssig berechnet werden.
@@ -615,7 +626,9 @@
     \subsection{Domänenmodel\label{sub:domMod}}
 
       Das Domänenmodell beschreibt den Zusammenhang der verschiedenen Klassen und Objekten.
-      Abbildung~\ref{fig:mainProcess} beschreibt den Haupt- und Abbildung~\ref{fig:simulationProcess} den Simulationsprozess.
+      Abbildung~\ref{fig:mainProcess} beschreibt den Hauptprozess
+      und Abbildung~\ref{fig:simulationProcess} den Simulationsprozess.
+
       \begin{figure}[H]
         \includegraphics[scale=0.6,center]{graphics/main_process}
         \caption{Domänen Modell, Hauptprozess\label{fig:mainProcess}}
