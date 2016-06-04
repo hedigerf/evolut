@@ -107,8 +107,6 @@
 
       \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
 
-        % glossar
-
         Das zufällige Erstellen eines Genotyps wird ``seeding'' genannt.
         Zu Beginn der Simulation wird die initale Population mit zufällig generierten Individuen erstellt.
         Dabei ist es Hilfreich manche Parameter nicht zufällig generieren zu lassen,
@@ -117,26 +115,42 @@
         Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp separat mit
         spezifizierten Werten zu initialisieren.
 
-      \subsubsection{Generierung Körperpunkte\label{subsub:GenotypGenerierungKörperpunkte}}
+      \subsubsection{Generierung Körperpunkte\label{subsub:GenotypeBodypointCreation}}
 
-        Es werden Körper mit 4--8 Punkten generiert.
-        Dazu wird der Einheitskreis in 4--8 Sektoren unterteilt
-        Der Winkel eines Sektors entspricht \( 2 * \pi / Anzahl Punkte\).
-        \\
-        Anschliessend wird in jedem Kreissektor ein Punkt bestimmt.
-        Die Koordinaten des Punkts sind in Polarform, was eine leicht leserliche Darstellung erlaubt.
-        \\
-        \( r = random (0, 1), winkel = random(startSektorWinkel, endeSektorWinkel) \)
-        Anschliessend werden die Polarkoordinaten in kartesische Koordinaten transformiert.
-        Die Punkte verbunden, ergeben den Körper des Individuum.
-        \\
-        Als erstes wurde ein Ansatz mit einem Quadrat evaluiert.
-        Es hat sich jedoch herausgestellt,
-        dass das zufällige Bestimmen der Punkte im Einheitskreis einfacher lösbar ist.
-        Der Nachteil dieses Ansatzes ist, dass eine quadratische Form nur angenähert werden kann.
+        Als erster Ansatz für die Generierung von Körperpunkten wurde ein Quadrat evaluiert.
+        Dieser Ansatz wurde nicht weiter verfolgt,
+        da der Ansatz mit einem Kreis für beliebig viele und ungerade Anzahlen von Punkten einfacher lösbar ist.
+
+        \smallskip
+
+        Die Generierung eines zufälligen Körpers läuft in mehreren Schritten ab.
+        Als erstes wird definiert aus wie vielen Punkten \( n \) der Körper besteht.
+
+        \[ 4 \leq n \leq 8 \]
+
+        Anschliessend wird der Einheitskreis in \( n \) Sektoren unterteilt.
+        Der Winkel \( \rho \) eines jeden Sektors entspricht:
+
+        \[ \rho = \frac{2 * \pi}{n} \]
+
+        Für jeden Sektor \( s_{i} \) werden ein zufälliger Radius \( r \) und ein zufälliger Winkel \( \phi \) gewählt.
+
+        \begin{align*}
+          r &= random(0, 1) \\
+          \phi &= random(\rho * i, \rho * (i + 1)) \\
+          P &= (r, \phi)
+        \end{align*}
+
+        Damit die Koordinaten in der Physik-Engine verwendet werden können,
+        müssen die Koordinaten in kartesicher Form sein.
+        Die Polarkooridnaten \( P \) werden in kartesische Koordinaten transformiert und miteinander verbunden.
+
+        \smallskip
+
         Die folgende Abbildung~\ref{fig:kp} zeigt die Form eines Individuums mit 6 Körperpunkten.
         \\
         \begin{figure}[H]
+          \centering
           \input{graphics/unit-circle-body-points}
           \caption{Berechnung Körperpunkt veranschaulicht\label{fig:kp}}
         \end{figure}
@@ -155,6 +169,8 @@
     % =====================================================================
 
     \subsection{Motor\label{sub:Engine}}
+
+
 
       Der Bewegungsablauf wird durch einen \gls{JointDriven} Bewegungsmotor realisiert.
       Der Bewegungsmotor kontrolliert die Bewegung eines Phänotyps indem die Motoren der Hüft- und
