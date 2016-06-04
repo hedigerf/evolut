@@ -12,7 +12,14 @@
   \end{landscape}
 
     \subsection{Protokolle}
-      \todo[inline]{Pro Woche ein Protokoll}
+
+      %
+      % includepdf uses intrnally includegraphics.
+      % But additionally a new page is inserted.
+      % Therefore the page is scaled down to fit on the current page with a heading.
+      %
+      \includegraphics[page=1,scale=0.8,trim=20 20 20 20,clip]{templates/protocols}
+      \includepdf[pages=2-last,scale=0.8,trim=20 20 20 20,clip]{templates/protocols}
 
   \section{Weiteres}
     \todo[inline]{CD mit dem vollständigen Bericht als pdf-File inklusive Film- und Fotomaterial\\
