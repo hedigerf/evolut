@@ -330,20 +330,7 @@
   % /MOTOR
   % =====================================================================
 
-    \subsection{Notwendige zusätzliche Implementierungen}
 
-      Die Physik-Engine enthält mehrere Fehler, deren Korrektur nicht die Aufgabe dieser Bachelorarbeit ist.
-      Für die Erstellung des Terrains wird ein Höhenfeld von p2.js benutzt.
-      Die Kollisionserkennung zwischen einem Höhenfeld und einem Polygon funktioniert nicht einwandfrei.
-      Manche Polygonecken werden nicht berücksichtigt in der Kollision.
-      Das hat zur Folge, dass die Individuen im Boden einsinken.
-      \\
-      Kollisionen mit einem Höhenfeld werden am besten erkannt mit Kreisen.
-      Deshalb werden kleine Kreise mit vernachlässigbarer Masse an den Ecken des Körpers und der Beine angebracht.
-      Dies verbessert die Kollisionserkennung zwischen den Phänotypen und dem Untergrund
-      und behebt das Problem mit dem Einsinken teilweise.
-      \\
-      Diese Optimierungen gehen zu Lasten eines erhöhten Rechenaufwands.
 
   \section{Auswahl des Evolutionären Algorithmus}
 
@@ -395,7 +382,7 @@
     so dass mit allen oben genannten Betriebssystemen entwickelt werden kann,
     konnte nicht erstellt werden.
     \\
-    Als zweite Möglichkeit wurde Javascript und die Physics Engine Matter.js und p2.js in Betracht gezogen.
+    Als zweite Möglichkeit wurde Javascript und die Physik-Engine Matter.js und p2.js in Betracht gezogen.
     Die Popularität von Javascript hat in den letzten Jahren enorm zugenommen.
     Auch wurde mit dem neuen ECMA2015 Standard die Sprache enorm verbessert und viele neue Features eingeführt.
     Das Javascript-Ökosystem ist eines der grössten überhaupt.
@@ -435,12 +422,54 @@
         In der funktionalen Programmierung versucht man Funktionen die Nebeneffekte haben (globale Attribute) zu vermeiden.
         Dies hat den Vorteil, dass einzelne Funktionen viel einfacher zu testen sind, als bei der objektorientierten Programmierung.
 
+      \subsection{Notwendige zusätzliche Implementierungen}
+
+        Für die Erstellung des Terrains wird ein Höhenfeld von p2.js benutzt.
+        Die Kollisionserkennung zwischen einem Höhenfeld und einem Polygon funktioniert nicht einwandfrei.
+        Manche Polygonecken werden nicht berücksichtigt in der Kollisionserkennung.
+        Das hat zur Folge, dass Körperteile der Individuen im Boden einsinken.
+        \vref{fig:vorEinsinken} zeigt das Individuum vor dem Einsinken und \vref{fig:nachEinsinken} zeigt das Invidiuum mit der eingesunkenen Spitze.
+
+        \begin{figure}[H]
+          \centering
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/physics-engine/sink-0}
+            \caption{Vor dem Einsinken\label{fig:vorEinsinken}}
+          \end{subfigure}
+          \qquad
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/physics-engine/sink-1}
+            \caption{Nach dem Einsinken\label{fig:nachEinsinken}}
+          \end{subfigure}
+          \caption{Vor Korrektur}
+        \end{figure}
+
+        Kollisionen mit einem Höhenfeld werden am besten erkannt mit Kreisen.
+        \vref{fig:noVorEinsinken} zeigt die Anbringung von kleinen Kreisne mit vernachlässigbarer Masse an den Ecken des Körpers und der Beine.
+        Dies verbessert die Kollisionserkennung zwischen den Phänotypen und dem Untergrund.
+        Wie in \vref{fig:noNachEinsinken} erkennbar sinkt die Spitze des Individuums nicht mehr in den Boden ein.
+        Diese Optimierungen gehen zu Lasten eines erhöhten Rechenaufwands.
+
+        \begin{figure}[H]
+          \centering
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/physics-engine/sink-fix-0}
+            \caption{Individuum mit Kreisen\label{fig:noVorEinsinken}}
+          \end{subfigure}
+          \qquad
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/physics-engine/sink-fix-1}
+            \caption{Verhindern des Einsinkens\label{fig:noNachEinsinken}}
+          \end{subfigure}
+          \caption{Nach Korrektur}
+        \end{figure}
+
   \section{Konfiguration\label{sec:Konfiguration}}
 
     Die Applikation lässt sich mit diversen Parametern konfigurieren.
     Es wird eine Konfigurationstabelle~(\vref{tbl:simulation-parameters-general}) eingeführt,
     welche auch im Kapitel Resultate~(\vref{chap:Resultate}) vewendet wird,
-    um die jeweilige Konfiguration der Simulation zu diskutieren. In der Konfigurationstabelle werden nur die Parameter erwähnt,
+    um die jeweilige Konfiguration der Simulation fest. In der Konfigurationstabelle werden nur die Parameter erwähnt,
     welche relevant für den Algorithmus sind. Bei der allgemeinen Lösung wird der Parcours
     nach jeder Generation neu generiert. Bei der Evaluation auf Evolvierbarkeit
     wird der Parcours nur dann neu generiert, wenn sich die Schwierigkeit des Parcours ändert.
@@ -567,13 +596,6 @@
       Turnierbasierte-Selektion hat den Vorteil, dass die Diversität erhalten bleibt,
       bei gleichzeitig guter Selektion der fittesten Individuen.
       Auf Grund der Empfehlung von D. Floreano und C. Mattiussi und der Erhaltung der Diversität wurde entschieden, Turnierbasierte-Selektion einzusetzen.
-        %%%streichen
-      \subsubsection{Hypothese Selektionsstrategie\label{sub:Hypothese Selektionsstrategie}}
-
-        Es wird die Hypothese aufgestellt,
-        dass turnierbasierte Selektion die besseren Resultate liefert im Vergleich zu den folgenden Selektionsstrategien: Rangbasierte Selektion und proportionale Selektion.
-        Um dies zu validieren ist es erforderlich die Selektionsstrategien rangbasierte Selektion und proportionale Selektion zu implementieren.
-        Ob dies zutrifft wird in Kapitel~\ref{chap:Diskussion} diskutiert.
 
     \subsection{Mutation\label{sec:Mutation}}
 
