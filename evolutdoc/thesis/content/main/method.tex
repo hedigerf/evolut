@@ -169,9 +169,77 @@
       Ein Constraint hat die Funktion 2 Objekte in einer Physik-Engine einzuschränken~\cite{gamedev:constraints}.
       Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird um eine Bewegung in Gang zu setzten.
 
-  % =====================================================================
-  % MOTOR
-  % =====================================================================
+  \section{Motor\label{sec:Engine}}
+
+    Der Motor sorgt zusammen mit den Informationen zum Bewegungsablauf im Phänotyp für die Bewegung eines Individuums.
+    Im Genotyp ist verankert, wann eine Bewegung~\vref{subsub:EngineMovement} vom Motor ausgeführt wird.
+    Diese Informationen werden im Prozess übernommen, wo der Genotyp auf den Phänotyp abgebildet wird.
+    Zusätzlich ist auf dem Phänotyp festgehalten, in welchem Zustand sich die Bewegung befindet.
+
+    \subsection{Funktionsprinzip}
+
+      Die Implementation des Motors ist ein \acrfull{fsm}.
+      Dabei repräsentieren die Bewegungen die Zustände des Motors zwischen denen gewechselt wird.
+      Durch diese Art der Implementation kann ein zyklischer Bewegungsablauf einfach abgearbeitet werden.
+      Die Bedinung für den Zustandswechsel von der aktuellen Bewegung \( M_{i} \) zu Bewegung \( M_{i + 1} \) ist,
+      dass die aktuelle Bewegung vollständig ausgeführt wurde.
+
+      \begin{figure}[H]
+        \centering
+        \input{graphics/concept-movement-fsm}
+        \caption{\Gls{FiniteStateMachine} veranschaulicht\label{fig:ConceptEngineFSM}}
+      \end{figure}
+
+      Aufgrund der Schnittstellen und bereits vorhandener Funktionen in der Physik-Engine ist ein Motor,
+      der \gls{JointDriven} arbeitet gewählt worden.
+      Er führt die Bewegungen, die Körperteile in Bewegung setzten, über die Drehgelenke des Individuums aus.
+      Mit der Kraft des Motors wird der Winkel eines Drehgelenkes verändert.
+
+      \smallskip
+
+      Am Beispiel des Kniegelenks ist ersichtlich wie der Motor arbeitet.
+      Das Kniegelenk ist am Oberschenkel fixiert und verbindet den Unterschenkel mit dem Oberschenkel.
+      Setzt der Motor das Gelenk in Bewegung wird der Unterschenkel bewegt.
+
+      \smallskip
+
+      Mit den Informationen des Phänotyps kann der Motor den gesamten Bewegungsablauf kontrollieren.
+      Der Motor überwacht die Übergänge zwischen einzelnen Bewegugnen oder zusammengefassten Bewegungen. % ref
+      Nach jedem Übergang zu einer neuen Bewegung, führt der Motor diese aus und prüft,
+      ob der Zustand gewechselt werden muss.
+      Ein Zustandswechsel ist gleichzusetzten mit einer neuen Bewegung auszuführen.
+
+      \smallskip
+
+      Als erste bringt der Motor ein Individuum immer in die Ausgangsposition.
+      Diese mit einem separaten Bewegungsablauf durchgeführt. Dieser kann ebenfalls evolviert werden.
+      \\
+      Sobald die Ausgangsposition erreicht ist, beginnt der Motor mit dem Ausführen des Bewegungsabalufs.
+      Dabei interpretiert der Motor die aktuelle Bewegung und setzt diese um.
+
+
+      Eine Bewegung wird durch mehrere Attribute beschrieben, welche der Motor interpretiert.
+      Anschliessend setzt der Motor die entsprechenden Anweisungen
+
+    \subsection{Vorgegebener Bewegungsablauf}
+
+      Die Individuen der initialen Population~\vref{sec:InitialPolulation} besitzen einen vorgegebenen Bewegungsablauf.
+      Der Grund dafür ist, dass damit die Wahrscheinlichkeit,
+      dass die Evolution lauffähige Individuen hervorbring steigt.
+      \\
+      Der vorgegebene Ablauf ist der Ameise nachempfunden, aufgrund der Einfachheit und Stabilität.
+      Eine Ameise bewegt pro Schritt immer 3 Beine.
+      Alternierend wird auf einer Seite 1 und auf der anderen 2 Beine gehoben und nach vorne bewegt.
+      Diese Bewegung erlaubt es der Ameise stets stabil zu stehen,
+      da ein Dreibein immer steht während das andere bewegt wird.
+      \\
+      Mit dem vorgegebenen Muster werden die Bewegungen für eine Seite erstellt.
+      Anschliessend können die Bewegungen für die andere Körperseite mit kleinen Anpassungen übernommen werden.
+
+      \begin{enumerate}
+
+        \setcounter{enumi}{-1}
+>>>>>>> 43f0e6191e5cbd545b455aa3c8fee5685b9fe22e
 
   \section{Motor\label{sec:Engine}}
 
@@ -258,6 +326,13 @@
       \caption{Bewegungsablauf\label{fig:ConceptMovementPhase12}}
     \end{figure}
 
+    \subsubsection{Bewegung\label{subsub:EngineMovement}}
+
+      Führt der Motor eine Bewegung aus, so interpretiert er die Daten aus dem Phänotyp.
+      Er liest die aktuelle Beschreibung der Bewegung.
+      Eine Bewegung ist mit mehreren Attributen beschrieben.
+
+
     \subsubsection{Bewegungen\label{subsub:EngineMovements}}
 
       Dem Motor stehen verschiedene Kategorien von Bewegungen zur Verfügung.
@@ -304,17 +379,6 @@
         \\
         Eine Prädikat-Bewegung gilt als ausgeführt, wenn sie das spezifizierte Prädikat erfüllt.
         Hierfür stehen mehrere Prädikate wie maximaler oder minimaler Winkel erreicht zur Verfügung.
-
-    \subsubsection{Ablauf}
-
-      Die Implementation des Bewegungsmotors ist eine \acrfull{fsm}.
-      Der Zustand des Bewegungsablaufs wird auf dem Phänotyp festgehalten.
-      Es wird gespeichert, welche die aktuelle Bewegung ist.
-      Jedes Individuum verfügt über einen eigenen Bewegungsablauf.
-      \\
-      Der Bewegungsablauf ist eine Liste von parametrisierbaren Bewegungen.
-      Im Bewegungsmotor wird das jeweilige aktuelle Element verarbeitet
-      während die Physik-Engine einen Zeitschritt ausführt.
 
     \subsubsection{Feedback}
 
