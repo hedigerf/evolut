@@ -152,7 +152,7 @@
         \smallskip
 
         Die folgende Abbildung~\ref{fig:kp} zeigt die Form eines Individuums mit 6 Körperpunkten.
-        \\
+
         \begin{figure}[H]
           \centering
           \input{graphics/unit-circle-body-points}
@@ -161,12 +161,11 @@
 
     \subsection{Phänotyp\label{sub:Phenotyp}}
 
-      Aus den reallen Werten des Genotyps wird der Phänotyp in der Physik-Engine erstellt.
-      Dieser Prozess wird auch als abbilden des Genotyps auf einen Phäntotyp bezeichnet (\vref{sub:introPhenotyp}).
-      Er setzt sich aus mehreren geometrischen Figuren und Constraints~\cite{gamedev:constraints} zusammen, welche die Physik-Engine anbietet.
+      Aus den realen Werten des Genotyps wird der Phänotyp in der Physik-Engine erstellt.
+      Dieser Prozess wird auch als Abbilden des Genotyps auf einen Phäntotyp bezeichnet (\vref{sub:introPhenotyp}).
+      Der Phänotyp setzt sich aus mehreren geometrischen Figuren und Gelenken (\Glspl{Constraint}) zusammen.
       Die Beine des Individuums werden mit Hilfe eines Drehgelenks an den Körper gebunden.
       Mit Hilfe von Constraints wird diese Bindung an den Körper erreicht.
-      Ein Constraint hat die Funktion 2 Objekte in einer Physik-Engine einzuschränken~\cite{gamedev:constraints}.
       Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird um eine Bewegung in Gang zu setzten.
 
   \section{Motor\label{sec:Engine}}
@@ -239,92 +238,90 @@
       \begin{enumerate}
 
         \setcounter{enumi}{-1}
->>>>>>> 43f0e6191e5cbd545b455aa3c8fee5685b9fe22e
 
-  \section{Motor\label{sec:Engine}}
+        \item Der Motor setzt die Beine und Gelenke in ihre Ausgangsposition (\vref{fig:ConceptMovement00})
 
+        \item In der ersten Phase werden die Beine der linken Seite bis zum maximalen Winkel bewegt
+          (\vref{fig:ConceptMovement10}).
 
+        \item Alle rechten Beine schieben nun den Körper nach vorne (\vref{fig:ConceptMovement15}) bis der minimale
+          Winkel des Hüftgelenks erreicht wurde (\vref{fig:ConceptMovement20}).
 
+        \item Die linken Beine werden nun gestreckt (\vref{fig:ConceptMovement30}).
 
-    % vorgabe ameise
-    % zentrales element mit ablauf liste
-    % hexapod -> 2 tripod
+        \item Anschliessend werden die rechten Beine nach vorne bewegt
+          (\vref{fig:ConceptMovement35} und (\vref{fig:ConceptMovement36}))
+          bis zum maximalen Winkel (\vref{fig:ConceptMovement40}).
+          Der Bewegungsablauf wird gespiegelt für die Beine der anderen Körperseite vollzogen.
 
-    % Motor
-    % Motor steuer bewegungen des indidivuums
+      \end{enumerate}
 
-    Der Bewegungsablauf wird durch einen \gls{JointDriven} Bewegungsmotor realisiert.
-    Der Bewegungsmotor kontrolliert die Bewegung eines Phänotyps indem die Motoren der Hüft- und
-    Knie-Gelenke gesteuert werden.
+      \begin{figure}[H]
+        \centering
 
-    %
-    % All movements
-    %
-    \begin{figure}[H]
-      \centering
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/00}
+          \caption{\label{fig:ConceptMovement00}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/05}
+          \caption{\label{fig:ConceptMovement05}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/10}
+          \caption{\label{fig:ConceptMovement10}}
+        \end{subfigure}
 
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/00}
-        \caption{\label{fig:ConceptMovement00}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/05}
-        \caption{\label{fig:ConceptMovement05}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/10}
-        \caption{\label{fig:ConceptMovement10}}
-      \end{subfigure}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/15}
+          \caption{\label{fig:ConceptMovement15}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/20}
+          \caption{\label{fig:ConceptMovement20}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/30}
+          \caption{\label{fig:ConceptMovement30}}
+        \end{subfigure}
 
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/15}
-        \caption{\label{fig:ConceptMovement15}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/20}
-        \caption{\label{fig:ConceptMovement20}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/30}
-        \caption{\label{fig:ConceptMovement30}}
-      \end{subfigure}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/35}
+          \caption{\label{fig:ConceptMovement35}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/36}
+          \caption{\label{fig:ConceptMovement36}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/40}
+          \caption{\label{fig:ConceptMovement40}}
+        \end{subfigure}
 
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/35}
-        \caption{\label{fig:ConceptMovement35}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/36}
-        \caption{\label{fig:ConceptMovement36}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/40}
-        \caption{\label{fig:ConceptMovement40}}
-      \end{subfigure}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/45}
+          \caption{\label{fig:ConceptMovement45}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/50}
+          \caption{\label{fig:ConceptMovement50}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/55}
+          \caption{\label{fig:ConceptMovement55}}
+        \end{subfigure}
 
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/45}
-        \caption{\label{fig:ConceptMovement45}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/50}
-        \caption{\label{fig:ConceptMovement50}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/55}
-        \caption{\label{fig:ConceptMovement55}}
-      \end{subfigure}
+        \caption{Bewegungsablauf im Zeitraffer\label{fig:ConceptMovement}}
 
-      \caption{Bewegungsablauf\label{fig:ConceptMovementPhase12}}
-    \end{figure}
+      \end{figure}
 
     \subsubsection{Bewegung\label{subsub:EngineMovement}}
 
