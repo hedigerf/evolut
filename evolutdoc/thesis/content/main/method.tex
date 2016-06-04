@@ -593,10 +593,12 @@
       dass ein Bein ausserhalb des Körpers ist, wird die Position zufällig neu bestimmt.
       Die Mutation läuft wie die Simulation parallel ab, das heisst, sie kann von mehreren CPU-Kernen profitieren.
 
-    \subsection{Wiederholungen}
+    \subsection{Abbruchkriterium}
 
-      Alle Schritte (ausser die Generierung der initialen Population) werden solange ausgeführt,
-      bis der Anwender der Applikation entscheidet, die Applikation zu beenden.
+      Der evolutinäre Algorithmus wird solange ausgeführt, bis der Anwender sich entscheidet ihn abzubrechen.
+      Theoretisch wäre es auch möglich abzubrechen, wenn ein bestimmer Fitnesswert erreicht wird.
+      Jedoch ist so mehr Flexibilität gewährleistet, der Anwender kann fortzu die Reports überprüfen und entscheiden
+      ob die Individuen den Ansprüchen genügen.
 
     \subsection{Domänenmodel\label{sub:domMod}}
 
