@@ -170,92 +170,128 @@
 
   \section{Motor\label{sec:Engine}}
 
-    Der Motor bildet zusammen mit den Informationen zum Bewegungsablauf im Phänotyp die Bewegung eines Individuums.
-    Im Genotyp ist verankert, wann und welche Bewegung vom Motor ausgeführt wird.
+    Der Motor sorgt zusammen mit den Informationen zum Bewegungsablauf im Phänotyp für Bewegung eines Individuums.
+    Im Genotyp ist verankert, wann eine Bewegung vom Motor ausgeführt wird.
     Diese Informationen werden im Prozess übernommen, wo der Genotyp auf den Phänotyp abgebildet wird.
     Zusätzlich ist auf dem Phänotyp festgehalten, in welchem Zustand sich die Bewegung befindet.
-    \\
-    Mit diesen Informationen ist es dem Motor möglich, die Bewegung kontrollieren.
-    Der Motor überwacht die Übergänge zwischen einzelnen Bewegugnen oder Bewegungsgruppen.
-    Nach jedem Übergang zu einer neuen Bewegung wird diese
-    \\
-    Die Individuen der initialen Population~\vref{sec:InitialPolulation} besitzen eine vorgegebene Bewegung.
-    Diese ist der Bewegung von Ameisen nachempfunden. Die Art und Weise,
-    wie sich Ameisen fortbewegen ist für \Glspl{Hexapod} eine
 
-    % vorgabe ameise
-    % zentrales element mit ablauf liste
-    % hexapod -> 2 tripod
-    % Der Bewegungsablauf wird durch einen \gls{JointDriven} Bewegungsmotor realisiert.
+    \subsection{Funktionsprinzip}
 
-    %
-    % All movements
-    %
-    \begin{figure}[H]
-      \centering
+      % Der Bewegungsablauf wird durch einen \gls{JointDriven} Bewegungsmotor realisiert.
 
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/00}
-        \caption{\label{fig:ConceptMovement00}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/05}
-        \caption{\label{fig:ConceptMovement05}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/10}
-        \caption{\label{fig:ConceptMovement10}}
-      \end{subfigure}
+      Mit den Informationen des Phänotyps kann der Motor den gesamten Bewegungsablauf kontrollieren.
+      Der Motor überwacht die Übergänge zwischen einzelnen Bewegugnen oder zusammengefassten Bewegungen. % ref
+      Nach jedem Übergang zu einer neuen Bewegung, führt der Motor diese aus und prüft,
+      ob der Zustand gewechselt werden muss.
+      Ein Zustandswechsel ist gleichzusetzten mit eine neue Bewegung auszuführen.
+      \\
+      Eine Bewegung wird durch mehrere Attribute beschrieben, welche der Motor interpretiert.
+      Anschliessend setzt der Motor die entsprechenden Anweisungen
+      \\
+      Das Funktionsprinzip des Motors ist ein \acrfull{fsm}.
+      Dabei repräsentieren die (zusammengefassten) Bewegungen die Zustände des Motors.
 
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/15}
-        \caption{\label{fig:ConceptMovement15}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/20}
-        \caption{\label{fig:ConceptMovement20}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/30}
-        \caption{\label{fig:ConceptMovement30}}
-      \end{subfigure}
+    \subsection{Vorgegebene Bewegung}
 
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/35}
-        \caption{\label{fig:ConceptMovement35}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/36}
-        \caption{\label{fig:ConceptMovement36}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/40}
-        \caption{\label{fig:ConceptMovement40}}
-      \end{subfigure}
+      Die Individuen der initialen Population~\vref{sec:InitialPolulation} besitzen eine vorgegebene Bewegung.
+      Der Grund dafür ist, dass damit die Wahrscheinlichkeit,
+      dass die Evolution lauffähige Individuen hervorbring steigt.
+      \\
+      Die vorgegebene Bewegung ist den Ameisen nachempfunden, aufgrund der Einfachheit und Stabilität. 
+      Eine Ameise bewegt pro Schritt immer 3 Beine.
+      Alternierend wird pro Seite 1 oder 2 Beine verwendet und nach vorne bewegt.
+      Diese Bewegung erlaubt es der Ameise stets stabil zu stehen, da ein Dreibein immer stabil steht.
+      \\
+      Mit dem vorgegebenen Muster werden die Bewegungen für eine Seite erstellt.
+      Anschliessend können die Bewegungen für die andere Körperseite mit kleinen Anpassungen übernommen werden.
 
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/45}
-        \caption{\label{fig:ConceptMovement45}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/50}
-        \caption{\label{fig:ConceptMovement50}}
-      \end{subfigure}
-      \hspace{\fill}
-      \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\linewidth,center]{graphics/movement/55}
-        \caption{\label{fig:ConceptMovement55}}
-      \end{subfigure}
+      \begin{enumerate}
 
-      \caption{Bewegungsablauf\label{fig:ConceptMovementPhase12}}
-    \end{figure}
+        \setcounter{enumi}{-1}
+
+        \item Der Motor setzt die Beine und Gelenke in ihre Ausgangsposition (\vref{fig:ConceptMovement00})
+
+        \item In der ersten Phase werden die Beine der linken Seite bis zum maximalen Winkel bewegt
+          (\vref{fig:ConceptMovement10}).
+
+        \item Alle rechten Beine schieben nun den Körper nach vorne (\vref{fig:ConceptMovement15}) bis der minimale
+          Winkel des Hüftgelenks erreicht wurde (\vref{fig:ConceptMovement20}).
+
+        \item Die linken Beine werden nun gestreckt (\vref{fig:ConceptMovement30}).
+
+        \item Anschliessend werden die rechten Beine nach vorne bewegt
+          (\vref{fig:ConceptMovement35} und (\vref{fig:ConceptMovement36}))
+          bis zum maximalen Winkel (\vref{fig:ConceptMovement40}).
+          Der Bewegungsablauf wird gespiegelt für die Beine der anderen Körperseite vollzogen.
+
+      \end{enumerate}
+
+      \begin{figure}[H]
+        \centering
+
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/00}
+          \caption{\label{fig:ConceptMovement00}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/05}
+          \caption{\label{fig:ConceptMovement05}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/10}
+          \caption{\label{fig:ConceptMovement10}}
+        \end{subfigure}
+
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/15}
+          \caption{\label{fig:ConceptMovement15}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/20}
+          \caption{\label{fig:ConceptMovement20}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/30}
+          \caption{\label{fig:ConceptMovement30}}
+        \end{subfigure}
+
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/35}
+          \caption{\label{fig:ConceptMovement35}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/36}
+          \caption{\label{fig:ConceptMovement36}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/40}
+          \caption{\label{fig:ConceptMovement40}}
+        \end{subfigure}
+
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/45}
+          \caption{\label{fig:ConceptMovement45}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/50}
+          \caption{\label{fig:ConceptMovement50}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/movement/55}
+          \caption{\label{fig:ConceptMovement55}}
+        \end{subfigure}
+
+        \caption{Bewegungsablauf im Zeitraffer\label{fig:ConceptMovement}}
+
+      \end{figure}
 
     \subsubsection{Bewegungen\label{subsub:EngineMovements}}
 
