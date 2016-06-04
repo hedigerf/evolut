@@ -161,17 +161,12 @@
 
     \subsection{Phänotyp\label{sub:Phenotyp}}
 
-      Aus den reallen Werten des Genotyps wird der Phänotyp in der Physik-Engine erstellt.
-      Dieser Prozess wird auch als abbilden des Genotyps auf einen Phäntotyp bezeichnet (\vref{sub:introPhenotyp}).
-      Er setzt sich aus mehreren geometrischen Figuren und Constraints~\cite{gamedev:constraints} zusammen, welche die Physik-Engine anbietet.
+      Aus den realen Werten des Genotyps wird der Phänotyp in der Physik-Engine erstellt.
+      Dieser Prozess wird auch als Abbilden des Genotyps auf einen Phäntotyp bezeichnet (\vref{sub:introPhenotyp}).
+      Der Phänotyp setzt sich aus mehreren geometrischen Figuren und Gelenken (\Glspl{Constraint}) zusammen.
       Die Beine des Individuums werden mit Hilfe eines Drehgelenks an den Körper gebunden.
       Mit Hilfe von Constraints wird diese Bindung an den Körper erreicht.
-      Ein Constraint hat die Funktion 2 Objekte in einer Physik-Engine einzuschränken~\cite{gamedev:constraints}.
       Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird um eine Bewegung in Gang zu setzten.
-
-  % =====================================================================
-  % MOTOR
-  % =====================================================================
 
   \section{Motor\label{sec:Engine}}
 
@@ -180,8 +175,9 @@
     Diese Informationen werden im Prozess übernommen, wo der Genotyp auf den Phänotyp abgebildet wird.
     Zusätzlich ist auf dem Phänotyp festgehalten, in welchem Zustand sich die Bewegung befindet.
     \\
-    Mit diesen Informationen ist es dem Motor möglich, die Bewegung vollständig zu kontrollieren.
-    Der
+    Mit diesen Informationen ist es dem Motor möglich, die Bewegung kontrollieren.
+    Der Motor überwacht die Übergänge zwischen einzelnen Bewegugnen oder Bewegungsgruppen.
+    Nach jedem Übergang zu einer neuen Bewegung wird diese
     \\
     Die Individuen der initialen Population~\vref{sec:InitialPolulation} besitzen eine vorgegebene Bewegung.
     Diese ist der Bewegung von Ameisen nachempfunden. Die Art und Weise,
