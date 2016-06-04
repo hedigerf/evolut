@@ -15,11 +15,11 @@
     \subsection{Körper\label{sub:DesignBody}}
 
       Die Form des Körpers soll frei evolvierbar sein.
-      Deshalb wird der Körper eines Individuums als Polygon mit n Punkten beschrieben.
+      Deshalb wird der Körper eines Individuums als Polygon mit \(n\) Punkten beschrieben.
       \\
       Als Einschränkung wird festgelegt, dass ein Polygon aus minimal 4 und maximal 8 Punkte generiert wird.
-      Diese Bedingung beschränkt sowohl den Rechenaufwand der Berechnung des Körpers während der Simulation,
-      als auch in der Mutationsphase.
+      Diese Bedingung beschränkt sowohl den Rechenaufwand der Berechnung des Körpers während der Simulation~(\vref{sec:simulation}),
+      als auch in der Mutationsphase~(\vref{sec:Mutation}).
       Weiter wird festgelegt, dass das Polygon ein \gls{SimplePolygon} sein muss.
       Ohne diese Bedingung könnten Körper generiert werden, deren Kanten sich überkreuzen.
       Solche Körper werden als ungültig erachtet, da diese in der Natur nicht vorkommen.
@@ -38,7 +38,7 @@
         \caption{Konzept Körper\label{fig:ConceptBodyPoints}}
       \end{figure}
 
-      \subsubsection{Hypothese Körperpunkte\label{subsub:hypoKp}}
+      \subsubsection{Hypothese zu Körperpunkten\label{subsub:hypoKp}}
 
         Es wird die Hypothese aufgestellt,
         dass sich ein Individuum mit 8 Körperpunkten schneller durch den Parcours bewegt,
@@ -52,7 +52,7 @@
       dass das Individuum 6 Beine besitzt.
       Analog zu einer Ameise werden die Beine in 3 symmetrische Beinpaare aufgeteilt.
       \\
-      Technisch bietet sich die Möglichkeit die Beine nicht in Paare zu gliedern und asymmetrisch am Körper anzubringen.
+      Technisch bietet sich die Möglichkeit, die Beine nicht in Paare zu gliedern und asymmetrisch am Körper anzubringen.
       Doch in der Natur existiert eine solche Anordnung nicht, weshalb darauf verzichtet wird.
 
       \smallskip
@@ -61,7 +61,7 @@
       Die Höhe \(h_{l}\) und Breite \(w_{l}\) des Beins sind limitiert.
       Andernfalls ist anzunehmen, dass ungewünschte Resultate entstehen~\vref{sub:IntroReqLimit}.
       \\
-      Im Genom bestimmt der Wert des Höhenfaktors \(h_{f}\)
+      Im Genom bestimmt der Wert des Höhenfaktors \(h_{f}\),
       wie das Verhältnis der Länge von Unterschenkel \(h_{s}\) zu Oberschenkel \(h_{t}\) ist.
       \\
       Die Schenkel sind durch das Kniegelenk \(j_{k}\) miteinander verbunden.
@@ -107,16 +107,16 @@
         Weiter können Teil-Genotypen wiederum in verschiedene weitere Teile aufgespalten werden.
         Damit entsteht die Möglichkeit, Individuen nach einem dynamisch generierten Bauplan zu erstellen
         und beliebige Kombinationen aus vorhandenen Teil-Genotypen innerhalb eines Genotyps zu bilden,
-        ohne dass die Implementation der seed-Funktion angepasst werden muss.
+        ohne dass die Implementation der seed-Funktion~(\vref{subsub:GenotypeSeeding}) angepasst werden muss.
 
       \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
 
         Das zufällige Erstellen eines Genotyps wird ``seeding'' genannt.
         Zu Beginn der Simulation wird die initale Population mit zufällig generierten Individuen erstellt.
-        Dabei ist es Hilfreich manche Parameter nicht zufällig generieren zu lassen,
+        Dabei ist es hilfreich manche Parameter nicht zufällig generieren zu lassen,
         sondern mit einem fixen Wert zu initialisieren.
         Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
-        Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp separat mit
+        Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp mit
         spezifizierten Werten zu initialisieren.
 
       \subsubsection{Generierung Körperpunkte\label{subsub:GenotypeBodypointCreation}}
@@ -161,12 +161,13 @@
 
     \subsection{Phänotyp\label{sub:Phenotyp}}
 
-      % TODO
-
-      Der Phänotyp stell die Repräsentation des Genotyps in der Physik-Engine dar.
-      Er setzt sich aus mehreren geometrischen Figuren zusammen.
+      Aus den reallen Werten des Genotyps wird der Phänotyp in der Physik-Engine erstellt.
+      Dieser Prozess wird auch als abbilden des Genotyps auf einen Phäntotyp bezeichnet (\vref{sub:introPhenotyp}).
+      Er setzt sich aus mehreren geometrischen Figuren und Constraints~\cite{gamedev:constraints} zusammen, welche die Physik-Engine anbietet.
       Die Beine des Individuums werden mit Hilfe eines Drehgelenks an den Körper gebunden.
-      Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird zum eine Bewegung in Gang zu setzten.
+      Mit Hilfe von Constraints wird diese Bindung an den Körper erreicht.
+      Ein Constraint hat die Funktion 2 Objekte in einer Physik-Engine einzuschränken~\cite{gamedev:constraints}.
+      Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird um eine Bewegung in Gang zu setzten.
 
   % =====================================================================
   % MOTOR
@@ -618,10 +619,12 @@
       dass ein Bein ausserhalb des Körpers ist, wird die Position zufällig neu bestimmt.
       Die Mutation läuft wie die Simulation parallel ab, das heisst, sie kann von mehreren CPU-Kernen profitieren.
 
-    \subsection{Wiederholungen}
+    \subsection{Abbruchkriterium}
 
-      Alle Schritte (ausser die Generierung der initialen Population) werden solange ausgeführt,
-      bis der Anwender der Applikation entscheidet, die Applikation zu beenden.
+      Der evolutinäre Algorithmus wird solange ausgeführt, bis der Anwender sich entscheidet ihn abzubrechen.
+      Theoretisch wäre es auch möglich abzubrechen, wenn ein bestimmer Fitnesswert erreicht wird.
+      Jedoch ist so mehr Flexibilität gewährleistet, der Anwender kann fortzu die Reports überprüfen und entscheiden
+      ob die Individuen den Ansprüchen genügen.
 
     \subsection{Domänenmodel\label{sub:domMod}}
 
