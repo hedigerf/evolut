@@ -44,7 +44,7 @@
         dass sich ein Individuum mit 8 Körperpunkten schneller durch den Parcours bewegt,
         als ein Individuum mit weniger Körperpunkten.
         Die Vermutung dabei ist, dass durch die komplexere Form des Individuums die Balance besser gehalten werden kann.
-        Im Kapitel~\ref{chap:Resultate} werden die Resultate diskutiert.
+        Im Kapitel~\vref{chap:Resultate} und \vref{chap:perspective} wird diskutiert ob dies zutrifft.
 
     \subsection{Beine\label{sub:Beine}}
 
@@ -112,7 +112,7 @@
       \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
 
         Das zufällige Erstellen eines Genotyps wird ``seeding'' genannt.
-        Zu Beginn der Simulation wird die initale Population mit zufällig generierten Individuen erstellt.
+        Zu Beginn der Simulation wird die initale Population~(\vref{sec:Initiale Polulation}) mit zufällig generierten Individuen erstellt.
         Dabei ist es hilfreich manche Parameter nicht zufällig generieren zu lassen,
         sondern mit einem fixen Wert zu initialisieren.
         Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
@@ -162,8 +162,9 @@
     \subsection{Phänotyp\label{sub:Phenotyp}}
 
       Aus den realen Werten des Genotyps wird der Phänotyp in der Physik-Engine erstellt.
-      Dieser Prozess wird auch als Abbilden des Genotyps auf einen Phäntotyp bezeichnet (\vref{sub:introPhenotyp}).
-      Der Phänotyp setzt sich aus mehreren geometrischen Figuren und Gelenken (\Glspl{Constraint}) zusammen.
+      Dieser Prozess wird auch als Abbilden des Genotyps auf einen Phäntotyp bezeichnet~(\vref{sub:introPhenotyp}).
+      Der Phänotyp enthält alle Daten, welche die Physik-Engine braucht, um das Individuum zu simulieren.
+      Er setzt sich aus mehreren geometrischen Figuren und Gelenken (\Glspl{Constraint}) zusammen.
       Die Beine des Individuums werden mit Hilfe eines Drehgelenks an den Körper gebunden.
       Mit Hilfe von Constraints wird diese Bindung an den Körper erreicht.
       Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird um eine Bewegung in Gang zu setzten.
@@ -210,7 +211,8 @@
 
       \smallskip
 
-      Als erste bringt der Motor ein Individuum immer in die Ausgangsposition.
+      Als erstes bringt der Motor ein Individuum immer in die Ausgangsposition.
+      % TODO nächste 2 Sätz machen keinen Sinn
       Diese mit einem separaten Bewegungsablauf durchgeführt. Dieser kann ebenfalls evolviert werden.
       \\
       Sobald die Ausgangsposition erreicht ist, beginnt der Motor mit dem Ausführen des Bewegungsabalufs.
@@ -218,7 +220,7 @@
 
 
       Eine Bewegung wird durch mehrere Attribute beschrieben, welche der Motor interpretiert.
-      Anschliessend setzt der Motor die entsprechenden Anweisungen
+      Anschliessend setzt der Motor die entsprechenden Anweisungen um.
 
     \subsection{Vorgegebener Bewegungsablauf}
 
@@ -405,18 +407,21 @@
     Das Austauschen der Genen (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
     Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird.
     So kann keine sinnvolle Evolution statt finde. Rekombination kann für die Verwendung somit ausgeschlossen werden.
-    Dies stellt schon den ersten Indikator dafür da,
+    Dies stellt schon den ersten Indikator dar,
     dass Evolutionäre Programmierung eingesetzt werden kann.
     Ein weiteres Kriterium ist die genetische Repräsentation.
-    Da unser Individuum sich aus Punkten im einem Koordinatensystem,
+    Da sich das Individuum aus Punkten im einem Koordinatensystem,
     verschiedene Winkel und einem Antrieb (Motor) definiert, wird die Reale-Werte-Repräsentation eingesetzt.
-    Eine Baumrepräsentation oder binäre Repräsentation erscheint hier wenig hilfreich.
     Ein Punkt ist nichts anderes als zwei reale Werte,
     ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
+    Die binäre Repräsentation scheint für die vielen realen Werte nicht geeignet zu sein.
+    Theoretisch wäre es möglich alle realle Werte binär darzustellen, jedoch würde so dem Problem eine unnötige Komplexität hinzugefügt werden.
+    Die Repräsentation als Baum ist laut K. Weicker ~\cite{book:evAlgo} eine Möglichkeit die Steuerung eines Roboters abzubilden.
+    Da aber mehr als nur die Steuerung evolviert wird, bleibt die Entscheidung bei der Reale-Werte-Repräsentation.
     Die Problemstellung würde wahrscheinlich anderst bewältigt werden,
-    würde es hier um reale Kreaturen gehen und nicht nur um virtuelle Roboter,
+    würde sich die Thematik um reale Kreaturen drehen und nicht um virtuelle Roboter,
     welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
-    Die Genetik ist in diesem Falle also vernachläsigbar.
+    Bei realen Kreaturen spielt die Genetik eine zentrale Rolle, jedoch kann sie bei den virtuellen Robotern vernachlässigt werden.
     Schlussendlich wurde entschieden die Problemstellung, auf Grund der gelieferten Argumente, mit evolutionärer Programmierung zu lösen.
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
