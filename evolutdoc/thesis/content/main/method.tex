@@ -44,7 +44,7 @@
         dass sich ein Individuum mit 8 Körperpunkten schneller durch den Parcours bewegt,
         als ein Individuum mit weniger Körperpunkten.
         Die Vermutung dabei ist, dass durch die komplexere Form des Individuums die Balance besser gehalten werden kann.
-        Im Kapitel~\vref{chap:Resultate} und \vref{chap:perspective} wird diskutiert ob dies zutrifft.
+        Im Kapitel~\vref{chap:Resultate} und~\vref{chap:perspective} wird diskutiert ob dies zutrifft.
 
     \subsection{Beine\label{sub:Beine}}
 
@@ -211,8 +211,8 @@
 
       \subsubsection{Ausführung in der Simulation}
 
-      Die Physik-Engine fürht die Simulation iterativ durch.
-      D.h\. der Zustand der Objekte in der Simulationswelt wird pro Schritt berechnet.
+      Die Physik-Engine führt die Simulation iterativ durch.
+      D.h.\ der Zustand der Objekte in der Simulationswelt wird pro Schritt berechnet.
       Diese Eigenschaft nutzt der Motor,
       indem in während jedem Schritt die aktuelle Bewegung aller Individuen bearbeitet.
       Damit ist die feinst mögliche Auﬂösung für die Bewegungssteuerung erreicht.
@@ -346,6 +346,15 @@
 
       Zur weiteren Verbesserung des Bewegungsablaufs,
       kann der Motor Rückmeldungen von der Simulationswelt anfordern.
+      Der Motor wird von der Physik-Engine benachrichtigt,
+      sobald eine Kollision zwischen einem Körperteil und dem Untergrund stattfindet.
+
+      \smallskip
+
+      Das Feedbacksystem ist nicht vollständig ausgearbeitet.
+      Aus zeitlichen Gründen ist dies nicht umgesetzt worden.
+      Es ist nur die Rückmeldung an den Motor vorhanden, jedoch wird die Rückmeldung nicht verarbeitet.
+      Im Kapitel~\vref{sec:PerspectiveFeedback} wird erläutert, was zusätzlich umgesetzt werden muss.
 
   \section{Auswahl des Evolutionären Algorithmus}
 
@@ -369,7 +378,7 @@
     ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
     Die binäre Repräsentation scheint für die vielen realen Werte nicht geeignet zu sein.
     Theoretisch wäre es möglich alle realle Werte binär darzustellen, jedoch würde so dem Problem eine unnötige Komplexität hinzugefügt werden.
-    Die Repräsentation als Baum ist laut K. Weicker ~\cite{book:evAlgo} eine Möglichkeit die Steuerung eines Roboters abzubilden.
+    Die Repräsentation als Baum ist laut K. Weicker~\cite{book:evAlgo} eine Möglichkeit die Steuerung eines Roboters abzubilden.
     Da aber mehr als nur die Steuerung evolviert wird, bleibt die Entscheidung bei der Reale-Werte-Repräsentation.
     Die Problemstellung würde wahrscheinlich anderst bewältigt werden,
     würde sich die Thematik um reale Kreaturen drehen und nicht um virtuelle Roboter,
@@ -636,7 +645,7 @@
     \subsection{Domänenmodel\label{sub:domMod}}
 
       Das Domänenmodell beschreibt den Zusammenhang der verschiedenen Klassen und Objekten.
-      \vref{fig:mainProcess} beschreibt den Haupt- und \vref{fig:simulationProcess} den Simulationsprozess.
+      \vref{fig:mainProcess} beschreibt den Haupt- und~\vref{fig:simulationProcess} den Simulationsprozess.
       \begin{figure}[H]
         \includegraphics[scale=0.6,center]{graphics/main_process}
         \caption{Domänen Modell, Hauptprozess\label{fig:mainProcess}}
