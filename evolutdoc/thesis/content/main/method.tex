@@ -112,7 +112,7 @@
       \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
 
         Das zufällige Erstellen eines Genotyps wird ``seeding'' genannt.
-        Zu Beginn der Simulation wird die initale Population~(\vref{sec:Initiale Polulation}) mit zufällig generierten Individuen erstellt.
+        Zu Beginn der Simulation wird die initale Population~(\vref{sec:initPop}) mit zufällig generierten Individuen erstellt.
         Dabei ist es hilfreich manche Parameter nicht zufällig generieren zu lassen,
         sondern mit einem fixen Wert zu initialisieren.
         Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
@@ -156,7 +156,7 @@
         \begin{figure}[H]
           \centering
           \input{graphics/unit-circle-body-points}
-          \caption{Berechnung Körperpunkt veranschaulicht\label{fig:kp}}
+          \caption{Berechnung der Körperpunkte veranschaulicht\label{fig:kp}}
         \end{figure}
 
     \subsection{Phänotyp\label{sub:Phenotyp}}
@@ -560,7 +560,7 @@
     Die Applikation setzt sich aus mehreren Komponenten zusammen.
     Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen~(\vref{fig:hauptSimuProzesse}).
     Während es nur eine Instanz vom Hauptprozess gibt, ist die Anzahl Simulationsprozesse frei wählbar (\vref{sub:techParams}).
-    Die Kommunikation zwischen Simulationsprozessen und Hauptprozess erfolgt über asynchrones Messaging.
+    Die Kommunikation zwischen Simulationsprozessen und Hauptprozess erfolgt über \gls{asyncMessaging}.
     In~\vref{sub:domMod} sind die jeweiligen Zusammenhänge der Klassen und Objekte ausführlicher beschrieben.
     \vref{fig:ablauf} beschreibt den generellen Ablauf als Flussdiagramm
 
@@ -573,7 +573,7 @@
       \caption{Ablauf der Simulation\label{fig:ablauf}}
     \end{figure}
 
-    \subsection{Initiale Population\label{sec:Initiale Polulation}}
+    \subsection{Initiale Population\label{sec:initPop}}
 
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewhält werden.
       Pro Simulationsprozess können etwa 15 Individuuen flüssig berechnet werden.
@@ -627,8 +627,6 @@
       Die Simulation kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
       Es wird dann jeweils für \( Populationsgrösse / Anzahl Simulationsprozesse \) Individuen eine eigene Simulation erstellt.
 
-      % TODO Glossar: asynchronous message-passing
-
     \subsection{Reporting\label{subsec:Reporting}}
 
       Das Reporting-Modul hilft nach einer Simulation alle wichtigen Daten festzuhalten.
@@ -680,7 +678,7 @@
     \subsection{Domänenmodel\label{sub:domMod}}
 
       Das Domänenmodell beschreibt den Zusammenhang der verschiedenen Klassen und Objekten.
-      Abbildung~\ref{fig:mainProcess} beschreibt den Haupt- und Abbildung~\ref{fig:simulationProcess} den Simulationsprozess.
+      \vref{fig:mainProcess} beschreibt den Haupt- und \vref{fig:simulationProcess} den Simulationsprozess.
       \begin{figure}[H]
         \includegraphics[scale=0.6,center]{graphics/main_process}
         \caption{Domänen Modell, Hauptprozess\label{fig:mainProcess}}
