@@ -4,7 +4,7 @@
 
 % !TEX root = ../../main.tex
 
-\chapter{Methode}
+\chapter{Methode\label{sec:method}}
 
   \section{Design der Individuen}
 
@@ -667,6 +667,11 @@
       Die Position eines Beins wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
       dass ein Bein ausserhalb des Körpers ist, wird die Position zufällig neu bestimmt.
       Die Mutation läuft wie die Simulation parallel ab, das heisst, sie kann von mehreren CPU-Kernen profitieren.
+
+      \subsubsection{Hypothese zur Mutation\label{subsub:hypoMut}}
+        Es wird die Hypthose aufgestelt, das kleinere Mutationswahrscheinlichkeiten bessere Fitnesswerte liefern als grosse Mutationswahrscheinlichkeiten.
+        Die Annahme besteht darin, dass von vielen Individuen mit guten Fitnesswerten zu viele Positionen des Genoms überschrieben werden.
+        Somit würde die Evolution gebremst werden.
 
     \subsection{Abbruchkriterium}
 

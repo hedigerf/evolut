@@ -62,7 +62,7 @@ Versuch 4 mit den vielversprechendsten Resultaten ist ausführlich mit Bilder de
         \caption{Simulationsparameter, Zweiter Versuch}
       \end{table}
 
-    \subsection{Auswertung}
+    \subsection{Auswertung\label{sub:scndAuswertung}}
 
       Interessant zu beobachten ist beim zweiten Versuch,
       dass die Fitness der Individuen erst ab der 1400\@. Generation (siehe Abbildung~\vref{fig:graphSecond})
@@ -86,7 +86,7 @@ Versuch 4 mit den vielversprechendsten Resultaten ist ausführlich mit Bilder de
 
       \subsubsection{Körperpunkte\label{subsub:bpScnd}}
 
-        Ein ähnliches Bild ist zu beobachten, wie bei bei~\vref{subsub:bp}.
+        Ein ähnliches Bild ist zu beobachten, wie bei~\vref{subsub:bp}.
         Bereits ab der 9\@. Generation existieren nur noch Individuen mit 7 Körperpunkten (siehe Abbildung~\vref{fig:graphBpSecond}).
         Dieses Phänomen kann als evolutionary frozen Accident bezeichnet werden.
         Damit eine Aussage über den Einfluss der Körperpunkte getroffen werden kann,
@@ -114,7 +114,7 @@ Versuch 4 mit den vielversprechendsten Resultaten ist ausführlich mit Bilder de
         Die Konfigurationstabelle~(\vref{tbl:thirdRunConf}) stellt die erweiterten Einstellungsmöglichkeiten dar.
 
 
-      \subsection{Auswertung\label{sub:fourthAuswertung}}
+      \subsection{Auswertung\label{sub:thirdAuswertung}}
 
         Leider dauert es mit dieser Version der Applikation sehr lange eine Generation zu evolvieren. Der Grund dafür ist einerseits die ineffiziente Mutation der Indivdiuuen.
         Andererseits ist die Wahrscheinlichkeit eine neue Bewegung hinzuzufügen grösser, als eine Bewegung zu entfernen. Dies lässt die Datenstrukturen grösser wachsen, da immer mehr Bewegung vorhanden sind.
@@ -159,7 +159,7 @@ Versuch 4 mit den vielversprechendsten Resultaten ist ausführlich mit Bilder de
             \caption{Simulationsparameter, Vierter Versuch \label{tbl:forthRunConf}}
           \end{table}
 
-          Wie in \vref{sub:fourthAuswertung} erwähnt, wurde die Wahrscheinlichkeit Bewegungen hinzuzufügen oder zuentfernen gleich gesetzt.
+          Wie in \vref{sub:thirdAuswertung} erwähnt, wurde die Wahrscheinlichkeit Bewegungen hinzuzufügen oder zuentfernen gleich gesetzt.
 
         \subsection{Auswertung}
 
@@ -200,7 +200,10 @@ Versuch 4 mit den vielversprechendsten Resultaten ist ausführlich mit Bilder de
           \subsubsection{3000. Generation}
             Etwa ab der 3000. Generation haben sich die Individuen zu Hüpfer entwickelt.
             Sie fixieren alle Beine ausser eines, welches sie benutzen um sich vom Boden abzustossen~(\vref{fig:gen3000}).
-            Diese Art von Fortbewegung bringt eine bessere Fitness ein, wie in \vref{fig:graphFourth} erkennbar ist.
+            Diese Art von Fortbewegung bringt eine bessere Fitness ein , wie in \vref{fig:graphFourth} erkennbar ist.
+            Im Gegensatz zu den Individuen in~\vref{sub:scndAuswertung} ist dies jedoch eine valide Hüpfbewegung.
+            Das herabsetzten der Muations-Wahrscheinlichkeiten~(Hypothese in \vref{subsub:hypoMut}) hat langfristig einen positiven Effekt auf die Fitness,
+            wie in \vref{fig:graphFourth} im Vergleich zu \vref{fig:graphFirst} erkennbar ist.
 
             \vspace{0.5cm}
 
