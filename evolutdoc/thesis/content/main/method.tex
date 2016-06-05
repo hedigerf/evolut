@@ -44,7 +44,7 @@
         dass sich ein Individuum mit 8 Körperpunkten schneller durch den Parcours bewegt,
         als ein Individuum mit weniger Körperpunkten.
         Die Vermutung dabei ist, dass durch die komplexere Form des Individuums die Balance besser gehalten werden kann.
-        Im~\vref{chap:Resultate} und~\vref{chap:perspective} wird diskutiert ob dies zutrifft.
+        Im~\vref{chap:Resultate} und~\vref{chap:perspective} wird diskutiert, ob dies zutrifft.
 
     \subsection{Beine\label{sub:Beine}}
 
@@ -386,7 +386,7 @@
     würde sich die Thematik um reale Kreaturen drehen und nicht um virtuelle Roboter,
     welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
     Bei realen Kreaturen spielt die Genetik eine zentrale Rolle, jedoch kann sie bei den virtuellen Robotern vernachlässigt werden.
-    Schlussendlich wurde entschieden die Problemstellung, auf Grund der gelieferten Argumente, mit evolutionärer Programmierung zu lösen.
+    Schlussendlich wurde entschieden die Problemstellung, aufgrund der gelieferten Argumente, mit evolutionärer Programmierung zu lösen.
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
 
@@ -519,7 +519,6 @@
       Die Stiffness ist der letzte wichtige technische Parameter. Man kann sich die Stiffness als Steifheit einer Feder vorstellen.
       Sie beschreibt wie steif alle Element der Simulation sich verhalten sollen.
 
-
   \section{Ablauf\label{sec:Ablauf}}
 
     Die Applikation setzt sich aus mehreren Komponenten zusammen.
@@ -585,23 +584,24 @@
 
       \subsection{Simulation\label{sec:simulation}}
 
-      Nachdem eine neue Population und ein neuer Parcours erstellt worden ist.
-      Muss eine Simulation durchgeführt werden um den Fitnesswert der Individuen zu bestimmen.
-      Die Verantwortliche Klasse ist die SimulationWorld.
-      Zuerst muss jeder Genotyp zu einem Phänotyp abgebildet werden.
-      Anschliessend muss der Parcours aus dem Blueprint erstellt werden. % TODO referenz?
-      Erst dann kann mit der Simulation begonnen werden.
-      Die Simulation merkt sich zu jedem Individuum die Position.
-      Individuen welche sich während 4 Sekunden kaum bewegt haben,
-      werden aus der Simulation entfernt und ihr Fitnesswert wird abgespeichert.
-      Die Simulation kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
-      Es wird dann jeweils für \( Populationsgrösse / Anzahl Simulationsprozesse \) Individuen eine eigene Simulation erstellt.
+        Nachdem eine neue Population und ein neuer Parcours erstellt worden ist.
+        Muss eine Simulation durchgeführt werden um den Fitnesswert der Individuen zu bestimmen.
+        Die Verantwortliche Klasse ist die SimulationWorld.
+        Zuerst muss jeder Genotyp zu einem Phänotyp abgebildet werden.
+        Anschliessend muss der Parcours aus dem Blueprint erstellt werden. % TODO referenz?
+        Erst dann kann mit der Simulation begonnen werden.
+        Die Simulation merkt sich zu jedem Individuum die Position.
+        Individuen welche sich während 4 Sekunden kaum bewegt haben,
+        werden aus der Simulation entfernt und ihr Fitnesswert wird abgespeichert.
+        Die Simulation kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
+        Es wird dann jeweils für \( Populationsgrösse / Anzahl Simulationsprozesse \) Individuen eine eigene Simulation erstellt.
 
     \subsection{Reporting\label{subsec:Reporting}}
 
       Das Reporting-Modul hilft nach einer Simulation alle wichtigen Daten festzuhalten.
       Mithilfe einer Funktion welche eine Population als Parameter entgegennimmt,
-      werden die Reports erstellt. Es existieren folgende Typen von Reports:
+      werden die Reports erstellt.
+      Es existieren folgende Typen von Reports:
 
       \begin{itemize}
         \item Fitness Graph Average Report: Enthält Koordinaten, um einen Graphen über die durchschnittliche Fitness pro Generation zu erstellen.
@@ -626,7 +626,8 @@
       dass Turnierbasierte-Selektion oft bei evolutionärer Programmierung eingesetzt wird.
       Turnierbasierte-Selektion hat den Vorteil, dass die Diversität erhalten bleibt,
       bei gleichzeitig guter Selektion der fittesten Individuen.
-      Auf Grund der Empfehlung von D. Floreano und C. Mattiussi und der Erhaltung der Diversität wurde entschieden, Turnierbasierte-Selektion einzusetzen.
+      Aufgrund der Empfehlung von D. Floreano und C. Mattiussi und der Erhaltung der Diversität,
+      wurde entschieden Turnierbasierte-Selektion einzusetzen.
 
     \subsection{Mutation\label{sec:Mutation}}
 
