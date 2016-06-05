@@ -44,7 +44,7 @@
         dass sich ein Individuum mit 8 Körperpunkten schneller durch den Parcours bewegt,
         als ein Individuum mit weniger Körperpunkten.
         Die Vermutung dabei ist, dass durch die komplexere Form des Individuums die Balance besser gehalten werden kann.
-        Im Kapitel~\vref{chap:Resultate} und \vref{chap:perspective} wird diskutiert ob dies zutrifft.
+        Im Kapitel~\vref{chap:Resultate} und~\vref{chap:perspective} wird diskutiert ob dies zutrifft.
 
     \subsection{Beine\label{sub:Beine}}
 
@@ -172,7 +172,7 @@
   \section{Motor\label{sec:Engine}}
 
     Der Motor sorgt zusammen mit den Informationen zum Bewegungsablauf im Phänotyp für die Bewegung eines Individuums.
-    Im Genotyp ist verankert, wann eine Bewegung~\vref{subsub:EngineMovement} vom Motor ausgeführt wird.
+    Im Genotyp ist verankert, wann eine Bewegung (\vref{subsub:EngineMovement}) vom Motor ausgeführt wird.
     Diese Informationen werden im Prozess übernommen, wo der Genotyp auf den Phänotyp abgebildet wird.
     Zusätzlich ist auf dem Phänotyp festgehalten, in welchem Zustand sich die Bewegung befindet.
 
@@ -180,8 +180,8 @@
 
       Die Implementation des Motors ist ein \acrfull{fsm}.
       Dabei repräsentieren die Bewegungen die Zustände des Motors zwischen denen gewechselt wird.
-      Durch diese Art der Implementation kann ein zyklischer Bewegungsablauf einfach abgearbeitet werden.
-      Die Bedinung für den Zustandswechsel von der aktuellen Bewegung \( M_{i} \) zu Bewegung \( M_{i + 1} \) ist,
+      Durch diese Art der Implementation kann ein zyklischer Bewegungsablauf einfach abgebildet werden.
+      Die Bedingung für den Zustandswechsel von der aktuellen Bewegung \( M_{i} \) zu Bewegung \( M_{i + 1} \) ist,
       dass die aktuelle Bewegung vollständig ausgeführt wurde.
 
       \begin{figure}[H]
@@ -204,35 +204,35 @@
       \smallskip
 
       Mit den Informationen des Phänotyps kann der Motor den gesamten Bewegungsablauf kontrollieren.
-      Der Motor überwacht die Übergänge zwischen einzelnen Bewegugnen oder zusammengefassten Bewegungen. % ref
+      Der Motor überwacht die Übergänge zwischen den Bewegungen.
       Nach jedem Übergang zu einer neuen Bewegung, führt der Motor diese aus und prüft,
       ob der Zustand gewechselt werden muss.
       Ein Zustandswechsel ist gleichzusetzten mit einer neuen Bewegung auszuführen.
 
-      \smallskip
+      \subsubsection{Ausführung in der Simulation}
 
-      Als erstes bringt der Motor ein Individuum immer in die Ausgangsposition.
-      % TODO nächste 2 Sätz machen keinen Sinn
-      Diese mit einem separaten Bewegungsablauf durchgeführt. Dieser kann ebenfalls evolviert werden.
+      Die Physik-Engine führt die Simulation iterativ durch.
+      D.h.\ der Zustand der Objekte in der Simulationswelt wird pro Schritt berechnet.
+      Diese Eigenschaft nutzt der Motor,
+      indem in während jedem Schritt die aktuelle Bewegung aller Individuen bearbeitet.
+      Damit ist die feinst mögliche Auﬂösung für die Bewegungssteuerung erreicht.
       \\
-      Sobald die Ausgangsposition erreicht ist, beginnt der Motor mit dem Ausführen des Bewegungsabalufs.
-      Dabei interpretiert der Motor die aktuelle Bewegung und setzt diese um.
-
-
-      Eine Bewegung wird durch mehrere Attribute beschrieben, welche der Motor interpretiert.
-      Anschliessend setzt der Motor die entsprechenden Anweisungen um.
+      Als erstes bringt der Motor ein Individuum immer in die Ausgangsposition (\vref{fig:ConceptMovement00}).
+      Die Ausgangsposition wird deﬁniert durch den initialen Bewegungsablauf.
+      Dieser ist unabhängig vom Ablauf, der das Gehen (oder eine andere Form der Fortbewegung) deﬁniert.
+      Sobald die Ausgangsposition erreicht ist, beginnt der Motor mit dem Ausführen des Bewegungsablaufs.
 
     \subsection{Vorgegebener Bewegungsablauf}
 
       Die Individuen der initialen Population~\vref{sec:initPop} besitzen einen vorgegebenen Bewegungsablauf.
-      Der Grund dafür ist, dass damit die Wahrscheinlichkeit,
-      dass die Evolution lauffähige Individuen hervorbring steigt.
+      Der Grund dafür ist, dass damit die Wahrscheinlichkeit steigt,
+      dass die Evolution lauffähige Individuen hervorbringt.
       \\
-      Der vorgegebene Ablauf ist der Ameise nachempfunden, aufgrund der Einfachheit und Stabilität.
+      Der vorgegebene Ablauf ist der Ameise nachempfunden, wegen der Einfachheit und Stabilität.
       Eine Ameise bewegt pro Schritt immer 3 Beine.
       Alternierend wird auf einer Seite 1 und auf der anderen 2 Beine gehoben und nach vorne bewegt.
       Diese Bewegung erlaubt es der Ameise stets stabil zu stehen,
-      da ein Dreibein immer steht während das andere bewegt wird.
+      da ein Dreibein immer steht während die anderen bewegt werden.
       \\
       Mit dem vorgegebenen Muster werden die Bewegungen für eine Seite erstellt.
       Anschliessend können die Bewegungen für die andere Körperseite mit kleinen Anpassungen übernommen werden.
@@ -327,72 +327,34 @@
 
     \subsubsection{Bewegung\label{subsub:EngineMovement}}
 
-      Führt der Motor eine Bewegung aus, so interpretiert er die Daten aus dem Phänotyp.
-      Er liest die aktuelle Beschreibung der Bewegung.
+      Unter dem Begriﬀ Bewegung werden alle Aktionen, die der Motor ausführt verstanden.
+      Es gibt neben den klassischen Bewegungen, wie ein Drehgelenk bewegen,
+      auch solche, die Attribute eines Gelenkes ändern oder den aktuellen Winkel eines Gelenkes abfragen.
+
+      \smallskip
+
       Eine Bewegung ist mit mehreren Attributen beschrieben.
-
-
-    \subsubsection{Bewegungen\label{subsub:EngineMovements}}
-
-      Dem Motor stehen verschiedene Kategorien von Bewegungen zur Verfügung.
-      Es wird unterschieden zwischen:
-
-      \begin{itemize}
-        \item Einfache
-        \item Zusammengesetzte
-        \item Prädikate
-      \end{itemize}
-
-      \paragraph{Einfache Bewegung\label{EngineMovementsSimple}}
-
-        Einfache Bewegungen werden dadurch charakterisiert,
-        dass sie einen Parameter einer Extremität des Phänotyps verändern.
-        \\
-        Veränderbar sind die minimalen und maximalen Winkel eines Gelenkes und die Winkelgeschwindigkeit des
-        Gelenk-Motors. Der Winkel des Gelenkes kann ebenfalls fixiert werden.
-        \\
-        Die maximale Winkelgeschwindigkeit des Gelenk-Motors ist limitiert.
-        Dies stellt sicher, dass die vorhandene Kraft eines Phänotyps nach oben limitiert wird.
-        \[ {\lvert} \omega_{\max} {\rvert} = 1\frac{rad}{s}\]
-        \\
-        Der minimale Winkel \(\alpha \) und der maximale Winkel \(\beta \) des Gelenks sind definiert als:
-        \[ \alpha, \beta \in \mathbb{R}, -\pi \leq \alpha < \beta \leq \pi \]
-
-      \paragraph{Zusammengesetzte Bewegung\label{EngineMovementsCompound}}
-
-        Zusammengesetzte Bewegungen gruppieren eine beliebige Anzahl von Bewegungen zu einer einzigen.
-        Dabei spielt es keine Rolle, von welchem Typ ein Element ist.
-        Die ganze Gruppe der Bewegungen wird in einem Schritt der Physik-Engine ausgeführt.
-        Damit können Bewegungen parallel abgearbeitet werden.
-        \\
-        Es stehen zwei Auswertungsfunktionen zur Verfügung:
-        \begin{itemize}
-          \item \textbf{Alle}: Jede Teil-Bewegungen in dieser Gruppe muss erfolgreich ausgeführt worden sein.
-          \item \textbf{Eine}: Nur eine einzige Bewegung in dieser Gruppe muss erfolgreich ausgeführt worden sein.
-        \end{itemize}
-
-      \paragraph{Prädikate\label{EngineMovementsPredicates}}
-
-        Dies Art der Bewegung führt keine Änderung am Zustand des Phänotyps durch.
-        Nur der Zustand eines Attributes des Gelenkes wird geprüft.
-        \\
-        Eine Prädikat-Bewegung gilt als ausgeführt, wenn sie das spezifizierte Prädikat erfüllt.
-        Hierfür stehen mehrere Prädikate wie maximaler oder minimaler Winkel erreicht zur Verfügung.
+      Es wird festgelegt welche Art der Bewegung es ist,
+      welches Gelenk gesteuert wird und was die Parameter für die Bewegung sind.
+      Mit dieser Aufgliederung lassen sich einzelne Teile einer Bewegung mutieren.
+      Insbesondere ist es möglich verschiedene Wahrscheinlichkeiten für Teile zu verwenden.
+      \\
+      Soblald der Motor eine Bewegung ausführt, interpretiert er die Daten aus dem Phänotyp.
+      Er liest die Beschreibung der aktuelln Bewegung und führt diese dann aus.
 
     \subsubsection{Feedback}
 
-      Zur weiteren Verbesserung des Bewegungsablaufs kann der Motor auf Rückmeldungen aus der Simulations-
-      Welt zurückgreifen.
-      Dabei können Kollisionen von Extremitäten mit dem Boden abgefangen und verarbeitet werden.
-      \\
-      Damit der Bewegungsmotor dynamisch auf Änderungen des Untergrundes reagieren kann,
-      muss zusätzlich eine Rückmeldung an den Motor erfolgen, wenn sich die Art des Untergrundes ändert
-      oder wenn ein Anstieg oder Abstieg bevorsteht.
-      \\
+      Zur weiteren Verbesserung des Bewegungsablaufs,
+      kann der Motor Rückmeldungen von der Simulationswelt anfordern.
+      Der Motor wird von der Physik-Engine benachrichtigt,
+      sobald eine Kollision zwischen einem Körperteil und dem Untergrund stattfindet.
 
-  % =====================================================================
-  % /MOTOR
-  % =====================================================================
+      \smallskip
+
+      Das Feedbacksystem ist nicht vollständig ausgearbeitet.
+      Aus zeitlichen Gründen ist dies nicht umgesetzt worden.
+      Es ist nur die Rückmeldung an den Motor vorhanden, jedoch wird die Rückmeldung nicht verarbeitet.
+      Im Kapitel~\vref{sec:PerspectiveFeedback} wird erläutert, was zusätzlich umgesetzt werden muss.
 
   \section{Auswahl des Evolutionären Algorithmus}
 
@@ -416,7 +378,7 @@
     ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
     Die binäre Repräsentation scheint für die vielen realen Werte nicht geeignet zu sein.
     Theoretisch wäre es möglich alle realle Werte binär darzustellen, jedoch würde so dem Problem eine unnötige Komplexität hinzugefügt werden.
-    Die Repräsentation als Baum ist laut K. Weicker ~\cite{book:evAlgo} eine Möglichkeit die Steuerung eines Roboters abzubilden.
+    Die Repräsentation als Baum ist laut K. Weicker~\cite{book:evAlgo} eine Möglichkeit die Steuerung eines Roboters abzubilden.
     Da aber mehr als nur die Steuerung evolviert wird, bleibt die Entscheidung bei der Reale-Werte-Repräsentation.
     Die Problemstellung würde wahrscheinlich anderst bewältigt werden,
     würde sich die Thematik um reale Kreaturen drehen und nicht um virtuelle Roboter,
@@ -682,7 +644,7 @@
     \subsection{Domänenmodel\label{sub:domMod}}
 
       Das Domänenmodell beschreibt den Zusammenhang der verschiedenen Klassen und Objekten.
-      \vref{fig:mainProcess} beschreibt den Haupt- und \vref{fig:simulationProcess} den Simulationsprozess.
+      \vref{fig:mainProcess} beschreibt den Haupt- und~\vref{fig:simulationProcess} den Simulationsprozess.
       \begin{figure}[H]
         \includegraphics[scale=0.6,center]{graphics/main_process}
         \caption{Domänen Modell, Hauptprozess\label{fig:mainProcess}}
