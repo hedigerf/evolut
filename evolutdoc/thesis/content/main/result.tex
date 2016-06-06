@@ -88,7 +88,7 @@
       Dieser Fehler kann bereinigt werden indem die Relaxation erhöht und gleichzeitig der Zeitschritt verringert wird,
       diese Parameter sind in~\vref{sec:Konfiguration} beschrieben.
 
-      \begin{figure}
+      \begin{figure}[H]
         \centering
         \input{graphics/fitness-graph-second-run-no-feedback}
         \caption{Bestes Individuum und Durchschnittliches Individuum, zweiter Versuch\label{fig:graphSecond}}
@@ -106,7 +106,7 @@
         müsste während der ganzen Simulation die Anzahl der Körperpunkte mutiert werden.
         Stattdessen wird momentan nur zu Beginn der Simulation die Anzahl der Körperpunkte für die Individuen festgelegt.
 
-        \begin{figure}
+        \begin{figure}[H]
           \centering
           \input{graphics/fitness-graph-average-body-points-second-run-no-feedback}
           \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, zweiter Versuch\label{fig:graphBpSecond}}
@@ -140,7 +140,7 @@
       Sie können die guten Fitnesswerte halten,
       obwohl der Parcours schwerer wird (siehe~\vref{fig:graphThird}).
 
-      \begin{figure}
+      \begin{figure}[H]
         \centering
         \input{graphics/fitness-graph-third-run}
         \caption{Bestes Individuum und durchschnittliches Individuum, dritter Versuch\label{fig:graphThird}}
@@ -167,7 +167,7 @@
         Interessant zu beobachten ist, dass die Diversität ab der 400. Generation wieder zu steigen beginnt.
         Die Vermutung dabei ist, dass sich mehr verschiedene Individuen mit einer guten Fitness finden lassen.
 
-        \begin{figure}
+        \begin{figure}[H]
           \centering
           \input{graphics/diversity-graph-third-run}
           \caption{Diversität pro Generation, dritter Versuch\label{fig:graphDivThird}}
@@ -330,8 +330,10 @@
         Die notwendigen Schritte für eine sinnvolle Evaluation wurden unter~\vref{subsub:bpScnd} beschrieben.
 
       \subsubsection{Diversität}
-        Der Einbruch ab ca. der 3000. Generation, lässt sich damit erklären, dass die Hüpfer gefunden worden sind.
+
+        Der Einbruch ab ca.\ der 3000. Generation, lässt sich damit erklären, dass die Hüpfer gefunden worden sind.
         Die Diversität konnte sich steigern im Vergleich zum Anfang der Simulation und spricht für die Turnierbasierte-Selektion.
+
         \begin{figure}[H]
           \centering
           \input{graphics/diversity-graph-fourth-run}
@@ -353,10 +355,12 @@
       Darum wurde das Ziel der Konfiguration modifiziert, um das Evolvieren auf Evolvierbarkeit zu erreichen.
 
     \subsection{Auswertung\label{sub:fifthAuswertung}}
-      Der Graph in \vref{fig:graphFifth} schläger weniger aus im Vergleich zu \vref{fig:graphForth}.
+
+      Der Graph in~\vref{fig:graphFifth} schläger weniger aus im Vergleich zu~\vref{fig:graphForth}.
       Dies zu erklären, das beim evolvieren auf Evolvierbarkeit, der Parcour erst nach 100
       Generationen ausgewechselt wird und somit die Fitnesswerte weniger pro Generation schwanken.
       Die Ausreisser (lokale Minima und Maxima) treten dann auf, wenn der Parcour gewechselt wird.
+
       \begin{figure}[H]
         \centering
         \input{graphics/fitness-graph-fifth-run}
@@ -364,13 +368,14 @@
       \end{figure}
 
       \subsubsection{Diversität}
+
         Die Diversität~(\vref{fig:graphDivFifth}) ist im Vergleich zum 4. Versuch~(\vref{fig:graphDivFourth}) deutlich niedriger.
         Die allgemeine Lösung erlaubt es diversere Individuen zu finden.
+
         \begin{figure}[H]
           \centering
           \input{graphics/diversity-graph-fifth-run}
           \caption{Diversität pro Generation, Fünfter Versuch\label{fig:graphDivFifth}}
-
         \end{figure}
 
   \section{Sechster Versuch, Fortsetzung Lauf 4\label{sec:sixthSimulation}}
