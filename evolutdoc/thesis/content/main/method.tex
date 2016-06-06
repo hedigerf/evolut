@@ -420,43 +420,6 @@
       Deshalb wurde als zweite Option auf ``p2.js'' zurückgegriffen.
       Diese \gls{PhysicsEngine} bietet eine ausführliche Dokumentation und Beispiele zu sämtlichen Aspekten.
 
-    \subsection{Laufzeitumgebung}
-
-      Um Javascript und p2.js ohne Browser zu betreiben wird Electron eingesetzt.
-      Electron ist node.js und Google Chrome vereint in einer Standalone-Anwendung.
-      Mit Hilfe von Node.js lassen sich alle I/0-Zugriffe regeln und es kann auf den
-      Node Package Manager zur Abhängigkeitsverwaltung von anderen Bibliotheken zurückgegriffen werden.
-      Auch lässt sich unter bestimmten Umständen Javascript schneller ausführen unter Node.js als in einem Browser.
-
-    % TODO ergänzen was wie wo oder löschen!
-    \subsection{Programmierparadigma\label{sub:TechnologyParadigma}}
-
-      In der Programmierung gibt es verschiedene Ansätze,
-      wie der Quellcode aufgebaut werden soll und wie Probleme gelöst werden sollen.
-      Die bekanntesten Ansätze sind prozedural, objektorientiert und funktional.
-
-      \subsubsection{Prozedural\label{subsub:TechnologyParadigmaProzedural}}
-
-        Prozedurale Programme bestehen aus einer Folge von Befehlen,
-        die vorgeben wann was ausgeführt wird.
-        Die Daten und die Routinen die mit diesen arbeiten, sind voneinander getrennt.
-
-      \subsubsection{Objekt-Orientiert\label{subsub:TechnologyParadigmaObjectOriented}}
-
-        Die objektorientierte Programmierung verbindet die Daten und
-        die Routinen die mit diesen interagieren. Sie werden zu Einheiten zusammengefasst.
-        Diese Einheiten werden im Zusammenhang mit Objekt-Orientierter-Programmierung Klassen genannt.
-
-      \subsubsection{Funktional\label{subsub:TechnologyParadigmaFunctional}}
-
-        Funktionale Programmierung heisst, das Programm so zu entwerfen, so dass die Datenverarbeitung nur aus Evaluationen von Funktionen besteht.
-        Wenn Mutationen durchgeführt werden, wird anstatt die jeweilige Eigenschaft zu verändern,
-        ein neues Objekt inklusive der Mutation zurückgegeben.
-        Ohne mutable State ist es einfach Parallelisierung zu implementieren. % TODO glossar
-        Es wird anstatt Iterationen, Rekursionen verwendet.
-        In der funktionalen Programmierung versucht man Funktionen die Nebeneffekte haben (globale Attribute) zu vermeiden.
-        Dies hat den Vorteil, dass einzelne Funktionen viel einfacher zu testen sind, als bei der objektorientierten Programmierung.
-
     \subsection{Fehler in der \gls{PhysicsEngine}}
 
       Für die Erstellung des Terrains wird ein Höhenfeld von p2.js benutzt.
@@ -501,6 +464,47 @@
         \end{subfigure}
         \caption{Nach Korrektur}
       \end{figure}
+
+    \subsection{Laufzeitumgebung}
+
+      % TODO umformulieren
+
+      Um Javascript und p2.js ohne Browser zu betreiben, wird Electron eingesetzt.
+      Electron ist node.js und Google Chrome vereint in einer Standalone-Anwendung.
+      Mit Hilfe von Node.js lassen sich alle I/0-Zugriffe regeln und es kann auf den
+      Node Package Manager zur Abhängigkeitsverwaltung von anderen Bibliotheken zurückgegriffen werden.
+      Auch lässt sich unter bestimmten Umständen Javascript schneller ausführen unter Node.js als in einem Browser.
+
+    % TODO ergänzen was wie wo oder löschen!
+    \subsection{Programmierparadigma\label{sub:TechnologyParadigma}}
+
+      In der Programmierung gibt es verschiedene Ansätze,
+      wie der Quellcode aufgebaut werden soll und wie Probleme gelöst werden sollen.
+      Die bekanntesten Ansätze sind prozedural, objektorientiert und funktional.
+
+      \subsubsection{Prozedural\label{subsub:TechnologyParadigmaProzedural}}
+
+        Prozedurale Programme bestehen aus einer Folge von Befehlen,
+        die vorgeben wann was ausgeführt wird.
+        Die Daten und die Routinen die mit diesen arbeiten, sind voneinander getrennt.
+
+      \subsubsection{Objekt-Orientiert\label{subsub:TechnologyParadigmaObjectOriented}}
+
+        Die objektorientierte Programmierung verbindet die Daten und
+        die Routinen die mit diesen interagieren. Sie werden zu Einheiten zusammengefasst.
+        Diese Einheiten werden im Zusammenhang mit Objekt-Orientierter-Programmierung Klassen genannt.
+
+      \subsubsection{Funktional\label{subsub:TechnologyParadigmaFunctional}}
+
+        Funktionale Programmierung heisst, das Programm so zu entwerfen,
+        so dass die Datenverarbeitung nur aus Evaluationen von Funktionen besteht.
+        Wenn Mutationen durchgeführt werden, wird anstatt die jeweilige Eigenschaft zu verändern,
+        ein neues Objekt inklusive der Mutation zurückgegeben.
+        Ohne mutable State ist es einfach Parallelisierung zu implementieren. % TODO glossar
+        Es wird anstatt Iterationen, Rekursionen verwendet.
+        In der funktionalen Programmierung versucht man Funktionen die Nebeneffekte haben (globale Attribute) zu vermeiden.
+        Dies hat den Vorteil, dass einzelne Funktionen viel einfacher zu testen sind,
+        als bei der objektorientierten Programmierung.
 
   \section{Konfiguration\label{sec:Konfiguration}}
 
