@@ -54,9 +54,8 @@
       \\
       Technisch bietet sich die Möglichkeit, die Beine nicht in Paare zu gliedern und asymmetrisch am Körper anzubringen.
       Doch in der Natur existiert eine solche Anordnung nicht, weshalb darauf verzichtet wird.
-
-      \smallskip
-
+      \\
+      \\
       Ein Bein ist unterteilt in Oberschenkel \(T\) und Unterschenkel \(S\).
       Die Höhe \(h_{l}\) und Breite \(w_{l}\) des Beins sind limitiert.
       Andernfalls ist anzunehmen, dass ungewünschte Resultate entstehen~\vref{sub:IntroReqLimit}.
@@ -124,9 +123,8 @@
         Als erster Ansatz für die Generierung von Körperpunkten wurde ein Quadrat evaluiert.
         Dieser Ansatz wurde nicht weiterverfolgt,
         da der Ansatz mit einem Kreis für beliebig viele und ungerade Anzahlen von Punkten einfacher lösbar ist.
-
-        \smallskip
-
+        \\
+        \\
         Die Generierung eines zufälligen Körpers läuft in mehreren Schritten ab.
         Als erstes wird definiert aus wie vielen Punkten \( n \) der Körper besteht.
 
@@ -148,9 +146,8 @@
         Damit die Koordinaten in der Physik-Engine verwendet werden können,
         müssen die Koordinaten in kartesicher Form sein.
         Die Polar-Koordinaten \( P \) werden in kartesische Koordinaten transformiert und miteinander verbunden.
-
-        \smallskip
-
+        \\
+        \\
         Die folgende Abbildung~\ref{fig:kp} zeigt die Form eines Individuums mit 6 Körperpunkten.
 
         \begin{figure}[H]
@@ -194,15 +191,13 @@
       der \gls{JointDriven} arbeitet gewählt worden.
       Er führt die Bewegungen, die Körperteile in Bewegung setzten, über die Drehgelenke des Individuums aus.
       Mit der Kraft des Motors wird der Winkel eines Drehgelenkes verändert.
-
-      \smallskip
-
+      \\
+      \\
       Am Beispiel des Kniegelenks ist ersichtlich wie der Motor arbeitet.
       Das Kniegelenk ist am Oberschenkel fixiert und verbindet den Unterschenkel mit dem Oberschenkel.
       Setzt der Motor das Gelenk in Bewegung wird der Unterschenkel bewegt.
-
-      \smallskip
-
+      \\
+      \\
       Mit den Informationen des Phänotyps kann der Motor den gesamten Bewegungsablauf kontrollieren.
       Der Motor überwacht die Übergänge zwischen den Bewegungen.
       Nach jedem Übergang zu einer neuen Bewegung, führt der Motor diese aus und prüft,
@@ -330,9 +325,8 @@
       Unter dem Begriff Bewegung werden alle Aktionen, die der Motor ausführt verstanden.
       Es gibt neben den klassischen Bewegungen, wie ein Drehgelenk bewegen,
       auch solche, die Attribute eines Gelenkes ändern oder den aktuellen Winkel eines Gelenkes abfragen.
-
-      \smallskip
-
+      \\
+      \\
       Eine Bewegung ist mit mehreren Attributen beschrieben.
       Es wird festgelegt welche Art der Bewegung es ist,
       welches Gelenk gesteuert wird und was die Parameter für die Bewegung sind.
@@ -348,9 +342,8 @@
       kann der Motor Rückmeldungen von der Simulationswelt anfordern.
       Der Motor wird von der Physik-Engine benachrichtigt,
       sobald eine Kollision zwischen einem Körperteil und dem Untergrund stattfindet.
-
-      \smallskip
-
+      \\
+      \\
       Das Feedbacksystem ist nicht vollständig ausgearbeitet.
       Aus zeitlichen Gründen ist dies nicht umgesetzt worden.
       Es ist nur die Rückmeldung an den Motor vorhanden, jedoch wird die Rückmeldung nicht verarbeitet.
@@ -510,20 +503,26 @@
     \end{table}
 
     \subsection{Technische Parameter\label{sub:techParams}}
+
       Ein wichtiger technischer Parameter ist die Anzahl der eingesetzten Simulationsprozesse~(\vref{sec:Ablauf}).
-      Durch die Erhöhung dieses Parameters kann von mehreren CPU-Kernen profitiert, somit lässt sich die Simulation~(\vref{sec:simulation}) und Mutation~(\vref{sec:Mutation}) parallelisieren.
+      Durch die Erhöhung dieses Parameters kann von mehreren CPU-Kernen profitiert,
+      somit lässt sich die Simulation~(\vref{sec:simulation}) und Mutation~(\vref{sec:Mutation}) parallelisieren.
       Optimal ist es diesen Wert auf die Anzahl verfügbarer CPU-Kerne zu setzen.
       Die Grösse des Zeitschritts~\cite{bullet:steppingTheWorld} der Physik-Engine lässt sich ebenfalls einstellen.
       %Wenn man den Zeitschritt halbiert muss die Relaxation mit dem Faktor 4 multipliziert werden.
-      Die Relaxation kann auch konfiguriert werden. Der Parameter beschreibt die Anzahl von Zeitschritten um eine Constraint-Gleichung~\cite{gamedev:constraints} zu stabilisieren.
-      Die Stiffness ist der letzte wichtige technische Parameter. Man kann sich die Stiffness als Steifheit einer Feder vorstellen.
+      Die Relaxation kann auch konfiguriert werden.
+      Der Parameter beschreibt die Anzahl von Zeitschritten,
+      um eine Constraint-Gleichung~\cite{gamedev:constraints} zu stabilisieren.
+      Die Stiffness ist der letzte wichtige technische Parameter.
+      Man kann sich die Stiffness als Steifheit einer Feder vorstellen.
       Sie beschreibt wie steif alle Element der Simulation sich verhalten sollen.
 
   \section{Ablauf\label{sec:Ablauf}}
 
     Die Applikation setzt sich aus mehreren Komponenten zusammen.
     Jeder dieser Komponenten kann man dem Haupt- oder Simulationsprozess zu ordnen~(\vref{fig:hauptSimuProzesse}).
-    Während es nur eine Instanz vom Hauptprozess gibt, ist die Anzahl Simulationsprozesse frei wählbar (\vref{sub:techParams}).
+    Während es nur eine Instanz vom Hauptprozess gibt,
+    ist die Anzahl Simulationsprozesse frei wählbar (\vref{sub:techParams}).
     Die Kommunikation zwischen Simulationsprozessen und Hauptprozess erfolgt über \gls{asyncMessaging}.
     In~\vref{sub:domMod} sind die jeweiligen Zusammenhänge der Klassen und Objekte ausführlicher beschrieben.
     \vref{fig:ablauf} beschreibt den generellen Ablauf als Flussdiagramm
@@ -604,12 +603,22 @@
       Es existieren folgende Typen von Reports:
 
       \begin{itemize}
-        \item Fitness Graph Average Report: Enthält Koordinaten, um einen Graphen über die durchschnittliche Fitness pro Generation zu erstellen.
-        \item Fitness Graph Best Report: Enthält Koordinaten, um einen Graphen über das beste Individuum der Generation zu erstellen.
-        \item Genotype Blue Print Report: Enthält pro Generation ein \gls{JSON}-Objekt, das Informationen über die ganze Population enthält.
+
+        \item Fitness Graph Average Report: Enthält Koordinaten,
+          um einen Graphen über die durchschnittliche Fitness pro Generation zu erstellen.
+
+        \item Fitness Graph Best Report: Enthält Koordinaten,
+          um einen Graphen über das beste Individuum der Generation zu erstellen.
+
+        \item Genotype Blue Print Report: Enthält pro Generation ein \gls{JSON}-Objekt,
+          das Informationen über die ganze Population enthält.
+
         \item Fitness Graph Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit Body Points Anzahl x.
               Ansonsten gleich wie der Fitness Graph Average Report.
-        \item Diversity Report: Enthält die Berechnung der Punktstreuung für eine Generation. Die Punktstreuung berechnet sich wie folgt:
+
+        \item Diversity Report: Enthält die Berechnung der Punktstreuung für eine Generation.
+          Die Punktstreuung berechnet sich wie folgt:
+          
         \begin{itemize}
           \item Erstellen von Vektoren der Genome. Jede Eigenschaft des Genoms wird in einen numerischen Wert konvertiert. \( V_d \)
           \item Alle Vektoren werden summiert. Die Summe wird als \(V_s\) bezeichnet.
