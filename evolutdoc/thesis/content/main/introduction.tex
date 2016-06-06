@@ -35,13 +35,13 @@
     die im Weltraum zur Funkkommunikation verwendet werden~\cite{Hornby2006}.
     Dabei wurde die Antenne auf gute Sendeleistung bei geringer Energieaufnahme optimiert.
     \\
-    \\
     Als theoretische Grundlagen wurden die Bücher ``Bio inspired artificial intelligence''~\cite{book:bioInspired} und
     ``Evolutionäre Algorithmen''~\cite{book:evAlgo} verwendet.
 
     % Altes Problem der Robotik.
 
   \section{Offizielle Aufgabenstellung}
+
     Als Mass für die Fitness wird eine Funktion der Zeit verwendet, welche das Tier braucht,
     um einen gegebenen Parcours zurückzulegen.
     Dabei müssen Individuen berücksichtigt werden, die den Parcours nicht vollständig ablaufen können.
@@ -68,17 +68,19 @@
     Es soll nicht nur die Steuerung der Beine evolviert werden (Gehen lernen),
     sondern auch die Form des Körpers und die Abmessung der Beine.
     Zur Implementierung soll eine bestehende Physik-Engine verwendet werden.
-    Der Hauptfokus liegt auf dem evolvieren der artifiziellen Tiere und nicht auf dem Ausbau der Physik-Engine.
+    Der Hauptfokus liegt auf dem Evolvieren der artifiziellen Tiere und nicht auf dem Ausbau der Physik-Engine.
     Zusätzliche Hypothesen~(\vref{subsub:hypoKp} und~\vref{subsub:hypoMut}) werden im Kapitel Methode~(\vref{sec:method}) erwähnt,
-    da dann die erforderlichen Begrifflichkeiten dann eingeführt sind, um die Hypothesen zu verstehen.
+    da die erforderlichen Begrifflichkeiten dann eingeführt sind.
 
   \section{Anforderungen}
 
     \subsection{Fitnessfunktion}
 
-      Die Fitness ist ein Mass mit derer sich die Anpassung der Individuen an ihre Umgebung messen lässt.
-      In frühen Generation kann es vorkommen, dass die künstlichen Tiere sich keinen einzigen Schritt weit während der Simulation
-      fortbewegen können. Die Zeit, welche ein Individuum für die Bewältigung eines Parcours (\vref{subsub:parcours}) brauchen würde, wäre somit unendlich.
+      Die Fitness ist ein Mass für den Grad der Anpassung eines Individuums an die Umgebung.
+      In frühen Generation kann es vorkommen,
+      dass die künstlichen Tiere sich keinen Schritt weit während der Simulation fortbewegen können.
+      Die Zeit, welche ein Individuum für die Bewältigung eines Parcours (\vref{subsub:parcours}) brauchen würde,
+      wäre somit unendlich.
       Um dieses Problem zu umgehen, wird als Mass für die Fitness die zurückgelegte Strecke verwendet.
       Für die Bewältigung des Parcours steht dem Individuum eine fixe Anzahl Zeiteinheiten zur Verfügung.
 
@@ -88,7 +90,7 @@
       Diese Strecke und ihre Begebenheiten werden als Parcours bezeichnet.
       \vref{fig:scetchParcours} zeigt eine Skizze des Parcours.
       Mit zunehmenden Generationen soll die Schwierigkeit des Parcours steigen.
-      Als Schwierigkeit kann man die maximale Steigung des Parcours bezeichnen.
+      Als Schwierigkeit eines Parcours wird die maximale Steigung bezeichnet.
       Der Parcours soll zufällig generiert werden.
 
       \begin{figure}[H]
@@ -114,7 +116,8 @@
 
       Die verschiedenen Arbeitspakete werden eine Woche im Voraus geplant.
       Dieses Vorgehen wird auch als rollende Planung bezeichnet.
-      Ein Projektvorgehensmodell wird nicht benutzt, jedoch ist eine Projektplanung mit Hilfe von MS Project 2016
-      erstellt worden. Alle wichtigen Meilensteine finden sich im Projektplan wieder.
-      Der Stand der Arbeit wurde jeweils an einem wöchentlichen Meeting mit den Betreuern besprochen.
-      Das Protokoll wurde vor dem nächsten Meeting jeweils verschickt.
+      Ein Projektvorgehensmodell wird nicht benutzt,
+      jedoch ist eine Projektplanung mit Hilfe von MS Project 2016 erstellt worden.
+      Alle wichtigen Meilensteine finden sich im Projektplan.
+      Der Stand der Arbeit wurde an einem wöchentlichen Meeting mit den Betreuern besprochen.
+      Das Beschlussprotokoll wurde vor dem nächsten Meeting verschickt.

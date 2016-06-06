@@ -6,20 +6,16 @@
 
 \chapter{Grundlagen}
 
-\section{Natürliche vs.\ artifizielle Evolution}
+  \section{Natürliche vs.\ artifizielle Evolution}
 
-  Natürliche Evolution hat kein vordefiniertes Ziel und ist ein sogenannter open-ended Anpassungsprozess.
-  Unter einem open-ended Anpassungsprozess in der natürlichen Evolution
-  versteht man die Anpassung an die natürliche Umgebung.
-  Da sich die natürliche Umgebung stetig ändert, ist der Prozess immer im Gange und endet nie.
-  Artifizielle Evolution jedoch ist ein Optimierungsprozess,
-  welcher versucht Lösungen zu vordefinierten Probleme zu finden~\cite[S.1]{book:bioInspired}.
+    Natürliche Evolution hat kein vordefiniertes Ziel und ist ein sogenannter open-ended Anpassungsprozess.
+    Unter einem open-ended Anpassungsprozess in der natürlichen Evolution
+    versteht man die Anpassung an die natürliche Umgebung.
+    Da sich die natürliche Umgebung stetig ändert, ist der Prozess immer im Gange und endet nie.
+    Artifizielle Evolution jedoch ist ein Optimierungsprozess,
+    welcher versucht Lösungen zu vordefinierten Probleme zu finden~\cite[S.1]{book:bioInspired}.
 
-  \subsection{Intelligent Design\label{sub:IntelligentDesign}}
-
-    \todo[inline]{intelligent design}
-
-\section{Artifizielle Evolution}
+  \section{Artifizielle Evolution}
 
     \subsection{Individuum\label{sub:individual}}
 
@@ -176,7 +172,7 @@
           \caption{Schritte einer gekürzten rang-basierten Selektion\label{fig:truncated_rank_based_selection}}
         \end{figure}
 
-      \subsubsection{Turnier-basierte Selektion\label{par:Turnier}}
+      \subsubsection{Turnier-basierte Selektion\label{subsub:Turnier}}
 
         Es werden \(k\) zufällig ausgewählte Individuen selektiert,
         diese Individuen tragen untereinander ein Turnier (\vref{fig:tournament_based}) aus.
@@ -189,65 +185,59 @@
 
         \begin{figure}[H]
           \includegraphics[scale=1,center]{graphics/tournament_based}
-          \caption{Turnier-basierte-Selektion~\label{fig:tournament_based}}
+          \caption{Turnier-basierte-Selektion\label{fig:tournament_based}}
         \end{figure}
 
     \subsection{Rekombinationsfunktion}
 
-        Bei der Rekombination werden jeweils zwei Individuen selektiert und
-        deren Gen-Paare neu kombiniert (untereinander vertauscht).
-        \vref{fig:crossOver} veranschaulicht diesen Prozess.
-        Nicht bei jedem Typ von evolutionären Algorithmen~(\vref{sub:artenEvAlgos}) und
-        jeder Problemstellung ist Rekombination sinnvoll.
-        Als Beispiel kann ein Haus mit Fenstern und Türen genommen werden.
-        Dabei führt die Rekombination der Gene der Türen mit denen der Fenster zu keinen verwendbaren Resultaten.
+      Bei der Rekombination werden jeweils zwei Individuen selektiert und
+      deren Gen-Paare neu kombiniert (untereinander vertauscht).
+      \vref{fig:crossOver} veranschaulicht diesen Prozess.
+      Nicht bei jedem Typ von evolutionären Algorithmen~(\vref{sub:artenEvAlgos}) und
+      jeder Problemstellung ist Rekombination sinnvoll.
+      Als Beispiel kann ein Haus mit Fenstern und Türen genommen werden.
+      Dabei führt die Rekombination der Gene der Türen mit denen der Fenster zu keinen verwendbaren Resultaten.
+
+      \begin{figure}[H]
+        \includegraphics[scale=0.3,center]{graphics/morgan_crossover}
+        \caption[\protect\bibentry{WikipediaEN:crossOver}]{Illustration des Crossover\label{fig:crossOver}}
+      \end{figure}
+
+      \subsubsection{One-Point-Crossover}
+
+        Es wird ein zufälliger Cross-Over-Punkt bestimmt an dem die Gene des Paares vertauscht werden (a)~\vref{fig:crossTypes}.
+        Anwendbar ist diese Strategie bei Diskreten- und Realen-Werten-Repräsentationen.
+
+      \subsubsection{Multi-Point-Crossover}
+
+        Dieser Ansatz funktioniert ähnliche wie One-Point-Crossover.
+        Statt nur an einem Punkt, werden mehrere Punkte definiert an denen die Gene ausgetauscht werden.
+
+      \subsubsection{Uniform-Crossover}
+
+        Die Gene werden an \(n\) zufälligen Stellen vertauscht ( b)~\vref{fig:crossTypes}).
+
+      \subsubsection{Arithmetic-Crossover}
+
+        Der Durschnitt von den Genen an \(n\) zufälligen Positionen wird gebildet.
+        Aus diesem Durchschnitt wird dann ein Nachkomme erzeugt ( c)~\vref{fig:crossTypes}).
+        Da arithmetische Operationen nur auf Zahlen anwendbar sind,
+        kann diese Art des Crossovers nur bei Reale-Werte-Repräsentationen verwendet werden.
+
+      \subsubsection{Sequenzen}
+
+        Bei Sequenzen muss die Regel eingehalten werden, dass alle Einträge nur einmal vorkommen dürfen.
+        Es wird ein Multi-Point-Crossover durchgeführt unter Einhaltung der oben genannten Regel ( d)~\vref{fig:crossTypes}).
+
+      \subsubsection{Bäume}
+
+        Bei Bäumen wird ein zufälliger Teil des Baumes,
+        mit einem anderen zufälligen Teil eines Baumes eines fremden Individuums vertauscht ( e)~\vref{fig:crossTypes}).
 
         \begin{figure}[H]
-          \includegraphics[scale=0.3, center]{graphics/morgan_crossover}
-          \caption[\protect\bibentry{WikipediaEN:crossOver}]{Illustration des Crossover~\label{fig:crossOver}}
+          \includegraphics[scale=0.7,center]{graphics/crossover_types}
+          \caption[\protect\bibentry{book:bioInspired}, S.27]{Typen von Crossovers\label{fig:crossTypes}}
         \end{figure}
-
-        \subsubsection{One-Point-Crossover}
-
-          Es wird ein zufälliger Cross-Over-Punkt bestimmt an dem die Gene des Paares vertauscht werden (a)~\vref{fig:crossTypes}.
-          Anwendbar ist diese Strategie bei Diskreten- und Realen-Werten-Repräsentationen.
-
-        \subsubsection{Multi-Point-Crossover}
-
-          Dieser Ansatz funktioniert ähnliche wie One-Point-Crossover.
-          Statt nur an einem Punkt, werden mehrere Punkte definiert an denen die Gene ausgetauscht werden.
-
-        \subsubsection{Uniform-Crossover}
-
-          % Ignore solo ')' warning
-          % chktex-file 10
-          % Ignore warning on ( b)..)
-          % chktex-file 37
-          % Ignore warning on unmatched count of '(' and ')'
-          % chktex-file 17
-          Die Gene werden an \(n\) zufälligen Stellen vertauscht ( b)~\vref{fig:crossTypes}).
-
-        \subsubsection{Arithmetic-Crossover}
-
-          Der Durschnitt von den Genen an \(n\) zufälligen Positionen wird gebildet.
-          Aus diesem Durchschnitt wird dann ein Nachkomme erzeugt ( c)~\vref{fig:crossTypes}).
-          Da arithmetische Operationen nur auf Zahlen anwendbar sind,
-          kann diese Art des Crossovers nur bei Reale-Werte-Repräsentationen verwendet werden.
-
-        \subsubsection{Sequenzen}
-
-          Bei Sequenzen muss die Regel eingehalten werden, dass alle Einträge nur einmal vorkommen dürfen.
-          Es wird ein Multi-Point-Crossover durchgeführt unter Einhaltung der oben genannten Regel ( d)~\vref{fig:crossTypes}).
-
-        \subsubsection{Bäume}
-
-          Bei Bäumen wird ein zufälliger Teil des Baumes,
-          mit einem anderen zufälligen Teil eines Baumes eines fremden Individuums vertauscht ( e)~\vref{fig:crossTypes}).
-
-          \begin{figure}[H]
-            \includegraphics[scale=0.7, center]{graphics/crossover_types}
-            \caption[\protect\bibentry{book:bioInspired}, S.27]{Typen von Crossovers\label{fig:crossTypes}}
-          \end{figure}
 
     \subsection{Mutationsfunktion}
 
@@ -263,7 +253,7 @@
         Invertieren bedeutet, dass aus einem 0 eine 1 wird und umgekehrt (\vref{fig:mutation_binary_flip}).
 
         \begin{figure}[H]
-          \includegraphics[scale=1, center]{graphics/mutation_binary_flip}
+          \includegraphics[scale=1,center]{graphics/mutation_binary_flip}
           \caption{Invertieren der Bits\label{fig:mutation_binary_flip}}
         \end{figure}
 
@@ -275,7 +265,7 @@
         Zudem sollte die Mutation innerhalb eines Wertebereichs stattfinden (\vref{fig:mutation_real_value}).
 
         \begin{figure}[H]
-          \includegraphics[scale=1, center]{graphics/mutation_real_value}
+          \includegraphics[scale=1,center]{graphics/mutation_real_value}
           \caption{Mutation von Reale-Werte-Repräsentationen\label{fig:mutation_real_value}}
         \end{figure}
 
@@ -284,7 +274,7 @@
         Zufällig ausgewählte Positionen der Sequenz werden miteinander vertauscht (\vref{fig:mutation_sequences}).
 
         \begin{figure}[H]
-            \includegraphics[scale=1, center]{graphics/mutation_sequences}
+            \includegraphics[scale=1,center]{graphics/mutation_sequences}
             \caption{Mutation von Reale-Werte-Repräsentationen\label{fig:mutation_sequences}}
         \end{figure}
 
@@ -293,7 +283,7 @@
         Bei Bäumen werden Teilabschnitte mutiert.
 
         \begin{figure}[H]
-            \includegraphics[scale=0.8, center]{graphics/mutation_tree}
+            \includegraphics[scale=0.8,center]{graphics/mutation_tree}
             \caption[\protect\bibentry{book:bioInspired}, S.29]{Mutation von Bäumen\label{fig:mutation_tree}}
         \end{figure}
 
