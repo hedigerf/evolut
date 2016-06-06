@@ -307,7 +307,8 @@
         Die notwendigen Schritte für eine sinnvolle Evaluation wurden unter~\vref{subsub:bpScnd} beschrieben.
 
       \subsubsection{Diversität}
-
+        Der Einbruch ab ca. der 3000. Generation, lässt sich damit erklären, dass die Hüpfer gefunden worden sind.
+        Die Diversität konnte sich steigern im Vergleich zum Anfang der Simulation und spricht für die Turnierbasierte-Selektion.
         \begin{figure}[H]
           \centering
           \input{graphics/diversity-graph-fourth-run}
@@ -329,7 +330,10 @@
       Darum wurde das Ziel der Konfiguration modifiziert, um das Evolvieren auf Evolvierbarkeit zu erreichen.
 
     \subsection{Auswertung\label{sub:fifthAuswertung}}
-
+      Der Graph in \vref{fig:graphFifth} schläger weniger aus im Vergleich zu \vref{fig:graphForth}.
+      Dies zu erklären, das beim evolvieren auf Evolvierbarkeit, der Parcour erst nach 100
+      Generationen ausgewechselt wird und somit die Fitnesswerte weniger pro Generation schwanken.
+      Die Ausreisser (lokale Minima und Maxima) treten dann auf, wenn der Parcour gewechselt wird.
       \begin{figure}[H]
         \centering
         \input{graphics/fitness-graph-fifth-run}
@@ -337,7 +341,8 @@
       \end{figure}
 
       \subsubsection{Diversität}
-
+        Die Diversität~(\vref{fig:graphDivFifth}) ist im Vergleich zum 4. Versuch~(\vref{fig:graphDivFourth}) deutlich niedriger.
+        Die allgemeine Lösung erlaubt es diversere Individuen zu finden.
         \begin{figure}[H]
           \centering
           \input{graphics/diversity-graph-fifth-run}
