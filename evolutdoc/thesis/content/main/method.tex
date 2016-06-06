@@ -515,9 +515,10 @@
     Es wird eine Konfigurationstabelle~(\vref{tbl:simulation-parameters-general}) eingeführt,
     welche auch im Kapitel Resultate~(\vref{chap:Resultate}) verwendet wird,
     um die jeweilige Konfiguration der Simulation festzuhalten. In der Konfigurationstabelle werden nur die Parameter erwähnt,
-    welche relevant für den Algorithmus sind. Bei der allgemeinen Lösung wird der Parcours
-    nach jeder Generation neu generiert. Bei der Evaluation auf Evolvierbarkeit
-    wird der Parcours nur dann neu generiert, wenn sich die Schwierigkeit des Parcours ändert.
+    welche relevant für den Algorithmus sind. Die Schwierikeit des Parcours wird alle 100 Generationen erhöht. Bei der allgemeinen Lösung wird der Parcours
+    nach jeder Generation neu generiert. Bei der Evolvierung auf Evolvierbarkeit wird der Parcours nur dann neu generiert,
+    wenn sich die Schwierigkeit des Parcours ändert.
+    Eine Hypothese welche nicht validiert werden konnte, wurde unter \vref{sub:hypoAnsatz} formuliert.
 
     \begin{table}[H]
       \input{tables/simulation-parameters-general.tex}
@@ -659,6 +660,7 @@
       bei gleichzeitig guter Selektion der fittesten Individuen.
       Aufgrund der Empfehlung von D. Floreano und C. Mattiussi und der Erhaltung der Diversität,
       wurde entschieden Turnierbasierte-Selektion einzusetzen.
+      Eine Hypothese welche nicht validiert werden konnte, wurde unter \vref{sub:hypoSelect} formuliert.
 
     \subsection{Mutation\label{sec:Mutation}}
 
