@@ -42,7 +42,7 @@
       so ist das grafisch gezeichnete Rechteck auf dem Monitor der Phänotyp~(\vref{fig:genoPheno}).
 
       \begin{figure}[H]
-        \includegraphics[scale=1]{graphics/genotyp_phenotyp}
+        \includegraphics[scale=1,center]{graphics/genotyp_phenotyp}
         \caption{Genotyp und Phänotyp\label{fig:genoPheno}}
       \end{figure}
 
@@ -78,7 +78,7 @@
         durch reale Zahlen dargestellt werden.
 
         \begin{figure}[H]
-          \includegraphics[scale=1]{graphics/real_value_representation}
+          \includegraphics[scale=1,center]{graphics/real_value_representation}
           \caption{Beispiel Reale-Werte-Repräsentation\label{fig:real_value_representation}}
         \end{figure}
 
@@ -168,7 +168,7 @@
         Anstatt alle Individuen zu berücksichtigen werden nur die besten der Rangliste selektiert und diese produzieren Nachkommen (\vref{fig:truncated_rank_based_selection}).
 
         \begin{figure}[H]
-          \includegraphics[scale=0.7,center]{graphics/truncated_rank_based_selection}
+          \includegraphics[width=\textwidth,center]{graphics/truncated_rank_based_selection}
           \caption{Schritte einer gekürzten rang-basierten Selektion\label{fig:truncated_rank_based_selection}}
         \end{figure}
 
@@ -235,7 +235,7 @@
         mit einem anderen zufälligen Teil eines Baumes eines fremden Individuums vertauscht ( e)~\vref{fig:crossTypes}).
 
         \begin{figure}[H]
-          \includegraphics[scale=0.7,center]{graphics/crossover_types}
+          \includegraphics[width=\textwidth,center]{graphics/crossover_types}
           \caption[\protect\bibentry{book:bioInspired}, S.27]{Typen von Crossovers\label{fig:crossTypes}}
         \end{figure}
 
@@ -250,11 +250,11 @@
       \subsubsection{Binäre Repräsentationen}
 
         Wenn die Repräsentation aus binären Werten besteht, werden die Bits invertiert (oder bestimmte Segmente).
-        Invertieren bedeutet, dass aus einem 0 eine 1 wird und umgekehrt (\vref{fig:mutation_binary_flip}).
+        Invertieren bedeutet, dass aus einem 0 eine 1 wird und umgekehrt (\vref{fig:MutationBinaryFlip}).
 
         \begin{figure}[H]
           \includegraphics[scale=1,center]{graphics/mutation_binary_flip}
-          \caption{Invertieren der Bits\label{fig:mutation_binary_flip}}
+          \caption{Invertieren der Bits\label{fig:MutationBinaryFlip}}
         \end{figure}
 
       \subsubsection{Reale-Werte-Repräsentationen}
@@ -262,20 +262,20 @@
         Bei Realen-Werte-Repräsentation wird jeweils zu einem bestehenden Wert ein nummerischer Wert addiert.
         Der Wert sollte zufällig berechnet werden.
         Die Zufallsfunktion, welche dafür verwendet wird, sollte normalverteilt sein.
-        Zudem sollte die Mutation innerhalb eines Wertebereichs stattfinden (\vref{fig:mutation_real_value}).
+        Zudem sollte die Mutation innerhalb eines Wertebereichs stattfinden (\vref{fig:MutationRealValue}).
 
         \begin{figure}[H]
           \includegraphics[scale=1,center]{graphics/mutation_real_value}
-          \caption{Mutation von Reale-Werte-Repräsentationen\label{fig:mutation_real_value}}
+          \caption{Mutation von Reale-Werte-Repräsentationen\label{fig:MutationRealValue}}
         \end{figure}
 
       \subsubsection{Sequenzen}
 
-        Zufällig ausgewählte Positionen der Sequenz werden miteinander vertauscht (\vref{fig:mutation_sequences}).
+        Zufällig ausgewählte Positionen der Sequenz werden miteinander vertauscht (\vref{fig:MutationSequences}).
 
         \begin{figure}[H]
             \includegraphics[scale=1,center]{graphics/mutation_sequences}
-            \caption{Mutation von Reale-Werte-Repräsentationen\label{fig:mutation_sequences}}
+            \caption{Mutation von Reale-Werte-Repräsentationen\label{fig:MutationSequences}}
         \end{figure}
 
       \subsubsection{Baum}
@@ -284,7 +284,7 @@
 
         \begin{figure}[H]
             \includegraphics[scale=0.8,center]{graphics/mutation_tree}
-            \caption[\protect\bibentry{book:bioInspired}, S.29]{Mutation von Bäumen\label{fig:mutation_tree}}
+            \caption[\protect\bibentry{book:bioInspired}, S.29]{Mutation von Bäumen\label{fig:MutationTree}}
         \end{figure}
 
     \subsection{Arten von evolutionären Algorithmen\label{sub:artenEvAlgos}}
@@ -326,5 +326,5 @@
 
   \section{Frozen Accident}
 
-    % evolutionary frozen accident
+
     Evolutionary frozen accident~\cite{Crick1968}.
