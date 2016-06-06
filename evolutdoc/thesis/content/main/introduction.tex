@@ -58,50 +58,37 @@
 
   \section{Aufgabenstellung}
 
-    % TODO aufgabenstellung zitieren.
-    % nicht fkt der zeit, sondern zeit
-
-    Als Mass für die Fitness wird eine Funktion der Zeit verwendet, welche das Tier braucht,
-    um einen gegebenen Parcours zurückzulegen.
-
-    % satz weg
-
-    Dabei müssen Individuen berücksichtigt werden, die den Parcours nicht vollständig ablaufen können.
-    Die Fitnessfunktion berücksichtigt in diesem Fall die zurückgelegte Strecke.
-
-    % klarer formulieren, wie es ist.
-    Als Randbedingungen vorgegeben sind:
-    \begin{enumerate}
-      \item Forderung einer physikalisch sinnvollen Bewegung
-      \item Obere Grenze für die total aufgewandte Energie
-      \item Beschränkung der abgegebenen Leistung
-    \end{enumerate}
+    ``Ziel der BA ist es,
+    in einer virtuellen Umwelt mit Hilfe evolutionärer Algorithmen künstliche Tiere entstehen zu lassen.
+    Evolviert werden die Geometrie und die Steuerung der Tiere,
+    d.h. die Anordnung der Beine und deren Kontrolle.
+    Als Mass für die Fitness wird eine Funktion der Zeit, welche das Tier braucht,
+    um einen gegebenen Parcours zurückzulegen, verwendet.
+    Als Randbedingungen vorgegeben sind: erstens die Forderung einer physikalisch sinnvollen Bewegung,
+    zweitens eine obere Grenze für die total aufgewandte Energie und drittens eine Beschränkung der abgegebenen Leistung.
     Damit die Forderung nach einer physikalischen Bewegung erfüllt werden kann,
-    wird die Bewegung mit Hilfe einer \gls{PhysicsEngine} simuliert.
+    wird die Bewegung mit Hilfe einer Physik-Engine simuliert.
     Diese Engine wird von den Studierenden ausgewählt und kann als Blackbox verwendet werden.
+    \\
+    Die BA beinhaltet folgende Forschungsfragen: 1) Wie kann eine Steuerung der Bewegung implementiert werden?
+    2) Wie kann diese Steuerung evolviert werden? 3) Wie kann die Geometrie der Tiere evolviert werden?
+    \\
+    Erfüllungskriterien: A) Die Steuerung von Tieren mit vorgegebener Geometrie (6 Beine) wird evolviert,
+    sodass ein Parcours mit vorgegebenen Eigenschaften bewältigt werden kann.
+    B) In einem zweiten Schritt wird sowohl die Geometrie als auch die Steuerung evolutiv weiterentwickelt;
+    dies mit dem Ziel, die für einen Parcours benötigte Zeit zu reduzieren.''~\cite{Task}
 
   \section{Zielsetzung}
-
-    % TODO holprig
-    % reihenfolge !
-
-    % !!! wissenschaftliche fragenstellung formulieren !!!
-    % anzahl (1,2,55) klare fragen stellen: gesucht ist ein tier, welche den parcours in endlicher zeit bewältigt.
-    % 2. welche anzahl beine ist optimal
-    %...
-    % möglich, dass auf spätere hypothesen verwiesen wird
-
-    % Liste von hypothesen
-    % fragestellungen und hypothesen explizit beantworten!!! ja, nein...
 
     Das Ziel dieser Arbeit ist sechsbeinigen künstlichen Tieren mit Hilfe eines evolutionären Algorithmus,
     in einer zweidimensionalen Umgebung das Gehen beizubringen.
     Es soll nicht nur die Steuerung der Beine evolviert werden~(Gehen lernen),
-    sondern auch die Form des Körpers und die Abmessung der Beine. \\
-
+    sondern auch die Form des Körpers und die Abmessung der Beine.
+    \\
     Folgende Fragestellungen werden untersucht:
+
     \begin{enumerate}
-      \item \label{item:frageSteuerungBeine} Wie kann eine Steuerung der Bewegung implementiert werden?
+      \item Wie kann eine Steuerung der Bewegung implementiert werden?\label{item:frageSteuerungBeine}
       \item Wie kann diese Steuerung evolviert werden?
       \item Wie kann die Geometrie der Tiere evolviert werden?
       \item Wie sieht der Bewegungsablauf und die Geometrie eines evolvierten Tieres aus?
@@ -110,13 +97,16 @@
             von einem das mit dem Evolvieren von Evolvierbarkeit gefunden wurde(\vref{sec:Konfiguration})?
 
     \end{enumerate}
-    Eine bestehende Physik-Engine darf für das Simulieren der Tiere in einer virtuellen Umgebung eingesetzt werden.
-    Der Hauptfokus liegt auf dem Evolvieren der artifiziellen Tiere und nicht auf dem Ausbau der verwendeten \gls{PhysicsEngine}.
-    Ein Werkzeug in Form einer selbst programmierten Applikation soll erstellt werden, um den evolutionären Algorithmus zu implementieren. \\
 
-    Zusätzliche Hypothesen~(\vref{subsub:hypoKp} und~\vref{subsub:hypoMut}) werden im Kapitel Methode~(\vref{sec:method}) erwähnt,
+    Eine bestehende \gls{PhysicsEngine} darf für das Simulieren der Tiere in einer virtuellen Umgebung eingesetzt werden.
+    Der Hauptfokus liegt auf dem Evolvieren der artifiziellen Tiere und
+    nicht auf dem Ausbau der verwendeten \gls{PhysicsEngine}.
+    Ein Werkzeug in Form einer selbst programmierten Applikation soll erstellt werden,
+    um den evolutionären Algorithmus zu implementieren.
+    \\
+    Weitere Hypothesen~(\vref{subsub:hypoKp} und~\vref{subsub:hypoMut})
+    werden im Kapitel \nameref{sec:method}~(\vref{sec:method}) erwähnt,
     da die erforderlichen Begrifflichkeiten dann eingeführt sind.
-
 
   \section{Anforderungen}
 
@@ -133,9 +123,9 @@
 
       Die Individuen müssen während der Simulation eine Strecke zurücklegen.
       Diese Strecke und ihre Begebenheiten werden als Parcours bezeichnet.
-      \vref{fig:scetchParcours} zeigt eine Skizze des Parcours.
+      Die~\vref{fig:scetchParcours} zeigt eine Skizze des Parcours.
       Mit zunehmenden Generationen soll die Schwierigkeit des Parcours steigen.
-      Als Schwierigkeit eines Parcours wird die maximale Steigung bezeichnet.
+      Die Schwierigkeit eines Parcours wird durch die maximale Steigung definiert.
       Der Parcours soll zufällig generiert werden.
 
       \begin{figure}[H]
@@ -148,7 +138,7 @@
       Limiten verhindern, dass der Parcours durch triviale Lösungen wie z.B. unendlich grosse Beine bewältigt werden kann.
       Ebenfalls schränken sie den Lösungsraum ein und helfen gewinnbringende Lösungen zu finden.
       Für folgende Komponenten werden Limiten eingeführt:
-      % Warum dieser limiten?
+
       \begin{itemize}
         \item Winkelgeschwindigkeit auf den Gelenken: Verhindert Beschleunigung ins unendliche.
         \item Beinhöhe: Verhindert die triviale Überwindung von Hindernissen.

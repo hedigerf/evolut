@@ -6,9 +6,9 @@ Dabei wird gezielt auf eine Eigenschaft hin optimiert.
 Als primäre Eigenschaft in dieser Arbeit wird die Zeit die ein Tier für eine Strecke benötigt verwendet,
 unter der Einschränkung, dass eine konstante Leistung angewendet wird.
 Zudem wird den Tieren das Gehen beigebracht.
-Die Algorithmen beziehen die notwendigen Daten aus der zugrunde liegenden \gls{PhysicsEngine}.
+Die Algorithmen beziehen die notwendigen Daten aus der zugrunde liegenden Physik-Engine.
 Der Fokus der Arbeit liegt auf den evolutionären Algorithmen,
-deshalb wird eine bestehende Implementation einer 2D-\gls{PhysicsEngine} verwendet.
+deshalb wird eine bestehende Implementation einer 2D-Physik-Engine verwendet.
 
 ## Forschungsfrage
 
