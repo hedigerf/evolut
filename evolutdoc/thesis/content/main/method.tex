@@ -143,7 +143,7 @@
           P &= (r, \phi)
         \end{align*}
 
-        Damit die Koordinaten in der Physik-Engine verwendet werden können,
+        Damit die Koordinaten in der \gls{PhysicsEngine} verwendet werden können,
         müssen die Koordinaten in kartesicher Form sein.
         Die Polar-Koordinaten \( P \) werden in kartesische Koordinaten transformiert und miteinander verbunden.
         \\
@@ -158,9 +158,9 @@
 
     \subsection{Phänotyp\label{sub:Phenotyp}}
 
-      Aus den realen Werten des Genotyps wird der Phänotyp in der Physik-Engine erstellt.
+      Aus den realen Werten des Genotyps wird der Phänotyp in der \gls{PhysicsEngine} erstellt.
       Dieser Prozess wird auch als Abbilden des Genotyps auf einen Phänotyp bezeichnet~(\vref{sub:introPhenotyp}).
-      Der Phänotyp enthält alle Daten, welche die Physik-Engine braucht, um das Individuum zu simulieren.
+      Der Phänotyp enthält alle Daten, welche die \gls{PhysicsEngine} braucht, um das Individuum zu simulieren.
       Er setzt sich aus mehreren geometrischen Figuren und Gelenken (\Glspl{Constraint}) zusammen.
       Die Beine des Individuums werden mit Hilfe eines Drehgelenks an den Körper gebunden.
       Mit Hilfe von Constraints wird diese Bindung an den Körper erreicht.
@@ -187,7 +187,7 @@
         \caption{\Gls{FiniteStateMachine} veranschaulicht\label{fig:ConceptEngineFSM}}
       \end{figure}
 
-      Aufgrund der Schnittstellen und bereits vorhandener Funktionen in der Physik-Engine ist ein Motor,
+      Aufgrund der Schnittstellen und bereits vorhandener Funktionen in der \gls{PhysicsEngine} ist ein Motor,
       der \gls{JointDriven} arbeitet gewählt worden.
       Er führt die Bewegungen, die Körperteile in Bewegung setzten, über die Drehgelenke des Individuums aus.
       Mit der Kraft des Motors wird der Winkel eines Drehgelenkes verändert.
@@ -206,7 +206,7 @@
 
       \subsubsection{Ausführung in der Simulation}
 
-      Die Physik-Engine führt die Simulation iterativ durch.
+      Die \gls{PhysicsEngine} führt die Simulation iterativ durch.
       D.h.\ der Zustand der Objekte in der Simulationswelt wird pro Schritt berechnet.
       Diese Eigenschaft nutzt der Motor,
       indem in während jedem Schritt die aktuelle Bewegung aller Individuen bearbeitet.
@@ -340,7 +340,7 @@
 
       Zur weiteren Verbesserung des Bewegungsablaufs,
       kann der Motor Rückmeldungen von der Simulationswelt anfordern.
-      Der Motor wird von der Physik-Engine benachrichtigt,
+      Der Motor wird von der \gls{PhysicsEngine} benachrichtigt,
       sobald eine Kollision zwischen einem Körperteil und dem Untergrund stattfindet.
       \\
       \\
@@ -383,42 +383,42 @@
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
 
-    Zur Auswahl standen mehrere Programmiersprachen und Physik-Engines.
+    Zur Auswahl standen mehrere Programmiersprachen und \glspl{PhysicsEngine}.
     Die Evaluationskriterien dabei waren:
 
     \begin{itemize}
       \item Plattform-Interoperabilität (Linux, Windows und Mac OS X)
       \item Einfache Handhabung
       \item Stabilität
-      \item Funktionsumfang der Physik-Engine
+      \item Funktionsumfang der \gls{PhysicsEngine}
       \item Ökosystem der Programmiersprache (verfügbare Bibliotheken)
     \end{itemize}
 
-    Als erstes wurde \gls{FSharp} und diverse populäre \gls{DotNet} Physik-Engines wie ``Farseer Physics'',
+    Als erstes wurde \gls{FSharp} und diverse populäre \gls{DotNet} \glspl{PhysicsEngine} wie ``Farseer Physics'',
     ``Physics 2D'' und ``Digital Rune Engine'' evaluiert.
     Jedoch gestaltete sich die Konfiguration und Plattform-Interoperablität schwierig.
     Eine plattformübergreifende Konfiguration, konnte nicht erstellt werden.
-    Dies lag nicht an den Physik-Engines, sondern an der Open-Source-Implementation von ``Mono Game''.
+    Dies lag nicht an den \glspl{PhysicsEngine}, sondern an der Open-Source-Implementation von ``Mono Game''.
     ``Mono Game'' und Mono werden verwendet, um die \gls{DotNet}-Umgebung auf Linux und Mac zu nutzen.
     \\
     \\
-    Als zweite Möglichkeit wurde Javascript und die Physik-Engines ``Matter.js'' und ``p2.js'' in Betracht gezogen.
+    Als zweite Möglichkeit wurde Javascript und die \glspl{PhysicsEngine} ``Matter.js'' und ``p2.js'' in Betracht gezogen.
     Die Popularität von Javascript hat in den letzten Jahren enorm zugenommen.
     Auch wurde mit dem neuen ECMA2015 Standard die Sprache enorm verbessert und viele neue Features eingeführt.
     Das Javascript-Ökosystem ist eines der grössten überhaupt.
     Da Javascript ursprünglich eine Webtechnologie ist und auf allen Plattformen problemlos läuft,
     wurde das Kriterium der Plattform-Interoperabilität ohne zusätzliche Konfiguration erfüllt.
 
-    \subsection{Auswahl der Physik-Engine}
+    \subsection{Auswahl der \gls{PhysicsEngine}}
 
-      Im Zentrum der Anwendung steht die Physik-Engine, welche die ganze Simulation berechnet.
-      Für die Auswahl der Physik-Engine war es besonders wichtig,
+      Im Zentrum der Anwendung steht die \gls{PhysicsEngine}, welche die ganze Simulation berechnet.
+      Für die Auswahl der \gls{PhysicsEngine} war es besonders wichtig,
       dass diese die notwendige Funktionalität bereitstellt.
       \\
       Die erste Option war ``Matter.js''. Schnell hat sich herausgestellt,
-      dass diese Physik-Engine nicht genug ausgereift ist.
+      dass diese \gls{PhysicsEngine} nicht genug ausgereift ist.
       Deshalb wurde als zweite Option auf ``p2.js'' zurückgegriffen.
-      Diese Physik-Engine bietet eine ausführliche Dokumentation und Beispiele zu sämtlichen Aspekten.
+      Diese \gls{PhysicsEngine} bietet eine ausführliche Dokumentation und Beispiele zu sämtlichen Aspekten.
 
     \subsection{Laufzeitumgebung}
 
@@ -457,7 +457,7 @@
         In der funktionalen Programmierung versucht man Funktionen die Nebeneffekte haben (globale Attribute) zu vermeiden.
         Dies hat den Vorteil, dass einzelne Funktionen viel einfacher zu testen sind, als bei der objektorientierten Programmierung.
 
-    \subsection{Fehler in der Physik-Engine}
+    \subsection{Fehler in der \gls{PhysicsEngine}}
 
       Für die Erstellung des Terrains wird ein Höhenfeld von p2.js benutzt.
       Die Kollisionserkennung zwischen einem Höhenfeld und einem Polygon funktioniert nicht einwandfrei.
@@ -523,7 +523,7 @@
       Durch die Erhöhung dieses Parameters kann von mehreren CPU-Kernen profitiert,
       somit lässt sich die Simulation~(\vref{sec:simulation}) und Mutation~(\vref{sec:Mutation}) parallelisieren.
       Optimal ist es diesen Wert auf die Anzahl verfügbarer CPU-Kerne zu setzen.
-      Die Grösse des Zeitschritts~\cite{bullet:steppingTheWorld} der Physik-Engine lässt sich ebenfalls einstellen.
+      Die Grösse des Zeitschritts~\cite{bullet:steppingTheWorld} der \gls{PhysicsEngine} lässt sich ebenfalls einstellen.
       %Wenn man den Zeitschritt halbiert muss die Relaxation mit dem Faktor 4 multipliziert werden.
       Die Relaxation kann auch konfiguriert werden.
       Der Parameter beschreibt die Anzahl von Zeitschritten,
@@ -574,7 +574,7 @@
       wird je nach Einstellung der Parcours nach jeder Generation neu generiert (allgemeine Lösung) oder
       er wird wiederverwendet (evolvieren auf Evolvierbarkeit).
       Der Parcours wird im ParcourGenerator generiert (Hauptprozess) und
-      von den jeweiligen Simulationsprozessen mit Hilfe vom ParcourCreator in der Physik-Engine erstellt.
+      von den jeweiligen Simulationsprozessen mit Hilfe vom ParcourCreator in der \gls{PhysicsEngine} erstellt.
 
       \vspace{1cm}
 
