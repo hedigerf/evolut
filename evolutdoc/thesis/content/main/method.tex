@@ -354,15 +354,14 @@
     Es stehen 4 Typen von evolutionären Algorithmen zur Auswahl:
 
     \begin{itemize}
-      \item Genetische Algorithmen~(GA)~(\vref{item:genAlgo})
-      \item Genetische Programmierung~(GP)~(\vref{item:genProg})
-      \item Evolutionäre Programmierung~(EP)~(\vref{item:evProg})
-      \item Evolutionäre Strategien~(ES)~(\vref{item:evStrat})
+      \item \acrfull{ga}~(\vref{item:genAlgo})
+      \item \acrfull{gp}~(\vref{item:genProg})
+      \item \acrfull{ep}~(\vref{item:evProg})
+      \item \acrfull{es}~(\vref{item:evStrat})
     \end{itemize}
 
-    % TODO umformulieren
+    % TODO umformulieren?
 
-    %Um die Problemstellung zu lösen, wurde entschieden Evolutionäre Programmierung einzusetzen
     Das Austauschen der Gene (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
     Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird.
     So kann keine sinnvolle Evolution statt finden.
@@ -371,18 +370,22 @@
     dass Evolutionäre Programmierung eingesetzt werden kann.
     Ein weiteres Kriterium ist die genetische Repräsentation.
     Da sich das Individuum aus Punkten im einem Koordinatensystem,
-    verschiedene Winkel und einem Antrieb (Motor) definiert, wird die Reale-Werte-Repräsentation eingesetzt.
-    Ein Punkt ist nichts anderes als zwei reale Werte,
-    ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
-    Die binäre Repräsentation scheint für die vielen realen Werte nicht geeignet zu sein.
-    Theoretisch wäre es möglich alle reale Werte binär darzustellen, jedoch würde so dem Problem eine unnötige Komplexität hinzugefügt werden.
+    verschiedenen Winkeln und einem Bewegungsablauf definiert, wird die Reale-Werte-Repräsentation eingesetzt.
+    Ein Punkt oder Vektor kann durch zwei reale Werte ausgedrückt werden.
+    Dies gilt ebenso für Winkel oder den Bewegungsablauf.
+    \\
+    Die binäre Repräsentation ist für die vielen realen Werte nicht geeignet.
+    Theoretisch wäre es möglich alle reale Werte binär darzustellen,
+    jedoch würde eine unnötige Komplexität hinzugefügt werden.
+    \\
     Die Repräsentation als Baum ist laut K. Weicker~\cite{book:evAlgo} eine Möglichkeit die Steuerung eines Roboters abzubilden.
     Da aber mehr als nur die Steuerung evolviert wird, bleibt die Entscheidung bei der Reale-Werte-Repräsentation.
-    Die Problemstellung würde wahrscheinlich anders bewältigt werden,
+    Die Problemstellung würde anders bewältigt werden,
     würde sich die Thematik um reale Kreaturen drehen und nicht um virtuelle Roboter,
     welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
-    Bei realen Kreaturen spielt die Genetik eine zentrale Rolle, jedoch kann sie bei den virtuellen Robotern vernachlässigt werden.
-    Schlussendlich wurde entschieden die Problemstellung, aufgrund der gelieferten Argumente, mit evolutionärer Programmierung zu lösen.
+    Bei realen Kreaturen spielt die Genetik eine zentrale Rolle,
+    jedoch kann sie bei den virtuellen Robotern vernachlässigt werden.
+    Schlussendlich wurde entschieden die Problemstellung, mit evolutionärer Programmierung zu lösen.
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
 
