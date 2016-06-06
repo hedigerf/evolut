@@ -6,16 +6,35 @@
 
 \chapter{Einleitung}
 
+  % TODO nomol..
+
   Viele Optimierungsprobleme,
   die in der Informatik und Robotik auftreten sind mit mathematischen Methoden nicht innert nützlicher Frist lösbar.
   Oft spielt dabei die Anzahl der Freiheitsgrade eine entscheidende Rolle.
   Die Anzahl der Freiheitsgrade und somit der Menge möglicher Lösungen übersteigt die Kapazität aktueller Computer.
   \\
   \\
+
+  % TODO alternativ zu was
+
   Ein alternatives Verfahren findet sich in der Natur. In der Natur werden ständig Optimierungsprobleme gelöst.
   Das Prinzip dabei ist, dass die Individuen überleben und Nachwuchs zeugen,
   die am besten an die aktuelle Umgebung angepasst sind.
   Die nächste Generation ist besser an die Bedingungen ihrer Vorgänger angepasst. % ZITAT
+
+  % nicht nur die guten, sondern auch schlechtere
+
+  % kombination aus reproduktion --  kopie --> variation, selektion, vererbung
+
+  % selektions druck, gut reproduzieren sich mit höhere wahrscheinlichkeit
+  % führt zu veränderung.
+
+  % 1 Mehr formulieren, dass formale lösungs methoden -> planen
+  % 2 natur: trial and error
+  %
+  % lösungsraum zu kompliziert für planung
+  %
+
   \\
   \\
   Mit dieser Methode können Optimierungsprobleme auf einem Computer gelöst werden,
@@ -40,12 +59,21 @@
 
     % Altes Problem der Robotik.
 
-  \section{Offizielle Aufgabenstellung}
+  \section{Aufgabenstellung}
+
+    % TODO aufgabenstellung zitieren.
+
+    % nicht fkt der zeit, sondern zeit
 
     Als Mass für die Fitness wird eine Funktion der Zeit verwendet, welche das Tier braucht,
     um einen gegebenen Parcours zurückzulegen.
+
+    % satz weg
+
     Dabei müssen Individuen berücksichtigt werden, die den Parcours nicht vollständig ablaufen können.
     Die Fitnessfunktion berücksichtigt in diesem Fall die zurückgelegte Strecke.
+
+    % klarer formulieren, wie es ist.
     \\
     Als Randbedingungen vorgegeben sind:
     \begin{enumerate}
@@ -59,9 +87,17 @@
 
   \section{Zielsetzung}
 
-    Das Ziel dieser Arbeit ist sechsbeinigen künstlichen Tieren, mit Hilfe eines evolutionären Algorithmus,
-    in einer zweidimensionalen Umgebung das Gehen zu lernen.
-    Die Individuen sollen sich immer besser an ihre Umgebung anpassen.
+    % TODO holprig
+    % reihenfolge !
+
+    % !!! wissenschaftliche fragenstellung formulieren !!!
+    % anzahl (1,2,55) klare fragen stellen: gesucht ist ein tier, welche den parcours in endlicher zeit bewältigt.
+    % 2. welche anzahl beine ist optimal
+    %...
+    % möglich, dass auf spätere hypothesen verwiesen wird
+
+    Das Ziel dieser Arbeit ist sechsbeinigen künstlichen Tieren mit Hilfe eines evolutionären Algorithmus,
+    in einer zweidimensionalen Umgebung das Gehen zu beizubringen.
     Um dieses Ziel zu erreichen, soll eine Applikation erstellt werden,
     welche den evolutionären Algorithmus implementiert.
     Die Applikation muss ebenfalls die Möglichkeit bieten, eine Simulation durchzuführen.
@@ -77,8 +113,7 @@
     \subsection{Fitnessfunktion}
 
       Die Fitness ist ein Mass für den Grad der Anpassung eines Individuums an die Umgebung.
-      In frühen Generation kann es vorkommen,
-      dass die künstlichen Tiere sich keinen Schritt weit während der Simulation fortbewegen können.
+      In frühen Generationen können Tiere existieren, die sich nicht fortbewegen können.
       Die Zeit, welche ein Individuum für die Bewältigung eines Parcours (\vref{subsub:parcours}) brauchen würde,
       wäre somit unendlich.
       Um dieses Problem zu umgehen, wird als Mass für die Fitness die zurückgelegte Strecke verwendet.
@@ -113,6 +148,8 @@
       \end{itemize}
 
     \section{Projektmanagement}
+
+      % TODO in anhang verschieben?
 
       Die verschiedenen Arbeitspakete werden eine Woche im Voraus geplant.
       Dieses Vorgehen wird auch als rollende Planung bezeichnet.
