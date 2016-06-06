@@ -12,13 +12,16 @@
   \todo[inline]{Legt dar, wie an die Resultate (konkret vom Industriepartner oder weiteren
   Forschungsarbeiten; allgemein) angeschlossen werden kann; legt dar, welche Chancen die
   Resultate bieten}
+
   \section{Diskussion der Resultate\label{sec:diskRes}}
+
     Die gefundenen Resultate wiederspiegeln Lösungen innerhalb einer künstlichen Umgebung.
     In dieser Umgebung wird eine vereinfachte Physik verwendet, welche nur an die reale Physik angenähert ist.
     Deshalb sind die Resultate nicht ohne Vorbehalte auf die reale Welt übertragbar.
     \\
     Das Evolvieren von artifiziellen Tieren und ihrer Steuerung ist möglich mit dem implementierten evolutinären Algorithmus.
-    Es entwickelte sich keine klassische Laufbewegung, aber eine Bewegung welche es den Individuen erlaubt sich durch den Parcours fortzubewegen.
+    Es entwickelte sich keine klassische Laufbewegung,
+    aber eine Bewegung welche es den Individuen erlaubt sich durch den Parcours fortzubewegen.
     \\
     Es stellt sich heraus, dass eine Simulation viel Zeit beansprucht und äusserst rechenintensiv ist.
     12000 Generationen zu simulieren, dauert rund 10 Tage. \\
@@ -36,35 +39,47 @@
     \subsection{Wie sieht der Bewegungsablauf eines evolvierten Tieres aus?}
 
     \subsection{Hypothese Körperpunkte}
+
       Um eine Aussage über die Hypothese der Körperpunkte~(\vref{subsub:hypoKp}) zu treffen,
       müsste wie erwähnt unter~\vref{subsub:bpScnd} die Mutation der Anzahl Körperpunkte implementiert werden.
-      Spätestens ab der 10. Generation bei jedem Lauf, existieren nur noch Individuen mit der gleichen Anzahl Körperpunkten.
+      Spätestens ab der 10. Generation bei jedem Lauf,
+      existieren nur noch Individuen mit der gleichen Anzahl Körperpunkten.
 
     \subsection{Hypothese Mutationswahrscheinlichkeiten}
-      Die Hyptohese über die Mutationswahrscheinlichkeiten~(\vref{subsub:hypoMut}) hat sich bewarheitet, wie in \vref{subsub:3000gen} festgestellt worden ist.
+
+      Die Hyptohese über die Mutationswahrscheinlichkeiten~(\vref{subsub:hypoMut}) hat sich bewahrheitet
+      wie in~\vref{subsub:3000gen} festgestellt worden ist.
       Mit kleineren Mutationswahrscheinlichkeiten lassen sich fittere Indivduen finden.
 
   \section{Ausblick\label{sec:ausblick}}
+
+    % Tiere mit andere anzahl an beinen als 6
+
     Die erstelle Simulationsapplikation ist gut erweiterbar und ermöglicht Interessierten sie weiter auszubauen.
     Der Programmcode soll für Interessierte unter \url{http://github.com} freigegeben werden nach der Abgabe der Arbeit.
 
     \subsection{Feedback an den Bewegungsmotor\label{sec:PerspectiveFeedback}}
+
       Die fehlende Implementation der Reaktion auf das Feedback der Steuerung ist sicher die Komponente,
       welche am meisten helfen würde, bessere Resultate zu finden.
 
     \subsection{Austauschen der Physik-Engine}
+
       Eine Verbesserungsmöglichkeit ist die langsame und teilweise fehlerhafte \gls{PhysicsEngine} p2.js auszutauschen.
       Mit Hilfe einer anderen \gls{PhysicsEngine} kann schneller simuliert werden und es können bessere Resultate gefunden werden.
       Für einen 30 Sekunden langen Simulationslauf, benötigt die Engine zum Teil mehr als eine Minute.
 
     \subsection{Hypothese Selektionsstrategie}
+
       Die zeitliche Beschränkung dieser Arbeit hat es nicht erlaubt,
       die ursprünglich geplannte Hypothese über den Vergleich von Selektionsstrategien durchzuführen.
-      In der Hypothese ging es darum die Auswirkungen von den Selektionstrategien: Turnierbasierte-Selektion, rangbasierte Selektion
+      In der Hypothese ging es darum die Auswirkungen von den Selektionstrategien:
+      Turnierbasierte-Selektion, rangbasierte Selektion
       und proportionale Selektion auf die Simulationsresultate zu untersuchen.
       Diese Hypothese würde genügend Stoff für eine weitere spannende Arbeit liefern.
 
     \subsection{Parcours}
+
       Der Parcours wird nur mit einem Typ von Element generiert, ein Höhenfeld welches einen Berg repräsentiert.
       Neue Terrain-Typen wie Eis, Wasser oder Grass könnten zusätzlich hinzugefügt werden.
 
