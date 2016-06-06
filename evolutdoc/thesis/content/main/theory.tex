@@ -9,7 +9,8 @@
 \section{Natürliche vs.\ artifizielle Evolution}
 
   Natürliche Evolution hat kein vordefiniertes Ziel und ist ein sogenannter open-ended Anpassungsprozess.
-  Unter einem open-ended Anpassungsprozess in der natürlichen Evolution versteht man die Anpassung an die natürliche Umgebung.
+  Unter einem open-ended Anpassungsprozess in der natürlichen Evolution
+  versteht man die Anpassung an die natürliche Umgebung.
   Da sich die natürliche Umgebung stetig ändert, ist der Prozess immer im Gange und endet nie.
   Artifizielle Evolution jedoch ist ein Optimierungsprozess,
   welcher versucht Lösungen zu vordefinierten Probleme zu finden~\cite[S.1]{book:bioInspired}.
@@ -28,13 +29,13 @@
     \subsection{Genotyp\label{sub:genotyp}}
 
       Das genetische Material eines Individuums wird als Genotyp bezeichnet~\cite[S.5]{book:bioInspired}.
-      Es beeinhaltet alle wichtigen Informationen zur Reproduktion des Individuums.
+      Es beinhaltet alle wichtigen Informationen zur Reproduktion des Individuums.
 
     \subsection{Genom\label{sub:genom}}
 
       Das Genom ist eine Repräsentation des Genotyps.
       Es beinhaltet nur Werte, jedoch keine Information was diese bedeuten.
-      Erst durch den Geno- und Phäntoyp werden den Werten einen Sinn gegeben.
+      Erst durch den Geno- und Phänotyp werden den Werten einen Sinn gegeben.
 
     \subsection{Phänotyp\label{sub:introPhenotyp}}
 
@@ -54,7 +55,7 @@
 
       Der erste Schritt bei der Definition eines evolutionären Algorithmus ist die Auswahl der genetischen Repräsentation.
       Nicht alle Arten von evolutionären Algorithmen harmonieren mit jeder Repräsentation.
-      Die genetische Repäsentation beschreibt die Elemente eines Genomes und
+      Die genetische Repräsentation beschreibt die Elemente eines Genoms und
       wie diese auf einen Phänotyp abgebildet werden~\cite[S.16]{book:bioInspired}.
 
       \subsubsection{Diskrete Repräsentation\label{subsub:GeneticRepresentationDiscrete}}
@@ -104,7 +105,8 @@
       Die Grösse der zu evolvierenden Population kann selber bestimmt werden.
       Jedoch muss beachtet werden, dass eine grössere Population mehr Rechenaufwand bedeutet.
       Auch die Eigenschaften des Suchraums dürfen dabei nicht ignoriert werden.
-      Wichtig bei der Erstellung einer initialen Population ist, möglichst diverse~(\vref{sub:diversity}) Individuen zu generieren,
+      Wichtig bei der Erstellung einer initialen Population ist,
+      möglichst diverse~(\vref{sub:diversity}) Individuen zu generieren,
       damit nicht wertvolle Lösungen verspielt werden.
 
     \subsection{Fitness-Funktion}
@@ -113,19 +115,20 @@
       wie gut geeignet ihre Gene sind um die Problemstellung zu bewältigen.
       In der natürlichen Evolution ist die Fitness des Tieres, wie viele Nachkommen es erzeugen kann.
       In der technischen Welt muss der Anwender sie jeweils selbst definieren und
-      anhand der Problemstellung anpassen. Oft ist die evaluation der Fitness-Funktion
+      anhand der Problemstellung anpassen. Oft ist die Evaluation der Fitness-Funktion
       die rechenintensivste Teilaufgabe eines evolutionären Algorithmus~\cite[S.22]{book:bioInspired}.
 
     \subsection{Diversität\label{sub:diversity}}
 
       Die Diversität einer Population von Individuen beschreibt wie verschieden die Individuen zueinander sind.
       Durch diese Kennzahl alleine lässt sich jedoch noch keine Aussage über die Diversität treffen.
-      Erst wenn mehrere Generationen von Populationen vorhanden sind, kann diese Kennzahl benutzt werden um die Diversität zu beurteilen.
+      Erst wenn mehrere Generationen von Populationen vorhanden sind,
+      kann diese Kennzahl benutzt werden um die Diversität zu beurteilen.
       Eine nummerisch grössere Zahl deutet darauf hin das die Individuen divers sind.
 
     \subsection{Selektionsoperation}
 
-      Eine Selektionsoperation hilft einem möglichst gut geeignete Individuen einer Generation zu selektieren.
+      Eine Selektionsoperation hilft geeignetsten Individuen einer Generation zu selektieren.
       Die Selektierten bilden die Basis für die nächste Generation.
       Eine grosse Herausforderung beim Selektieren ist die Erhaltung der Diversität.
 
@@ -138,58 +141,65 @@
 
       \subsubsection{Proportionale Selektion}
 
-        Bei der proportionalen Selektion wird die Reprodutionsrate proportional zur Fitness gewählt.
-        D. Floreano und C. Mattiussi~\cite[S.23]{book:bioInspired} beschreiben die Proportionale Selektion als Rouletterad,
-        in dem jedes Individuum ein Stück des Rouletterad für sich beanspruchen~(\vref{fig:rouletteWheel}).
-        Das Stück welches sie beanspruchen, ist so gross, wie ihre Fitness im Vergleich zu der Fitness ihrer Konkurrenten.
+        Bei der proportionalen Selektion wird die Reproduktionsrate proportional zur Fitness gewählt.
+        D. Floreano und C. Mattiussi~\cite[S.23]{book:bioInspired} beschreiben die proportionale Selektion als Rouletterad,
+        in dem jedes Individuum ein Stück des Rouletterads für sich beanspruchen~(\vref{fig:rouletteWheel}).
+        Das Stück welches sie beanspruchen, ist so gross,
+        wie ihre Fitness im Vergleich zu der Fitness ihrer Konkurrenten.
         Das Individuum mit der grössten Fitness wird auch das grösste Stück des Rouletterads für sich beanspruchen und hat somit die grösste Wahrscheinlichkeit Nachkommen zu erzeugen.
-        Wenn die Population \(N\) Indivduen gross ist, wird das Rad \(N\) mal gedreht um die Nachkommen zu bestimmen.
-        Proportionale Selektion funktioniert schlecht wenn alle Individuen sehr ähnliche Fitnesswerte aufweisen oder es nur wenige/einen Ausreisser gibt.
+        Wenn die Population \(N\) Individuen gross ist, wird das Rad \(N\) mal gedreht um die Nachkommen zu bestimmen.
+        Proportionale Selektion funktioniert schlecht,
+        wenn alle Individuen sehr ähnliche Fitnesswerte aufweisen oder es nur wenige/einen Ausreisser gibt.
         Denn dann haben alle Individuen die gleiche Chance selektiert zu werden.
 
         \begin{figure}[H]
-          \includegraphics[scale=0.4, center]{graphics/roulettewheel}
-          \caption[\protect\bibentry{book:bioInspired}, S.24]{Rhouletterad der proportionalen Seleketion\label{fig:rouletteWheel}}
+          \includegraphics[scale=0.4,center]{graphics/roulettewheel}
+          \caption[\protect\bibentry{book:bioInspired}, S.24]{Rouletterad der proportionalen Selektion\label{fig:rouletteWheel}}
         \end{figure}
 
       \subsubsection{Rang-basierte Selektion}
 
         Es wird zuerst eine Rangliste nach Fitness erstellt und dann werden die Reproduktionswahrscheinlichkeiten proportional zum Rang zugeordnet.
-        Anstatt das Rouletterad~(\vref{fig:rouletteWheel}) nach Fitness der Individuen zu unterteilen, wird es anhand des Ranges unterteilt.
+        Anstatt das Rouletterad~(\vref{fig:rouletteWheel}) nach Fitness der Individuen zu unterteilen,
+        wird es anhand des Ranges unterteilt.
         Diese Selektionsstrategie hat den Vorteil gegenüber der proportionalen Selektion,
-        dass die Fitness der Indivdueen ähnlich sein darf, jedoch wird mit hoher Wahrscheinlichkeit immer noch das besere selektiert werden.
+        dass die Fitness der Indivduen ähnlich sein darf,
+        jedoch wird mit hoher Wahrscheinlichkeit das bessere selektiert werden.
 
       \subsubsection{Gekürzte Rang-basierte Selektion}
 
-        Es wird eine Rangeliste wird für die Individuen der Population erstellt.
+        Es wird eine Rangliste wird für die Individuen der Population erstellt.
         Anstatt alle Individuen zu berücksichtigen werden nur die besten der Rangliste selektiert und diese produzieren Nachkommen (\vref{fig:truncated_rank_based_selection}).
 
         \begin{figure}[H]
-          \includegraphics[scale=0.7, center]{graphics/truncated_rank_based_selection}
+          \includegraphics[scale=0.7,center]{graphics/truncated_rank_based_selection}
           \caption{Schritte einer gekürzten rang-basierten Selektion\label{fig:truncated_rank_based_selection}}
         \end{figure}
 
       \subsubsection{Turnier-basierte Selektion\label{par:Turnier}}
 
-        Es werden \(k\) zufällig ausgewählte Individuen selektiert, diese Individuen tragen untereinander ein Turnier (\vref{fig:tournament_based}) aus.
+        Es werden \(k\) zufällig ausgewählte Individuen selektiert,
+        diese Individuen tragen untereinander ein Turnier (\vref{fig:tournament_based}) aus.
         Das Turnier gewinnt jenes Individuum, welches den höchsten Fitnesswert aufweist.
         Dies wird solange wiederholt, bis so viele Nachkommen vorhanden sind wie in der vorherigen Generation.
         Ein grosser Vorteil von Turniert-basierter Selektion ist die gute Balance zwischen
-        Selektionsdruck und genetischer Diversität, da alle Individuen in der Population die gleiche Wahrscheinlichkeit haben, für das Turnier selektiert zu werden.
-        Somit können auch Indivduen mit niedrigem Fitnesswert ein Turnier gewinnen.
+        Selektionsdruck und genetischer Diversität,
+        da alle Individuen in der Population die gleiche Wahrscheinlichkeit haben, für das Turnier selektiert zu werden.
+        Somit können auch Individuen mit niedrigem Fitnesswert ein Turnier gewinnen.
 
         \begin{figure}[H]
-          \includegraphics[scale=1, center]{graphics/tournament_based}
+          \includegraphics[scale=1,center]{graphics/tournament_based}
           \caption{Turnier-basierte-Selektion~\label{fig:tournament_based}}
         \end{figure}
 
     \subsection{Rekombinationsfunktion}
 
         Bei der Rekombination werden jeweils zwei Individuen selektiert und
-        deren Gen-Paare rekombiniert (untereinander vertauscht).
+        deren Gen-Paare neu kombiniert (untereinander vertauscht).
         \vref{fig:crossOver} veranschaulicht diesen Prozess.
-        Nicht bei jedem Typ von evolutinären Algorithmen~(\vref{sub:artenEvAlgos}) und jeder Problemstellung ist Rekombination sinnvoll.
-        Als Beispiel kann ein Haus mit Fenstern und Türne genommen werden.
+        Nicht bei jedem Typ von evolutionären Algorithmen~(\vref{sub:artenEvAlgos}) und
+        jeder Problemstellung ist Rekombination sinnvoll.
+        Als Beispiel kann ein Haus mit Fenstern und Türen genommen werden.
         Dabei führt die Rekombination der Gene der Türen mit denen der Fenster zu keinen verwendbaren Resultaten.
 
         \begin{figure}[H]
@@ -209,6 +219,12 @@
 
         \subsubsection{Uniform-Crossover}
 
+          % Ignore solo ')' warning
+          % chktex-file 10
+          % Ignore warning on ( b)..)
+          % chktex-file 37
+          % Ignore warning on unmatched count of '(' and ')'
+          % chktex-file 17
           Die Gene werden an \(n\) zufälligen Stellen vertauscht ( b)~\vref{fig:crossTypes}).
 
         \subsubsection{Arithmetic-Crossover}
@@ -239,7 +255,7 @@
       Die Positionen eines Genoms werden mit einer bestimmten Wahrscheinlichkeit \(p_{m}\) mutiert.
       Es ist jedoch Vorsicht geboten, da gewisse Lösungen durch Mutationen verloren gehen können.
       Darum sollten Mutationswahrscheinlichkeiten klein gewählt werden,
-      da sonst keine gewinnbringende Evolution statt finden kann.
+      da sonst keine gewinnbringende Evolution stattfinden kann.
 
       \subsubsection{Binäre Repräsentationen}
 
@@ -253,7 +269,7 @@
 
       \subsubsection{Reale-Werte-Repräsentationen}
 
-        Bei Realen-Werte-Repräsentation wird jeweils zu einem bestehnden Wert ein nummerischer Wert addiert.
+        Bei Realen-Werte-Repräsentation wird jeweils zu einem bestehenden Wert ein nummerischer Wert addiert.
         Der Wert sollte zufällig berechnet werden.
         Die Zufallsfunktion, welche dafür verwendet wird, sollte normalverteilt sein.
         Zudem sollte die Mutation innerhalb eines Wertebereichs stattfinden (\vref{fig:mutation_real_value}).
@@ -285,9 +301,9 @@
 
       Es gibt verschiedene Typen von evolutionären Algorithmen, welche sich hauptsächlich in der Wahl ihrer
       genetischen Repräsentation und Operationen unterscheiden~\cite{book:introEvComp}.
-      Die Auswahl des evolutionären Algorithmus hängt von den Eingeschaft der Problemstellung ab.
+      Die Auswahl des evolutionären Algorithmus hängt von den Eigenschaften der Problemstellung ab.
       Es gibt keinen Algorithmus der alle Probleme optimal lösen kann~\cite{book:genAlgoDataStructsEvProg}.
-      Die am häufigst verbreiteten Algorithmen sind: genetische Algorithmen~(\vref{item:genAlgo}),
+      Die am häufigsten verbreiteten Algorithmen sind: genetische Algorithmen~(\vref{item:genAlgo}),
       genetische Programmierung~(\vref{item:genProg}), evolutionäre Programmierung~(\vref{item:evProg})
       und evolutionäre Strategien~(\vref{item:evStrat}).
 
@@ -306,14 +322,14 @@
 
       \subsubsection{Evolutionäre Programmierung\label{item:evProg}}
 
-        Evolutinäre Programmierung versucht die Evolution auf einer verhaltensbestimmten Ebene zu berücksichtigen,
+        Evolutionäre Programmierung versucht die Evolution auf einer verhaltensbestimmten Ebene zu berücksichtigen,
         d.h.\ die Genetik wird nicht berücksichtigt~\cite[S.140]{book:evAlgo}.
-        Das bedeuted, dass bei der evolutionären Programmierung~\cite{book:artIntSimEv}
+        Das bedeutet, dass bei der evolutionären Programmierung~\cite{book:artIntSimEv}
         ausschliesslich Mutation und keine Rekombination eingesetzt wird.
         Das Genom kann durch eine beliebige genetische Repräsentation dargestellt werden.
         Als Selektionsoperator wird oft Turnier-basierte-Selektion eingesetzt~\cite[S.33]{book:bioInspired}.
 
       \subsubsection{Evolutionäre Strategien\label{item:evStrat}}
 
-        Evolutinäre Strategien~\cite{book:evStrat} sind ähnlich wie evolutionäre Programmierung.
+        Evolutionäre Strategien~\cite{book:evStrat} sind ähnlich wie evolutionäre Programmierung.
         Das Genom wird durch reale Werte repräsentiert~\cite[S.134]{book:evAlgo}.

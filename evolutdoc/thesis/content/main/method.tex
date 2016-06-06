@@ -44,7 +44,7 @@
         dass sich ein Individuum mit 8 Körperpunkten schneller durch den Parcours bewegt,
         als ein Individuum mit weniger Körperpunkten.
         Die Vermutung dabei ist, dass durch die komplexere Form des Individuums die Balance besser gehalten werden kann.
-        Im Kapitel~\vref{chap:Resultate} und~\vref{chap:perspective} wird diskutiert ob dies zutrifft.
+        Im~\vref{chap:Resultate} und~\vref{chap:perspective} wird diskutiert, ob dies zutrifft.
 
     \subsection{Beine\label{sub:Beine}}
 
@@ -65,8 +65,8 @@
       wie das Verhältnis der Länge von Unterschenkel \(h_{s}\) zu Oberschenkel \(h_{t}\) ist.
       \\
       Die Schenkel sind durch das Kniegelenk \(j_{k}\) miteinander verbunden.
-      Mit dem Hüfgelenk \(j_{h}\) wird das Bein mit dem Körper verbunden.
-      Für die Position des Hüftgelenkes existiert die Bedinung,
+      Mit dem Hüftgelenk \(j_{h}\) wird das Bein mit dem Körper verbunden.
+      Für die Position des Hüftgelenkes existiert die Bedingung,
       dass das Gelenk innerhalb der Körperfläche angebracht sein muss.
       \\
       Zur Vereinfachung wird die Höhe jedes Gelenkes auf 0 festgelegt.
@@ -112,7 +112,7 @@
       \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
 
         Das zufällige Erstellen eines Genotyps wird ``seeding'' genannt.
-        Zu Beginn der Simulation wird die initale Population~(\vref{sec:initPop}) mit zufällig generierten Individuen erstellt.
+        Zu Beginn der Simulation wird die initiale Population~(\vref{sec:initPop}) mit zufällig generierten Individuen erstellt.
         Dabei ist es hilfreich manche Parameter nicht zufällig generieren zu lassen,
         sondern mit einem fixen Wert zu initialisieren.
         Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
@@ -122,7 +122,7 @@
       \subsubsection{Generierung Körperpunkte\label{subsub:GenotypeBodypointCreation}}
 
         Als erster Ansatz für die Generierung von Körperpunkten wurde ein Quadrat evaluiert.
-        Dieser Ansatz wurde nicht weiter verfolgt,
+        Dieser Ansatz wurde nicht weiterverfolgt,
         da der Ansatz mit einem Kreis für beliebig viele und ungerade Anzahlen von Punkten einfacher lösbar ist.
 
         \smallskip
@@ -147,7 +147,7 @@
 
         Damit die Koordinaten in der Physik-Engine verwendet werden können,
         müssen die Koordinaten in kartesicher Form sein.
-        Die Polarkooridnaten \( P \) werden in kartesische Koordinaten transformiert und miteinander verbunden.
+        Die Polar-Koordinaten \( P \) werden in kartesische Koordinaten transformiert und miteinander verbunden.
 
         \smallskip
 
@@ -162,7 +162,7 @@
     \subsection{Phänotyp\label{sub:Phenotyp}}
 
       Aus den realen Werten des Genotyps wird der Phänotyp in der Physik-Engine erstellt.
-      Dieser Prozess wird auch als Abbilden des Genotyps auf einen Phäntotyp bezeichnet~(\vref{sub:introPhenotyp}).
+      Dieser Prozess wird auch als Abbilden des Genotyps auf einen Phänotyp bezeichnet~(\vref{sub:introPhenotyp}).
       Der Phänotyp enthält alle Daten, welche die Physik-Engine braucht, um das Individuum zu simulieren.
       Er setzt sich aus mehreren geometrischen Figuren und Gelenken (\Glspl{Constraint}) zusammen.
       Die Beine des Individuums werden mit Hilfe eines Drehgelenks an den Körper gebunden.
@@ -339,8 +339,8 @@
       Mit dieser Aufgliederung lassen sich einzelne Teile einer Bewegung mutieren.
       Insbesondere ist es möglich verschiedene Wahrscheinlichkeiten für Teile zu verwenden.
       \\
-      Soblald der Motor eine Bewegung ausführt, interpretiert er die Daten aus dem Phänotyp.
-      Er liest die Beschreibung der aktuelln Bewegung und führt diese dann aus.
+      Sobald der Motor eine Bewegung ausführt, interpretiert er die Daten aus dem Phänotyp.
+      Er liest die Beschreibung der aktuellen Bewegung und führt diese dann aus.
 
     \subsubsection{Feedback}
 
@@ -359,14 +359,16 @@
   \section{Auswahl des Evolutionären Algorithmus}
 
     Es stehen 4 Typen von Evolutionäre Algorithmen zur Auswahl:
+
     \begin{itemize}
       \item Genetische Algorithmen~(GA)~(\vref{item:genAlgo})
       \item Genetische Programmierung~(GP)~(\vref{item:genProg})
       \item Evolutionäre Programmierung~(EP)~(\vref{item:evProg})
       \item Evolutionäre Strategien~(ES)~(\vref{item:evStrat})
     \end{itemize}
+
     %Um die Problemstellung zu lösen, wurde entschieden Evolutionäre Programmierung einzusetzen
-    Das Austauschen der Genen (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
+    Das Austauschen der Gene (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
     Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird.
     So kann keine sinnvolle Evolution statt finde. Rekombination kann für die Verwendung somit ausgeschlossen werden.
     Dies stellt schon den ersten Indikator dar,
@@ -377,21 +379,21 @@
     Ein Punkt ist nichts anderes als zwei reale Werte,
     ein Winkel kann ebenfalls so beschrieben werden und ein Antrieb auch.
     Die binäre Repräsentation scheint für die vielen realen Werte nicht geeignet zu sein.
-    Theoretisch wäre es möglich alle realle Werte binär darzustellen, jedoch würde so dem Problem eine unnötige Komplexität hinzugefügt werden.
+    Theoretisch wäre es möglich alle reale Werte binär darzustellen, jedoch würde so dem Problem eine unnötige Komplexität hinzugefügt werden.
     Die Repräsentation als Baum ist laut K. Weicker~\cite{book:evAlgo} eine Möglichkeit die Steuerung eines Roboters abzubilden.
     Da aber mehr als nur die Steuerung evolviert wird, bleibt die Entscheidung bei der Reale-Werte-Repräsentation.
-    Die Problemstellung würde wahrscheinlich anderst bewältigt werden,
+    Die Problemstellung würde wahrscheinlich anders bewältigt werden,
     würde sich die Thematik um reale Kreaturen drehen und nicht um virtuelle Roboter,
     welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
     Bei realen Kreaturen spielt die Genetik eine zentrale Rolle, jedoch kann sie bei den virtuellen Robotern vernachlässigt werden.
-    Schlussendlich wurde entschieden die Problemstellung, auf Grund der gelieferten Argumente, mit evolutionärer Programmierung zu lösen.
+    Schlussendlich wurde entschieden die Problemstellung, aufgrund der gelieferten Argumente, mit evolutionärer Programmierung zu lösen.
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
 
     Zur Auswahl standen mehrere Programmiersprachen und Physik-Engines.
     Die Evaluationskriterien dabei waren:
     \begin{itemize}
-      \item Platform-Interoperabilität (Linux, Windows Mac OS X)
+      \item Plattform-Interoperabilität (Linux, Windows Mac OS X)
       \item Einfache Handhabung
       \item Stabilität
       \item Funktionsumfang der Physik-Engine
@@ -402,9 +404,9 @@
     % chktex-file 26
     Als erstes wurde F\# und diverse populäre .NET Physik-Engines wie Farseer Physics,
     Physics 2D und Digital Rune Engine evaluiert.
-    F\# ist eine funktionale Sprache die mit einer sauberen Syntax und einem der besten Typensystem überhaupt besticht.
-    Jedoch gestaltete sich die Konfiguration und Platform-Interoperablität sehr schwierig.
-    Dies lag nicht an den Physics Engines selber, sondern an der Open-Source-Implementierung Mono Game.
+    F\# ist eine funktionale Sprache, die mit einer sauberen Syntax und einem ausgereiften Typensystem besticht.
+    Jedoch gestaltete sich die Konfiguration und Plattform-Interoperablität sehr schwierig.
+    Dies lag nicht an den Physic-Engines selber, sondern an der Open-Source-Implementierung Mono Game.
     Eine plattformübergreifende Konfiguration,
     so dass mit allen oben genannten Betriebssystemen entwickelt werden kann,
     konnte nicht erstellt werden.
@@ -414,7 +416,7 @@
     Auch wurde mit dem neuen ECMA2015 Standard die Sprache enorm verbessert und viele neue Features eingeführt.
     Das Javascript-Ökosystem ist eines der grössten überhaupt.
     Da Javascript ursprünglich eine Webtechnologie ist und auf allen Plattformen problemlos läuft,
-    wurde das Kriterium der Platform-Interoperabilität ohne zusätzliche Konfiguration erfüllt.
+    wurde das Kriterium der Plattform-Interoperabilität ohne zusätzliche Konfiguration erfüllt.
     Matter.js wirkte noch nicht so ausgereift wie p2.js und wies viele Fehler auf.
     Um Javascript und p2.js ohne Browser zu betreiben wird Electron eingesetzt.
     Electron ist node.js und Google Chrome vereint in einer Standalone-Anwendung.
@@ -444,7 +446,8 @@
 
         Funktionale Programmierung heisst, das Programm so zu entwerfen, so dass die Datenverarbeitung nur aus Evaluationen von Funktionen besteht.
         Wenn Mutationen durchgeführt werden, wird anstatt die jeweilige Eigenschaft zu verändern,
-        ein neues Objekt inklusive der Mutation zurückgegeben. Ohne mutable State ist es einfach Parallelisierung zu implementieren.
+        ein neues Objekt inklusive der Mutation zurückgegeben.
+        Ohne mutable State ist es einfach Parallelisierung zu implementieren. % TODO glossar
         Es wird anstatt Iterationen, Rekursionen verwendet.
         In der funktionalen Programmierung versucht man Funktionen die Nebeneffekte haben (globale Attribute) zu vermeiden.
         Dies hat den Vorteil, dass einzelne Funktionen viel einfacher zu testen sind, als bei der objektorientierten Programmierung.
@@ -455,7 +458,7 @@
         Die Kollisionserkennung zwischen einem Höhenfeld und einem Polygon funktioniert nicht einwandfrei.
         Manche Polygonecken werden nicht berücksichtigt in der Kollisionserkennung.
         Das hat zur Folge, dass Körperteile der Individuen im Boden einsinken.
-        \vref{fig:vorEinsinken} zeigt das Individuum vor dem Einsinken und~\vref{fig:nachEinsinken} zeigt das Invidiuum mit der eingesunkenen Spitze.
+        \vref{fig:vorEinsinken} zeigt das Individuum vor dem Einsinken und~\vref{fig:nachEinsinken} zeigt das Individuum mit der eingesunkenen Spitze.
 
         \begin{figure}[H]
           \centering
@@ -472,7 +475,7 @@
         \end{figure}
 
         Kollisionen mit einem Höhenfeld werden am besten erkannt mit Kreisen.
-        \vref{fig:noVorEinsinken} zeigt die Anbringung von kleinen Kreisne mit vernachlässigbarer Masse an den Ecken des Körpers und der Beine.
+        \vref{fig:noVorEinsinken} zeigt die Anbringung von kleinen Kreisen mit vernachlässigbarer Masse an den Ecken des Körpers und der Beine.
         Dies verbessert die Kollisionserkennung zwischen den Phänotypen und dem Untergrund.
         Wie in~\vref{fig:noNachEinsinken} erkennbar sinkt die Spitze des Individuums nicht mehr in den Boden ein.
         Diese Optimierungen gehen zu Lasten eines erhöhten Rechenaufwands.
@@ -495,7 +498,7 @@
 
     Die Applikation lässt sich mit diversen Parametern konfigurieren.
     Es wird eine Konfigurationstabelle~(\vref{tbl:simulation-parameters-general}) eingeführt,
-    welche auch im Kapitel Resultate~(\vref{chap:Resultate}) vewendet wird,
+    welche auch im Kapitel Resultate~(\vref{chap:Resultate}) verwendet wird,
     um die jeweilige Konfiguration der Simulation festzuhalten. In der Konfigurationstabelle werden nur die Parameter erwähnt,
     welche relevant für den Algorithmus sind. Bei der allgemeinen Lösung wird der Parcours
     nach jeder Generation neu generiert. Bei der Evaluation auf Evolvierbarkeit
@@ -515,7 +518,6 @@
       Die Relaxation kann auch konfiguriert werden. Der Parameter beschreibt die Anzahl von Zeitschritten um eine Constraint-Gleichung~\cite{gamedev:constraints} zu stabilisieren.
       Die Stiffness ist der letzte wichtige technische Parameter. Man kann sich die Stiffness als Steifheit einer Feder vorstellen.
       Sie beschreibt wie steif alle Element der Simulation sich verhalten sollen.
-
 
   \section{Ablauf\label{sec:Ablauf}}
 
@@ -537,10 +539,10 @@
 
     \subsection{Initiale Population\label{sec:initPop}}
 
-      Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewhält werden.
-      Pro Simulationsprozess können etwa 15 Individuuen flüssig berechnet werden.
+      Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewählt werden.
+      Pro Simulationsprozess können etwa 15 Individuen flüssig berechnet werden.
       Dies bedeutet das die optimale Populationsgrösse  \( Anzahl(CPU Kerne) * 15 \) beträgt.
-      Dieser Wert wurde durch mehrere Versüche mit unterschiedlichen CPUs gefunden.
+      Dieser Wert wurde durch mehrere Versuche mit unterschiedlichen Prozessoren gefunden.
       Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~(\vref{sub:DesignBody}) zufällig generiert.
       Die Verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
@@ -549,11 +551,16 @@
 
       Der Parcours wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcours generiert.
       Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours,
-      dass heisst es werden höhere Steigungen und Punkte mit höheren Y-Koordinaten vorkommen.
-      \vref{fig:parcours1},~\vref{fig:parcours2} und~\vref{fig:parcours3} zeigen wie der Parcours mit zunehmenden Generationen schwieriger wird.
-      Der ParcourGenerator ist die Verantwortliche Klasse in Javascript,welche mit Hilfe von Obergrenzen von Werten einen Parcours generieren kann.
-      Wie unter~\ref{sec:Konfiguration} erwähnt, wird je nach Einstellung der Parcours nach jeder Generation neu generiert (allgemeine Lösung) oder er wird wiederverwendet (evolieren auf Evolvierbarkeit).
-      Der Parcours wird im ParcourGenerator generiert (Hauptprozess) und von den jeweiligen Simulationsprozessen mit Hilfe vom ParcourCreator in der Physik-Engine erstellt.
+      das heisst es werden höhere Steigungen und Punkte mit höheren Y-Koordinaten vorkommen.
+      \vref{fig:parcours1},~\vref{fig:parcours2} und~\vref{fig:parcours3} zeigen
+      wie der Parcours mit zunehmenden Generationen schwieriger wird.
+      Der ParcourGenerator ist die Verantwortliche Klasse in Javascript,
+      welche mit Hilfe von Obergrenzen von Werten einen Parcours generieren kann.
+      Wie unter~\ref{sec:Konfiguration} erwähnt,
+      wird je nach Einstellung der Parcours nach jeder Generation neu generiert (allgemeine Lösung) oder
+      er wird wiederverwendet (evolvieren auf Evolvierbarkeit).
+      Der Parcours wird im ParcourGenerator generiert (Hauptprozess) und
+      von den jeweiligen Simulationsprozessen mit Hilfe vom ParcourCreator in der Physik-Engine erstellt.
 
       \vspace{1cm}
 
@@ -577,46 +584,50 @@
 
       \subsection{Simulation\label{sec:simulation}}
 
-      Nachdem eine neue Population und ein neuer Parcours erstellt worden ist.
-      Muss eine Simulation durchgeführt werden um den Fitnesswert der Individuen zu bestimmen.
-      Die Verantwortliche Klasse ist die SimulationWorld.
-      Zuerst muss jeder Genotyp zu einem Phänotyp abgebildet werden.
-      Anschliessend muss der Parcours aus dem Blueprint erstellt werden.
-      Erst dann kann mit der Simulation begonnen werden.
-      Die Simulation merkt sich zu jedem Individuum die Position.
-      Individuen welche sich während 4 Sekunden kaum bewegt haben,
-      werden aus der Simulation entfernt und ihr Fitnesswert wird abgespeichert.
-      Die Simulation kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
-      Es wird dann jeweils für \( Populationsgrösse / Anzahl Simulationsprozesse \) Individuen eine eigene Simulation erstellt.
+        Nachdem eine neue Population und ein neuer Parcours erstellt worden ist.
+        Muss eine Simulation durchgeführt werden um den Fitnesswert der Individuen zu bestimmen.
+        Die Verantwortliche Klasse ist die SimulationWorld.
+        Zuerst muss jeder Genotyp zu einem Phänotyp abgebildet werden.
+        Anschliessend muss der Parcours aus dem Blueprint erstellt werden. % TODO referenz?
+        Erst dann kann mit der Simulation begonnen werden.
+        Die Simulation merkt sich zu jedem Individuum die Position.
+        Individuen welche sich während 4 Sekunden kaum bewegt haben,
+        werden aus der Simulation entfernt und ihr Fitnesswert wird abgespeichert.
+        Die Simulation kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
+        Es wird dann jeweils für \( Populationsgrösse / Anzahl Simulationsprozesse \) Individuen eine eigene Simulation erstellt.
 
     \subsection{Reporting\label{subsec:Reporting}}
 
       Das Reporting-Modul hilft nach einer Simulation alle wichtigen Daten festzuhalten.
       Mithilfe einer Funktion welche eine Population als Parameter entgegennimmt,
-      werden die Reports erstellt. Es existieren folgende Typen von Reports:
+      werden die Reports erstellt.
+      Es existieren folgende Typen von Reports:
+
       \begin{itemize}
-        \item Fitness Graph Average Report: Enthält Koordinaten um einen Graph über die durchschnittliche Fitness pro Generation zu erstellen.
-        \item Fitness Graph Best Report: Enthält Koordinaten um einen Graph über das beste Individuum der Generation zu erstellen.
-        \item Genotype Blue Print Report: Enthält pro Generation ein \gls{JSON} das Informationen über die ganze Population enthält.
+        \item Fitness Graph Average Report: Enthält Koordinaten, um einen Graphen über die durchschnittliche Fitness pro Generation zu erstellen.
+        \item Fitness Graph Best Report: Enthält Koordinaten, um einen Graphen über das beste Individuum der Generation zu erstellen.
+        \item Genotype Blue Print Report: Enthält pro Generation ein \gls{JSON}-Objekt, das Informationen über die ganze Population enthält.
         \item Fitness Graph Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit Body Points Anzahl x.
               Ansonsten gleich wie der Fitness Graph Average Report.
-        \item Diversity Report: Enthält die Berechnung der Punktstreuung für jeweils eine Generation. Die Punktstreuung berechnet sich wie folgt:
+        \item Diversity Report: Enthält die Berechnung der Punktstreuung für eine Generation. Die Punktstreuung berechnet sich wie folgt:
         \begin{itemize}
-          \item Erstellung von Vektoren der Genome. Jede Eigenschaft des Genoms wird in einen numerischen Wert konvertiert. \( V_d \)
-          \item Alle Vektoren werden summiert.  Die Summe wird als \(V_s\) bezeichnet.
+          \item Erstellen von Vektoren der Genome. Jede Eigenschaft des Genoms wird in einen numerischen Wert konvertiert. \( V_d \)
+          \item Alle Vektoren werden summiert. Die Summe wird als \(V_s\) bezeichnet.
           \item Der Schwerpunktvektor wird gebildet: \( V_s / Anzahl(V_d) = V_{schwer} \)
           \item Von jedem \(V_d\) wird \(V_{schwer}\) subtrahiert  \( V_d - V_{schwer}  = V_{d2} \)
           \item Nun werden alle \(V_{d2}\) normiert, quadriert \( norm{(V_{d2})}^2 = d \)
-          \item Abschliessend werden alle \(d\) zusammengezählt und durch \(Anzahl(V_d)\) dividiert. So erhält man ein Mass für die Punktestreuung.
+          \item Abschliessend werden alle \(d\) zusammengezählt und durch \(Anzahl(V_d)\) dividiert. So wird ein Mass für die Punktestreuung gewonnen.
         \end{itemize}
       \end{itemize}
 
     \subsection{Selektion\label{sec:Selektion}}
 
-      \citet[S.33]{book:bioInspired} schreiben, dass Turnierbasierte-Selektion oft bei evolutinärer Programmierung eingesetzt wird.
+      \citet[S.33]{book:bioInspired} schreiben,
+      dass Turnierbasierte-Selektion oft bei evolutionärer Programmierung eingesetzt wird.
       Turnierbasierte-Selektion hat den Vorteil, dass die Diversität erhalten bleibt,
       bei gleichzeitig guter Selektion der fittesten Individuen.
-      Auf Grund der Empfehlung von D. Floreano und C. Mattiussi und der Erhaltung der Diversität wurde entschieden, Turnierbasierte-Selektion einzusetzen.
+      Aufgrund der Empfehlung von D. Floreano und C. Mattiussi und der Erhaltung der Diversität,
+      wurde entschieden Turnierbasierte-Selektion einzusetzen.
 
     \subsection{Mutation\label{sec:Mutation}}
 
@@ -631,14 +642,18 @@
       Die Mutation läuft wie die Simulation parallel ab, das heisst, sie kann von mehreren CPU-Kernen profitieren.
 
       \subsubsection{Hypothese zur Mutation\label{subsub:hypoMut}}
-        Es wird die Hypthose aufgestelt, das kleinere Mutationswahrscheinlichkeiten bessere Fitnesswerte liefern als grosse Mutationswahrscheinlichkeiten.
-        Die Annahme besteht darin, dass die Evolution der Individuen gebrembst wird, falls grosse Mutationswahrscheinlichkeiten eingesetzt werden.
+
+        Es wird die Hypothese aufgestellt,
+        dass kleinere Mutationswahrscheinlichkeiten bessere Fitnesswerte liefern als grosse.
+        Die Annahme besteht darin, dass die Evolution der Individuen gebremst wird,
+        falls grosse Mutationswahrscheinlichkeiten eingesetzt werden.
 
     \subsection{Abbruchkriterium}
 
-      Der evolutinäre Algorithmus wird solange ausgeführt, bis der Anwender sich entscheidet ihn abzubrechen.
-      Theoretisch wäre es auch möglich abzubrechen, wenn ein bestimmer Fitnesswert erreicht wird.
-      Jedoch ist so mehr Flexibilität gewährleistet, der Anwender kann fortzu die Reports überprüfen und entscheiden
+      Der evolutionäre Algorithmus wird solange ausgeführt, bis der Anwender sich entscheidet ihn abzubrechen.
+      Theoretisch wäre möglich abzubrechen, wenn ein bestimmter Fitnesswert erreicht wird.
+      Ohne automatischen Abbruch ist mehr Flexibilität gewährleistet,
+      der Anwender kann die Reports immer wieder überprüfen und entscheiden,
       ob die Individuen den Ansprüchen genügen.
 
     \subsection{Domänenmodel\label{sub:domMod}}

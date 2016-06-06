@@ -5,54 +5,54 @@
 % !TEX root = ../../main.tex
 \chapter{Resultate\label{chap:Resultate}}
 
-Zu den Versuchen 1-3 gibt es keine Bilder der Individuen, da es sonst den Rahmen dieser Arbeit sprengen würde.
-Versuch 4 mit den vielversprechendsten Resultaten ist ausführlich mit Bilder der Indivduen dokumentiert.
-Eine Simulation mit 12000 Generationen dauert rund 10 Tage.
-%%vlt in Diskussion disktutieren
+  Zu den Versuchen 1--3 gibt es keine Bilder der Individuen, da es sonst den Rahmen dieser Arbeit sprengen würde.
+  Versuch 4 mit den vielversprechendsten Resultaten ist ausführlich mit Bilder der Individuen dokumentiert.
+  Eine Simulation mit 12000 Generationen dauert rund 10 Tage.
+  %%vlt in Diskussion disktutieren
 
-\section{Erster Versuch}
+  \section{Erster Versuch}
 
-  \subsection{Konfiguration}
+    \subsection{Konfiguration}
 
-    \begin{table}[H]
-      \centering
-      \input{tables/simulation-parameters-first-run-no-feedback.tex}
-      \caption{Simulationsparameter, Erster Versuch}
-    \end{table}
+      \begin{table}[H]
+        \centering
+        \input{tables/simulation-parameters-first-run-no-feedback.tex}
+        \caption{Simulationsparameter, Erster Versuch}
+      \end{table}
 
-  \subsection{Auswertung}
+    \subsection{Auswertung}
 
-    Es ist ein klarer Aufwärtstrend der Fitness zu erkennen bis etwa zur 1000. Generation (siehe Abbildung~\vref{fig:graphFirst}).
-    Danach ist ein Abfall der Fitness bei den Individuen zu beobachten.
-    Die Vermutung dabei ist, das der Parcours zu schwierig ist und die Individuen
-    mit der grossen Steigung nicht mehr zurechtkommen.
-    Die Ausreisser sind dadurch zu erklären,
-    dass ein bestimmter Parcours sehr einfach für die Individuen zu bewältigen war oder eben ihnen Schwierigkeiten bereitet hat.
-    Es wird vermutet dass die Implementation des Feedbacksystems der Steuerung helfen wird.
-    Ausserdem müssen für die nächste Simulation die Parameter des Parcours anders konfiguriert werden.
-    Der Zuwachs der Steigung sollte auf 0.01 limitiert werden und der Zuwachs des höchsten Punktes
-    sollte auf 0.02 gesetzt werden.
-
-    \begin{figure}
-      \centering
-      \input{graphics/fitness-graph-first-run-no-feedback}
-      \caption{Bestes Individuum und Durchschnittliches Individuum, Erster Versuch\label{fig:graphFirst}}
-    \end{figure}
-
-    \subsubsection{Körperpunkte\label{subsub:bp}}
-
-      Die Auswertung der Individuen nach der Anzahl ihrer Körperpunkte ist ernüchternd (siehe Abbildung~\vref{fig:graphBpFirst}).
-      Bereits ab der 14. Generation existieren nur noch Individuen mit vier Körperpunkten.
-      Vielleicht ist dies ebenfalls auf das fehlende Feedback zurückzuführen.
-      Im besten Fall wurden die Individuen mit mehr als vier Körperpunkten der initialen Population unvorteilhaft generiert.
-      Eine weitere Simulation wird zeigen,
-      ob vier Körperpunkten am geeignetsten sind für die Bewältigung der Problemstellung.
+      Es ist ein klarer Aufwärtstrend der Fitness zu erkennen bis etwa zur 1000. Generation (siehe Abbildung~\vref{fig:graphFirst}).
+      Danach ist ein Abfall der Fitness bei den Individuen zu beobachten.
+      Die Vermutung dabei ist, das der Parcours zu schwierig ist und die Individuen
+      mit der grossen Steigung nicht mehr zurechtkommen.
+      Die Ausreisser sind dadurch zu erklären,
+      dass ein bestimmter Parcours sehr einfach für die Individuen zu bewältigen war oder eben ihnen Schwierigkeiten bereitet hat.
+      Es wird vermutet, dass die Implementation des Feedbacksystems der Steuerung helfen wird.
+      Ausserdem müssen für die nächste Simulation die Parameter des Parcours anders konfiguriert werden.
+      Der Zuwachs der Steigung sollte auf 0.01 limitiert werden und der Zuwachs des höchsten Punktes
+      sollte auf 0.02 gesetzt werden.
 
       \begin{figure}
         \centering
-        \input{graphics/fitness-graph-average-body-points-first-run-no-feedback}
-        \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, Erster Versuch\label{fig:graphBpFirst}}
+        \input{graphics/fitness-graph-first-run-no-feedback}
+        \caption{Bestes Individuum und durchschnittliches Individuum, erster Versuch\label{fig:graphFirst}}
       \end{figure}
+
+      \subsubsection{Körperpunkte\label{subsub:bp}}
+
+        Die Auswertung der Individuen nach der Anzahl ihrer Körperpunkte ist ernüchternd (siehe Abbildung~\vref{fig:graphBpFirst}).
+        Bereits ab der 14. Generation existieren nur noch Individuen mit vier Körperpunkten.
+        Vielleicht ist dies ebenfalls auf das fehlende Feedback zurückzuführen.
+        Im besten Fall wurden die Individuen mit mehr als vier Körperpunkten der initialen Population unvorteilhaft generiert.
+        Eine weitere Simulation wird zeigen,
+        ob vier Körperpunkten am geeignetsten sind für die Bewältigung der Problemstellung.
+
+        \begin{figure}
+          \centering
+          \input{graphics/fitness-graph-average-body-points-first-run-no-feedback}
+          \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, erster Versuch\label{fig:graphBpFirst}}
+        \end{figure}
 
   \section{Zweiter Versuch}
 
@@ -61,7 +61,7 @@ Eine Simulation mit 12000 Generationen dauert rund 10 Tage.
       \begin{table}[H]
         \centering
         \input{tables/simulation-parameters-second-run-no-feedback.tex}
-        \caption{Simulationsparameter, Zweiter Versuch}
+        \caption{Simulationsparameter, zweiter Versuch}
       \end{table}
 
     \subsection{Auswertung\label{sub:scndAuswertung}}
@@ -83,7 +83,7 @@ Eine Simulation mit 12000 Generationen dauert rund 10 Tage.
       \begin{figure}
         \centering
         \input{graphics/fitness-graph-second-run-no-feedback}
-        \caption{Bestes Individuum und Durchschnittliches Individuum, Zweiter Versuch\label{fig:graphSecond}}
+        \caption{Bestes Individuum und Durchschnittliches Individuum, zweiter Versuch\label{fig:graphSecond}}
       \end{figure}
 
       \subsubsection{Körperpunkte\label{subsub:bpScnd}}
@@ -98,235 +98,251 @@ Eine Simulation mit 12000 Generationen dauert rund 10 Tage.
         \begin{figure}
           \centering
           \input{graphics/fitness-graph-average-body-points-second-run-no-feedback}
-          \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, Zweiter Versuch\label{fig:graphBpSecond}}
+          \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, zweiter Versuch\label{fig:graphBpSecond}}
         \end{figure}
 
-    \section{Dritter Versuch}
+  \section{Dritter Versuch}
 
-      \subsection{Konfiguration}
+    \subsection{Konfiguration}
 
-        \begin{table}[H]
-          \centering
-          \input{tables/simulation-parameters-third-run.tex}
-          \caption{Simulationsparameter, Dritter Versuch \label{tbl:thirdRunConf}}
-        \end{table}
+      \begin{table}[H]
+        \centering
+        \input{tables/simulation-parameters-third-run.tex}
+        \caption{Simulationsparameter, dritter Versuch\label{tbl:thirdRunConf}}
+      \end{table}
 
-        Die Implementation des Feedbacks musste leider auf Grund mangelnder Zeit eingestellt werden.
-        In dieser Version ist die detailierte Konfiguration der Mutation verfügbar.
-        Die Konfigurationstabelle~(\vref{tbl:thirdRunConf}) stellt die erweiterten Einstellungsmöglichkeiten dar.
+      Die Implementation des Feedbacks musste leider wegen mangelnder Zeit eingestellt werden.
+      In dieser Version ist die detaillierte Konfiguration der Mutation verfügbar.
+      Die Konfigurationstabelle~(\vref{tbl:thirdRunConf}) stellt die erweiterten Einstellungsmöglichkeiten dar.
 
+    \subsection{Auswertung\label{sub:thirdAuswertung}}
 
-      \subsection{Auswertung\label{sub:thirdAuswertung}}
+      Leider dauert es mit dieser Version der Applikation sehr lange eine Generation zu evolvieren.
+      Der Grund dafür ist einerseits die ineffiziente Mutation der Individuen.
+      Andererseits ist die Wahrscheinlichkeit eine neue Bewegung hinzuzufügen grösser, als eine Bewegung zu entfernen.
+      Dies lässt die Datenstrukturen grösser wachsen, da immer mehr Bewegung vorhanden sind.
+      Erhöhter Rechenaufwand ist die Folge der oben genannten Probleme.
+      Darum beschränkt sich dieser Versuch nur auf ca. 1200 Generationen,
+      damit Geschwindigkeits-Optimierungen implementiert werden können und die Wahrscheinlichkeit anders konfiguriert werden kann.
+      Die Individuen haben bei diesem Versuch, eine Art rollende Bewegung entwickelt.
+      Sie können die guten Fitnesswerte halten,
+      obwohl der Parcours immer schwerer wird (siehe Abbildung~\vref{fig:graphThird}).
 
-        Leider dauert es mit dieser Version der Applikation sehr lange eine Generation zu evolvieren. Der Grund dafür ist einerseits die ineffiziente Mutation der Indivdiuuen.
-        Andererseits ist die Wahrscheinlichkeit eine neue Bewegung hinzuzufügen grösser, als eine Bewegung zu entfernen. Dies lässt die Datenstrukturen grösser wachsen, da immer mehr Bewegung vorhanden sind.
-        Erhöter Rechenaufwand ist die Folge der oben genannten Probleme.
-        Darum beschränkt sich dieser Versuch nur auf ca. 1200 Generationen, damit Performance Optimierungen implementiert werden können und die Wahrscheinlichkeit anderst konfiguriert werden kann.
-        Die Individuen haben bei diesem Versuch, eine Art rollende Bewegung entwickelt.
-        Sie können die guten Fitnesswerte halten, obwohl der Parcour immer schwerer wird (siehe Abbildung~\vref{fig:graphThird}).
+      \begin{figure}
+        \centering
+        \input{graphics/fitness-graph-third-run}
+        \caption{Bestes Individuum und durchschnittliches Individuum, dritter Versuch\label{fig:graphThird}}
+      \end{figure}
+
+      \subsubsection{Körperpunkte}
+
+        Auf eine Diskussion der Körperpunkte wird verzichtet.
+        Die notwendigen Schritte für eine sinnvolle Evaluation wurden unter~\vref{subsub:bpScnd} beschrieben.
+
+      \subsubsection{Diversität}
+
+        Ab diesem Lauf ist der Diversitätsreport verfügbar.
+        Wie in~\vref{fig:graphDivThird} zu sehen ist, bewegt sich die Diversität kurz auf einem hohen Niveau,
+        da am Anfang alles völlig zufällig generiert wird.
+        Durch die nachfolgenden Selektionen sinkt sie, da mit hoher Wahrscheinlichkeit nur leistungsstarke Individuen
+        bei der Turnier-basierten Selektion gewinnen.
+        Interessant zu beobachten ist, dass die Diversität ab der 400. Generation wieder zu steigen beginnt.
+        Die Vermutung dabei ist, dass sich immer mehr verschiedene Individuen mit einer guten Fitness finden lassen.
 
         \begin{figure}
           \centering
-          \input{graphics/fitness-graph-third-run}
-          \caption{Bestes Individuum und Durchschnittliches Individuum, Dritter Versuch\label{fig:graphThird}}
+          \input{graphics/diversity-graph-third-run}
+          \caption{Diversität pro Generation, dritter Versuch\label{fig:graphDivThird}}
         \end{figure}
 
-        \subsubsection{Körperpunkte}
+  \section{Vierter Versuch}
 
-          Auf eine Diskussion der Körperpunkte wird verzichtet.
-          Die notwendigen Schritte für eine sinvolle Evaluation wurden unter~\vref{subsub:bpScnd} beschrieben.
+    \subsection{Konfiguration}
 
-        \subsubsection{Diversität}
-          Ab diesem Lauf ist endlich der Diversitätsreport verfügbar. Wie in~\vref{fig:graphDivThird} zu sehen ist,
-          bewegt sich die Diversität kurz auf einem hohen Niveau, da am Anfang alles völlig zufällig generiert wird.
-          Durch die nachfolgenden Selektionen sinkt sie, da mit hoher wahrscheinlichkeit nur leistungsstarke Individuen
-          bei der Tunier-basierten Selektion gewinnen. Interessant zu beobachten ist,
-          dass die Diversität ab der 400. Generation wieder zu steigen beginnt.
-          Die Vermutung dabei ist, dass sich immer mehr verschiedene Individuen mit einer
-          guten Fitness finden lassen.
+      \begin{table}[H]
+        \centering
+        \input{tables/simulation-parameters-forth-run.tex}
+        \caption{Simulationsparameter, vierter Versuch\label{tbl:forthRunConf}}
+      \end{table}
 
-          \begin{figure}
-            \centering
-            \input{graphics/diversity-graph-third-run}
-            \caption{Diversität pro Generation, Dritter Versuch\label{fig:graphDivThird}}
-          \end{figure}
+      Wie in~\vref{sub:thirdAuswertung} erwähnt,
+      wurde die Wahrscheinlichkeit Bewegungen hinzuzufügen oder zu entfernen gleichgesetzt.
 
-      \section{Vierter Versuch}
+    \subsection{Auswertung}
 
-        \subsection{Konfiguration}
+      \begin{figure}[H]
+        \centering
+        \input{graphics/fitness-graph-fourth-run}
+        \caption{Bestes Individuum und durchschnittliches Individuum, vierter Versuch\label{fig:graphFourth}}
+      \end{figure}
 
-          \begin{table}[H]
-            \centering
-            \input{tables/simulation-parameters-forth-run.tex}
-            \caption{Simulationsparameter, Vierter Versuch \label{tbl:forthRunConf}}
-          \end{table}
+      \subsubsection{200. Generation}
 
-          Wie in \vref{sub:thirdAuswertung} erwähnt, wurde die Wahrscheinlichkeit Bewegungen hinzuzufügen oder zuentfernen gleich gesetzt.
+        Wie in~\vref{fig:gen200} erkennbar, haben sich die Individuen zu einer Art Rolle entwickelt.
+        Diese Art von Fortbewegung ist nicht optimal und setzt sich fort bis etwa zur 3000. Generation.
 
-        \subsection{Auswertung}
-
-          \begin{figure}[H]
-            \centering
-            \input{graphics/fitness-graph-fourth-run}
-            \caption{Bestes Individuum und Durchschnittliches Individuum, Vierter Versuch\label{fig:graphFourth}}
-          \end{figure}
-
-          \subsubsection{200. Generation}
-            Wie in \vref{fig:gen200} erkennbar, haben sich die Individuen zu einer Art Rolle entwickelt.
-            Diese Art von Fortbewgung ist nicht optimal und setzt sich fort bis etwa zur 3000. Generation.
-
-            \vspace{0.5cm}
-
-            \begin{figure}[H]
-              \centering
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen200_1}
-                \caption{\label{fig:gen200_1}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen200_2}
-                \caption{\label{fig:gen200_2}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen200_3}
-                \caption{\label{fig:gen200_3}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen200_4}
-                \caption{\label{fig:gen200_4}}
-              \end{subfigure}
-              \caption{200. Generation \label{fig:gen200}}
-            \end{figure}
-
-
-          \subsubsection{3000. Generation}
-            Etwa ab der 3000. Generation haben sich die Individuen zu Hüpfer entwickelt.
-            Sie fixieren alle Beine ausser eines, welches sie benutzen um sich vom Boden abzustossen~(\vref{fig:gen3000}).
-            Diese Art von Fortbewegung bringt eine bessere Fitness ein , wie in \vref{fig:graphFourth} erkennbar ist.
-            Im Gegensatz zu den Individuen in~\vref{sub:scndAuswertung} ist dies jedoch eine valide Hüpfbewegung.
-            Das herabsetzten der Muationswahrscheinlichkeiten~(Hypothese in \vref{subsub:hypoMut}) hat langfristig einen positiven Effekt auf die Fitness,
-            wie in \vref{fig:graphFourth} im Vergleich zu \vref{fig:graphFirst} erkennbar ist.
-
-            \vspace{0.5cm}
-
-            \begin{figure}[H]
-              \centering
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen3000_1}
-                \caption{\label{fig:gen3000_1}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen3000_2}
-                \caption{\label{fig:gen3000_2}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen3000_3}
-                \caption{\label{fig:gen3000_3}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen3000_4}
-                \caption{\label{fig:gen3000_4}}
-              \end{subfigure}
-              \caption{3000. Generation \label{fig:gen3000}}
-            \end{figure}
-
-          \subsubsection{7000. Generation}
-            Mit zunehmender Schwierigkeit des Parcours scheint das Hüpfen nicht mehr die richtige Art von Fortbewegung zu sein.
-            Die Individuen bleiben häufig in Bergen und Tälern stecken~(\vref{fig:gen7000}).
-
-            \vspace{0.5cm}
-
-            \begin{figure}[H]
-              \centering
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen7000_1}
-                \caption{\label{fig:gen7000_1}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen7000_2}
-                \caption{\label{fig:gen7000_2}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen7000_3}
-                \caption{\label{fig:gen7000_3}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen7000_4}
-                \caption{\label{fig:gen7000_4}}
-              \end{subfigure}
-              \caption{7000. Generation \label{fig:gen7000}}
-            \end{figure}
-
-          \subsubsection{11000. Generation}
-            Die Individuen haben sich zu Rudern entwickelt wie in \vref{fig:gen11000} zu sehen ist.
-            Die Masse der anderen Beinpaare, welche nicht für die Ruderbewegung gebraucht werden, ist sichbar kleiner geworden.
-            Bei der Analyse dieser Generation ist ein Fehler aufgefallen. Die Individuen werden nach 4 Sekunden bei denen sie sich nicht um einen bestimmten Wert in X-Richtung fortbewegen entfernt.
-            Der Wert sollte aber höher sein, da es in späteren Generationen und zunehmender Parcours Schwierigkeit sein kann, dass die Indivduen sich lange an einer Stelle aufhalten, um einen Berg zu erklimmen.
-            Um diese Vermutung zu validieren, wird die Endpopulation aus dem 4. Lauf im 6. Lauf~(\vref{sec:sixthSimulation}) weiter evolviert.
-
-            %%\vspace{0.5cm} nicht nötig hier
-
-            \begin{figure}[H]
-              \centering
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen11000_1}
-                \caption{\label{fig:gen11000_1}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen11000_2}
-                \caption{\label{fig:gen11000_2}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen11000_3}
-                \caption{\label{fig:gen11000_3}}
-              \end{subfigure}
-              \begin{subfigure}[b]{0.45\textwidth}
-                \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen11000_4}
-                \caption{\label{fig:gen11000_4}}
-              \end{subfigure}
-              \caption{11000. Generation \label{fig:gen11000}}
-            \end{figure}
-
-          \subsubsection{Körperpunkte}
-
-            Auf eine Diskussion der Körperpunkte wird verzichtet.
-            Die notwendigen Schritte für eine sinvolle Evaluation wurden unter~\vref{subsub:bpScnd} beschrieben.
-
-          \subsubsection{Diversität}
-
-            \begin{figure}[H]
-              \centering
-              \input{graphics/diversity-graph-fourth-run}
-              \caption{Diversität pro Generation, Vierter Versuch\label{fig:graphDivFourth}}
-            \end{figure}
-
-    \section{Fünfter Versuch}
-
-      \subsection{Konfiguration}
-
-        \begin{table}[H]
-          \centering
-          \input{tables/simulation-parameters-fifth-run.tex}
-          \caption{Simulationsparameter, Fünfter Versuch}
-        \end{table}
-
-        Das Ziel dieser Simulation ist das Evolvieren auf Evolvierbarkeit um einen Vergleich zur allgemeinen Lösung zuziehen.
-        Darum wurde das Ziel der Konfiguration modifiziert, um das Evolvieren auf Evolvierbarkeit zu erreichen.
-
-      \subsection{Auswertung\label{sub:fifthAuswertung}}
+        \vspace{0.5cm}
 
         \begin{figure}[H]
           \centering
-          \input{graphics/fitness-graph-fifth-run}
-          \caption{Bestes Individuum und Durchschnittliches Individuum, Fünfter Versuch\label{fig:graphFifth}}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen200_1}
+            \caption{\label{fig:gen200_1}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen200_2}
+            \caption{\label{fig:gen200_2}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen200_3}
+            \caption{\label{fig:gen200_3}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen200_4}
+            \caption{\label{fig:gen200_4}}
+          \end{subfigure}
+          \caption{200. Generation\label{fig:gen200}}
         \end{figure}
+
+      \subsubsection{3000. Generation}
+
+        Etwa ab der 3000. Generation haben sich die Individuen zu Hüpfer entwickelt.
+        Sie fixieren alle Beine ausser eines, welches sie benutzen um sich vom Boden abzustossen~(\vref{fig:gen3000}).
+        Diese Art von Fortbewegung bringt eine bessere Fitness hervor, wie in~\vref{fig:graphFourth} erkennbar ist.
+        Im Gegensatz zu den Individuen in~\vref{sub:scndAuswertung} ist dies jedoch eine valide Hüpfbewegung.
+        Das Herabsetzten der Mutationswahrscheinlichkeiten~(Hypothese in~\vref{subsub:hypoMut}) hat langfristig einen positiven Effekt auf die Fitness,
+        wie in~\vref{fig:graphFourth} im Vergleich zu~\vref{fig:graphFirst} erkennbar ist.
+
+        \vspace{0.5cm}
+
+        \begin{figure}[H]
+          \centering
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen3000_1}
+            \caption{\label{fig:gen3000_1}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen3000_2}
+            \caption{\label{fig:gen3000_2}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen3000_3}
+            \caption{\label{fig:gen3000_3}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen3000_4}
+            \caption{\label{fig:gen3000_4}}
+          \end{subfigure}
+          \caption{3000. Generation\label{fig:gen3000}}
+        \end{figure}
+
+      \subsubsection{7000. Generation}
+
+        Mit zunehmender Schwierigkeit des Parcours scheint das Hüpfen nicht mehr die richtige Art von Fortbewegung zu sein.
+        Die Individuen bleiben häufig in Bergen und Tälern stecken~(\vref{fig:gen7000}).
+
+        \vspace{0.5cm}
+
+        \begin{figure}[H]
+          \centering
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen7000_1}
+            \caption{\label{fig:gen7000_1}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen7000_2}
+            \caption{\label{fig:gen7000_2}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen7000_3}
+            \caption{\label{fig:gen7000_3}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen7000_4}
+            \caption{\label{fig:gen7000_4}}
+          \end{subfigure}
+          \caption{7000. Generation\label{fig:gen7000}}
+        \end{figure}
+
+      \subsubsection{11000. Generation}
+
+        Die Individuen haben sich zu Rudern entwickelt wie in~\vref{fig:gen11000} zu sehen ist.
+        Die Masse der anderen Beinpaare, welche nicht für die Ruderbewegung gebraucht werden,
+        ist sichtbar kleiner geworden.
+        Bei der Analyse dieser Generation ist ein Fehler aufgefallen.
+        Die Individuen werden nach 4 Sekunden entfernt,
+        wenn sie während dessen sich nicht um einen bestimmten Wert in X-Richtung fortbewegen.
+        Der Wert sollte allerdings höher gewählt werden,
+        da es in späteren Generationen und zunehmender Parcours-Schwierigkeit sein kann,
+        dass die Individuen sich lange an einer Stelle aufhalten, um einen Berg zu erklimmen.
+        Um diese Vermutung zu validieren,
+        wird die Endpopulation aus dem 4. Lauf im 6. Lauf~(\vref{sec:sixthSimulation}) weiter evolviert.
+
+        %%\vspace{0.5cm} nicht nötig hier
+
+        \begin{figure}[H]
+          \centering
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen11000_1}
+            \caption{\label{fig:gen11000_1}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen11000_2}
+            \caption{\label{fig:gen11000_2}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen11000_3}
+            \caption{\label{fig:gen11000_3}}
+          \end{subfigure}
+          \begin{subfigure}[b]{0.45\textwidth}
+            \includegraphics[width=\linewidth,center]{graphics/simulation-results/4_gen11000_4}
+            \caption{\label{fig:gen11000_4}}
+          \end{subfigure}
+          \caption{11000. Generation\label{fig:gen11000}}
+        \end{figure}
+
+      \subsubsection{Körperpunkte}
+
+        Auf eine Diskussion der Körperpunkte wird verzichtet.
+        Die notwendigen Schritte für eine sinnvolle Evaluation wurden unter~\vref{subsub:bpScnd} beschrieben.
+
+      \subsubsection{Diversität}
+
+        \begin{figure}[H]
+          \centering
+          \input{graphics/diversity-graph-fourth-run}
+          \caption{Diversität pro Generation, vierter Versuch\label{fig:graphDivFourth}}
+        \end{figure}
+
+  \section{Fünfter Versuch}
+
+    \subsection{Konfiguration}
+
+      \begin{table}[H]
+        \centering
+        \input{tables/simulation-parameters-fifth-run.tex}
+        \caption{Simulationsparameter, fünfter Versuch}
+      \end{table}
+
+      Das Ziel dieser Simulation ist das Evolvieren auf Evolvierbarkeit,
+      um einen Vergleich zur allgemeinen Lösung zu ziehen.
+      Darum wurde das Ziel der Konfiguration modifiziert, um das Evolvieren auf Evolvierbarkeit zu erreichen.
+
+    \subsection{Auswertung\label{sub:fifthAuswertung}}
+
+      \begin{figure}[H]
+        \centering
+        \input{graphics/fitness-graph-fifth-run}
+        \caption{Bestes Individuum und durchschnittliches Individuum, fünfter Versuch\label{fig:graphFifth}}
+      \end{figure}
 
       \subsubsection{Diversität}
 
         \begin{figure}[H]
           \centering
           \input{graphics/diversity-graph-fifth-run}
-          \caption{Diversität pro Generation, Fünfter Versuch\label{fig:graphDivFourth}}
+          \caption{Diversität pro Generation, Fünfter Versuch\label{fig:graphDivFifth}}
+
         \end{figure}
 
-    \section{Sechster Versuch, weiterführung Lauf 4 \label{sec:sixthSimulation}}
+  \section{Sechster Versuch, Fortsetzung Lauf 4\label{sec:sixthSimulation}}
