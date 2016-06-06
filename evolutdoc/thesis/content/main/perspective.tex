@@ -69,7 +69,7 @@
       Mit Hilfe einer anderen \gls{PhysicsEngine} kann schneller simuliert werden und es können bessere Resultate gefunden werden.
       Für einen 30 Sekunden langen Simulationslauf, benötigt die Engine zum Teil mehr als eine Minute.
 
-    \subsection{Hypothese Selektionsstrategie}
+    \subsection{Hypothese Selektionsstrategie\label{sub:hypoSelect}}
 
       Die zeitliche Beschränkung dieser Arbeit hat es nicht erlaubt,
       die ursprünglich geplannte Hypothese über den Vergleich von Selektionsstrategien durchzuführen.
@@ -77,6 +77,20 @@
       Turnierbasierte-Selektion, rangbasierte Selektion
       und proportionale Selektion auf die Simulationsresultate zu untersuchen.
       Diese Hypothese würde genügend Stoff für eine weitere spannende Arbeit liefern.
+
+    \subsection{Hyptothese Allgemeine Lösung vs Evolvierung auf Evolvierbarkeit\label{sub:hypoAnsatz}}
+      Leider war nicht genügend Zeit vorhanden folgende Hypothese zu validieren:
+      Individuen welche durch die allgemeine Lösungen gefunden werden,
+      sollten bei unterschiedlichen Parcours im Durchschnitt besser abschneiden als ihre Gegenspieler~(Evolvierung auf Evolvierbarkeit),
+      da sie sich schneller an eine neue Umgebung anpassen können.
+      Wenn immer der gleiche Parcour benutzt wird, sollten die Individuen welche auf Evolvierbarkeit evolviert worden sind, auf Dauer überlegen sein. \\
+      Um diese Hyptothese zu validieren, sollten zwei Simulationsläufe mit zwei Populationen aus den Lösungsansätzen durchgeführt werden:
+      \begin{itemize}
+        \item Simulationslauf mit gleichem Parcours
+        \item Simulationslauf mit 10 unterschiedlichen Parcours
+      \end{itemize}
+      Anschliessend sollte ein Vergleich angestellt werden unter den Lösungsansätzen mit beiden Läufen.
+
 
     \subsection{Parcours}
 
