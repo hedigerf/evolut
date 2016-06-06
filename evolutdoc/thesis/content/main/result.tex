@@ -22,16 +22,18 @@
 
     \subsection{Auswertung}
 
-      Es ist ein klarer Aufwärtstrend der Fitness zu erkennen bis etwa zur 1000. Generation (siehe Abbildung~\vref{fig:graphFirst}).
+      Es ist ein klarer Aufwärtstrend der Fitness zu erkennen bis etwa zur 1000. Generation (siehe~\vref{fig:graphFirst}).
       Danach ist ein Abfall der Fitness bei den Individuen zu beobachten.
-      Die Vermutung dabei ist, das der Parcours zu schwierig ist und die Individuen
-      mit der grossen Steigung nicht mehr zurechtkommen.
+      Die Vermutung dabei ist,
+      dass der Parcours zu schwierig ist und die Individuen mit der grossen Steigung nicht mehr zurechtkommen.
       Die Ausreisser sind dadurch zu erklären,
-      dass ein bestimmter Parcours sehr einfach für die Individuen zu bewältigen war oder eben ihnen Schwierigkeiten bereitet hat.
-      Es wird vermutet, dass die Implementation des Feedbacksystems der Steuerung helfen wird.
-      Ausserdem müssen für die nächste Simulation die Parameter des Parcours anders konfiguriert werden.
-      Der Zuwachs der Steigung sollte auf 0.01 limitiert werden und der Zuwachs des höchsten Punktes
+      dass ein bestimmter Parcours sehr einfach für die Individuen zu bewältigen war oder ihnen Schwierigkeiten bereitet hat.
+      Es wird vermutet, dass des Feedbacksystems der Steuerung hier helfen wird.
+      Ausserdem müssen die Parameter des Parcours für die nächste Simulation anders konfiguriert werden.
+      Der Steigungszuwachs sollte auf 0.01 limitiert werden und der Zuwachs des höchsten Punktes
       sollte auf 0.02 gesetzt werden.
+
+      % TODO warum diese werte?
 
       \begin{figure}
         \centering
@@ -41,14 +43,20 @@
 
       \subsubsection{Körperpunkte\label{subsub:bp}}
 
-        Die Auswertung der Individuen nach der Anzahl ihrer Körperpunkte ist ernüchternd (siehe Abbildung~\vref{fig:graphBpFirst}).
+        Die Auswertung der Individuen nach der Anzahl ihrer Körperpunkte ist ernüchternd (siehe~\vref{fig:graphBpFirst}).
+
+        % TODO referenz auf 2. versuch?
+
         Bereits ab der 14. Generation existieren nur noch Individuen mit vier Körperpunkten.
         Vielleicht ist dies ebenfalls auf das fehlende Feedback zurückzuführen.
         Im besten Fall wurden die Individuen mit mehr als vier Körperpunkten der initialen Population unvorteilhaft generiert.
         Eine weitere Simulation wird zeigen,
-        ob vier Körperpunkten am geeignetsten sind für die Bewältigung der Problemstellung.
+        ob vier Körperpunkten am geeignetsten sind für die Bewältigung der Problemstellung,
+        oder ob es sich um einen \gls{FrozenAccident} handelt.
 
-        \begin{figure}
+        % TODO glossar frozen accident
+
+        \begin{figure}[H]
           \centering
           \input{graphics/fitness-graph-average-body-points-first-run-no-feedback}
           \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, erster Versuch\label{fig:graphBpFirst}}
@@ -66,16 +74,16 @@
 
     \subsection{Auswertung\label{sub:scndAuswertung}}
 
-      Interessant zu beobachten ist beim zweiten Versuch,
-      dass die Fitness der Individuen erst ab der 1400\@. Generation (siehe Abbildung~\vref{fig:graphSecond})
+      Beim zweiten Versuch ist interessant zu beobachten,
+      dass die Fitness der Individuen erst ab der 1400\@. Generation (siehe~\vref{fig:graphSecond})
       wieder abzunehmen beginnt.
-      Jedoch ist auch hier wieder ein klarer, wenn auch nicht so starker Abwärtstrend zu erkennen.
+      Jedoch ist auch hier ein klarer, wenn auch nicht so starker Abwärtstrend zu erkennen.
       Eine weitere Vermutung, neben dem fehlenden Feedback der Engine, warum die Fitness wieder abzunehmen beginnt,
       ist die zu hohe Wahrscheinlichkeit der Mutation.
       In einem nächsten Versuch muss getestet werden,
       ob niedrigere Mutationswahrscheinlichkeiten einen positiven Effekt auf die langfristige Fitness der Individuen haben.
       Ab ca\@. der 2000\@. Generation beginnt die Fitness wieder rapide zu steigen,
-      jedoch ist dies durch einen Fehler der Engine zu erklären.
+      jedoch ist dies durch einen Fehler der Physik-Engine zu erklären.
       Die Individuen verhaken sich im Boden und beginnen grosse Distanzen durch Hüpfbewegungen zurückzulegen.
       Dieser Fehler kann bereinigt werden indem die Relaxation erhöht und gleichzeitig der Zeitschritt verringert wird,
       diese Parameter sind in~\vref{sec:Konfiguration} beschrieben.
@@ -89,8 +97,11 @@
       \subsubsection{Körperpunkte\label{subsub:bpScnd}}
 
         Ein ähnliches Bild ist zu beobachten, wie bei~\vref{subsub:bp}.
-        Bereits ab der 9\@. Generation existieren nur noch Individuen mit 7 Körperpunkten (siehe Abbildung~\vref{fig:graphBpSecond}).
+        Bereits ab der 9\@. Generation existieren nur noch Individuen mit 7 Körperpunkten (siehe~\vref{fig:graphBpSecond}).
         Dieses Phänomen kann als evolutionary frozen Accident bezeichnet werden.
+
+        % TODO forzen accident
+
         Damit eine Aussage über den Einfluss der Körperpunkte getroffen werden kann,
         müsste während der ganzen Simulation die Anzahl der Körperpunkte mutiert werden.
         Stattdessen wird momentan nur zu Beginn der Simulation die Anzahl der Körperpunkte für die Individuen festgelegt.
@@ -120,13 +131,14 @@
       Leider dauert es mit dieser Version der Applikation sehr lange eine Generation zu evolvieren.
       Der Grund dafür ist einerseits die ineffiziente Mutation der Individuen.
       Andererseits ist die Wahrscheinlichkeit eine neue Bewegung hinzuzufügen grösser, als eine Bewegung zu entfernen.
-      Dies lässt die Datenstrukturen grösser wachsen, da immer mehr Bewegung vorhanden sind.
-      Erhöhter Rechenaufwand ist die Folge der oben genannten Probleme.
-      Darum beschränkt sich dieser Versuch nur auf ca. 1200 Generationen,
+      Die Datenstrukturen wachsen, da mehr Bewegungen hinzukommen als entfernt werden,
+      was wiederum den Rechenaufwand erhöht.
+      Darum wird dieser Versuch nach ca. 1200 Generationen abgebrochen,
       damit Geschwindigkeits-Optimierungen implementiert werden können und die Wahrscheinlichkeit anders konfiguriert werden kann.
-      Die Individuen haben bei diesem Versuch, eine Art rollende Bewegung entwickelt.
+      \\
+      Die Individuen haben bei diesem Versuch eine Art rollende Bewegung entwickelt.
       Sie können die guten Fitnesswerte halten,
-      obwohl der Parcours immer schwerer wird (siehe Abbildung~\vref{fig:graphThird}).
+      obwohl der Parcours schwerer wird (siehe~\vref{fig:graphThird}).
 
       \begin{figure}
         \centering
@@ -137,17 +149,23 @@
       \subsubsection{Körperpunkte}
 
         Auf eine Diskussion der Körperpunkte wird verzichtet.
+
+        % TODO weshalb?
+
         Die notwendigen Schritte für eine sinnvolle Evaluation wurden unter~\vref{subsub:bpScnd} beschrieben.
 
       \subsubsection{Diversität}
 
-        Ab diesem Lauf ist der Diversitätsreport verfügbar.
+        Ab diesem Lauf ist der Diversitätsreport verfügbar. % TODO umformulieren
+        \\
         Wie in~\vref{fig:graphDivThird} zu sehen ist, bewegt sich die Diversität kurz auf einem hohen Niveau,
         da am Anfang alles völlig zufällig generiert wird.
-        Durch die nachfolgenden Selektionen sinkt sie, da mit hoher Wahrscheinlichkeit nur leistungsstarke Individuen
-        bei der Turnier-basierten Selektion gewinnen.
+        Die Turnier-basierte-Selektion bevorzugt Individuen mit einer grossen Fitness,
+        deshalb sinkt die Diversität nach der Selektion.
+        Darum ist kurz nach Beginn der Simulation ein starker Abfall der Diversität zu beobachten.
+        \\
         Interessant zu beobachten ist, dass die Diversität ab der 400. Generation wieder zu steigen beginnt.
-        Die Vermutung dabei ist, dass sich immer mehr verschiedene Individuen mit einer guten Fitness finden lassen.
+        Die Vermutung dabei ist, dass sich mehr verschiedene Individuen mit einer guten Fitness finden lassen.
 
         \begin{figure}
           \centering
@@ -168,6 +186,8 @@
       Wie in~\vref{sub:thirdAuswertung} erwähnt,
       wurde die Wahrscheinlichkeit Bewegungen hinzuzufügen oder zu entfernen gleichgesetzt.
 
+      % TODO das führt zu?
+
     \subsection{Auswertung}
 
       \begin{figure}[H]
@@ -180,6 +200,8 @@
 
         Wie in~\vref{fig:gen200} erkennbar, haben sich die Individuen zu einer Art Rolle entwickelt.
         Diese Art von Fortbewegung ist nicht optimal und setzt sich fort bis etwa zur 3000. Generation.
+
+        % TODO warum nicht?
 
         \vspace{0.5cm}
 
@@ -206,10 +228,11 @@
 
       \subsubsection{3000. Generation}
 
-        Etwa ab der 3000. Generation haben sich die Individuen zu Hüpfer entwickelt.
+        Ab der 3000. Generation haben die Individuen eine Hüpf-Bewegung entwickelt.
         Sie fixieren alle Beine ausser eines, welches sie benutzen um sich vom Boden abzustossen~(\vref{fig:gen3000}).
         Diese Art von Fortbewegung bringt eine bessere Fitness hervor, wie in~\vref{fig:graphFourth} erkennbar ist.
         Im Gegensatz zu den Individuen in~\vref{sub:scndAuswertung} ist dies jedoch eine valide Hüpfbewegung.
+        \\ % TODO warum nun valid?
         Das Herabsetzten der Mutationswahrscheinlichkeiten~(Hypothese in~\vref{subsub:hypoMut}) hat langfristig einen positiven Effekt auf die Fitness,
         wie in~\vref{fig:graphFourth} im Vergleich zu~\vref{fig:graphFirst} erkennbar ist.
 

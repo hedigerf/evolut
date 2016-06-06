@@ -451,7 +451,8 @@
         Die Kollisionserkennung zwischen einem Höhenfeld und einem Polygon funktioniert nicht einwandfrei.
         Manche Polygonecken werden nicht berücksichtigt in der Kollisionserkennung.
         Das hat zur Folge, dass Körperteile der Individuen im Boden einsinken.
-        \vref{fig:vorEinsinken} zeigt das Individuum vor dem Einsinken und~\vref{fig:nachEinsinken} zeigt das Individuum mit der eingesunkenen Spitze.
+        \vref{fig:vorEinsinken} zeigt ein Individuum vor dem Einsinken
+        und~\vref{fig:nachEinsinken} zeigt ein Individuum mit einer eingesunkenen Spitze.
 
         \begin{figure}[H]
           \centering
@@ -467,7 +468,7 @@
           \caption{Vor Korrektur}
         \end{figure}
 
-        Kollisionen mit einem Höhenfeld werden am besten erkannt mit Kreisen.
+        Die Kollision mit einem Höhenfeld wird am besten erkannt mit einem Kreis.
         \vref{fig:noVorEinsinken} zeigt die Anbringung von kleinen Kreisen mit vernachlässigbarer Masse an den Ecken des Körpers und der Beine.
         Dies verbessert die Kollisionserkennung zwischen den Phänotypen und dem Untergrund.
         Wie in~\vref{fig:noNachEinsinken} erkennbar sinkt die Spitze des Individuums nicht mehr in den Boden ein.
@@ -618,7 +619,7 @@
 
         \item Diversity Report: Enthält die Berechnung der Punktstreuung für eine Generation.
           Die Punktstreuung berechnet sich wie folgt:
-          
+
         \begin{itemize}
           \item Erstellen von Vektoren der Genome. Jede Eigenschaft des Genoms wird in einen numerischen Wert konvertiert. \( V_d \)
           \item Alle Vektoren werden summiert. Die Summe wird als \(V_s\) bezeichnet.
