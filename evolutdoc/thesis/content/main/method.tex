@@ -432,7 +432,7 @@
       Die Kollisionserkennung zwischen einem Höhenfeld und einem Polygon funktioniert nicht einwandfrei.
       Manche Polygonecken werden nicht berücksichtigt in der Kollisionserkennung.
       Das hat zur Folge, dass Körperteile der Individuen im Boden einsinken.
-      \vref{fig:vorEinsinken} zeigt ein Individuum vor dem Einsinken
+      Die~\vref{fig:vorEinsinken} zeigt ein Individuum vor dem Einsinken
       und~\vref{fig:nachEinsinken} zeigt ein Individuum mit einer eingesunkenen Spitze.
 
       \begin{figure}[H]
@@ -481,37 +481,6 @@
       Node Package Manager zur Abhängigkeitsverwaltung von anderen Bibliotheken zurückgegriffen werden.
       Auch lässt sich unter bestimmten Umständen Javascript schneller ausführen unter Node.js als in einem Browser.
 
-    % TODO ergänzen was wie wo oder löschen!
-    \subsection{Programmierparadigma\label{sub:TechnologyParadigma}}
-
-      In der Programmierung gibt es verschiedene Ansätze,
-      wie der Quellcode aufgebaut werden soll und wie Probleme gelöst werden sollen.
-      Die bekanntesten Ansätze sind prozedural, objektorientiert und funktional.
-
-      \subsubsection{Prozedural\label{subsub:TechnologyParadigmaProzedural}}
-
-        Prozedurale Programme bestehen aus einer Folge von Befehlen,
-        die vorgeben wann was ausgeführt wird.
-        Die Daten und die Routinen die mit diesen arbeiten, sind voneinander getrennt.
-
-      \subsubsection{Objekt-Orientiert\label{subsub:TechnologyParadigmaObjectOriented}}
-
-        Die objektorientierte Programmierung verbindet die Daten und
-        die Routinen die mit diesen interagieren. Sie werden zu Einheiten zusammengefasst.
-        Diese Einheiten werden im Zusammenhang mit Objekt-Orientierter-Programmierung Klassen genannt.
-
-      \subsubsection{Funktional\label{subsub:TechnologyParadigmaFunctional}}
-
-        Funktionale Programmierung heisst, das Programm so zu entwerfen,
-        so dass die Datenverarbeitung nur aus Evaluationen von Funktionen besteht.
-        Wenn Mutationen durchgeführt werden, wird anstatt die jeweilige Eigenschaft zu verändern,
-        ein neues Objekt inklusive der Mutation zurückgegeben.
-        Ohne mutable State ist es einfach Parallelisierung zu implementieren. % TODO glossar
-        Es wird anstatt Iterationen, Rekursionen verwendet.
-        In der funktionalen Programmierung versucht man Funktionen die Nebeneffekte haben (globale Attribute) zu vermeiden.
-        Dies hat den Vorteil, dass einzelne Funktionen viel einfacher zu testen sind,
-        als bei der objektorientierten Programmierung.
-
   \section{Konfiguration\label{sec:Konfiguration}}
 
     Die Applikation lässt sich mit diversen Parametern konfigurieren.
@@ -550,7 +519,7 @@
     ist die Anzahl Simulationsprozesse frei wählbar (\vref{sub:techParams}).
     Die Kommunikation zwischen Simulationsprozessen und Hauptprozess erfolgt über \gls{asyncMessaging}.
     In~\vref{sub:domMod} sind die jeweiligen Zusammenhänge der Klassen und Objekte ausführlicher beschrieben.
-    \vref{fig:ablauf} beschreibt den generellen Ablauf als Flussdiagramm
+    Die~\vref{fig:ablauf} beschreibt den generellen Ablauf als Flussdiagramm
 
     \begin{figure}[H]
       \includegraphics[scale=0.45,center]{graphics/haupt_simulations_prozess}
@@ -576,7 +545,7 @@
       Der Parcours wird zufällig generiert. Am Anfang wird ein einfacher und flacher Parcours generiert.
       Mit zunehmenden Iterationen steigt die Schwierigkeit des Parcours,
       das heisst es werden höhere Steigungen und Punkte mit höheren Y-Koordinaten vorkommen.
-      \vref{fig:parcours1},~\vref{fig:parcours2} und~\vref{fig:parcours3} zeigen
+      In~\vref{fig:parcours1},~\vref{fig:parcours2} und~\vref{fig:parcours3} ist ersichtlich,
       wie der Parcours mit zunehmenden Generationen schwieriger wird.
       Der ParcourGenerator ist die Verantwortliche Klasse in Javascript,
       welche mit Hilfe von Obergrenzen von Werten einen Parcours generieren kann.
@@ -693,7 +662,7 @@
     \subsection{Domänenmodell\label{sub:domMod}}
 
       Das Domänenmodell beschreibt den Zusammenhang der verschiedenen Klassen und Objekten.
-      \vref{fig:mainProcess} beschreibt den Haupt- und~\vref{fig:simulationProcess} den Simulationsprozess.
+      Die~\vref{fig:mainProcess} beschreibt den Haupt- und~\vref{fig:simulationProcess} den Simulationsprozess.
       \begin{figure}[H]
         \includegraphics[scale=0.6,center]{graphics/main_process}
         \caption{Domänenmodell, Hauptprozess\label{fig:mainProcess}}
