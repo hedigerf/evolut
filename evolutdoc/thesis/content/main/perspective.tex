@@ -46,8 +46,8 @@
 
 
     \subsection{Nimmt die Diversität mit zunehmenden Generationen stetig ab?}
-      Analysiert man die Diversitätsgraphe aus dem vierten~\vref{sec:4lauf} und
-      fünften Simmulationslauf~\vref{sec:5lauf} sieht man einen Abfall der Diversität in den ersten Generationen.
+      Analysiert man die Diversitätsgraphe aus dem vierten~(\vref{sec:4lauf}) und
+      fünften Simmulationslauf~(\vref{sec:5lauf}) sieht man einen Abfall der Diversität in den ersten Generationen.
       Bei der allgemeinen Lösung erholt sich die Diversität mit zunehmenden Generationen.
       Gewisse Ausreisser erreichen sogar die Diversität der ersten Generationen.
       Jedoch zeichnet sich ein anderes Bild bei dem Evolvieren auf Evolvierbarkeit ab.
@@ -55,11 +55,144 @@
       Es hat sich gezeigt, dass die allgemeine Lösung diverse Individuen liefert.
 
 
-    \subsection{Wie sieht der Bewegungsablauf eines evolvierten Tieres aus?}
+    \subsection{Wie sieht der Bewegungsablauf und Geometrie eines evolvierten Tieres aus?}
+      Neben der vordefinierten Bewegungsablauf~(\vref{sec:Engine}) wurden drei weitere Typen gefunden:
 
+      \begin{itemize}
+
+        \item Rollbewegung
+
+        \item Hüpfbewegung
+
+        \item Ruderbewegung
+
+      \end{itemize}
+
+      Bei der Rollbewegung kippen die Individuen vornüber und drehen sich einmal um sich selber.
+      Die Gemoetrie des Körpers tendiert zu einer kreisartigen Form.
+      Die Beine spielen bei dieser Art von Bewegung eine untergeordnete Rolle.
+
+      \begin{figure}[H]
+        \centering
+
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/roll_1}
+          \caption{\label{fig:roll_1}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/roll_2}
+          \caption{\label{fig:roll_2}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/roll_3}
+          \caption{\label{fig:roll_3}}
+        \end{subfigure}
+
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/roll_4}
+          \caption{\label{fig:roll_4}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/roll_5}
+          \caption{\label{fig:roll_5}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/roll_6}
+          \caption{\label{fig:roll_6}}
+        \end{subfigure}
+
+        \caption{Rollbewegung im Zeitraffer\label{fig:roll}}
+
+      \end{figure}
+
+      Die Hüpfbewegung in \vref{fig:hupf} führen die Individuen aus, in dem sie sich mit einem Bein vom Boden abstossen.
+      Es lässt sich keine Tendenz zu einer bestimmten Körperform erkennen.
+
+      \begin{figure}[H]
+        \centering
+
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/hupf_1}
+          \caption{\label{fig:hupf_1}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/hupf_2}
+          \caption{\label{fig:hupf_2}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/hupf_3}
+          \caption{\label{fig:hupf_3}}
+        \end{subfigure}
+
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/hupf_4}
+          \caption{\label{fig:hupf_4}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/hupf_5}
+          \caption{\label{fig:hupf_5}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/hupf_6}
+          \caption{\label{fig:hupf_6}}
+        \end{subfigure}
+
+        \caption{Hüpfbewegung im Zeitraffer\label{fig:hupf}}
+
+      \end{figure}
+
+      Die Ruderer in \vref{fig:ruder} benutzen ein Bein um die Bewegung durchzuführen, alle anderen Beine verharren starr am Körper.
+      Alle Beinpaare, ausser das sich bewegende Bein, haben sich möglichst verkleinert.
+      Der Trend bei Rundern liegt bei flachen Körpern.
+
+      \begin{figure}[H]
+        \centering
+
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/ruder_1}
+          \caption{\label{fig:ruder_1}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/ruder_2}
+          \caption{\label{fig:ruder_2}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/ruder_3}
+          \caption{\label{fig:ruder_3}}
+        \end{subfigure}
+
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/ruder_4}
+          \caption{\label{fig:ruder_4}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/ruder_5}
+          \caption{\label{fig:ruder_5}}
+        \end{subfigure}
+        \hspace{\fill}
+        \begin{subfigure}[b]{0.3\textwidth}
+          \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/ruder_6}
+          \caption{\label{fig:ruder_6}}
+        \end{subfigure}
+
+        \caption{Ruderbewegung im Zeitraffer\label{fig:ruder}}
+
+      \end{figure}
+      
     \subsection{Individuum: Allgemeine Lösung vs Evolvieren auf Evolvierbarkeit}
-      Es wird das beste Indivdiuum der 4000. Generation~\vref{fig:gen4000} aus dem vierten Simulationslauf~\vref{sec:4lauf}
-      und dem füften Simulationslauf~\vref{sec:5lauf} miteinander verglichen.
+      Es wird das beste Indivdiuum der 4000. Generation~(\vref{fig:gen4000}) aus dem vierten Simulationslauf~\vref{sec:4lauf}
+      und dem füften Simulationslauf~(\vref{sec:5lauf}) miteinander verglichen.
       Die Individuen haben beide eine Hüpfbewegung entwickelt.
       Jedoch streckt das eine Individum~(\vref{fig:gen4000_alg}) alle Beine,
       während das Andere~(\vref{fig:gen4000_ev}) fast alle Beine angewinkelt hat.
