@@ -362,8 +362,6 @@
       \item \acrfull{es}~(\vref{item:evStrat})
     \end{itemize}
 
-    % TODO umformulieren?
-
     Das Austauschen der Gene (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
     Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird.
     So kann keine sinnvolle Evolution statt finden.
@@ -474,13 +472,19 @@
 
     \subsection{Laufzeitumgebung}
 
-      % TODO umformulieren
-
-      Um Javascript und p2.js ohne Browser zu betreiben, wird Electron eingesetzt.
-      Electron ist node.js und Google Chrome vereint in einer Standalone-Anwendung.
-      Mit Hilfe von Node.js lassen sich alle I/0-Zugriffe regeln und es kann auf den
-      Node Package Manager zur Abhängigkeitsverwaltung von anderen Bibliotheken zurückgegriffen werden.
-      Auch lässt sich unter bestimmten Umständen Javascript schneller ausführen unter Node.js als in einem Browser.
+      Javascript ist eine Script-Sprache.
+      Diese benötigt ein Programm, welches den Quellcode interpretiert und ausführt.
+      Als Plattform wurde deshalb Electron eingesetzt. Electorn besteht aus node.js und Google Chrome.
+      \\
+      Node.js ist eine Umgebung in der server-seitige Javascript-Anwendungen aufgeführt werden.
+      Durch den Paketmanager \acrfull{npm} werden externe Abhängigkeiten und Bibliotheken verwaltet.
+      \acrshort{npm} bietet Zugriff auf eine Vielzahl von Bibliotheken.
+      \\
+      Google Chrome wird verwendet für die Darstellung der Anwendung.
+      Die Inhalte der Applikation werden wie eine Webseite erstellt und dargestellt.
+      \\
+      Electron verbindet beide in einer Anwendung.
+      Damit kann eine Web-Applikation in eine Desktop-Applikation verpackt werden.
 
   \section{Konfiguration\label{sec:Konfiguration}}
 
@@ -584,7 +588,7 @@
         Muss eine Simulation durchgeführt werden um den Fitnesswert der Individuen zu bestimmen.
         Die Verantwortliche Klasse ist die SimulationWorld.
         Zuerst muss jeder Genotyp zu einem Phänotyp abgebildet werden.
-        Anschliessend muss der Parcours aus dem Blueprint erstellt werden. % TODO referenz?
+        Anschliessend muss der Parcours aus dem Blueprint erstellt werden.
         Erst dann kann mit der Simulation begonnen werden.
         Die SimulationWorld merkt sich zu jedem Individuum die Position.
         Individuen welche sich während 4 Sekunden kaum bewegt haben,
