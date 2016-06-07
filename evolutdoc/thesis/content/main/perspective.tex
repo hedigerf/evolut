@@ -26,15 +26,37 @@
     12000 Generationen zu simulieren, dauert rund 10 Tage.
     \\
     Es kann die Hypothese aufgestellt werden, dass die JavaScript-Engine V8 momentan noch nicht ausreichend schnell ist.
-    Eine weiterführende Arbeit kann untersuchen wie die Leistungen anderer Implementationen von Javascript-Engines im
+    Eine weiterführende Arbeit könnte untersuchen wie die Leistungen anderer Implementationen von Javascript-Engines im
     Vergleich zu V8 abschneiden.
 
     \subsection{Wie kann eine Steuerung der Bewegung implementiert werden?}
 
+
       % TODO Flo input
       Der~\vref{sec:Engine} beschreibt wie die Steuerung der Bewegung implementiert wurde.
 
+      % Aufteilen in daten und logik
+      % Vorteil, nachteil
+
+
+      ~\vref{sub:PerspectiveFeedback}.
+
     \subsection{Wie kann diese Steuerung evolviert werden?}
+
+      Damit die Steuerung der Bewegung, der Bewegungsablauf, evolviert werden kann,
+      muss dieser in einer Form vorliegen, die es erlaubt einzelne Werte zu manipulieren.
+      Der Bewegungsablauf beinhaltet eine Liste von Bewegungen.
+      In der Liste können Bewegungen beliebig gruppiert werden.
+      Wie in~\vref{subsub:EngineMovement} beschrieben wird die Information zu einer Bewegung in mehrere Teile aufgespaltet.
+      Die gewählte Darstellungsform bietet eine fein gegliederte Beschreibung des Bewegungsablaufs.
+      Diese Gleiderung erlaubt es den Bewegungsablauf einfach zu entwickeln.
+      \\
+      Der Bewegungsablauf ist hauptverantwortlich für die Fitness eines Individuums.
+      Dies führt dazu, dass Individuen mit einem ausgereiften Bewegungsablauf mit grösserer Wahrscheinlichkeit
+      für die Reproduktion selektiert und anschliessen mutiert werden.
+      \\
+
+      % vor-, nachteil
 
       % TODO Flo input
       Die Steuerung wurde durch Selektion und Mutation evolviert.
@@ -237,10 +259,14 @@
     Die erstelle Simulationsapplikation ist gut erweiterbar und ermöglicht Interessierten sie weiter auszubauen.
     Der Programmcode soll für Interessierte unter \url{http://github.com} freigegeben werden nach der Abgabe der Arbeit.
 
-    \subsection{Feedback an den Bewegungsmotor\label{sec:PerspectiveFeedback}}
+    \subsection{Feedback an den Bewegungsmotor\label{sub:PerspectiveFeedback}}
 
       Die fehlende Implementation der Reaktion auf das Feedback der Steuerung ist sicher die Komponente,
       welche am meisten helfen würde, bessere Resultate zu finden.
+
+    \subsection{Pro Bein ein Bewegungsmotor}
+
+      % TODO ein bein, ein motor -> separate bewegungsabläufe
 
     \subsection{Austauschen der Physik-Engine}
 
@@ -284,3 +310,8 @@
       Neue Terrain-Typen wie Eis, Wasser oder Grass könnten zusätzlich hinzugefügt werden.
 
       % Tendenz?
+
+
+    \subsection{Neuronales Netzwerk}
+
+      % YEEES
