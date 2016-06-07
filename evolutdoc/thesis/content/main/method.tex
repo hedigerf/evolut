@@ -50,8 +50,7 @@
 
     \subsection{Beine\label{sub:Beine}}
 
-      Da als Grundkonzept ein \gls{Hexapod} verwendet wird, wird auch die Eigenschaft übernommen,
-      dass das Individuum 6 Beine besitzt.
+      Da als Grundkonzept ein \gls{Hexapod} verwendet wird, wird die Eigenschaft von 6 Beinen übernommen.
       Analog zu einer Ameise werden die Beine in 3 symmetrische Beinpaare aufgeteilt.
       \\
       Technisch bietet sich die Möglichkeit, die Beine nicht in Paare zu gliedern und asymmetrisch am Körper anzubringen.
@@ -87,7 +86,7 @@
         \paragraph{Beispiel\label{par:MassExample}}
 
           Sei die Fläche eines Körpers \(a_{b} = 2 \) und die eines Beines jeweils \(a_{l} = 1\),
-          dann werden die Massen \(m_{b}\) und \(m_{l}\) wie folgt berechnet:
+          dann werden die Masse des Körpers \(m_{b}\) und eines Beines \(m_{l}\) wie folgt berechnet:
 
           \begin{gather*}
             m = 1, a_{l} = 1, a_{b} = 2 \\
@@ -116,7 +115,7 @@
         Zu Beginn der Simulation wird die initiale Population~(\vref{sec:initPop}) mit zufällig generierten Individuen erstellt.
         Dabei ist es hilfreich manche Parameter nicht zufällig generieren zu lassen,
         sondern mit einem fixen Wert zu initialisieren.
-        Besonders der Bewegungsablauf kann so von Beginn an festgelegt werden.
+        So kann der Bewegungsablauf von Beginn an festgelegt werden.
         Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp mit
         spezifizierten Werten zu initialisieren.
 
@@ -173,15 +172,16 @@
     Der Motor sorgt zusammen mit den Informationen zum Bewegungsablauf im Phänotyp für die Bewegung eines Individuums.
     Im Genotyp ist verankert, wann eine Bewegung (\vref{subsub:EngineMovement}) vom Motor ausgeführt wird.
     Diese Informationen werden im Prozess übernommen, wo der Genotyp auf den Phänotyp abgebildet wird.
-    Zusätzlich ist auf dem Phänotyp festgehalten, in welchem Zustand sich die Bewegung befindet.
+    Auf dem Phänotyp ist festgehalten, welches die aktuelle Bewegung im Ablauf ist.
 
     \subsection{Funktionsprinzip}
 
       Die Implementation des Motors ist ein \acrfull{fsm}.
       Dabei repräsentieren die Bewegungen die Zustände des Motors zwischen denen gewechselt wird.
       Durch diese Art der Implementation kann ein zyklischer Bewegungsablauf einfach abgebildet werden.
-      Die Bedingung für den Zustandswechsel von der aktuellen Bewegung \( M_{i} \) zu Bewegung \( M_{i + 1} \) ist,
-      dass die aktuelle Bewegung vollständig ausgeführt wurde.
+      \\
+      Solange die aktuelle Bewegung \( M_{i} \) nicht vollendet ist, wird kein Zustandswechsel ausgeführt.
+      Ist die Bewegung \( M_{i} \) vollendet, wird der Zustand gewechselt und die Bewegung \( M_{i + 1} \) ausgeführt.
 
       \begin{figure}[H]
         \centering
@@ -402,17 +402,16 @@
       \item Ökosystem der Programmiersprache (verfügbare Bibliotheken)
     \end{itemize}
 
-    Als erstes wurde \gls{FSharp} und diverse populäre \gls{DotNet} \glspl{PhysicsEngine} wie ``Farseer Physics'',
-    ``Physics 2D'' und ``Digital Rune Engine'' evaluiert.
+    \gls{FSharp} und diverse populäre \gls{DotNet} \glspl{PhysicsEngine} wurden evaluiert.
     Jedoch gestaltete sich die Konfiguration und Plattform-Interoperabilität schwierig.
     Eine plattformübergreifende Konfiguration, konnte nicht erstellt werden.
     Dies lag nicht an den \glspl{PhysicsEngine}, sondern an der Open-Source-Implementation von ``Mono Game''.
     ``Mono Game'' und Mono werden verwendet, um die \gls{DotNet}-Umgebung auf Linux und Mac zu nutzen.
     \\
     \\
-    Als zweite Möglichkeit wurde Javascript und die \glspl{PhysicsEngine} ``Matter.js'' und ``p2.js'' in Betracht gezogen.
-    Die Popularität von Javascript hat in den letzten Jahren enorm zugenommen.
-    Auch wurde mit dem neuen ECMA2015 Standard die Sprache enorm verbessert und viele neue Features eingeführt.
+    Als weitere Option wurde Javascript und die \glspl{PhysicsEngine} in Betracht gezogen.
+    Die Popularität von Javascript hat in den letzten Jahren stark zugenommen.
+    Auch wurde mit dem neuen Standard ECMA2015 die Sprache enorm verbessert und viele neue Funktionalitäten eingeführt.
     Das Javascript-Ökosystem ist eines der grössten überhaupt.
     Da Javascript ursprünglich eine Webtechnologie ist und auf allen Plattformen problemlos läuft,
     wurde das Kriterium der Plattform-Interoperabilität ohne zusätzliche Konfiguration erfüllt.
@@ -420,11 +419,11 @@
     \subsection{Auswahl der Physik-Engine}
 
       Im Zentrum der Anwendung steht die \gls{PhysicsEngine}, welche die ganze Simulation berechnet.
-      Für die Auswahl der \gls{PhysicsEngine} war es besonders wichtig,
+      Für die Auswahl der \gls{PhysicsEngine} ist es besonders wichtig,
       dass diese die notwendige Funktionalität bereitstellt.
       \\
-      Die erste Option war ``Matter.js''. Schnell hat sich herausgestellt,
-      dass diese \gls{PhysicsEngine} nicht genug ausgereift ist.
+      Die erste Option war ``Matter.js'', welche als nicht genug ausgereift eingestuft wurde.
+      Viele Funktionen haben zum Zeitpunkt der Evaluation gefehlt.
       Deshalb wurde als zweite Option auf ``p2.js'' zurückgegriffen.
       Diese \gls{PhysicsEngine} bietet eine ausführliche Dokumentation und Beispiele zu sämtlichen Aspekten.
 
@@ -488,9 +487,12 @@
     Die Applikation lässt sich mit diversen Parametern konfigurieren.
     Es wird eine Konfigurationstabelle~(\vref{tbl:simulation-parameters-general}) eingeführt,
     welche auch im Kapitel Resultate~(\vref{chap:Resultate}) verwendet wird,
-    um die jeweilige Konfiguration der Simulation festzuhalten. In der Konfigurationstabelle werden nur die Parameter erwähnt,
-    welche relevant für den Algorithmus sind. Die Schwierigkeit des Parcours wird alle 100 Generationen erhöht. Bei der allgemeinen Lösung wird der Parcours
-    nach jeder Generation neu generiert. Bei der Evolvierung auf Evolvierbarkeit wird der Parcours nur dann neu generiert,
+    um die jeweilige Konfiguration der Simulation festzuhalten.
+    In der Konfigurationstabelle werden nur die Parameter erwähnt,
+    welche relevant für den Algorithmus sind.
+    Der Schwierigkeitsgrad des Parcours wird alle 100 Generationen erhöht.
+    Bei der allgemeinen Lösung wird der Parcours nach jeder Generation neu generiert.
+    Bei der Evolvierung auf Evolvierbarkeit wird der Parcours nur dann neu generiert,
     wenn sich die Schwierigkeit des Parcours ändert.
     Eine Hypothese welche nicht validiert werden konnte, wurde unter~\vref{sub:hypoAnsatz} formuliert.
 
@@ -502,17 +504,16 @@
     \subsection{Technische Parameter\label{sub:techParams}}
 
       Ein wichtiger technischer Parameter ist die Anzahl der eingesetzten Simulationsprozesse~(\vref{sec:Ablauf}).
-      Durch die Erhöhung dieses Parameters kann von mehreren CPU-Kernen profitiert,
-      somit lässt sich die Simulation~(\vref{sec:simulation}) und Mutation~(\vref{sec:Mutation}) parallelisieren.
-      Optimal ist es diesen Wert auf die Anzahl verfügbarer CPU-Kerne zu setzen.
-      Die Grösse des Zeitschritts~\cite{bullet:steppingTheWorld} der \gls{PhysicsEngine} lässt sich ebenfalls einstellen.
-      %Wenn man den Zeitschritt halbiert muss die Relaxation mit dem Faktor 4 multipliziert werden.
-      Die Relaxation kann auch konfiguriert werden.
-      Der Parameter beschreibt die Anzahl von Zeitschritten,
+      Durch die Erhöhung dieses Parameters kann von mehreren Prozessor-Kernen profitiert werden.
+      Domit lässt sich die Simulation~(\vref{sec:simulation}) und Mutation~(\vref{sec:Mutation}) parallelisieren.
+      Optimal ist es diesen Wert auf die Anzahl verfügbarer Prozessor-Kerne zu setzen.
+      Die Grösse des Zeitschritts~\cite{bullet:steppingTheWorld} der \gls{PhysicsEngine} lässt sich einstellen.
+      Die ``relaxation'' (Entspannung) kann auch konfiguriert werden.
+      Dieser Parameter beschreibt die Anzahl von Zeitschritten,
       um eine Constraint-Gleichung~\cite{gamedev:constraints} zu stabilisieren.
-      Die Stiffness ist der letzte wichtige technische Parameter.
-      Man kann sich die Stiffness als Steifheit einer Feder vorstellen.
-      Sie beschreibt wie steif alle Element der Simulation sich verhalten sollen.
+      Die ``stiffness'' (Steifheit) ist der letzte wichtige technische Parameter.
+      Ein Beispiel für diesen Parameter ist die Steifheit einer Feder.
+      Er beschreibt, wie steif die Objekte innerhalb der Simulation sich verhalten sollen.
 
   \section{Ablauf\label{sec:Ablauf}}
 
