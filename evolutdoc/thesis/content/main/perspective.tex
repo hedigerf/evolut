@@ -32,9 +32,8 @@
     \subsection{Wie kann eine Steuerung der Bewegung implementiert werden?}
 
       Wie in~\vref{sec:Engine} beschrieben ist die Steuerung der Bewegung ist in zwei Teile aufgeteilt.
-      Einerseits die Daten im Genotyp und andererseits in die Logik, der Motor.
       Es existiert nur ein Bewegungsablauf pro Individuum.
-      Damit wird erreicht, dass keien Synchronisation zwischen mehreren Motoren stattfinden muss.
+      Damit wird erreicht, dass keine Synchronisation zwischen mehreren Motoren stattfinden muss.
       Was wiederum die Komplexität des Motors reduziert.
 
       \smallskip
@@ -53,23 +52,21 @@
       was der nächste Zustand des Motors sein muss.
       Zustände werden während der Evolution erstellt und gelöscht.
       Somit müssen diese Regeln dynamisch erstellt werden können.
+      Aus diesen Gründen ist das Feedback-System nicht in den Motor integriert.
 
       \smallskip
 
-      Die erzielten Resultate mit der Implementation des Motors sind zufriedenstellend.
+      Die erzielten Resultate mit der Implementation des Motors sind zufriedenstellend und
+      liegen innerhalb der Erwartungen.
       In der gegebenen Form werden Bewegungsmuster entwickelt, die an den Parcours angepasst werden.
       Es gilt zu beachten, dass diese Resultate unter dem von Floreano~\cite{Floreano2010} beschriebenen Problem
       der evolutionären Robotik leiden.
       Die entwickelten Individuen nutzen an bestimmten Stellen Eigenschaften des Parcours aus.
-      Eigenschaften innerhalb eines Parcours sind besondere Geländeformationen.
-      Damit lässt sich herleiten,
-      weshalb Simulationen mit einer höheren Wahrscheinlichkeit für das Hinzufügen von Bewegungen als das Löschen
-      bessere Resultate liefern.
+      Eigenschaften sind hier besondere Geländeformationen innerhalb eines Parcours.
+      Damit lässt sich herleiten, weshalb die Simulation mit einer höheren Wahrscheinlichkeit
+      für das Hinzufügen von Bewegungen als das Löschen bessere Resultate liefert.
       Mit den zusätzlichen Bewegugnen kann das Individuum seinen Bewegungsablauf
       an weitere Geländeformationen adaptieren und erreicht somit eine höhere Fitness.
-
-      % TODO 1200 gen
-      % relevanz einschränken, validierung für mehr generationen
 
       \begin{figure}[H]
         \centering
@@ -77,7 +74,13 @@
         \caption{Fittestes Individum, Vergleich dritter und vierter Lauf}
       \end{figure}
 
-      TEXT~\vref{sub:PerspectiveFeedback}.
+      Dieser Vergleich ist nur für 1200 Generationen relevant.
+      Die Grösse der Datenstrukturen im dritten Simulationslauf hat die Simulation start verlangsamt,
+      weshalb die Simulation abgebrochen werden musste.
+      Deshalb ist dieser Vergleich nur für die ersten 1200 Generationen relevant.
+      Damit die Vermutung valdidiert werden kann,
+      muss ein geeignetes Verhältnis zwischen Hinzufügen und Löschen von Bewegungen gefunden werden,
+      so dass die Simulation länger laufen kann.
 
     \subsection{Wie kann diese Steuerung evolviert werden?}
 
