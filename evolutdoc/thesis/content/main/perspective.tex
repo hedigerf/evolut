@@ -14,7 +14,7 @@
   \section{Diskussion der Resultate\label{sec:diskRes}}
 
     Die gefundenen Resultate wiederspiegeln Lösungen innerhalb einer künstlichen Umgebung.
-    In dieser Umgebung wird eine vereinfachte Physik verwendet, welche nur an die reale Physik angenähert ist.
+    In dieser Umgebung wird eine vereinfachte Physik verwendet, welche nur eine Annäherung and die reale Physik ist.
     Deshalb sind die Resultate nicht ohne Vorbehalte auf die reale Welt übertragbar.
     \\
     Das Evolvieren von artifiziellen Tieren und ihrer Steuerung ist möglich
@@ -65,8 +65,10 @@
       Damit lässt sich herleiten,
       weshalb Simulationen mit einer höheren Wahrscheinlichkeit für das Hinzufügen von Bewegungen als das Löschen
       bessere Resultate liefern.
-      Mit den zusätzlichen Bewegugnen kann das Individuum seinen Bewegungsablauf an weitere Geländeformationen adaptieren
-      und erreicht somit eine höhere Fitness.
+      Mit den zusätzlichen Bewegugnen kann das Individuum seinen Bewegungsablauf
+      an weitere Geländeformationen adaptieren und erreicht somit eine höhere Fitness.
+
+      % TODO 1200 gen
 
       \begin{figure}
         \centering
@@ -91,7 +93,7 @@
       Dies führt dazu, dass Individuen mit einem ausgereiften Bewegungsablauf mit grösserer Wahrscheinlichkeit
       für die Reproduktion selektiert und anschliessen mutiert werden.
       \\
-
+      % TODO moaaar
 
     \subsection{Wie kann die Geometrie der Tiere evolviert werden?}
 
@@ -200,7 +202,8 @@
 
       \end{figure}
 
-      Die Ruderer in~\vref{fig:ruder} benutzen ein Bein um die Bewegung durchzuführen, alle anderen Beine verharren starr am Körper.
+      Die Ruderer in~\vref{fig:ruder} benutzen ein Bein um die Bewegung durchzuführen,
+      alle anderen Beine verharren starr am Körper.
       Die Fixierung der anderen Beine haben sie von ihren Vorfahren~(den Hüpfern) geerbt und noch nicht korrigiert.
       Es wäre von Vorteil, wenn sie alle Beine für die Ruderbewegung nutzen würden.
       Die Massen aller Beinpaare, ausser dass sich bewegende, haben sich verkleinert.
@@ -271,25 +274,31 @@
         \caption{4000. Generation\label{fig:gen4000}}
       \end{figure}
 
+      %TODO was heisst das nun?
+
     \subsection{Hypothese Körperpunkte}
 
       Um eine Aussage über die Hypothese der Körperpunkte~(\vref{subsub:hypoKp}) zu treffen,
       müsste wie erwähnt unter~\vref{subsub:bpScnd} die Mutation der Anzahl Körperpunkte implementiert werden.
       Spätestens ab der 10. Generation bei jedem Lauf,
       existieren nur noch Individuen mit der gleichen Anzahl Körperpunkten.
+      Deshalb kann diese Hypothese nicht validiert werden.
+
+      % TODO validationsstatus konkretisieren
 
     \subsection{Hypothese Mutationswahrscheinlichkeiten}
 
       Die Hypothese über die Mutationswahrscheinlichkeiten~(\vref{subsub:hypoMut}) hat sich bewahrheitet
       wie in~\vref{subsub:3000gen} festgestellt worden ist.
       Mit kleineren Mutationswahrscheinlichkeiten lassen sich fittere Indivduen finden.
+      % TODO discuss
 
   \section{Ausblick\label{sec:ausblick}}
 
     % Tiere mit andere anzahl an beinen als 6
 
-    Die erstelle Simulationsapplikation ist gut erweiterbar und ermöglicht Interessierten sie weiter auszubauen.
-    Der Programmcode soll für Interessierte unter \url{http://github.com} freigegeben werden nach der Abgabe der Arbeit.
+    Die erstellte Simulationsapplikation ist gut erweiterbar und ermöglicht Interessierten sie weiter auszubauen.
+    Der Programmcode soll für Interessierte unter \url{http://github.com} freigegeben werden.
 
     \subsection{Feedback an den Bewegungsmotor\label{sub:PerspectiveFeedback}}
 
@@ -346,6 +355,7 @@
       % Tendenz?
 
     \subsection{Neuronales Netzwerk}
+
       Neben den evolutinären Algorithmen gibt es noch eine andere Form von Algorithmus, der ähnliche Problemstellungen bewältigen kann.
       Laut M. Füllsack~\cite{book:fullsack} funktionieren neuronale Netzte ähnlich wie das Neuronennetzwerk des Gehirns.
       Die bestehende Implementation des evolutionären Algorithmus könnte mit einer Version, welche auf neuronalen Netzwerke basiert, verglichen werden.
