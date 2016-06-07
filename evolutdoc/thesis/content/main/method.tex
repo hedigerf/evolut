@@ -107,7 +107,7 @@
         Weiter können Teil-Genotypen wiederum in verschiedene weitere Teile aufgespalten werden.
         Damit entsteht die Möglichkeit, Individuen nach einem dynamisch generierten Bauplan zu erstellen
         und beliebige Kombinationen aus vorhandenen Teil-Genotypen innerhalb eines Genotyps zu bilden,
-        ohne dass die Implementation der seed-Funktion~(\vref{subsub:GenotypeSeeding}) angepasst werden muss.
+        ohne dass die Implementation der Seed-Funktion~(\vref{subsub:GenotypeSeeding}) angepasst werden muss.
 
       \subsubsection{Seeding\label{subsub:GenotypeSeeding}}
 
@@ -145,7 +145,7 @@
         \end{align*}
 
         Damit die Koordinaten in der \gls{PhysicsEngine} verwendet werden können,
-        müssen die Koordinaten in kartesicher Form sein.
+        müssen die Koordinaten in kartesicherer Form sein.
         Die Polar-Koordinaten \( P \) werden in kartesische Koordinaten transformiert und miteinander verbunden.
         \\
         \\
@@ -366,7 +366,7 @@
 
     Das Austauschen der Gene (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
     Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird.
-    So kann keine sinnvolle Evolution statt finden.
+    So kann keine sinnvolle Evolution stattfinden.
     Rekombination kann für die Verwendung somit ausgeschlossen werden.
     Dies stellt schon den ersten Indikator dar,
     dass Evolutionäre Programmierung eingesetzt werden kann.
@@ -377,7 +377,7 @@
     Dies gilt ebenso für Winkel oder den Bewegungsablauf.
     \\
     Die binäre Repräsentation ist für die vielen realen Werte nicht geeignet.
-    Theoretisch wäre es möglich alle reale Werte binär darzustellen,
+    Theoretisch wäre es möglich alle realen Werte binär darzustellen,
     jedoch würde eine unnötige Komplexität hinzugefügt werden.
     \\
     Die Repräsentation als Baum ist laut K. Weicker~\cite{book:evAlgo} eine Möglichkeit die Steuerung eines Roboters abzubilden.
@@ -537,7 +537,7 @@
 
       Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewählt werden.
       Pro Simulationsprozess können etwa 15 Individuen flüssig berechnet werden.
-      Dies bedeutet das die optimale Populationsgrösse  \( Anzahl(CPU Kerne) * 15 \) beträgt.
+      Dies bedeutet das die optimale Populationsgrösse  \(Anzahl(CPU Kerne) * 15 \) beträgt.
       Dieser Wert wurde durch mehrere Versuche mit unterschiedlichen Prozessoren gefunden.
       Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~(\vref{sub:DesignBody}) zufällig generiert.
       Die Verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
