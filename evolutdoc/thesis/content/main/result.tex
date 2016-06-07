@@ -14,7 +14,7 @@
   Eine Simulation mit 12000 Generationen dauert rund 10 Tage.
   %%vlt in Diskussion disktutieren
 
-  \section{Allgemeine Lösung - 1. Simmulationslauf}
+  \section{Allgemeine Lösung - 1. Simulationslauf}
 
     \subsection{Konfiguration}
 
@@ -35,7 +35,9 @@
       Es wird vermutet, dass des Feedbacksystems der Steuerung hier helfen wird.
       Ausserdem müssen die Parameter des Parcours für die nächste Simulation anders konfiguriert werden.
       Der Steigungszuwachs sollte auf 0.01 limitiert werden und der Zuwachs der höchsten Y-Koordinate
-      sollte auf 0.02 gesetzt werden. Mit der Herabsetzung dieser Werte werden weniger Mutation durchgeführt und die Lösungsmenge nicht zu stark eingegrenzt werden.
+      sollte auf 0.02 gesetzt werden.
+      Mit der Herabsetzung dieser Werte werden weniger Mutation durchgeführt und
+      die Lösungsmenge nicht zu stark eingegrenzt werden.
 
       \begin{figure}
         \centering
@@ -59,7 +61,7 @@
           \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, erster Versuch\label{fig:graphBpFirst}}
         \end{figure}
 
-  \section{Allgemeine Lösung - 2. Simmulationslauf}
+  \section{Allgemeine Lösung - 2. Simulationslauf}
 
     \subsection{Konfiguration}
 
@@ -106,7 +108,7 @@
           \caption{Durchschnittliches Individuum pro Anzahl Körperpunkte, zweiter Versuch\label{fig:graphBpSecond}}
         \end{figure}
 
-  \section{Allgemeine Lösung - 3. Simmulationslauf}
+  \section{Allgemeine Lösung - 3. Simulationslauf}
 
     \subsection{Konfiguration}
 
@@ -128,7 +130,8 @@
       Die Datenstrukturen wachsen, da mehr Bewegungen hinzukommen als entfernt werden,
       was wiederum den Rechenaufwand erhöht.
       Darum wird dieser Versuch nach ca. 1200 Generationen abgebrochen,
-      damit Geschwindigkeits-Optimierungen implementiert werden können und die Wahrscheinlichkeit anders konfiguriert werden kann.
+      damit Geschwindigkeits-Optimierungen implementiert werden können und
+      die Wahrscheinlichkeit anders konfiguriert werden kann.
       \\
       Die Individuen haben bei diesem Versuch eine Art rollende Bewegung entwickelt.
       Sie können die guten Fitnesswerte halten,
@@ -159,7 +162,7 @@
           \caption{Diversität pro Generation, dritter Versuch\label{fig:graphDivThird}}
         \end{figure}
 
-  \section{Allgemeine Lösung - 4. Simmulationslauf}
+  \section{Allgemeine Lösung - 4. Simulationslauf}
 
     \subsection{Konfiguration}
 
@@ -171,7 +174,8 @@
 
       Wie beabsichtig in~\vref{sub:thirdAuswertung},
       wurde die Wahrscheinlichkeit Bewegungen hinzuzufügen oder zu entfernen gleichgesetzt.
-      Dies sollte verhindern, dass die Datenstrukturen durch die hinzukommenden Bewegungen zu gross werden und den benötigten Rechenaufwand in die Höhe treiben.
+      Dies sollte verhindern, dass die Datenstrukturen durch die hinzukommenden Bewegungen zu gross werden
+      und den benötigten Rechenaufwand in die Höhe treiben.
       Durch den erhöhten Rechenaufwand wären nur sehr wenige Generationen pro Tag evolvierbar.
 
     \subsection{Auswertung}
@@ -217,8 +221,10 @@
         Sie fixieren alle Beine ausser eines, welches sie benutzen um sich vom Boden abzustossen~(\vref{fig:gen3000}).
         Diese Art von Fortbewegung bringt eine bessere Fitness hervor, wie in~\vref{fig:graphFourth} erkennbar ist.
         Im Gegensatz zu den Individuen in~\vref{sub:scndAuswertung} ist dies jedoch eine valide Hüpfbewegung.
-        Da die Individuen sich vom Boden korrekt mit einem Bein abstossen, sich nicht im Boden verhacken und durch die zu späte fehlerhafte Kollisionerkennung abgestossen werden.
-        Das Herabsetzten der Mutationswahrscheinlichkeiten~(Hypothese in~\vref{subsub:hypoMut}) hat langfristig einen positiven Effekt auf die Fitness,
+        Da die Individuen sich vom Boden korrekt mit einem Bein abstossen,
+        sich nicht im Boden verhaken und durch die zu späte fehlerhafte Kollisionserkennung abgestossen werden.
+        Das Herabsetzten der Mutationswahrscheinlichkeiten~(Hypothese in~\vref{subsub:hypoMut})
+        hat langfristig einen positiven Effekt auf die Fitness,
         wie in~\vref{fig:graphFourth} im Vergleich zu~\vref{fig:graphFirst} erkennbar ist.
 
         \vspace{0.5cm}
@@ -312,7 +318,8 @@
       \subsubsection{Diversität}
 
         Der Einbruch ab ca.\ der 3000. Generation, lässt sich damit erklären, dass die Hüpfer gefunden worden sind.
-        Die Diversität konnte sich steigern im Vergleich zum Anfang der Simulation und spricht für die Turnierbasierte-Selektion.
+        Die Diversität konnte sich steigern im Vergleich zum Anfang der Simulation und
+        spricht für die Turnierbasierte-Selektion.
 
         \begin{figure}[H]
           \centering
@@ -320,7 +327,7 @@
           \caption{Diversität pro Generation, vierter Versuch\label{fig:graphDivFourth}}
         \end{figure}
 
-  \section{Evolvieren auf Evolvierbarkeit - 1. Simmulationslauf}
+  \section{Evolvieren auf Evolvierbarkeit - 1. Simulationslauf}
 
     \subsection{Konfiguration}
 
@@ -336,10 +343,11 @@
 
     \subsection{Auswertung\label{sub:fifthAuswertung}}
 
-      Der Graph in~\vref{fig:graphFifth} schläger weniger aus im Vergleich zu~\vref{fig:graphForth}.
-      Dies zu erklären, das beim evolvieren auf Evolvierbarkeit, der Parcour erst nach 100
-      Generationen ausgewechselt wird und somit die Fitnesswerte weniger pro Generation schwanken.
-      Die Ausreisser (lokale Minima und Maxima) treten dann auf, wenn der Parcour gewechselt wird.
+      Der Graph in~\vref{fig:graphFifth} schlägt weniger aus im Vergleich zu~\vref{fig:graphForth}.
+      Dies ist damit zu erklären, dass beim Evolvieren auf Evolvierbarkeit,
+      der Parcours erst nach 100 Generationen ausgewechselt wird und
+      somit die Fitnesswerte weniger pro Generation schwanken.
+      Die Ausreisser (lokale Minima und Maxima) treten dann auf, wenn der Parcours gewechselt wird.
 
       \begin{figure}[H]
         \centering
