@@ -8,23 +8,28 @@
 
   In der Technik, insbesondere in der Informatik und Robotik,
   ist das Lösen und Optimieren von Problemstellungen eine aufwendige Planungsaufgabe.
-  Es wird viel Fachwissen gefordert und ist zeit- und ressourcenintensiv.
-  Sobald der Lösungsraum eines Problems zu komplex wird, stossen die formalen Lösungsmethoden an Grenzen.
+  Das Lösen dieser Problemstellungen erfordert viel Fachwissen, kostet Zeit und Ressourcen.
+  Sobald der Lösungsraum eines Problems zu komplex wird, stossen die formalen Lösungsmethoden an ihre Grenzen.
   Oft spielt dabei die Anzahl der Freiheitsgrade eine entscheidende Rolle.
   \\
   Alternativ kann eine Lösung durch evolutionäre Algorithmen gesucht werden.
-  Das Konzept ist der natürlichen Evolution nachempfunden, wo durch Versuch und Irrtum neue Lösungen generiert werden.
-  Die Algorithmen nutzen eine Population, welche die möglichen Lösungen beinhaltet.
+  Die Algorithmen produzieren Populationen, welche die möglichen Lösungen beinhalten.
+  Das Konzept ist der natürlichen Evolution nachempfunden, wo durch ``Trial and Error'' neue Lösungen generiert werden.
   Mit dem Prinzip ``surival of the fittest'' werden immer bessere Näherungen für ein Problem produziert.
   \\
-  Die Kombination aus Reproduktion, Variation, Selektion und Vererbung
-  übernehmen dabei die Rolle des Lösens und Optimierens einer Problemstellung.
-  Für die Veränderung der Population sorgt der \nameref{subsub:SelectionPressure} (\vref{subsub:SelectionPressure}).
-  Dadurch reproduzieren sich Individuen mit grösserer Fitness mit höherer Wahrscheinlichkeit,
-  was zu Veränderung führt.
+  Die Kombination aus Reproduktion, Vererbung, Variation und Selektion
+  übernimmt dabei die Rolle des lösens und optimierens einer Problemstellung.
   \\
+  Dawkins~R.~\cite{book:universalDarwinism} definiert die vier Begrifflichkeiten~(auch universeller Darwinismus genannt) wie folgt:
+  \begin{itemize}
+    \item Reproduktion/Vererbung: Die Individuen müssen fähig sein sich fortzupflanzen. Der Nachwuchs welcher erzeugt wird, muss ebenfalls fortpflanzungsfähig sein und erbt Eigenschaften der Eltern.
+    \item Variation: Es muss ein Mechanismus existieren~(Mutation~\vref{sub:mutFunction}), welcher neue Variationen in die Nachkommen einführen kann.
+    \item Selektion: Die vererbten und varierten Merkmale müssen die Reproduktionsfähigkeit beeinflussen. Durch Selektion werden die am besten geeignesten Individuen selektiert.
+  \end{itemize}
+
   In dieser Arbeit wird versucht mit evolutionären Algorithmen Individuen zu entwickeln,
-  die lernen zu laufen und einen Parcours bewältigen können.
+  welche das Gehene lernen und einen Parcours bewältigen können.
+
 
   \section{Ausgangslage}
 
