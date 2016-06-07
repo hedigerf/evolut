@@ -31,6 +31,14 @@
 
     \subsection{Wie kann eine Steuerung der Bewegung implementiert werden?}
 
+      Die Steuerung der Bewegung ist in zwei Teile aufgeteilt.
+      Einerseits in die Daten und andererseits in die Logik, der Motor.
+      \\
+      Dies bietet mehrere Vorteile.
+      Die Mutation arbeitet mit einer einfachen Repräsentation des Bewegungsablaufs.
+
+
+
 
       % TODO Flo input
       Der~\vref{sec:Engine} beschreibt wie die Steuerung der Bewegung implementiert wurde.
@@ -39,7 +47,7 @@
       % Vorteil, nachteil
 
 
-      ~\vref{sub:PerspectiveFeedback}.
+      TEXT~\vref{sub:PerspectiveFeedback}.
 
     \subsection{Wie kann diese Steuerung evolviert werden?}
 
@@ -47,7 +55,8 @@
       muss dieser in einer Form vorliegen, die es erlaubt einzelne Werte zu manipulieren.
       Der Bewegungsablauf beinhaltet eine Liste von Bewegungen.
       In der Liste können Bewegungen beliebig gruppiert werden.
-      Wie in~\vref{subsub:EngineMovement} beschrieben wird die Information zu einer Bewegung in mehrere Teile aufgespaltet.
+      Wie in~\vref{subsub:EngineMovement} beschrieben
+      wird die Information zu einer Bewegung in mehrere Teile aufgespaltet.
       Die gewählte Darstellungsform bietet eine fein gegliederte Beschreibung des Bewegungsablaufs.
       Diese Gleiderung erlaubt es den Bewegungsablauf einfach zu entwickeln.
       \\
@@ -56,10 +65,6 @@
       für die Reproduktion selektiert und anschliessen mutiert werden.
       \\
 
-      % vor-, nachteil
-
-      % TODO Flo input
-      Die Steuerung wurde durch Selektion und Mutation evolviert.
 
     \subsection{Wie kann die Geometrie der Tiere evolviert werden?}
 
@@ -264,7 +269,7 @@
       Die fehlende Implementation der Reaktion auf das Feedback der Steuerung ist sicher die Komponente,
       welche am meisten helfen würde, bessere Resultate zu finden.
 
-    \subsection{Pro Bein ein Bewegungsmotor}
+    \subsection{Pro Bein ein Bewegungsablauf}
 
       % TODO ein bein, ein motor -> separate bewegungsabläufe
 
@@ -310,7 +315,6 @@
       Neue Terrain-Typen wie Eis, Wasser oder Grass könnten zusätzlich hinzugefügt werden.
 
       % Tendenz?
-
 
     \subsection{Neuronales Netzwerk}
 
