@@ -490,7 +490,7 @@
     welche relevant für den Algorithmus sind. Die Schwierigkeit des Parcours wird alle 100 Generationen erhöht. Bei der allgemeinen Lösung wird der Parcours
     nach jeder Generation neu generiert. Bei der Evolvierung auf Evolvierbarkeit wird der Parcours nur dann neu generiert,
     wenn sich die Schwierigkeit des Parcours ändert.
-    Eine Hypothese welche nicht validiert werden konnte, wurde unter \vref{sub:hypoAnsatz} formuliert.
+    Eine Hypothese welche nicht validiert werden konnte, wurde unter~\vref{sub:hypoAnsatz} formuliert.
 
     \begin{table}[H]
       \input{tables/simulation-parameters-general.tex}
@@ -632,7 +632,7 @@
       bei gleichzeitig guter Selektion der fittesten Individuen.
       Aufgrund der Empfehlung von D. Floreano und C. Mattiussi und der Erhaltung der Diversität,
       wurde entschieden Turnierbasierte-Selektion einzusetzen.
-      Eine Hypothese welche nicht validiert werden konnte, wurde unter \vref{sub:hypoSelect} formuliert.
+      Eine Hypothese welche nicht validiert werden konnte, wurde unter~\vref{sub:hypoSelect} formuliert.
 
     \subsection{Mutation\label{sec:Mutation}}
 
@@ -665,11 +665,15 @@
 
       Das Domänenmodell beschreibt den Zusammenhang der verschiedenen Klassen und Objekten.
       Die~\vref{fig:mainProcess} beschreibt den Haupt- und~\vref{fig:simulationProcess} den Simulationsprozess.
-      \begin{figure}[H]
-        \includegraphics[scale=0.6,center]{graphics/main_process}
-        \caption{Domänenmodell, Hauptprozess\label{fig:mainProcess}}
+
+      \begin{figure}
+        % \includegraphics[scale=0.6,center]{graphics/main_process}
+        \includegraphics[width=\textwidth,center]{graphics/uml/domain-model-main}
+        \caption{Domänenmodell Hauptprozess\label{fig:mainProcess}}
       \end{figure}
-      \begin{figure}[H]
-        \includegraphics[scale=0.6,center]{graphics/simulation_process}
-        \caption{Domänenmodell, Simulationsprozess\label{fig:simulationProcess}}
+
+      \begin{figure}
+        % \includegraphics[scale=0.6,center]{graphics/simulation_process}
+        \includegraphics[width=\textwidth,center]{graphics/uml/domain-model-simulation}
+        \caption{Domänenmodell Simulationsprozess\label{fig:simulationProcess}}
       \end{figure}
