@@ -36,7 +36,7 @@
       Mit der Herabsetzung dieser Werte werden weniger Mutation durchgeführt und
       die Lösungsmenge nicht zu stark eingegrenzt werden.
 
-      \begin{figure}
+      \begin{figure}[H]
         \centering
         \input{graphics/fitness-graph-first-run-no-feedback}
         \caption{Bestes Individuum und durchschnittliches Individuum\label{fig:graphFirst}}
@@ -67,6 +67,7 @@
         \input{tables/simulation-parameters-second-run-no-feedback.tex}
         \caption{Simulationsparameter}
       \end{table}
+
       Wie in~\vref{sub:confSecond} besprochen wurde die Parameter der Parcoursschwierigkeit angepasst:
 
       \begin{itemize}
@@ -87,7 +88,8 @@
       Ab ca\@. der 2000\@. Generation beginnt die Fitness wieder rapide zu steigen,
       jedoch ist dies durch einen Fehler der \gls{PhysicsEngine} zu erklären.
       Die Individuen verhaken sich im Boden und beginnen grosse Distanzen durch Hüpfbewegungen zurückzulegen.
-      Dieser Fehler kann bereinigt werden indem die Relaxation~\vref{sub:techParams} erhöht und gleichzeitig der Zeitschritt~\vref{sub:techParams} verringert wird.
+      Dieser Fehler kann bereinigt werden indem die Relaxation~\vref{sub:techParams} erhöht und
+      gleichzeitig der Zeitschritt~\vref{sub:techParams} verringert wird.
 
       \begin{figure}[H]
         \centering
@@ -355,7 +357,8 @@
 
       \subsubsection{Diversität}
 
-        Die Diversität~(\vref{fig:graphDivFifth}) ist im Vergleich zum vierten Versuch~(\vref{fig:graphDivFourth}) deutlich niedriger.
+        Die Diversität~(\vref{fig:graphDivFifth}) ist im Vergleich zum
+        vierten Simulationslauf~(\vref{fig:graphDivFourth}) deutlich niedriger.
         Die allgemeine Lösung erlaubt es diversere Individuen zu finden.
 
         \begin{figure}[H]
