@@ -13,14 +13,14 @@
     versteht man die Anpassung an die natürliche Umgebung.
     Da sich die natürliche Umgebung stetig ändert, ist der Prozess immer im Gange und endet nie.
     Artifizielle Evolution jedoch ist ein Optimierungsprozess,
-    welcher versucht Lösungen zu vordefinierten Probleme zu finden~\cite[S.1]{book:bioInspired}.
+    welcher versucht Lösungen zu vordefinierten Problemen zu finden~\cite[S.1]{book:bioInspired}.
 
   \section{Artifizielle Evolution}
 
     \subsection{Individuum\label{sub:individual}}
 
       Als Individuum wird die zu evolvierende künstliche Kreatur bezeichnet.
-      Ein Individuum hat einen zugehörigen Genotyp~(\vref{sub:genotyp}) und dessen Phänotyp~(\vref{sub:introPhenotyp}).
+      Ein Individuum hat einen zugehörigen Genotyp~(\vref{sub:genotyp}) und einen Phänotyp~(\vref{sub:introPhenotyp}).
 
     \subsection{Genotyp\label{sub:genotyp}}
 
@@ -34,8 +34,9 @@
       Erst durch den Geno- und Phänotyp werden den Werten einen Sinn gegeben.
 
     \subsection{Phänotyp\label{sub:introPhenotyp}}
-
-      In der virtuellen Umgebung, die mit dem Computer erschaffen wird,
+      Der Genotyp kann zu einem Phänotyp abgebildet werden.
+      % TODO need help, umformulieren des nächsten Satzes
+      In der virtuellen Umgebung die mit dem Computer erschaffen wird,
       entspricht der Phänotyp der Abbildung (Repräsentation in Pixel) die durch den Genotyp erstellt wird.
       Wenn der Genotyp die Länge und Breite eines Rechtecks beschreibt,
       so ist das grafisch gezeichnete Rechteck auf dem Monitor der Phänotyp~(\vref{fig:genoPheno}).
@@ -104,18 +105,18 @@
       möglichst diverse~(\vref{sub:diversity}) Individuen zu generieren,
       damit nicht wertvolle Lösungen verspielt werden.
 
-    \subsection{Fitness-Funktion}
+    \subsection{Fitnessfunktion}
 
-      Mit Hilfe der Fitness-Funktion lassen sich Individuen beurteilen,
-      wie gut geeignet ihre Gene sind um die Problemstellung zu bewältigen.
+      Mit Hilfe der Fitnessfunktion lassen sich Individuen beurteilen,
+      wie gut geeignet ihre Gene sind, um die Problemstellung zu bewältigen.
       In der natürlichen Evolution ist die Fitness des Tieres, wie viele Nachkommen es erzeugen kann.
-      In der technischen Welt muss der Anwender sie jeweils selbst definieren und
+      In der technischen Welt jedoch muss der Anwender sie jeweils selbst definieren und
       anhand der Problemstellung anpassen. Oft ist die Evaluation der Fitness-Funktion
       die rechenintensivste Teilaufgabe eines evolutionären Algorithmus~\cite[S.22]{book:bioInspired}.
 
     \subsection{Diversität\label{sub:diversity}}
 
-      Die Diversität einer Population von Individuen beschreibt wie verschieden die Individuen zueinander sind.
+      Die Diversität einer Population von Individuen beschreibt, wie verschieden die Individuen zueinander sind.
       Durch diese Kennzahl alleine lässt sich jedoch noch keine Aussage über die Diversität treffen.
       Erst wenn mehrere Generationen von Populationen vorhanden sind,
       kann diese Kennzahl benutzt werden um die Diversität zu beurteilen.
@@ -123,7 +124,7 @@
 
     \subsection{Selektionsoperation}
 
-      Eine Selektionsoperation hilft geeignetsten Individuen einer Generation zu selektieren.
+      Eine Selektionsoperation hilft die geeignetsten Individuen einer Generation zu selektieren.
       Die Selektierten bilden die Basis für die nächste Generation.
       Eine grosse Herausforderung beim Selektieren ist die Erhaltung der Diversität.
 
@@ -141,7 +142,7 @@
         in dem jedes Individuum ein Stück des Rouletterads für sich beanspruchen~(\vref{fig:rouletteWheel}).
         Das Stück welches sie beanspruchen, ist so gross,
         wie ihre Fitness im Vergleich zu der Fitness ihrer Konkurrenten.
-        Das Individuum mit der grössten Fitness wird auch das grösste Stück des Rouletterads für sich beanspruchen und hat somit die grösste Wahrscheinlichkeit Nachkommen zu erzeugen.
+        Das Individuum mit der grössten Fitness wird auch das grösste Stück des Rouletterads für sich beanspruchen und hat somit die grösste Wahrscheinlichkeit, Nachkommen zu erzeugen.
         Wenn die Population \(N\) Individuen gross ist, wird das Rad \(N\) mal gedreht um die Nachkommen zu bestimmen.
         Proportionale Selektion funktioniert schlecht,
         wenn alle Individuen sehr ähnliche Fitnesswerte aufweisen oder es nur wenige/einen Ausreisser gibt.
@@ -159,12 +160,12 @@
         wird es anhand des Ranges unterteilt.
         Diese Selektionsstrategie hat den Vorteil gegenüber der proportionalen Selektion,
         dass die Fitness der Individuen ähnlich sein darf,
-        jedoch wird mit hoher Wahrscheinlichkeit das bessere selektiert werden.
+        jedoch wird mit hoher Wahrscheinlichkeit das Bessere selektiert werden.
 
       \subsubsection{Gekürzte Rang-basierte Selektion}
 
-        Es wird eine Rangliste wird für die Individuen der Population erstellt.
-        Anstatt alle Individuen zu berücksichtigen werden nur die besten der Rangliste selektiert und diese produzieren Nachkommen (\vref{fig:truncated_rank_based_selection}).
+        Es wird eine Rangliste für die Individuen der Population erstellt.
+        Anstatt alle Individuen zu berücksichtigen, werden nur die besten der Rangliste selektiert und diese produzieren Nachkommen (\vref{fig:truncated_rank_based_selection}).
 
         \begin{figure}[H]
           \includegraphics[width=\textwidth,center]{graphics/truncated_rank_based_selection}
@@ -177,7 +178,7 @@
         diese Individuen tragen untereinander ein Turnier (\vref{fig:tournament_based}) aus.
         Das Turnier gewinnt jenes Individuum, welches den höchsten Fitnesswert aufweist.
         Dies wird solange wiederholt, bis so viele Nachkommen vorhanden sind wie in der vorherigen Generation.
-        Ein grosser Vorteil von Turniert-basierter Selektion ist die gute Balance zwischen
+        Ein grosser Vorteil von Turnier-basierter Selektion ist die gute Balance zwischen
         Selektionsdruck und genetischer Diversität,
         da alle Individuen in der Population die gleiche Wahrscheinlichkeit haben, für das Turnier selektiert zu werden.
         Somit können auch Individuen mit niedrigem Fitnesswert ein Turnier gewinnen.
@@ -195,7 +196,7 @@
       Nicht bei jedem Typ von evolutionären Algorithmen~(\vref{sub:artenEvAlgos}) und
       jeder Problemstellung ist Rekombination sinnvoll.
       Als Beispiel kann ein Haus mit Fenstern und Türen genommen werden.
-      Dabei führt die Rekombination der Gene der Türen mit denen der Fenster zu keinen verwendbaren Resultaten.
+      Dabei führt die Rekombination der Gene von Türen mit denen der Fenster zu keinen verwendbaren Resultaten.
 
       \begin{figure}[H]
         \includegraphics[scale=0.3,center]{graphics/morgan_crossover}
@@ -205,7 +206,7 @@
       \subsubsection{One-Point-Crossover}
 
         Es wird ein zufälliger Cross-Over-Punkt bestimmt an dem die Gene des Paares vertauscht werden (a)~\vref{fig:crossTypes}.
-        Anwendbar ist diese Strategie bei Diskreten- und Realen-Werten-Repräsentationen.
+        Anwendbar ist diese Strategie bei Diskret- und Reale-Werte-Repräsentationen.
 
       \subsubsection{Multi-Point-Crossover}
 
@@ -230,8 +231,8 @@
 
       \subsubsection{Bäume}
 
-        Bei Bäumen wird ein zufälliger Teil des Baumes,
-        mit einem anderen zufälligen Teil eines Baumes eines fremden Individuums vertauscht ( e)~\vref{fig:crossTypes}).
+        Bei Bäumen wird ein zufälliger Teil eines Baumes,
+        mit einem anderen zufälligen Teilbaum eines fremden Individuums vertauscht ( e)~\vref{fig:crossTypes}).
 
         \begin{figure}[H]
           \includegraphics[width=\textwidth,center]{graphics/crossover_types}
@@ -242,12 +243,9 @@
 
       Mutationen operieren auf dem Genotyp des Individuums.
       Die Positionen eines Genoms werden mit einer bestimmten Wahrscheinlichkeit \(p_{m}\) mutiert.
-
-      % TODO warum?
-
       Es ist jedoch Vorsicht geboten, da gewisse Lösungen durch Mutationen verloren gehen können.
-      Darum sollten Mutationswahrscheinlichkeiten klein gewählt werden,
-      da sonst keine gewinnbringende Evolution stattfinden kann.
+      Wenn zuviel mutiert wird, kann die Selektion und Evolution der Individuen nicht statt finden.
+      Darum sollten Mutationswahrscheinlichkeiten klein gewählt werden.
 
       \subsubsection{Binäre Repräsentationen}
 
@@ -282,7 +280,7 @@
 
       \subsubsection{Baum}
 
-        Bei Bäumen werden Teilabschnitte mutiert.
+        Bei Bäumen werden Teilabschnitte mutiert, wie in \vref{fig:MutationTree} erkennbar ist.
 
         \begin{figure}[H]
             \includegraphics[scale=0.8,center]{graphics/mutation_tree}
@@ -302,7 +300,7 @@
       \subsubsection{Genetische Algorithmen\label{item:genAlgo}}
 
         Die Genetischen Algorithmen~\cite{book:adapNaturalArtSys} arbeiten mit binären genetischen Repräsentationen.
-        Es wird Rekombination und selten Mutation eingesetzt~\cite[S.128]{book:evAlgo}.
+        Es wird rekombiniert und selten mutiert~\cite[S.128]{book:evAlgo}.
         Die Mutationen werden, falls eingesetzt,
         nur mit einer sehr kleinen Wahrscheinlichkeit durchgeführt~\cite[S.128]{book:evAlgo}.
 
@@ -314,7 +312,7 @@
 
       \subsubsection{Evolutionäre Programmierung\label{item:evProg}}
 
-        Evolutionäre Programmierung versucht die Evolution auf einer verhaltensbestimmten Ebene zu berücksichtigen,
+        Evolutionäre Programmierung versucht, die Evolution auf einer verhaltensbestimmten Ebene zu berücksichtigen,
         d.h.\ die Genetik wird nicht berücksichtigt~\cite[S.140]{book:evAlgo}.
         Das bedeutet, dass bei der evolutionären Programmierung~\cite{book:artIntSimEv}
         ausschliesslich Mutation und keine Rekombination eingesetzt wird.
@@ -337,5 +335,4 @@
     Doch es ist nicht möglich, dass das System in einem Schritt geändert wird.
     Nur einzelne, kleine Schritte in die entsprechende Richtung können unternommen werden.
     Dies wiederum führt zu Individuen mit geringerer Fitness.
-    Da aber viele Individuen existieren,
-    wird ein Individuum mit geringer Fitness kleinere Chancen haben während der Selektion (\vref{sec:Selektion}).
+    Da viele Individuen existieren, wird ein Individuum mit geringer Fitness, eine kleinere Chancen haben selektiert zu werden (\vref{sec:Selektion}).
