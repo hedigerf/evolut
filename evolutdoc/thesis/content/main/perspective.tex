@@ -9,8 +9,7 @@
   \todo[inline]{Bespricht die erzielten Ergebnisse bezüglich ihrer Erwartbarkeit, Aussagekraft und Relevanz}
   \todo[inline]{Interpretation und Validierung der Resultate}
   \todo[inline]{Rückblick auf Aufgabenstellung, erreicht bzw\@. nicht erreicht}
-  \todo[inline]{Legt dar, wie an die Resultate (konkret vom Industriepartner oder weiteren
-  Forschungsarbeiten; allgemein) angeschlossen werden kann; legt dar, welche Chancen die Resultate bieten}
+  \todo[inline]{Legt dar, wie an die Resultate angeschlossen werden kann; legt dar, welche Chancen die Resultate bieten}
 
   \section{Diskussion der Resultate\label{sec:diskRes}}
 
@@ -18,7 +17,8 @@
     In dieser Umgebung wird eine vereinfachte Physik verwendet, welche nur an die reale Physik angenähert ist.
     Deshalb sind die Resultate nicht ohne Vorbehalte auf die reale Welt übertragbar.
     \\
-    Das Evolvieren von artifiziellen Tieren und ihrer Steuerung ist möglich mit dem implementierten evolutionären Algorithmus.
+    Das Evolvieren von artifiziellen Tieren und ihrer Steuerung ist möglich
+    mit dem implementierten evolutionären Algorithmus.
     Es entwickelte sich keine klassische Laufbewegung,
     aber eine Bewegung welche es den Individuen erlaubt sich durch den Parcours fortzubewegen.
     \\
@@ -31,21 +31,42 @@
 
     \subsection{Wie kann eine Steuerung der Bewegung implementiert werden?}
 
-      Die Steuerung der Bewegung ist in zwei Teile aufgeteilt.
-      Einerseits in die Daten und andererseits in die Logik, der Motor.
-      \\
-      Dies bietet mehrere Vorteile.
-      Die Mutation arbeitet mit einer einfachen Repräsentation des Bewegungsablaufs.
+      Wie in~\vref{sec:Engine} beschrieben ist die Steuerung der Bewegung ist in zwei Teile aufgeteilt.
+      Einerseits die Daten im Genotyp und andererseits in die Logik, der Motor.
+      Es existiert nur ein Bewegungsablauf pro Individuum.
+      Damit wird erreicht, dass keien Synchronisation zwischen mehreren Motoren stattfinden muss.
+      Was wiederum die Komplexität des Motors reduziert.
 
+      \smallskip
 
+      Die Aufteilung bietet mehrere Vorteile.
+      Die Implementation des Motors und der Mutation des Bewegungsablaufs kann getrennt werden.
+      Die Mutation verarbeitet nur die Repräsentation des Bewegungsablaufs.
+      Innerhalb der Mutation muss deshalb nur die Struktur der Daten bekannt sein.
+      Vorteilhaft für die Implementation des Motors ist, dass dieser nur den vorgegebenen Ablauf abarbeiten muss.
 
+      \smallskip
 
-      % TODO Flo input
-      Der~\vref{sec:Engine} beschreibt wie die Steuerung der Bewegung implementiert wurde.
+      Ein Nachteil der Implementation des Motors ist, dass das Feedback-System nicht trivial implementiert werden kann.
+      Der Motor muss anhand des Feedbacks entscheiden, was weiter geschehen soll.
+      Für jede Kombination von Zustand des Bewegungsablaufs und Art des Feedbacks muss definiert werden,
+      was der nächste Zustand des Motors sein muss.
+      Zustände werden währen der Evolution erstellt und gelöscht.
+      Somit müssen diese Regeln dynamisch erstellt werden können.
 
-      % Aufteilen in daten und logik
-      % Vorteil, nachteil
+      \smallskip
 
+      Die erzeilten Resultate mit der Implementation des Motors sind zufriedenstellend.
+      In der gegebenen Form werden Bewegungsmuster entwickelt, die an den Parcours angepasst werden.
+      Es gilt zu beachten, dass diese Resultate unter dem von Floreano~\cite{Floreano2010} beschriebenen Problem
+      der evolutionären Robotik leiden.
+      Die entwickelten Individuen nutzen an bestimmten Stellen Eigenschaften des Parcours aus.
+      Eigenschaften innerhalb eines Parcours sind besondere Geländeformationen.
+      Damit lässt sich herleiten,
+      weshalb Simulationen mit einer höheren Wahrscheinlichkeit für das Hinzufügen von Bewegungen als das Löschen
+      bessere Resultate liefern.
+      Mit den zusätzlichen Bewegugnen kann das Individuum seinen Bewegungsablauf an weitere Geländeformationen adaptieren
+      und erreicht somit eine höhere Fitness.
 
       TEXT~\vref{sub:PerspectiveFeedback}.
 
