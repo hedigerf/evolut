@@ -31,25 +31,30 @@
 
     \subsection{Wie kann eine Steuerung der Bewegung implementiert werden?}
       \vref{sec:Engine} beschreibt wie die Steuerung der Bewegung implementiert wurde.
+      % TODO Flo input
 
     \subsection{Wie kann diese Steuerung evolviert werden?}
       Die Steuerung wurde durch Selektion und Mutation evolviert.
+      % TODO Flo input
     \subsection{Wie kann die Geometrie der Tiere evolviert werden?}
       Die Konstruktion der geometrischen Körper aus deren sich ein Individuum zusammensetzt, wurde unter \vref{sub:Beine} und \vref{subsub:GenotypeBodypointCreation} besprochen.
       Welche Geometrie die richtige ist, wird durch die Selektion und Mutation der Individuen bestimmt.
     \subsection{Wie sieht der Bewegungsablauf eines evolvierten Tieres aus?}
 
-    \subsection{Individuum Allgemeine Lösung vs Individuum evolvieren auf Evolvierbarkeit}
-
+    \subsection{Individuum: Allgemeine Lösung vs Evolvieren auf Evolvierbarkeit}
+      Es wird das beste Indivdiuum der 4000. Generation~\vref{fig:gen4000} aus dem vierten Simulationslauf~\vref{sec:4lauf} und dem füften Simulationslauf~\vref{sec:5lauf} miteinander verglichen.
+      Die Individuen haben beide eine Hüpfbewegung entwickelt. Jedoch streckt das eine Individum~(\vref{fig:gen4000_alg}) alle Beine, während das Andere~(\vref{fig:gen4000_ev}) fast alle Beine angewinkelt hat.
+      Ebenso weisst der Körper des Individuums, welches auf Evolvierbarkeit evolviert wurde, eine grössere Masse auf. Die Masse aller Beine ist folglich grösser beim Individum der allgemeinen Lösung.
+      Die Steuerung beider Individuen sind also quasi identisch, während bei der Geometrie leichte Unterschiede festgestellt worden sind.
     \begin{figure}[H]
       \centering
       \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/4_gen4000}
-        \caption{Allgemeine Lösung\label{fig:gen200_1}}
+        \caption{Allgemeine Lösung\label{fig:gen4000_alg}}
       \end{subfigure}
       \begin{subfigure}[b]{0.45\textwidth}
         \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/5_gen4000}
-        \caption{Evolvierung auf Evolvierbarkeit}
+        \caption{Evolvierung auf Evolvierbarkeit\label{fig:gen4000_ev}}
       \end{subfigure}
 
       \caption{4000. Generation\label{fig:gen4000}}
