@@ -15,21 +15,21 @@
     Das Evolvieren von artifiziellen Tieren und ihrer Steuerung ist möglich
     mit dem implementierten evolutionären Algorithmus.
     Es entwickelte sich keine klassische Laufbewegung,
-    aber eine Bewegung, welche es den Individuen erlaubt, sich durch den Parcours fortzubewegen.
+    sondern eine Bewegung welche es den Individuen erlaubt, sich durch den Parcours fortzubewegen.
     \\
     Es stellt sich heraus, dass eine Simulation viel Zeit beansprucht und äusserst rechenintensiv ist.
     12000 Generationen zu simulieren, dauert rund 10 Tage.
     \\
     Es kann die Hypothese aufgestellt werden, dass die JavaScript-Engine V8 momentan noch nicht ausreichend schnell ist.
     Eine weiterführende Arbeit könnte untersuchen,
-    wie die Leistungen anderer Implementationen von Javascript-Engines im Vergleich zu V8 abschneiden.
+    wie die Leistungen anderer Implementationen von Javascript-Engines im Vergleich zu V8 abschneiden würde.
 
     \subsection{Wie kann eine Steuerung der Bewegung implementiert werden?}
 
       Wie in~\vref{sec:Engine} beschrieben ist die Steuerung der Bewegung in zwei Teile aufgeteilt.
       Es existiert nur ein Bewegungsablauf pro Individuum.
       Damit wird erreicht, dass keine Synchronisation zwischen mehreren Motoren stattfinden muss.
-      Was wiederum die Komplexität des Motors reduziert.
+      Was wiederum die Komplexität eines Motors reduziert.
 
       \smallskip
 
@@ -57,7 +57,7 @@
       die es erlaubt einzelne Werte zu manipulieren.
       Der Bewegungsablauf beinhaltet eine Liste von möglichen Bewegungen.
       In der Liste können Bewegungen beliebig gruppiert werden.
-      Wie in~\vref{subsub:EngineMovement} beschrieben
+      Wie in~\vref{subsub:EngineMovement} beschrieben,
       wird die Information zu einer Bewegung in mehrere Teile aufgespaltet.
       Die gewählte Darstellungsform bietet eine fein gegliederte Beschreibung des Bewegungsablaufs.
       Diese Gleiderung erlaubt es den Bewegungsablauf einfach zu entwickeln.
@@ -94,7 +94,7 @@
       Damit dies validiert werden kann,
       muss ein geeignetes Verhältnis zwischen Hinzufügen und Löschen von Bewegungen gefunden werden,
       so dass die Simulation länger laufen kann.
-      Dieses Verhältnis ist jedoch abhängig von äusseren Faktoren und wird durch verfügbaren Ressourcen begrenzt.
+      Dieses Verhältnis ist jedoch abhängig von äusseren Faktoren und wird durch die verfügbaren Ressourcen begrenzt.
       Das Verhältnis kann durch mehrere Versuche bestimmt werden.
 
     \subsection{Wie kann die Geometrie der Tiere evolviert werden?}
@@ -115,7 +115,7 @@
 
       \smallskip
 
-      Es gilt zu prüfen, ob die Einschränkung, dass ein Körper eines Indidviduums aus 4--8 Punkten besteht,
+      Es gilt zu prüfen ob die Einschränkung, dass ein Körper eines Indidviduums aus 4--8 Punkten besteht,
       geändert werden kann.
       Damit ein Körper geformt werden kann, müssen mindesten drei Punkte vorhanden sein.
       Werden mehr Punkte zugelassen, so können komplexere Formen gebildet werden.
@@ -142,9 +142,9 @@
       \\
       Diese Aussagen über die Diversität sind nur gültig für den Einsatz von Turnierselektion.
       Um eine Aussage über andere Selektionsstrategien zu machen,
-      müssten andere Strategien implementiert werden~(\vref{sub:hypoSelect})
+      müssten andere Strategien implementiert werden~(\vref{sub:hypoSelect}).
 
-    \subsection{Wie sieht der Bewegungsablauf und Geometrie eines evolvierten Tieres aus?}
+    \subsection{Wie sieht der Bewegungsablauf und die Geometrie eines evolvierten Tieres aus?}
 
       Es wurde erwartet, dass die Indivdiuen eine Bewegung entwickelt,
       welche immer noch an den Gang einer Ameise erinnert.
@@ -198,7 +198,7 @@
       \end{figure}
 
       Die Hüpfbewegung in~\vref{fig:hupf} führen die Individuen aus, in dem sie sich mit einem Bein vom Boden abstossen.
-      Es lässt sich keine Tendenz zu einer bestimmten Körperform erkennen.
+      Es lässt sich keine Tendenz, zu einer bestimmten Körperform erkennen.
 
       \begin{figure}[H]
         \centering
@@ -239,8 +239,9 @@
 
       Die Ruderer in~\vref{fig:ruder} benutzen ein Bein um die Bewegung durchzuführen,
       alle anderen Beine verharren starr am Körper.
-      Die Fixierung der anderen Beine haben sie von ihren Vorfahren~(den Hüpfern) geerbt und noch nicht korrigiert.
-      Es wäre von Vorteil, wenn sie alle Beine für die Ruderbewegung nutzen würden.
+      Die starren Beine haben sie von ihren Vorfahren~(den Hüpfern) geerbt und noch nicht korrigiert.
+      Diese Gegebenheit kann man als ``frozen accident'' bezeichnen.
+      Alle Beine für die Ruderbewegung zu nutzen, würde zu besseren Fitnesswerten führen.
       Die Massen aller Beinpaare, ausser dass sich bewegende, haben sich verkleinert.
       Der Trend bei den Rundern liegt bei flachen Körpern.
 
@@ -290,9 +291,9 @@
 
     \subsection{Individuum: Allgemeine Lösung vs.\ Evolvieren auf Evolvierbarkeit}
 
-      Es wird das beste Indivdiuum der 4000. Generation~(\vref{fig:gen4000}) aus dem vierten Simulationslauf~\vref{sec:4lauf}
-      und dem füften Simulationslauf~(\vref{sec:5lauf}) miteinander verglichen.
-      Die Individuen haben beide eine Hüpfbewegung entwickelt.
+      Es wird das beste Indivdiuum der 4000. Generation~(\vref{fig:gen4000}) aus dem vierten Simulationslauf~(\vref{sec:4lauf})
+      mit dem füften Simulationslauf~(\vref{sec:5lauf}) miteinander verglichen.
+      Die Individuen haben beide Hüpfbewegungen entwickelt.
       Jedoch streckt das eine Individum~(\vref{fig:gen4000_alg}) alle Beine,
       während das Andere~(\vref{fig:gen4000_ev}) fast alle Beine angewinkelt hat.
       Das Strecken der Beine bringt eine bessere Balance,
@@ -324,14 +325,14 @@
     \subsection{Hypothese Körperpunkte\label{sub:PerspectiveHypBodyPoints}}
 
       Um eine Aussage über die Hypothese der Körperpunkte~(\vref{subsub:hypoKp}) zu treffen,
-      müsste wie erwähnt unter~\vref{subsub:bpScnd} die Mutation der Anzahl Körperpunkte implementiert werden.
+      müsste wie erwähnt unter~\vref{subsub:bpScnd}, die Mutation der Anzahl Körperpunkte implementiert werden.
       Spätestens ab der 10. Generation bei jedem Simulationslauf,
       existieren nur noch Individuen mit der gleichen Anzahl Körperpunkten.
       Die Hypothese kann erst valdiert werden, wenn die Anzahl der Körperpunkte mutiert wird.
 
     \subsection{Hypothese Mutationswahrscheinlichkeiten}
 
-      Die Hypothese über die Mutationswahrscheinlichkeiten~(\vref{subsub:hypoMut}) hat sich bewahrheitet
+      Die Hypothese über die Mutationswahrscheinlichkeiten~(\vref{subsub:hypoMut}) hat sich bewahrheitet,
       wie in~\vref{subsub:3000gen} festgestellt worden ist.
       Kleinere Mutationswahrscheinlichkeiten tragen dazu bei, fittere Individuen zu finden.
       Hohe Mutatinswahrscheinlichkeiten bedeuten,
@@ -344,7 +345,7 @@
       Insbesondere für die Entwicklung des Bewegungsablaufs ist dies relevant.
       Mit kleineren Wahrscheinlichkeiten werden feinere Änderungen vorgenommen,
       die in der Simulation ausgewertet werden.
-      Fallen die Änderungen zu gross aus ist es möglich, dass im Ablauf eine nachteilhafte Mutation
+      Fallen die Änderungen zu gross aus, ist es möglich, dass im Ablauf eine unvorteilhafte Mutation
       zu Beginn des Bewegungsablaufs eine vorteilhafte Änderung zunichtemacht.
 
       \smallskip
@@ -439,7 +440,7 @@
         \item Simulationslauf mit 10 unterschiedlichen Parcours
       \end{itemize}
 
-      Folgende Kritierien müssen erfüllt sein:
+      Folgende Kritierien müssten erfüllt sein:
 
       \begin{itemize}
         \item Es sollen zwei bestehende Populationen verwendet werden.
