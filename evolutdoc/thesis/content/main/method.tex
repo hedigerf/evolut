@@ -496,7 +496,7 @@
     welche relevant für den Algorithmus sind.
     Der Schwierigkeitsgrad des Parcours wird alle 100 Generationen erhöht.
     Bei der allgemeinen Lösung wird der Parcours nach jeder Generation neu generiert.
-    Bei dem Evolvieren auf Evolvierbarkeit wird der Parcours nur dann neu generiert,
+    Beim Evolvieren auf Evolvierbarkeit wird der Parcours nur dann neu generiert,
     wenn sich die Schwierigkeit des Parcours ändert.
 
     \begin{table}[H]
@@ -508,17 +508,17 @@
 
       Ein wichtiger technischer Parameter ist die Anzahl der eingesetzten Simulationsprozesse~(\vref{sec:Ablauf}).
       Durch die Erhöhung dieses Parameters kann von mehreren Prozessor-Kernen profitiert werden.
-      Domit lässt sich die Simulation~(\vref{sec:simulation}) und Mutation~(\vref{sec:Mutation}) parallelisieren.
-      Optimal ist es diesen Wert auf die Anzahl verfügbarer Prozessor-Kerne zu setzen.
+      Damit lässt sich die Simulation~(\vref{sec:simulation}) in der \gls{PhysicsEngine} und die Mutation~(\vref{sec:Mutation}) parallelisieren.
+      Optimal ist es diesen Wert auf die Anzahl verfügbarer Prozessorkerne zu setzen.
       Die Grösse des Zeitschritts~\cite{bullet:steppingTheWorld} der \gls{PhysicsEngine} lässt sich einstellen.
-      Die ``relaxation'' (Entspannung) kann auch konfiguriert werden.
+      Die ``relaxation''~(Entspannung) kann auch konfiguriert werden.
       Dieser Parameter beschreibt die Anzahl von Zeitschritten,
       um eine Constraint-Gleichung~\cite{gamedev:constraints} zu stabilisieren.
-      Die ``stiffness'' (Steifheit) ist der letzte wichtige technische Parameter.
+      Die ``stiffness''~(Steifheit) ist der letzte wichtige technische Parameter.
       Ein Beispiel für diesen Parameter ist die Steifheit einer Feder.
       Er beschreibt, wie steif die Objekte innerhalb der Simulation sich verhalten sollen.
 
-  \section{Ablauf\label{sec:Ablauf}}
+  \section{Ablauf der Simulation\label{sec:Ablauf}}
 
     Die Applikation setzt sich aus mehreren Komponenten zusammen.
     Jeder dieser Komponenten kann dem Haupt- oder Simulationsprozess zugeordnet werden~(\vref{fig:hauptSimuProzesse}).
@@ -582,19 +582,19 @@
         \caption{Parcours 1000. Generation\label{fig:parcours3}}
       \end{figure}
 
-      \subsection{Simulation\label{sec:simulation}}
+      \subsection{Evaluation der Fitnessfunktion\label{sec:simulation}}
 
         Nachdem eine neue Population und ein neuer Parcours erstellt worden ist.
-        Muss eine Simulation durchgeführt werden um den Fitnesswert der Individuen zu bestimmen.
+        Muss eine Evaluation der Fitnessfunktion durchgeführt werden.
         Die Verantwortliche Klasse ist die SimulationWorld.
         Zuerst muss jeder Genotyp zu einem Phänotyp abgebildet werden.
-        Anschliessend muss der Parcours aus dem Blueprint erstellt werden.
-        Erst dann kann mit der Simulation begonnen werden.
+        Anschliessend muss der Parcours aus dem Blueprint in der \gls{PhysicsEngine} erstellt werden.
+        Erst dann kann mit dem Simulieren der Individuen begonnen werden.
         Die SimulationWorld merkt sich zu jedem Individuum die Position.
         Individuen welche sich während vier Sekunden kaum bewegt haben,
         werden aus der laufenden Simulation entfernt und ihr Fitnesswert wird abgespeichert.
-        Die Simulation kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
-        Es wird dann jeweils für \( Populationsgrösse / Anzahl Simulationsprozesse \) Individuen eine eigene Simulation erstellt.
+        Das Simulieren der Individuen kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
+        Es wird dann jeweils für \( Populationsgrösse / Anzahl von Simulationsprozessen \) Individuen eine eigene Simulation erstellt.
 
     \subsection{Reporting\label{subsec:Reporting}}
 
