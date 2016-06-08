@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg height="460" version="1.1" width="772" xmlns="http://www.w3.org/2000/svg">
+<polygon fill="#ffffff" points="14,14 308,14 308,38 357,38 357,445 14,445 14,14" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="294" x="14" y="14"/>
+<text font-family="Dialog" font-size="12" x="19" y="28">
+Hauptprozess</text>
+<rect fill="none" height="407" stroke="#000000" stroke-width="1" width="343" x="14" y="38"/>
+<polygon fill="#ffffff" points="406,14 708,14 708,38 757,38 757,445 406,445 406,14" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="302" x="406" y="14"/>
+<text font-family="Dialog" font-size="12" x="411" y="28">
+Simulationsprozess</text>
+<rect fill="none" height="407" stroke="#000000" stroke-width="1" width="351" x="406" y="38"/>
+<polygon fill="#ffffff" points="22,166 92,166 92,190 141,190 141,261 22,261 22,166" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="70" x="22" y="166"/>
+<text font-family="Dialog" font-size="12" x="27" y="180">
+Selektion</text>
+<rect fill="none" height="71" stroke="#000000" stroke-width="1" width="119" x="22" y="190"/>
+<polygon fill="#ffffff" points="422,302 500,302 500,326 549,326 549,397 422,397 422,302" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="78" x="422" y="302"/>
+<text font-family="Dialog" font-size="12" x="427" y="316">
+Mutation</text>
+<rect fill="none" height="71" stroke="#000000" stroke-width="1" width="127" x="422" y="326"/>
+<polygon fill="#ffffff" points="182,54 260,54 260,78 309,78 309,141 182,141 182,54" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="78" x="182" y="54"/>
+<text font-family="Dialog" font-size="12" x="187" y="68">
+Population</text>
+<rect fill="none" height="63" stroke="#000000" stroke-width="1" width="127" x="182" y="78"/>
+<polygon fill="#ffffff" points="190,174 260,174 260,198 309,198 309,261 190,261 190,174" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="70" x="190" y="174"/>
+<text font-family="Dialog" font-size="12" x="195" y="188">
+Reporting</text>
+<rect fill="none" height="63" stroke="#000000" stroke-width="1" width="119" x="190" y="198"/>
+<polygon fill="#ffffff" points="22,54 100,54 100,78 149,78 149,141 22,141 22,54" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="78" x="22" y="54"/>
+<text font-family="Dialog" font-size="12" x="27" y="68">
+Genotyp</text>
+<rect fill="none" height="63" stroke="#000000" stroke-width="1" width="127" x="22" y="78"/>
+<polygon fill="#ffffff" points="422,54 508,54 508,78 557,78 557,141 422,141 422,54" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="86" x="422" y="54"/>
+<text font-family="Dialog" font-size="12" x="427" y="68">
+Phenotyp</text>
+<rect fill="none" height="63" stroke="#000000" stroke-width="1" width="135" x="422" y="78"/>
+<polygon fill="#ffffff" points="30,294 142,294 142,318 191,318 191,389 30,389 30,294" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="112" x="30" y="294"/>
+<text font-family="Dialog" font-size="12" x="35" y="308">
+ParcourGenerator</text>
+<rect fill="none" height="71" stroke="#000000" stroke-width="1" width="161" x="30" y="318"/>
+<polygon fill="#ffffff" points="582,54 702,54 702,78 751,78 751,141 582,141 582,54" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="120" x="582" y="54"/>
+<text font-family="Dialog" font-size="12" x="587" y="68">
+p2.js Physik-Engine</text>
+<rect fill="none" height="63" stroke="#000000" stroke-width="1" width="169" x="582" y="78"/>
+<polygon fill="#ffffff" points="422,158 508,158 508,182 557,182 557,261 422,261 422,158" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="86" x="422" y="158"/>
+<text font-family="Dialog" font-size="12" x="427" y="172">
+Simulation</text>
+<rect fill="none" height="79" stroke="#000000" stroke-width="1" width="135" x="422" y="182"/>
+<polygon fill="#ffffff" points="590,158 688,158 688,182 737,182 737,261 590,261 590,158" stroke="#ffffff" stroke-width="1"/>
+<rect fill="none" height="24" stroke="#000000" stroke-width="1" width="98" x="590" y="158"/>
+<text font-family="Dialog" font-size="12" x="595" y="172">
+ParcourCreator</text>
+<rect fill="none" height="79" stroke="#000000" stroke-width="1" width="147" x="590" y="182"/>
+</svg>
