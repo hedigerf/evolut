@@ -302,7 +302,6 @@
       Die Hypothese über die Mutationswahrscheinlichkeiten~(\vref{subsub:hypoMut}) hat sich bewahrheitet
       wie in~\vref{subsub:3000gen} festgestellt worden ist.
       Kleinere Mutationswahrscheinlichkeiten tragen dazu bei, fittere Individuen zu finden.
-      \\
       Hohe Mutatinswahrscheinlichkeiten bedeuten,
       dass viele Bereiche eines Individuums in einem Schritt variiert werden können.
       Dies führt dazu, dass vorteilhafte, sinnvolle Mutationen durch unvorteilhafte überschattet werden.
@@ -310,16 +309,18 @@
 
       \smallskip
 
-      Insbesondere auf die Entwicklung des Bewegungsablaufs hat dies grosse Auswirkungen.
+      Insbesondere für die Entwicklung des Bewegungsablaufs ist dies relevant.
       Mit kleineren Wahrscheinlichkeiten werden feinere Änderungen vorgenommen,
-      die dann in der Simulation ausgewertet werden.
+      die in der Simulation ausgewertet werden.
+      Fallen die Änderungen zu gross aus ist es möglich, dass im Ablauf eine nachteilhafte Mutation
+      zu Beginn des Bewegungsablaufs eine vorteilhafte Änderung zunichtemacht.
 
-      \ldots TODO
+      \smallskip
 
-      % TODO discuss
-
-      % zu viele mutation -> wertvolle lösungen verspielt
-      % zu viele änderung für sinnvolle mutation
+      Die Wahrscheinlichkeit der Mutation steuert,
+      ob der evolutionäre Algorithmus in eine Zufallssuche abgleitet~\cite{Sampson1976}.
+      Daraus folgt, dass die Wahrscheinlichkeit der entscheidende Faktor it für einen positiven oder
+      negativen Effekt der Mutation.
 
   \section{Ausblick\label{sec:ausblick}}
 
