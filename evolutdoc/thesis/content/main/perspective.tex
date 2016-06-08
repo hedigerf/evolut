@@ -14,24 +14,24 @@
   \section{Diskussion der Resultate\label{sec:diskRes}}
 
     Die gefundenen Resultate wiederspiegeln Lösungen innerhalb einer künstlichen Umgebung.
-    In dieser Umgebung wird eine vereinfachte Physik verwendet, welche nur eine Annäherung and die reale Physik ist.
+    In dieser Umgebung wird eine vereinfachte Physik verwendet, welche nur eine Annäherung an die reale Physik ist.
     Deshalb sind die Resultate nicht ohne Vorbehalte auf die reale Welt übertragbar.
     \\
     Das Evolvieren von artifiziellen Tieren und ihrer Steuerung ist möglich
     mit dem implementierten evolutionären Algorithmus.
     Es entwickelte sich keine klassische Laufbewegung,
-    aber eine Bewegung welche es den Individuen erlaubt sich durch den Parcours fortzubewegen.
+    aber eine Bewegung, welche es den Individuen erlaubt, sich durch den Parcours fortzubewegen.
     \\
     Es stellt sich heraus, dass eine Simulation viel Zeit beansprucht und äusserst rechenintensiv ist.
     12000 Generationen zu simulieren, dauert rund 10 Tage.
     \\
     Es kann die Hypothese aufgestellt werden, dass die JavaScript-Engine V8 momentan noch nicht ausreichend schnell ist.
-    Eine weiterführende Arbeit könnte untersuchen wie die Leistungen anderer Implementationen von Javascript-Engines im
-    Vergleich zu V8 abschneiden.
+    Eine weiterführende Arbeit könnte untersuchen,
+    wie die Leistungen anderer Implementationen von Javascript-Engines im Vergleich zu V8 abschneiden. % TODO ref
 
     \subsection{Wie kann eine Steuerung der Bewegung implementiert werden?}
 
-      Wie in~\vref{sec:Engine} beschrieben ist die Steuerung der Bewegung ist in zwei Teile aufgeteilt.
+      Wie in~\vref{sec:Engine} beschrieben ist die Steuerung der Bewegung in zwei Teile aufgeteilt.
       Es existiert nur ein Bewegungsablauf pro Individuum.
       Damit wird erreicht, dass keine Synchronisation zwischen mehreren Motoren stattfinden muss.
       Was wiederum die Komplexität des Motors reduziert.
@@ -40,8 +40,8 @@
 
       Die Aufteilung bietet mehrere Vorteile.
       Die Implementation des Motors und der Mutation des Bewegungsablaufs kann getrennt werden.
-      Die Mutation verarbeitet nur die Repräsentation des Bewegungsablaufs.
-      Innerhalb der Mutation muss deshalb nur die Struktur der Daten bekannt sein.
+      Die Mutation verarbeitet die Repräsentation des Bewegungsablaufs.
+      Innerhalb der Mutation muss deshalb einzig die Struktur der Daten bekannt sein.
       Vorteilhaft für die Implementation des Motors ist, dass dieser nur den vorgegebenen Ablauf abarbeiten muss.
 
       \smallskip
@@ -58,9 +58,9 @@
 
     \subsection{Wie kann diese Steuerung evolviert werden?\label{sub:wieStEv}}
 
-      Damit die Steuerung der Bewegung, der Bewegungsablauf, evolviert werden kann,
-      muss dieser in einer Form vorliegen, die es erlaubt einzelne Werte zu manipulieren.
-      Der Bewegungsablauf beinhaltet eine Liste von Bewegungen.
+      Damit die Steuerung der Bewegung, der Bewegungsablauf, evolviert werden kann, liegt diese in einer Form vor,
+      die es erlaubt einzelne Werte zu manipulieren.
+      Der Bewegungsablauf beinhaltet eine Liste von möglichen Bewegungen.
       In der Liste können Bewegungen beliebig gruppiert werden.
       Wie in~\vref{subsub:EngineMovement} beschrieben
       wird die Information zu einer Bewegung in mehrere Teile aufgespaltet.
@@ -91,27 +91,28 @@
         \caption{Fittestes Individuum, Vergleich dritter und vierter Lauf}
       \end{figure}
 
-      Dieser Vergleich ist nur für 1200 Generationen relevant.
+      Der Vergleich zwischen den Simulationsläufen zeigt, dass im dritten Lauf die Individuen fitter waren.
+      Es kann jedoch kein allgemeiner Schluss gezogen werden, da der Vergleich nur 1200 Generationen beinhaltet.
       Die Grösse der Datenstrukturen im dritten Simulationslauf hat die Simulation stark verlangsamt,
       weshalb die Simulation abgebrochen werden musste.
-      Deshalb ist dieser Vergleich nur für die ersten 1200 Generationen relevant.
-      Damit die Vermutung validiert werden kann,
+      \\
+      Damit dies validiert werden kann,
       muss ein geeignetes Verhältnis zwischen Hinzufügen und Löschen von Bewegungen gefunden werden,
       so dass die Simulation länger laufen kann.
+      Dieses Verhältnis ist jedoch abhängig von äusseren Faktoren und wird durch verfügbaren Ressourcen begrenzt.
+      Das Verhältnis kann durch mehrere Versuche bestimmt werden.
 
     \subsection{Wie kann die Geometrie der Tiere evolviert werden?}
 
       Die Konstruktion der geometrischen Objekte aus denen sich ein Individuum zusammensetzt,
       wurde unter~\vref{sub:Beine} und~\vref{subsub:GenotypeBodypointCreation} besprochen.
-
-      
-
       \\
       Welche Geometrie die richtige ist, wird durch die Selektion und Mutation der Individuen bestimmt.
 
-      \smallskip
-
       % TODO
+
+      - Wäre eventuell ein Tierchen mit 3 oder 9 Beinen besser?Weshalb ja, weshalb nein
+      - Was wäre geschehen, wenn ihr ein anderes Verteilsystem der Punkte genommen hätte?
 
     \subsection{Nimmt die Diversität mit zunehmenden Generationen stetig ab?}
       Es wurde erwatet, dass die anfänglich hohe Diversität stetig sinken würde,
