@@ -11,15 +11,21 @@
     Die gefundenen Resultate wiederspiegeln Lösungen innerhalb einer künstlichen Umgebung.
     In dieser Umgebung wird eine vereinfachte Physik verwendet, welche nur eine Annäherung an die reale Physik ist.
     Deshalb sind die Resultate nicht ohne Vorbehalte auf die reale Welt übertragbar.
-    \\
+
+    \medskip
+
     Das Evolvieren von artifiziellen Tieren und ihrer Steuerung ist möglich
     mit dem implementierten evolutionären Algorithmus.
     Es entwickelte sich keine klassische Laufbewegung,
     sondern eine Bewegung welche es den Individuen erlaubt, sich durch den Parcours fortzubewegen.
-    \\
+
+    \medskip
+
     Es stellt sich heraus, dass eine Simulation viel Zeit beansprucht und äusserst rechenintensiv ist.
     12000 Generationen zu simulieren, dauert rund 10 Tage.
-    \\
+
+    \medskip
+
     Es kann die Hypothese aufgestellt werden, dass die JavaScript-Engine V8 momentan noch nicht ausreichend schnell ist.
     Eine weiterführende Arbeit könnte untersuchen,
     wie die Leistungen anderer Implementationen von Javascript-Engines im Vergleich zu V8 abschneiden würde.
@@ -61,7 +67,9 @@
       wird die Information zu einer Bewegung in mehrere Teile aufgespaltet.
       Die gewählte Darstellungsform bietet eine fein gegliederte Beschreibung des Bewegungsablaufs.
       Diese Gleiderung erlaubt es den Bewegungsablauf einfach zu entwickeln.
-      \\
+
+      \medskip
+
       Wie erwartet ist der Bewegungsablauf hauptverantwortlich für die Fitness eines Individuums.
       Dies führt dazu, dass Individuen mit einem ausgereiften Bewegungsablauf mit grösserer Wahrscheinlichkeit
       für die Reproduktion selektiert und anschliessen mutiert werden.
@@ -73,6 +81,7 @@
       In der gegebenen Form werden Bewegungsmuster entwickelt, die an den Parcours angepasst werden.
       Es gilt zu beachten, dass diese Resultate unter dem von Floreano~\cite{Floreano2010} beschriebenen Problem
       der evolutionären Robotik leiden.
+      \\
       Die entwickelten Individuen nutzen an bestimmten Stellen Eigenschaften des Parcours aus.
       Eigenschaften sind hier besondere Geländeformationen innerhalb eines Parcours.
       Damit lässt sich herleiten, weshalb die Simulation mit einer höheren Wahrscheinlichkeit
@@ -100,7 +109,7 @@
     \subsection{Wie kann die Geometrie der Tiere evolviert werden?}
 
       Die Konstruktion der geometrischen Objekte, aus denen sich ein Individuum zusammensetzt,
-      wurde unter~\vref{sub:Beine} und~\vref{subsub:GenotypeBodypointCreation} besprochen.
+      wird unter~\vref{sub:Beine} und~\vref{subsub:GenotypeBodypointCreation} besprochen.
       Welche Geometrie die richtige ist, wird durch die Selektion und Mutation der Individuen bestimmt.
       Falls die Körperpunkte mit Hilfe eines viereckigen Bereiches konstruiert worden sind,
       wäre die Konstruktion eines Körpers schwieriger ausgefallen~(\vref{subsub:GenotypeBodypointCreation}).
@@ -125,7 +134,7 @@
 
     \subsection{Nimmt die Diversität mit zunehmenden Generationen stetig ab?}
 
-      Es wurde erwatet, dass die anfänglich hohe Diversität stetig sinken würde,
+      Es wird erwartet, dass die anfänglich hohe Diversität stetig sinken würde,
       bis sie einen Tiefpunkt zum Ende der Simulation erreicht hätte.
       \\
       Analysiert man die Diversitätsgraphen aus dem vierten~(\vref{sec:4lauf}) und
@@ -135,19 +144,23 @@
       Gewisse Ausreisser erreichen sogar die Diversität der ersten Generationen.
       Jedoch zeichnet sich ein anderes Bild bei dem Evolvieren auf Evolvierbarkeit ab.
       Hier fällt die Fitness ab der 2000. Generation auf ein niedriges Niveau.
-      \\
+
+      \medskip
+
       Durch den sich ständigen verändernden Parcours,
       müssen sich die Individuen der allgemeinen Lösung mehr anpassen, als ihre Gegenspieler.
       Deshalb liefert die allgemeine Lösung vielfältigere Individuen.
-      \\
+
+      \medskip
+
       Diese Aussagen über die Diversität sind nur gültig für den Einsatz von Turnierselektion.
       Um eine Aussage über andere Selektionsstrategien zu machen,
       müssten andere Strategien implementiert werden~(\vref{sub:hypoSelect}).
 
     \subsection{Wie sieht der Bewegungsablauf und die Geometrie eines evolvierten Tieres aus?}
 
-      Es wurde erwartet, dass die Indivdiuen eine Bewegung entwickelt,
-      welche immer noch an den Gang einer Ameise erinnert.
+      Es wird erwartet, dass die Indivdiuen eine Bewegung entwickelt,
+      welche noch an den Gang einer Ameise erinnert.
       Stattdessen haben sich drei unterschiedliche Bewegungen entwickelt:
 
       \begin{itemize}
@@ -286,23 +299,27 @@
       dass nicht alle Beine benützen werden müssen, um sich durch den Parcours fortbewegen zu können.
       Eine Anpassung der Wahrscheinlichkeit für das Hinzufügen von Bewegungen (\vref{sub:wieStEv}),
       könnte die Ruderer veranlassen, alle Beine zu bewegen.
-      Weiterführende Simulationen mit angepassten Parameter könnten fähig sein,
-      alle Beine der artifiziellen Tiere auszunutzen.
+      Weiterführende Simulationen mit angepassten Parameter könnten fähig sein, alle Beine auszunutzen.
 
-    \subsection{Individuum: Allgemeine Lösung vs.\ Evolvieren auf Evolvierbarkeit}
+    \subsection{Individuum: Allgemeine Lösung vs.\ evolvieren auf Evolvierbarkeit}
 
       Es wird das beste Indivdiuum der 4000. Generation~(\vref{fig:gen4000}) aus dem vierten Simulationslauf~(\vref{sec:4lauf})
       mit dem füften Simulationslauf~(\vref{sec:5lauf}) miteinander verglichen.
+
+      \medskip
+
       Die Individuen haben beide Hüpfbewegungen entwickelt.
       Jedoch streckt das eine Individum~(\vref{fig:gen4000_alg}) alle Beine,
       während das Andere~(\vref{fig:gen4000_ev}) fast alle Beine angewinkelt hat.
       Das Strecken der Beine bringt eine bessere Balance,
-      dies ist der Grund, warum das Individum aus der allgemeinen Lösung einen besseren Fitnesswert aufweisen kann.
-      Ebenso weisst der Körper des Individuums, welches auf Evolvierbarkeit evolviert wurde, eine grössere Masse auf.
-      Die Masse aller Beine ist folglich grösser beim Individum der allgemeinen Lösung.
+      dies ist der Grund, warum das Individuum aus der allgemeinen Lösung einen besseren Fitnesswert aufweist.
+      Ebenso weist der Körper des Individuums, welches auf Evolvierbarkeit evolviert wurde, eine grössere Masse auf.
+      Die Masse aller Beine ist folglich grösser beim Individuum der allgemeinen Lösung.
       Während bei der Geometrie leichte Unterschiede festgestellt worden sind,
       ist die Steuerung beider Individuen fast identisch.
-      \\
+
+      \medskip
+
       Die Resulatate sprechen dafür, dass mit der allgemeinen Lösung fittere Individuen gefunden werden können.
       Um diese Aussage zu unterstreichen,
       sollten noch mehr Simulationen mit dem Evolvieren auf Evolvierbarkeit durchgeführt werden.
@@ -431,7 +448,9 @@
       da sie sich schneller an eine neue Umgebung anpassen können.
       Wenn immer der gleiche Parcours benutzt wird,
       sollten die Individuen welche auf Evolvierbarkeit evolviert worden sind, auf Dauer überlegen sein.
-      \\
+
+      \medskip
+
       Um diese Hypothese zu validieren,
       sollte für beide Lösungsansätze je zwei Simulationsläufe mit 1000 Iterationen durchgeführt werden:
 
@@ -439,6 +458,8 @@
         \item Simulationslauf mit gleichem Parcours
         \item Simulationslauf mit 10 unterschiedlichen Parcours
       \end{itemize}
+
+      \medskip
 
       Folgende Kritierien müssten erfüllt sein:
 
@@ -457,10 +478,13 @@
       Jeder dieser Terrain-Typen verlangt andere Anpassungen des Individuums.
       Eisige Untergründe bieten wenig Halt und Reibung.
       Sandige Terrains sind ein weicher Untergrund und benötigen deshalb andere Eigenscahften.
+      \\
       Eine interessante Fragestellung ist, wie die Terrain-Typen das Aussehen und den Bewegungsablauf beeinflussen.
       Ein Parcours der einen Mix aus verschiedenen Terrain-Typen beinhaltet ist ebenfalls interessant zu untersuchen.
       Darin werden alle Anforderung kombiniert und das Indidivuum muss diese abdecken.
-      \\
+
+      \medskip
+      
       Zusammen mit einem Feedback-System für die Bewegung und verschiedenen Terrain-Typen kann untersucht werden,
       ob komplexere Bewegungsabläufe entstehen und wie diese sich in unterschiedlichen Umgebungen verhalten.
 
