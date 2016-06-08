@@ -101,26 +101,27 @@
 
       Die Konstruktion der geometrischen Objekte aus denen sich ein Individuum zusammensetzt,
       wurde unter~\vref{sub:Beine} und~\vref{subsub:GenotypeBodypointCreation} besprochen.
-      \\
       Welche Geometrie die richtige ist, wird durch die Selektion und Mutation der Individuen bestimmt.
+      Falls die Körperpunkte mit Hilfe eines viereckigen Bereiches konstruiert worden sind,
+      wäre die Konstruktion eines Körpers schwieriger ausgefallen~(\vref{subsub:GenotypeBodypointCreation}).
+      Der Kreis scheint nach wie vor, die einfachste Art der Körperpunktekonstruktion zu sein.
 
       \smallskip
 
-      % Wäre eventuell ein Tierchen mit 3 oder 9 Beinen besser?Weshalb ja, weshalb nein
-
-      Es gilt zu prüfen, ob die Einschränkung, dass ein Körper aus 4--8 Punkten besteht, geändert werden kann.
-      Ein Körper kann nur mit drei oder mehr Punkte geformt werden.
-      Mit mehr Punkten können komplexere Formen gebildet werden.
-      \\
-      Damit geprüft werden kann,
-      wie die Fitness von Individuen mit verschiedenen Anzahlen an Körperpunkten ist
-      müssen die Voraussetzungen dafür geschaffen werden~\vref{sub:PerspectiveHypBodyPoints}.
+      Man könnte den Ansatz der Konstruierung mit Hilfe eines Kreises jedoch erweitern.
+      Um mit bestimmten Formen Simulationsläufe durchzuführen, könnten Bediengungen für die Körperpunkte formulieren werden,
+      so dass sie nur in definierten Bereichen gesetzt werden dürfen.
 
       \smallskip
 
-      Ein weiterer Punkt ist die Art und Weise wie die Koordinaten der Punkte generiert werden.
-      Die verwendete Methode mit dem Einheitskreis ist eine flexibele Methode,
-      mit der vielfältige Formen einfach generiert werden können.
+      Es gilt zu prüfen, ob die Einschränkung, dass ein Körper eines Indidviduums aus 4--8 Punkten besteht,
+      geändert werden kann.
+      Damit ein Körper geformt werden kann, müssen mindesten drei Punkte vorhanden sein.
+      Werden mehr Punkte zugelassen, so können komplexere Formen gebildet werden.
+      Ausserdem muss die Mutation der Anzahl Körperpunkte implementiert werden~(\vref{subsub:bpScnd}).
+      Sonst werden bereits nach kurzer Zeit nur Individuen mit der selben Anzahl Köprerpunkten existieren.
+      \(N\)-eckige Individuen haben das Potenzial besser abzuschneiden, als die Bestehenden.
+
 
     \subsection{Nimmt die Diversität mit zunehmenden Generationen stetig ab?}
 
@@ -368,8 +369,7 @@
       Momentan beschränkt der definierte Bewegugngsablauf die Individuen auf sechs Beine.
       Wenn auf jedem Bein ein Bewegungsablauf definiert wird, wäre es möglich artifizielle Tiere mit \(n\)-Beinen zu erstellen.
       Es muss aber mit erhöhtem Rechenaufwand gerechnet werden,
-      da die Bewegugnsabläufe miteinander synchronisiert werden müssen
-      und mehr Beine bewegt werden.
+      da die Bewegugnsabläufe miteinander synchronisiert werden müssen und mehr Beine bewegt werden.
       Eine weitere spannende Forschungsfrage könnte formuliert werden:
       Mit wie vielen Beine kann sich ein künstliches Tier optimal fortbewegen?
 
