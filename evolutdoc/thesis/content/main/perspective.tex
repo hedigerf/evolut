@@ -66,7 +66,7 @@
       Wie in~\vref{subsub:EngineMovement} beschrieben,
       wird die Information zu einer Bewegung in mehrere Teile aufgespaltet.
       Die gewählte Darstellungsform bietet eine fein gegliederte Beschreibung des Bewegungsablaufs.
-      Diese Gleiderung erlaubt es den Bewegungsablauf einfach zu entwickeln.
+      Diese Gliederung erlaubt es den Bewegungsablauf einfach zu entwickeln.
 
       \medskip
 
@@ -124,12 +124,12 @@
 
       \medskip
 
-      Es gilt zu prüfen ob die Einschränkung, dass ein Körper eines Indidviduums aus 4--8 Punkten besteht,
+      Es gilt zu prüfen ob die Einschränkung, dass ein Körper eines Individuums aus 4--8 Punkten besteht,
       geändert werden kann.
       Damit ein Körper geformt werden kann, müssen mindesten drei Punkte vorhanden sein.
       Werden mehr Punkte zugelassen, so können komplexere Formen gebildet werden.
       Ausserdem muss die Mutation der Anzahl Körperpunkte implementiert werden~(\vref{subsub:bpScnd}).
-      Sonst werden bereits nach kurzer Zeit nur Individuen mit der selben Anzahl Köprerpunkten existieren.
+      Sonst werden bereits nach kurzer Zeit nur Individuen mit derselben Anzahl Körperpunkten existieren.
       \(N\)-eckige Individuen haben das Potenzial besser abzuschneiden, als die Bestehenden.
 
     \subsection{Nimmt die Diversität mit zunehmenden Generationen stetig ab?}
@@ -159,7 +159,7 @@
 
     \subsection{Wie sieht der Bewegungsablauf und die Geometrie eines evolvierten Tieres aus?}
 
-      Es wird erwartet, dass die Indivdiuen eine Bewegung entwickelt,
+      Es wird erwartet, dass die Individuen eine Bewegung entwickeln,
       welche noch an den Gang einer Ameise erinnert.
       Stattdessen haben sich drei unterschiedliche Bewegungen entwickelt:
 
@@ -170,7 +170,7 @@
       \end{itemize}
 
       Bei der Rollbewegung kippen die Individuen vornüber und drehen sich einmal um sich selber.
-      Die Gemoetrie des Körpers tendiert zu einer kreisartigen Form.
+      Die Geometrie des Körpers tendiert zu einer kreisartigen Form.
       Beine spielen bei dieser Art von Bewegung eine untergeordnete Rolle.
 
       \begin{figure}[H]
@@ -256,7 +256,7 @@
       Diese Gegebenheit kann man als ``frozen accident'' bezeichnen.
       Alle Beine für die Ruderbewegung zu nutzen, würde zu besseren Fitnesswerten führen.
       Die Massen aller Beinpaare, ausser dass sich bewegende, haben sich verkleinert.
-      Der Trend bei den Rundern liegt bei flachen Körpern.
+      Der Trend bei den Ruderern liegt bei flachen Körpern.
 
       \begin{figure}[H]
         \centering
@@ -295,7 +295,7 @@
 
       \end{figure}
 
-      Die gefunden Resultate zeigen,
+      Die gefundenen Resultate zeigen,
       dass nicht alle Beine benützen werden müssen, um sich durch den Parcours fortbewegen zu können.
       Eine Anpassung der Wahrscheinlichkeit für das Hinzufügen von Bewegungen (\vref{sub:wieStEv}),
       könnte die Ruderer veranlassen, alle Beine zu bewegen.
@@ -303,13 +303,13 @@
 
     \subsection{Individuum: Allgemeine Lösung vs.\ evolvieren auf Evolvierbarkeit}
 
-      Es wird das beste Indivdiuum der 4000. Generation~(\vref{fig:gen4000}) aus dem vierten Simulationslauf~(\vref{sec:4lauf})
-      mit dem füften Simulationslauf~(\vref{sec:5lauf}) miteinander verglichen.
+      Es wird das beste Individuum der 4000. Generation~(\vref{fig:gen4000}) aus dem vierten Simulationslauf~(\vref{sec:4lauf})
+      mit dem fünften Simulationslauf~(\vref{sec:5lauf}) miteinander verglichen.
 
       \medskip
 
       Die Individuen haben beide Hüpfbewegungen entwickelt.
-      Jedoch streckt das eine Individum~(\vref{fig:gen4000_alg}) alle Beine,
+      Jedoch streckt das eine Individuum~(\vref{fig:gen4000_alg}) alle Beine,
       während das Andere~(\vref{fig:gen4000_ev}) fast alle Beine angewinkelt hat.
       Das Strecken der Beine bringt eine bessere Balance,
       dies ist der Grund, warum das Individuum aus der allgemeinen Lösung einen besseren Fitnesswert aufweist.
@@ -320,7 +320,7 @@
 
       \medskip
 
-      Die Resulatate sprechen dafür, dass mit der allgemeinen Lösung fittere Individuen gefunden werden können.
+      Die Resultate sprechen dafür, dass mit der allgemeinen Lösung fittere Individuen gefunden werden können.
       Um diese Aussage zu unterstreichen,
       sollten noch mehr Simulationen mit dem Evolvieren auf Evolvierbarkeit durchgeführt werden.
 
@@ -345,14 +345,14 @@
       müsste wie erwähnt unter~\vref{subsub:bpScnd}, die Mutation der Anzahl Körperpunkte implementiert werden.
       Spätestens ab der 10. Generation bei jedem Simulationslauf,
       existieren nur noch Individuen mit der gleichen Anzahl Körperpunkten.
-      Die Hypothese kann erst valdiert werden, wenn die Anzahl der Körperpunkte mutiert wird.
+      Die Hypothese kann erst validiert werden, wenn die Anzahl der Körperpunkte mutiert wird.
 
     \subsection{Hypothese Mutationswahrscheinlichkeiten}
 
       Die Hypothese über die Mutationswahrscheinlichkeiten~(\vref{subsub:hypoMut}) hat sich bewahrheitet,
       wie in~\vref{subsub:3000gen} festgestellt worden ist.
       Kleinere Mutationswahrscheinlichkeiten tragen dazu bei, fittere Individuen zu finden.
-      Hohe Mutatinswahrscheinlichkeiten bedeuten,
+      Hohe Mutationswahrscheinlichkeiten bedeuten,
       dass viele Bereiche eines Individuums in einem Schritt variiert werden können.
       Dies führt dazu, dass vorteilhafte, sinnvolle Mutationen durch unvorteilhafte überschattet werden.
       Damit werden wertvolle Lösungen verspielt.
@@ -369,7 +369,7 @@
 
       Die Wahrscheinlichkeit der Mutation steuert,
       ob der evolutionäre Algorithmus in eine Zufallssuche abgleitet~\cite{Sampson1976}.
-      Daraus folgt, dass die Wahrscheinlichkeit der entscheidende Faktor it für einen positiven oder
+      Daraus folgt, dass die Wahrscheinlichkeit der entscheidende Faktor ist für einen positiven oder
       negativen Effekt der Mutation.
 
   \section{Ausblick\label{sec:ausblick}}
@@ -380,7 +380,8 @@
     \subsection{Feedback an den Bewegungsmotor\label{sub:PerspectiveFeedback}}
 
       Eine wichtige Komponente im Bewegungsablauf stellt das Feedback dar.
-      Mit einem Feedback-System können Ereignisse~(Boden berühren, Steigung und Gefällr) erkannt und verarbeitet werden.
+      Mit einem Feedback-System können Ereignisse~(Boden berühren) oder
+      Beschaffenheiten des Parcours (Steigung und Gefälle) erkannt und verarbeitet werden.
 
       \medskip
 
@@ -392,7 +393,7 @@
       Wobei der nächste Zustand bzw. Bewegung nicht die im Bewegungsablauf nachfolgende sein muss.
       \\
       Als weitere Option kann der Motor selbst ergänzt werden.
-      Dabei steigt die Komplexität der Impelementations des Motor,
+      Dabei steigt die Komplexität der Implementation des Motors,
       da dieser ein Regelwerk (oder ähnlich) verwenden muss, um die Zustandswechsel zu organisieren.
 
       \medskip
@@ -404,11 +405,11 @@
 
     \subsection{\(N\)-beinige Tiere}
 
-      Zu \(n\)-beinigen Tieren können folgende Forschugsfragen formuliert werden:
+      Zu \(n\)-beinigen Tieren können folgende Forschungsfragen formuliert werden:
 
       \begin{itemize}
 
-        \item Warum existieren nur symetrische Anordnungen der Beinpaare in der Natur?
+        \item Warum existieren nur symmetrische Anordnungen der Beinpaare in der Natur?
 
         \item Warum haben Spinnen acht Beine?
 
@@ -416,12 +417,12 @@
 
       \end{itemize}
 
-      Momentan beschränkt der definierte Bewegugngsablauf die Individuen auf sechs Beine.
+      Momentan beschränkt der definierte Bewegungsablauf die Individuen auf sechs Beine.
       Wenn auf jedem Bein ein Bewegungsablauf definiert wird,
       wäre es möglich artifizielle Tiere mit \(n\)-Beinen zu evolvieren.
-      Eine ungerade Anzahl und asymetrische Anordnung der Beine wäre so realisierbar.
+      Eine ungerade Anzahl und asymmetrische Anordnung der Beine wäre so realisierbar.
       Es muss aber mit erhöhtem Rechenaufwand gerechnet werden,
-      da die Bewegugnsabläufe miteinander synchronisiert werden müssen und mehr Beine bewegt werden.
+      da die Bewegungsabläufe miteinander synchronisiert werden müssen und mehr Beine bewegt werden.
       Mit Hilfe der Implementation von den genannten Vorschlägen, wäre es möglich die Forschungsfragen zu
       \(n\)-beinigen Tieren zu beantworten.
 
@@ -471,7 +472,7 @@
 
       \medskip
 
-      Folgende Kritierien müssten erfüllt sein:
+      Folgende Kriterien müssten erfüllt sein:
 
       \begin{itemize}
         \item Es sollen zwei bestehende Populationen verwendet werden.
@@ -487,11 +488,11 @@
       verschiedener Terrain-Typen in den Parcours. Weitere Typen wie Eis, Gras oder Sand können hinzugefügt werden.
       Jeder dieser Terrain-Typen verlangt andere Anpassungen des Individuums.
       Eisige Untergründe bieten wenig Halt und Reibung.
-      Sandige Terrains sind ein weicher Untergrund und benötigen deshalb andere Eigenscahften.
+      Sandige Terrains sind ein weicher Untergrund und benötigen deshalb andere Eigenschaften.
       \\
       Eine interessante Fragestellung ist, wie die Terrain-Typen das Aussehen und den Bewegungsablauf beeinflussen.
       Ein Parcours der einen Mix aus verschiedenen Terrain-Typen beinhaltet ist ebenfalls interessant zu untersuchen.
-      Darin werden alle Anforderung kombiniert und das Indidivuum muss diese abdecken.
+      Darin werden alle Anforderung kombiniert und das Individuum muss diese abdecken.
 
       \medskip
 
