@@ -427,10 +427,20 @@
 
     \subsection{Austauschen der Physik-Engine}
 
-      Eine Verbesserungsmöglichkeit ist die langsame und teilweise fehlerhafte \gls{PhysicsEngine} p2.js auszutauschen.
-      Mit Hilfe einer anderen \gls{PhysicsEngine} kann schneller simuliert werden und
-      es können bessere Resultate gefunden werden.
-      Für einen 30 Sekunden langen Simulationslauf, benötigt die Engine zum Teil mehr als eine Minute.
+      Ein grosses Potential birgt der Wechsel der \gls{PhysicsEngine}.
+      Die verwendete \gls{PhysicsEngine} ``p2.js'' zeigt während der Simulation einige Schwächen.
+      \\
+      Besonders die Kollisionserkennung ist unvollständig implementiert.
+      Das führt zu den beschriebenen Fehlern~(\vref{sub:Fehler}).
+      \\
+      Ein weiterer Kritikpunkt ist die Geschwindigkeit. Damit bessere Resultate erzielt werden können,
+      müssen mehr Individuen in einer Population simuliert werden.
+      Zudem soll die Simulation schneller berechnet werden können.
+
+      \medskip
+
+      Von einem Wechsel der \gls{PhysicsEngine} wird vor allem erhofft,
+      dass grössere Populationen berechnet werden können und schneller simuliert werden kann.
 
     \subsection{Hypothese Selektionsstrategie\label{sub:hypoSelect}}
 
