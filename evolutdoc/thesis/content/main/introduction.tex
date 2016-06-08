@@ -19,7 +19,9 @@
   \\
   Die Kombination aus Reproduktion, Vererbung, Variation und Selektion
   übernimmt dabei die Rolle des Lösens und Optimierens einer Problemstellung.
-  \\
+
+  \medskip
+
   Dawkins~\cite{book:universalDarwinism} definiert die vier Begrifflichkeiten~(auch universeller Darwinismus genannt) wie folgt:
 
   \begin{itemize}
@@ -44,7 +46,9 @@
     Evolutionäre Algorithmen sind bereits in vielen Bereichen im Einsatz.
     Besonders bei Problemstellungen, wo eine approximative Lösung ausreichend ist,
     wird dieses Verfahren eingesetzt.
-    \\
+
+    \medskip
+
     Forscher der NASA verwenden evolutionäre Algorithmen, um Antennen zu entwerfen,
     die für den Einsatz im Weltraum gedacht sind~\cite{Hornby2006}.
     Zum ersten Mal wurden dabei durch evolutionäre Algorithmen entworfene Teile im Weltraum eigesetzt.
@@ -54,7 +58,9 @@
     Dabei wurde der Zeitaufwand, der für den Entwurf und das Testen benötigt wird, stark reduziert.
     Ebenfalls ermöglicht der Einsatz von evolutionären Algorithmen Szenarien zu prüfen,
     die wegen Zeitmangels nicht hätten geprüft werden können.
-    \\
+
+    \medskip
+
     Auch das Verhalten von Robotern kann mit Hilfe von evolutionären Algorithmen entwickelt werden.
     Floreano~\cite{Floreano2010} zeigt, wie die Steuerung und Kommunikation von Robotern entwickelt werden kann.
     Dabei zeigen sich Ähnlichkeiten in der Evolution von künstlichen Robotern und natürlichen Organismen,
@@ -63,8 +69,9 @@
     wenn Individuen eine spezifische Eigenschaft einer Umgebung ausnützen.
     Sobald aber die Umgebung gewechselt wird, wo diese Eigenschaftt fehlt, sinkt die Fitness~\cite[S.6]{Floreano2010}.
     Diese Einschränkung wird durch die verwendete künstliche Umgebung hervorgerufen.
-    \\
-    \\
+
+    \medskip
+
     Als theoretische Grundlagen werden die Bücher ``Bio-inspired artificial intelligence''~\cite{book:bioInspired} und
     ``Evolutionäre Algorithmen''~\cite{book:evAlgo} verwendet.
 
@@ -82,10 +89,14 @@
     Damit die Forderung nach einer physikalischen Bewegung erfüllt werden kann,
     wird die Bewegung mit Hilfe einer Physik-Engine simuliert.
     Diese Engine wird von den Studierenden ausgewählt und kann als Blackbox verwendet werden.
-    \\
+
+    \medskip
+
     Die BA beinhaltet folgende Forschungsfragen: 1) Wie kann eine Steuerung der Bewegung implementiert werden?
     2) Wie kann diese Steuerung evolviert werden? 3) Wie kann die Geometrie der Tiere evolviert werden?
-    \\
+
+    \medskip
+
     Erfüllungskriterien: A) Die Steuerung von Tieren mit vorgegebener Geometrie (6 Beine) wird evolviert,
     sodass ein Parcours mit vorgegebenen Eigenschaften bewältigt werden kann.
     B) In einem zweiten Schritt wird sowohl die Geometrie als auch die Steuerung evolutiv weiterentwickelt;
@@ -97,7 +108,9 @@
     in einer zweidimensionalen Umgebung eine Fortbewegungsart beizubringen.
     Es soll nicht nur die Steuerung der Beine evolviert werden,
     sondern auch die Form des Körpers und die Abmessung der Beine.
-    \\
+
+    \medskip
+
     Folgende Fragestellungen werden untersucht:
 
     \begin{enumerate}
@@ -115,7 +128,9 @@
     nicht auf dem Ausbau der verwendeten \gls{PhysicsEngine}.
     Ein Werkzeug in Form einer selbst programmierten Applikation soll erstellt werden,
     um den evolutionären Algorithmus zu implementieren.
-    \\
+
+    \medskip
+
     Weitere Hypothesen~(\vref{subsub:hypoKp} und~\vref{subsub:hypoMut})
     werden im Kapitel \nameref{sec:method}~(\vref{sec:method}) erwähnt,
     da die erforderlichen Begrifflichkeiten dann eingeführt sind.
@@ -126,7 +141,7 @@
 
       Die Fitness ist ein Mass für den Grad der Anpassung eines Individuums an die Umgebung.
       In frühen Generationen können Tiere existieren, die sich nicht fortbewegen können.
-      Die Zeit, welche ein Individuum für die Bewältigung eines Parcours (\vref{subsub:parcours}) brauchen würde,
+      Die Zeit, welche ein Individuum für die Bewältigung eines Parcours~(\vref{subsub:parcours}) brauchen würde,
       wäre somit unendlich.
       Um dieses Problem zu umgehen, wird als Mass für die Fitness die zurückgelegte Strecke verwendet.
       Für die Bewältigung des Parcours steht dem Individuum eine fixe Anzahl Zeiteinheiten zur Verfügung.
@@ -149,7 +164,9 @@
 
       Limiten verhindern, dass der Parcours durch triviale Lösungen wie z.B. unendlich grosse Beine bewältigt werden kann.
       Ebenfalls schränken sie den Lösungsraum ein und helfen gewinnbringende Lösungen zu finden.
-      \\
+
+      \medskip
+
       Für folgende Komponenten werden Limiten eingeführt:
 
       \begin{itemize}

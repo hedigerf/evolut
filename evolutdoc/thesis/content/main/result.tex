@@ -6,11 +6,6 @@
 
 \chapter{Resultate\label{chap:Resultate}}
 
-  Zu den Simulationsläufen 1--3 gibt es keine Bilder der Individuen, da es sonst den Rahmen dieser Arbeit sprengen würde.
-  Versuch vier mit den vielversprechendsten Resultaten ist ausführlich mit Bildern der Individuen dokumentiert.
-  Eine Simulation mit 12000 Generationen dauert rund 10 Tage.
-  %%vlt in Diskussion disktutieren
-
   \section{Allgemeine Lösung --- erster Simulationslauf}
 
     \subsection{Konfiguration\label{sub:confSecond}}
@@ -23,12 +18,20 @@
 
     \subsection{Auswertung}
 
-      Es ist ein klarer Aufwärtstrend der Fitness zu erkennen bis etwa zur 1000. Generation (siehe~\vref{fig:graphFirst}).
+      Es ist ein klarer Aufwärtstrend der Fitness zu erkennen bis etwa zur 1000. Generation~(\vref{fig:graphFirst}).
       Danach ist ein Abfall der Fitness bei den Individuen zu beobachten.
+      \\
       Die Vermutung dabei ist,
       dass der Parcours zu schwierig ist und die Individuen mit der grossen Steigung nicht mehr zurechtkommen.
-      Die Ausreisser sind dadurch zu erklären,
+      \\
+      Ausreisser sind dadurch zu erklären,
       dass ein bestimmter Parcours sehr einfach für die Individuen zu bewältigen war oder ihnen Schwierigkeiten bereitet hat.
+      \\
+      In dieser Simulation ist der Bewegungsablauf nur wenig mutiert worden.
+      Der Bewegungsablauf gleicht dem Vordefinierten.
+
+      \medskip
+
       Es wird vermutet, dass des Feedbacksystems der Steuerung hier helfen wird.
       Ausserdem müssen die Parameter des Parcours für die nächste Simulation anders konfiguriert werden.
       Der Steigungszuwachs sollte auf 0.01 limitiert werden und der Zuwachs der höchsten Y-Koordinate
@@ -44,11 +47,11 @@
 
       \subsubsection{Körperpunkte\label{subsub:bp}}
 
-        Die Auswertung der Individuen nach der Anzahl ihrer Körperpunkte ist ernüchternd (siehe~\vref{fig:graphBpFirst}).
+        Die Auswertung der Individuen nach der Anzahl ihrer Körperpunkte ist ernüchternd~(\vref{fig:graphBpFirst}).
         Bereits ab der 14. Generation existieren nur noch Individuen mit vier Körperpunkten.
-        Vielleicht ist dies ebenfalls auf das fehlende Feedback zurückzuführen.
-        Im besten Fall wurden die Individuen mit mehr als vier Körperpunkten der initialen Population unvorteilhaft generiert.
-        Eine weitere Simulation wird zeigen,
+        Einerseits könnte dies auf das fehlende Feedback zurückzuführen sein oder andererseits
+        könnten die Individuen in der initialen Population mit mehr als vier Körperpunkten unvorteilhaft generiert worden sein.
+        Eine weitere Simulation zeigt,
         ob vier Körperpunkten am geeignetsten sind für die Bewältigung der Problemstellung,
         oder ob es sich um einen ``frozen accident'' handelt.
 
@@ -78,18 +81,21 @@
     \subsection{Auswertung\label{sub:scndAuswertung}}
 
       Beim zweiten Versuch ist interessant zu beobachten,
-      dass die Fitness der Individuen erst ab der 1400\@. Generation (siehe~\vref{fig:graphSecond})
+      dass die Fitness der Individuen erst ab der 1400\@. Generation~(\vref{fig:graphSecond})
       wieder abzunehmen beginnt.
-      Jedoch ist auch hier ein klarer, wenn auch nicht so starker Abwärtstrend zu erkennen.
-      Eine weitere Vermutung, neben dem fehlenden Feedback der Engine, warum die Fitness wieder abzunehmen beginnt,
+      Hier ist ebenfalls ein klarer, jedoch nicht gleich deutlich ausgeprägter Abwärtstrend zu erkennen.
+      Eine weitere Vermutung, neben dem fehlenden Feedback des Motors, warum die Fitness wieder abzunehmen beginnt,
       ist die zu hohe Wahrscheinlichkeit der Mutation.
       In einem nächsten Versuch muss getestet werden,
       ob niedrigere Mutationswahrscheinlichkeiten einen positiven Effekt auf die langfristige Fitness der Individuen haben.
+
+      \medskip
+
       Ab ca\@. der 2000\@. Generation beginnt die Fitness wieder rapide zu steigen,
       jedoch ist dies durch einen Fehler der \gls{PhysicsEngine} zu erklären.
       Die Individuen verhaken sich im Boden und beginnen grosse Distanzen durch Hüpfbewegungen zurückzulegen.
-      Dieser Fehler kann bereinigt werden indem die Relaxation~\vref{sub:techParams} erhöht und
-      gleichzeitig der Zeitschritt~\vref{sub:techParams} verringert wird.
+      Dieser Fehler kann bereinigt werden indem die Relaxation~(\vref{sub:techParams}) erhöht und
+      gleichzeitig der Zeitschritt~(\vref{sub:techParams}) verringert wird.
 
       \begin{figure}[H]
         \centering
@@ -100,11 +106,11 @@
       \subsubsection{Körperpunkte\label{subsub:bpScnd}}
 
         Ein ähnliches Bild ist zu beobachten, wie bei~\vref{subsub:bp}.
-        Bereits ab der 9\@. Generation existieren nur noch Individuen mit 7 Körperpunkten (siehe~\vref{fig:graphBpSecond}).
+        Bereits ab der 9\@. Generation existieren nur noch Individuen mit sieben Körperpunkten~(\vref{fig:graphBpSecond}).
         Es wird angenommen, dass hier ein ``frozen accident'' geschehen ist.
         Damit eine Aussage über den Einfluss der Körperpunkte getroffen werden kann,
         müsste während der ganzen Simulation die Anzahl der Körperpunkte mutiert werden.
-        Stattdessen wird momentan nur zu Beginn der Simulation die Anzahl der Körperpunkte für die Individuen festgelegt.
+        Stattdessen wird momentan zu Beginn der Simulation die Anzahl der Körperpunkte für die Individuen festgelegt.
 
         \begin{figure}[H]
           \centering
@@ -122,7 +128,7 @@
         \caption{Simulationsparameter\label{tbl:thirdRunConf}}
       \end{table}
 
-      Die Implementation des Feedbacks musste leider wegen mangelnder Zeit eingestellt werden.
+      Die Implementation des Feedbacks musste wegen mangelnder Zeit eingestellt werden.
       In dieser Version ist die detaillierte Konfiguration der Mutation verfügbar.
       Die Konfigurationstabelle~(\vref{tbl:thirdRunConf}) stellt die erweiterten Einstellungsmöglichkeiten dar.
 
@@ -133,13 +139,16 @@
       Andererseits ist die Wahrscheinlichkeit eine neue Bewegung hinzuzufügen grösser, als eine Bewegung zu entfernen.
       Die Datenstrukturen wachsen, da mehr Bewegungen hinzukommen als entfernt werden,
       was wiederum den Rechenaufwand erhöht.
-      Darum wird dieser Versuch nach ca. 1200 Generationen abgebrochen,
-      damit Geschwindigkeits-Optimierungen implementiert werden können und
-      die Wahrscheinlichkeit anders konfiguriert werden kann.
       \\
+      Darum wird dieser Versuch nach ca. 1200 Generationen abgebrochen,
+      damit Verbesserungen an der Geschwindigkeit der Mutation implementiert werden können und
+      die Wahrscheinlichkeit anders konfiguriert werden kann.
+
+      \medskip
+
       Die Individuen haben bei diesem Versuch eine Art rollende Bewegung entwickelt.
       Sie können die guten Fitnesswerte halten,
-      obwohl der Parcours schwerer wird (siehe~\vref{fig:graphThird}).
+      obwohl der Parcours schwerer wird~(\vref{fig:graphThird}).
 
       \begin{figure}[H]
         \centering
@@ -149,11 +158,11 @@
 
       \subsubsection{Diversität}
 
-        In dieser Version der Simmulation ist der Diversitätsreport verfügbar.
+        In dieser Version der Simulation ist der Diversitätsreport verfügbar.
         \\
         Wie in~\vref{fig:graphDivThird} zu sehen ist, bewegt sich die Diversität kurz auf einem hohen Niveau,
-        da am Anfang alles völlig zufällig generiert wird.
-        Die Turnier-basierte-Selektion bevorzugt Individuen mit einer grossen Fitness,
+        da am Anfang alles zufällig generiert wird.
+        Die Turnierselektion bevorzugt Individuen mit einer grossen Fitness,
         deshalb sinkt die Diversität nach der Selektion.
         Darum ist kurz nach Beginn der Simulation ein starker Abfall der Diversität zu beobachten.
         \\
@@ -180,7 +189,6 @@
       wurde die Wahrscheinlichkeit Bewegungen hinzuzufügen oder zu entfernen gleichgesetzt.
       Dies sollte verhindern, dass die Datenstrukturen durch die hinzukommenden Bewegungen zu gross werden
       und den benötigten Rechenaufwand in die Höhe treiben.
-      Durch den erhöhten Rechenaufwand wären nur sehr wenige Generationen pro Tag evolvierbar.
 
     \subsection{Auswertung}
 
@@ -193,8 +201,9 @@
       \subsubsection{200. Generation}
 
         Wie in~\vref{fig:gen200} erkennbar, haben sich die Individuen zu einer Art Rolle entwickelt.
-        Diese Art von Fortbewegung ist nicht optimal und setzt sich fort bis etwa zur 3000. Generation.
-        Da sich die Individuen genau einmal um sich selber drehen und dann zum Stillstand kommen.
+        Diese Art von Fortbewegung ist nicht optimal,
+        da sich die Individuen genau einmal um sich selber drehen und dann zum Stillstand kommen.
+        Dies setzt sich fort bis etwa zur 3000. Generation.
 
         \vspace{0.5cm}
 
@@ -226,7 +235,10 @@
         Diese Art von Fortbewegung bringt eine bessere Fitness hervor, wie in~\vref{fig:graphFourth} erkennbar ist.
         Im Gegensatz zu den Individuen in~\vref{sub:scndAuswertung} ist dies jedoch eine valide Hüpfbewegung.
         Da die Individuen sich vom Boden korrekt mit einem Bein abstossen,
-        sich nicht im Boden verhaken und durch die zu späte fehlerhafte Kollisionserkennung abgestossen werden.
+        sich nicht im Boden verhaken und nicht durch die zu späte und fehlerhafte Kollisionserkennung weggestossen werden.
+
+        \medskip
+
         Das Herabsetzten der Mutationswahrscheinlichkeiten~(Hypothese in~\vref{subsub:hypoMut})
         hat langfristig einen positiven Effekt auf die Fitness,
         wie in~\vref{fig:graphFourth} im Vergleich zu~\vref{fig:graphFirst} erkennbar ist.
@@ -257,7 +269,7 @@
       \subsubsection{7000. Generation}
 
         Mit zunehmender Schwierigkeit des Parcours scheint das Hüpfen nicht mehr die richtige Art von Fortbewegung zu sein.
-        Die Individuen bleiben häufig in Bergen und Tälern stecken~(\vref{fig:gen7000}).
+        Die Individuen bleiben häufig an Berghängen und in Tälern stecken~(\vref{fig:gen7000}).
 
         \vspace{0.5cm}
 
@@ -287,10 +299,11 @@
         Die Individuen haben sich zu Rudern entwickelt wie in~\vref{fig:gen11000} zu sehen ist.
         Die Masse der anderen Beinpaare, welche nicht für die Ruderbewegung gebraucht werden,
         ist sichtbar kleiner geworden.
+        \\
         Bei der Analyse dieser Generation ist ein Fehler aufgefallen.
         Die Individuen werden nach vier Sekunden entfernt,
-        wenn sie während dessen sich nicht um einen bestimmten Wert in X-Richtung fortbewegen.
-        Der Wert sollte allerdings höher gewählt werden,
+        wenn sie sich während dessen nicht um einen bestimmten Wert vorwärts bewegen.
+        Dieser Wert sollte allerdings grösser gewählt werden,
         da es in späteren Generationen und zunehmender Parcours-Schwierigkeit sein kann,
         dass die Individuen sich lange an einer Stelle aufhalten, um einen Berg zu erklimmen.
 
@@ -319,7 +332,7 @@
 
         Der Einbruch ab ca.\ der 3000. Generation, lässt sich damit erklären, dass die Hüpfer gefunden worden sind.
         Die Diversität konnte sich steigern im Vergleich zum Anfang der Simulation und
-        spricht für die Turnierbasierte-Selektion.
+        spricht für die Turnierselektion.
 
         \begin{figure}[H]
           \centering
@@ -347,7 +360,8 @@
       Dies ist damit zu erklären, dass beim Evolvieren auf Evolvierbarkeit,
       der Parcours erst nach 100 Generationen ausgewechselt wird und
       somit die Fitnesswerte weniger schwanken pro Generation.
-      Die Ausreisser (lokale Minima und Maxima) treten dann auf, wenn der Parcours gewechselt wird.
+      Wenn der Parcours gewechselt wird, treten Ausreisser (lokale Minima und Maxima) auf.
+      Die gefundenen Individuen bewegen sich mit Hüpfen fort.
 
       \begin{figure}[H]
         \centering

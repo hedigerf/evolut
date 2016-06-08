@@ -20,6 +20,7 @@
       Als Einschränkung wird festgelegt, dass ein Polygon aus minimal vier und maximal acht Punkte generiert wird.
       Diese Bedingung beschränkt sowohl den Rechenaufwand der Berechnung des Körpers während der Simulation~(\vref{sec:simulation}),
       als auch in der Mutationsphase~(\vref{sec:Mutation}).
+      \\
       Weiter wird festgelegt, dass das Polygon ein \gls{SimplePolygon} sein muss.
       Ohne diese Bedingung könnten Körper generiert werden, deren Kanten sich überkreuzen.
       Solche Körper werden als ungültig erachtet, da diese in der Natur nicht vorkommen.
@@ -55,8 +56,9 @@
       \\
       Technisch bietet sich die Möglichkeit, die Beine nicht in Paare zu gliedern und asymmetrisch am Körper anzubringen.
       Doch in der Natur existiert eine solche Anordnung nicht, weshalb darauf verzichtet wird.
-      \\
-      \\
+
+      \medskip
+
       Ein Bein ist unterteilt in Oberschenkel \(T\) und Unterschenkel \(S\).
       Die Höhe \(h_{l}\) und Breite \(w_{l}\) des Beins sind limitiert.
       Andernfalls ist anzunehmen, dass ungewünschte Resultate entstehen~\vref{sub:IntroReqLimit}.
@@ -68,7 +70,6 @@
       Mit dem Hüftgelenk \(j_{h}\) wird das Bein mit dem Körper verbunden.
       Für die Position des Hüftgelenkes existiert die Bedingung,
       dass das Gelenk innerhalb der Körperfläche angebracht sein muss.
-      \\
       Zur Vereinfachung wird die Höhe jedes Gelenkes auf 0 festgelegt.
 
       \begin{figure}[H]
@@ -103,6 +104,7 @@
         Der Anspruch an das Design des Genotyps ist möglichst modular und einfach zu sein.
         Als Grund für ein modulares Design spricht die Erweiterbarkeit und Wiederverwendung der bestehenden Teile.
         Deshalb wurde der Genotyp in Teil-Genotypen unterteilt.
+        \\
         Ein Teil-Genotyp repräsentiert dabei eine beliebige Eigenschaft des Individuums.
         Weiter können Teil-Genotypen wiederum in verschiedene weitere Teile aufgespalten werden.
         Damit entsteht die Möglichkeit, Individuen nach einem dynamisch generierten Bauplan zu erstellen
@@ -115,6 +117,7 @@
         Zu Beginn der Simulation wird die initiale Population~(\vref{sec:initPop}) mit zufällig generierten Individuen erstellt.
         Dabei ist es hilfreich manche Parameter nicht zufällig generieren zu lassen,
         sondern mit einem fixen Wert zu initialisieren.
+        \\
         So kann der Bewegungsablauf von Beginn an festgelegt werden.
         Deshalb wurde beim Seeding ein Ansatz gewählt, der es erlaubt flexibel jeden Teil-Genotyp mit
         spezifizierten Werten zu initialisieren.
@@ -124,18 +127,15 @@
         Als erster Ansatz für die Generierung von Körperpunkten wurde ein Quadrat evaluiert.
         Dieser Ansatz wurde nicht weiterverfolgt,
         da der Ansatz mit einem Kreis für beliebig viele und ungerade Anzahlen von Punkten einfacher lösbar ist.
-        \\
-        \\
+
+        \medskip
+
         Die Generierung eines zufälligen Körpers läuft in mehreren Schritten ab.
         Als erstes wird definiert aus wie vielen Punkten \( n \) der Körper besteht.
-
         \[ 4 \leq n \leq 8 \]
-
         Anschliessend wird der Einheitskreis in \( n \) Sektoren unterteilt.
         Der Winkel \( \rho \) eines jeden Sektors entspricht:
-
         \[ \rho = \frac{2 * \pi}{n} \]
-
         Für jeden Sektor \( s_{i} \) werden ein zufälliger Radius \( r \) und ein zufälliger Winkel \( \phi \) gewählt.
 
         \begin{align*}
@@ -147,9 +147,10 @@
         Damit die Koordinaten in der \gls{PhysicsEngine} verwendet werden können,
         müssen die Koordinaten in kartesicherer Form sein.
         Die Polar-Koordinaten \( P \) werden in kartesische Koordinaten transformiert und miteinander verbunden.
-        \\
-        \\
-        Die folgende Abbildung~\ref{fig:kp} zeigt die Konstruktion der Form eines Individuums mit sechs Körperpunkten.
+
+        \medskip
+
+        Die folgende Abbildung~\vref{fig:kp} zeigt die Konstruktion der Form eines Individuums mit sechs Körperpunkten.
 
         \begin{figure}[H]
           \centering
@@ -163,6 +164,9 @@
       Dieser Prozess wird auch als Abbilden des Genotyps auf einen Phänotyp bezeichnet~(\vref{sub:introPhenotyp}).
       Der Phänotyp enthält alle Daten, welche die \gls{PhysicsEngine} braucht, um das Individuum zu simulieren.
       Er setzt sich aus mehreren geometrischen Figuren und Gelenken (\Glspl{Constraint}) zusammen.
+
+      \medskip
+
       Die Beine des Individuums werden mit Hilfe eines Drehgelenks an den Körper gebunden.
       Mit Hilfe von Constraints wird diese Bindung an den Körper erreicht.
       Auf allen Gelenken ist ein Rotationsmotor vorhanden, der verwendet wird um eine Bewegung in Gang zu setzten.
@@ -193,13 +197,15 @@
       der \gls{JointDriven} arbeitet gewählt worden.
       Er führt die Bewegungen, die Körperteile in Bewegung setzten, über die Drehgelenke des Individuums aus.
       Mit der Kraft des Motors wird der Winkel eines Drehgelenkes verändert.
-      \\
-      \\
+
+      \medskip
+
       Am Beispiel des Kniegelenks ist ersichtlich wie der Motor arbeitet.
       Das Kniegelenk ist am Oberschenkel fixiert und verbindet den Unterschenkel mit dem Oberschenkel.
       Setzt der Motor das Gelenk in Bewegung wird der Unterschenkel bewegt.
-      \\
-      \\
+
+      \medskip
+
       Mit den Informationen des Phänotyps kann der Motor den gesamten Bewegungsablauf kontrollieren.
       Der Motor überwacht die Übergänge zwischen den Bewegungen.
       Nach jedem Übergang zu einer neuen Bewegung, führt der Motor diese aus und prüft,
@@ -213,7 +219,9 @@
         Diese Eigenschaft nutzt der Motor,
         indem in während jedem Schritt die aktuelle Bewegung aller Individuen bearbeitet.
         Damit ist die feinst mögliche Auflösung für die Bewegungssteuerung erreicht.
-        \\
+
+        \medskip
+
         Als erstes bringt der Motor ein Individuum immer in die Ausgangsposition (\vref{fig:ConceptMovement00}).
         Die Ausgangsposition wird definiert durch den initialen Bewegungsablauf.
         Dieser ist unabhängig vom Ablauf, der das Gehen (oder eine andere Form der Fortbewegung) definiert.
@@ -224,13 +232,17 @@
       Die Individuen der initialen Population~\vref{sec:initPop} besitzen einen vorgegebenen Bewegungsablauf.
       Der Grund dafür ist, dass damit die Wahrscheinlichkeit steigt,
       dass die Evolution lauffähige Individuen hervorbringt.
-      \\
+
+      \medskip
+
       Der vorgegebene Ablauf ist der Ameise nachempfunden, wegen der Einfachheit und Stabilität.
       Eine Ameise bewegt pro Schritt immer drei Beine.
       Alternierend wird auf einer Seite eines und auf der anderen zwei Beine gehoben und nach vorne bewegt.
       Diese Bewegung erlaubt es der Ameise stets stabil zu stehen,
       da ein Dreibein immer steht während die anderen bewegt werden.
-      \\
+
+      \medskip
+
       Mit dem vorgegebenen Muster werden die Bewegungen für eine Seite erstellt.
       Anschliessend können die Bewegungen für die andere Körperseite mit kleinen Anpassungen übernommen werden.
 
@@ -238,19 +250,19 @@
 
         \setcounter{enumi}{-1}
 
-        \item Der Motor setzt die Beine und Gelenke in ihre Ausgangsposition (\vref{fig:ConceptMovement00})
+        \item Der Motor setzt die Beine und Gelenke in ihre Ausgangsposition~(\vref{fig:ConceptMovement00})
 
         \item In der ersten Phase werden die Beine der linken Seite bis zum maximalen Winkel bewegt
           (\vref{fig:ConceptMovement10}).
 
-        \item Alle rechten Beine schieben nun den Körper nach vorne (\vref{fig:ConceptMovement15}) bis der minimale
-          Winkel des Hüftgelenks erreicht wurde (\vref{fig:ConceptMovement20}).
+        \item Alle rechten Beine schieben nun den Körper nach vorne~(\vref{fig:ConceptMovement15}) bis der minimale
+          Winkel des Hüftgelenks erreicht wurde~(\vref{fig:ConceptMovement20}).
 
-        \item Die linken Beine werden nun gestreckt (\vref{fig:ConceptMovement30}).
+        \item Die linken Beine werden nun gestreckt~(\vref{fig:ConceptMovement30}).
 
-        \item Anschliessend werden die rechten Beine nach vorne bewegt
-          (\vref{fig:ConceptMovement35} und (\vref{fig:ConceptMovement36}))
-          bis zum maximalen Winkel (\vref{fig:ConceptMovement40}).
+        \item Anschliessend werden die rechten Beine nach vorne bewegt~(\vref{fig:ConceptMovement35}
+          und~(\vref{fig:ConceptMovement36})) bis zum maximalen Winkel~(\vref{fig:ConceptMovement40}).
+          \\
           Der Bewegungsablauf wird gespiegelt für die Beine der anderen Körperseite vollzogen.
 
       \end{enumerate}
@@ -326,9 +338,10 @@
 
         Unter dem Begriff Bewegung werden alle Aktionen, die der Motor ausführt verstanden.
         Es gibt neben den klassischen Bewegungen, wie ein Drehgelenk bewegen,
-        auch solche, die Attribute eines Gelenkes ändern oder den aktuellen Winkel eines Gelenkes abfragen.
-        \\
-        \\
+        auch solche die Attribute eines Gelenkes ändern oder den aktuellen Winkel eines Gelenkes abfragen.
+
+        \medskip
+
         Eine Bewegung ist mit mehreren Attributen beschrieben.
         Es wird festgelegt welche Art der Bewegung es ist,
         welches Gelenk gesteuert wird und was die Parameter für die Bewegung sind.
@@ -344,8 +357,9 @@
         kann der Motor Rückmeldungen von der Simulationswelt anfordern.
         Der Motor wird von der \gls{PhysicsEngine} benachrichtigt,
         sobald eine Kollision zwischen einem Körperteil und dem Untergrund stattfindet.
-        \\
-        \\
+
+        \medskip
+
         Das Feedbacksystem ist nicht vollständig ausgearbeitet.
         Aus zeitlichen Gründen ist dies nicht umgesetzt worden.
         Es ist nur die Rückmeldung an den Motor vorhanden, jedoch wird die Rückmeldung nicht verarbeitet.
@@ -365,21 +379,29 @@
     Das Austauschen der Gene (Rekombination) ist wenig hilfreich bei der Lösung der Problemstellung.
     Man stelle sich dazu vor, dass das Gen welches den Körper definiert, mit dem des Motors vertauscht wird.
     So kann keine sinnvolle Evolution stattfinden.
+
+    \medskip
+
     Rekombination kann für die Verwendung somit ausgeschlossen werden.
-    Dies stellt schon den ersten Indikator dar,
-    dass Evolutionäre Programmierung eingesetzt werden kann.
+    Dies stellt schon den ersten Indikator dar, dass Evolutionäre Programmierung eingesetzt werden kann.
+    \\
     Ein weiteres Kriterium ist die genetische Repräsentation.
     Da sich das Individuum aus Punkten im einem Koordinatensystem,
     verschiedenen Winkeln und einem Bewegungsablauf definiert, wird die Reale-Werte-Repräsentation eingesetzt.
     Ein Punkt oder Vektor kann durch zwei reale Werte ausgedrückt werden.
     Dies gilt ebenso für Winkel oder den Bewegungsablauf.
-    \\
+
+    \medskip
+
     Die binäre Repräsentation ist für die vielen realen Werte nicht geeignet.
     Theoretisch wäre es möglich alle realen Werte binär darzustellen,
     jedoch würde eine unnötige Komplexität hinzugefügt werden.
     \\
     Die Repräsentation als Baum ist laut K. Weicker~\cite{book:evAlgo} eine Möglichkeit die Steuerung eines Roboters abzubilden.
     Da aber mehr als nur die Steuerung evolviert wird, bleibt die Entscheidung bei der Reale-Werte-Repräsentation.
+
+    \medskip
+
     Die Problemstellung würde anders bewältigt werden,
     würde sich die Thematik um reale Kreaturen drehen und nicht um virtuelle Roboter,
     welche in einer künstlichen Umgebung (virtuelles Koordinatensystem) das Laufen lernen.
@@ -388,6 +410,8 @@
     Schlussendlich wurde entschieden die Problemstellung, mit evolutionärer Programmierung zu lösen.
 
   \section{Eingesetzte Technologien\label{sec:Technology}}
+
+    \begin{minipage}{\textwidth}
 
     Zur Auswahl standen mehrere Programmiersprachen und \glspl{PhysicsEngine}.
     Die Evaluationskriterien dabei waren:
@@ -400,17 +424,25 @@
       \item Ökosystem der Programmiersprache (verfügbare Bibliotheken)
     \end{itemize}
 
+    \end{minipage}
+
+    \bigskip
+    \smallskip
+
     \gls{FSharp} und diverse populäre \gls{DotNet} \glspl{PhysicsEngine} wurden evaluiert.
     Jedoch gestaltete sich die Konfiguration und Plattform-Interoperabilität schwierig.
     Eine plattformübergreifende Konfiguration, konnte nicht erstellt werden.
+    \\
     Dies lag nicht an den \glspl{PhysicsEngine}, sondern an der Open-Source-Implementation von ``Mono Game''.
     ``Mono Game'' und Mono werden verwendet, um die \gls{DotNet}-Umgebung auf Linux und Mac zu nutzen.
-    \\
-    \\
+
+    \medskip
+
     Als weitere Option wurde Javascript und die \glspl{PhysicsEngine} in Betracht gezogen.
     Die Popularität von Javascript hat in den letzten Jahren stark zugenommen.
     Auch wurde mit dem neuen Standard ECMA2015 die Sprache enorm verbessert und viele neue Funktionalitäten eingeführt.
     Das Javascript-Ökosystem ist eines der grössten überhaupt.
+    \\
     Da Javascript ursprünglich eine Webtechnologie ist und auf allen Plattformen problemlos läuft,
     wurde das Kriterium der Plattform-Interoperabilität ohne zusätzliche Konfiguration erfüllt.
 
@@ -422,6 +454,7 @@
       \\
       Die erste Option war ``Matter.js'', welche als nicht genug ausgereift eingestuft wurde.
       Viele Funktionen haben zum Zeitpunkt der Evaluation gefehlt.
+      \\
       Deshalb wurde als zweite Option auf ``p2.js'' zurückgegriffen.
       Diese \gls{PhysicsEngine} bietet eine ausführliche Dokumentation und Beispiele zu sämtlichen Aspekten.
 
@@ -430,6 +463,7 @@
       Für die Erstellung des Terrains wird ein Höhenfeld von p2.js benutzt.
       Die Kollisionserkennung zwischen einem Höhenfeld und einem Polygon funktioniert nicht einwandfrei.
       Manche Polygonecken werden nicht berücksichtigt in der Kollisionserkennung.
+      \\
       Das hat zur Folge, dass Körperteile der Individuen im Boden einsinken.
       Die~\vref{fig:vorEinsinken} zeigt ein Individuum vor dem Einsinken
       und~\vref{fig:nachEinsinken} zeigt ein Individuum mit einer eingesunkenen Spitze.
@@ -449,9 +483,11 @@
       \end{figure}
 
       Die Kollision mit einem Höhenfeld wird am besten erkannt mit einem Kreis.
+      \\
       In~\vref{fig:noVorEinsinken} sind an allen Ecken des Körpers und der Beine kleine Kreise angebracht.
       Diese besitzen eine vernachlässigbare Masse, damit keine Nebeneffekte auftreten.
-      Dies verbessert die Kollisionserkennung zwischen den Phänotypen und dem Untergrund.
+      So wird die Kollisionserkennung zwischen den Phänotypen und dem Untergrund verbessert.
+      \\
       Wie in~\vref{fig:noNachEinsinken} erkennbar, sinkt die Spitze des Individuums nicht mehr in den Boden ein.
       Die zusätzlichen Objekte, welche für diese Optimierung verwendet wurden,
       erhöhen den Rechenaufwand der Simulation.
@@ -475,14 +511,20 @@
       Javascript ist eine Script-Sprache.
       Diese benötigt ein Programm, welches den Quellcode interpretiert und ausführt.
       Als Plattform wurde deshalb Electron eingesetzt. Electorn besteht aus node.js und Google Chrome.
-      \\
+
+      \medskip
+
       Node.js ist eine Umgebung in der server-seitige Javascript-Anwendungen aufgeführt werden.
       Durch den Paketmanager \acrfull{npm} werden externe Abhängigkeiten und Bibliotheken verwaltet.
       \acrshort{npm} bietet Zugriff auf eine Vielzahl von Bibliotheken.
-      \\
+
+      \medskip
+
       Google Chrome wird verwendet für die Darstellung der Anwendung.
       Die Inhalte der Applikation werden wie eine Webseite erstellt und dargestellt.
-      \\
+
+      \medskip
+
       Electron verbindet beide in einer Anwendung.
       Damit kann eine Web-Applikation in eine Desktop-Applikation verpackt werden.
 
@@ -490,10 +532,13 @@
 
     Die Applikation lässt sich mit diversen Parametern konfigurieren.
     Es wird eine Konfigurationstabelle~(\vref{tbl:simulation-parameters-general}) eingeführt,
-    welche auch im Kapitel Resultate~(\vref{chap:Resultate}) verwendet wird,
+    welche im Kapitel Resultate~(\vref{chap:Resultate}) verwendet wird,
     um die jeweilige Konfiguration der Simulation festzuhalten.
     In der Konfigurationstabelle werden nur die Parameter erwähnt,
     welche relevant für den Algorithmus sind.
+
+    \medskip
+
     Der Schwierigkeitsgrad des Parcours wird alle 100 Generationen erhöht.
     Bei der allgemeinen Lösung wird der Parcours nach jeder Generation neu generiert.
     Beim Evolvieren auf Evolvierbarkeit wird der Parcours nur dann neu generiert,
@@ -510,10 +555,15 @@
       Durch die Erhöhung dieses Parameters kann von mehreren Prozessor-Kernen profitiert werden.
       Damit lässt sich die Simulation~(\vref{sec:simulation}) in der \gls{PhysicsEngine} und die Mutation~(\vref{sec:Mutation}) parallelisieren.
       Optimal ist es diesen Wert auf die Anzahl verfügbarer Prozessorkerne zu setzen.
+
+      \medskip
+
       Die Grösse des Zeitschritts~\cite{bullet:steppingTheWorld} der \gls{PhysicsEngine} lässt sich einstellen.
+      \\
       Die ``relaxation''~(Entspannung) kann auch konfiguriert werden.
       Dieser Parameter beschreibt die Anzahl von Zeitschritten,
       um eine Constraint-Gleichung~\cite{gamedev:constraints} zu stabilisieren.
+      \\
       Die ``stiffness''~(Steifheit) ist der letzte wichtige technische Parameter.
       Ein Beispiel für diesen Parameter ist die Steifheit einer Feder.
       Er beschreibt, wie steif die Objekte innerhalb der Simulation sich verhalten sollen.
@@ -521,9 +571,10 @@
   \section{Ablauf der Simulation\label{sec:Ablauf}}
 
     Die Applikation setzt sich aus mehreren Komponenten zusammen.
-    Jeder dieser Komponenten kann dem Haupt- oder Simulationsprozess zugeordnet werden~(\vref{fig:hauptSimuProzesse}).
+    Jeder dieser Komponenten kann dem Haupt- oder Simulationsprozess zugeordnet werden (\vref{fig:hauptSimuProzesse}).
     Während es nur eine Instanz vom Hauptprozess gibt,
     ist die Anzahl Simulationsprozesse frei wählbar (\vref{sub:techParams}).
+    \\
     Die Kommunikation zwischen Simulationsprozessen und Hauptprozess erfolgt über \gls{asyncMessaging}.
     In~\vref{sub:domMod} sind die jeweiligen Zusammenhänge der Klassen und Objekte ausführlicher beschrieben.
     Die~\vref{fig:ablauf} beschreibt den generellen Ablauf als Flussdiagramm
@@ -539,12 +590,16 @@
 
     \subsection{Initiale Population\label{sec:initPop}}
 
-      Als erster Schritt muss eine initiale Population erstellt werden. Die Populationsgrösse kann frei gewählt werden.
+      Als erster Schritt muss eine initiale Population erstellt werden.
+      Die Populationsgrösse kann frei gewählt werden.
       Pro Simulationsprozess können etwa 15 Individuen flüssig berechnet werden.
       Dies bedeutet das die optimale Populationsgrösse  \(Anzahl(CPU Kerne) * 15 \) beträgt.
       Dieser Wert wurde durch mehrere Versuche mit unterschiedlichen Prozessoren gefunden.
+
+      \medskip
+
       Es werden jeweils Individuen mit vier, fünkt, sechs, sieben und acht Körperpunkten~(\vref{sub:DesignBody}) zufällig generiert.
-      Die Verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
+      Die verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
 
     \subsection{Parcours-Generierung\label{sec:ParcourCreation}}
@@ -554,9 +609,13 @@
       das heisst es werden höhere Steigungen und Punkte mit höheren Y-Koordinaten vorkommen.
       In~\vref{fig:parcours1},~\vref{fig:parcours2} und~\vref{fig:parcours3} ist ersichtlich,
       wie der Parcours mit zunehmenden Generationen schwieriger wird.
-      Der ParcourGenerator ist die Verantwortliche Klasse in Javascript,
+
+      \medskip
+
+      Der ParcourGenerator ist die verantwortliche Klasse in Javascript,
       welche mit Hilfe von Obergrenzen von Werten einen Parcours generieren kann.
-      Wie unter~\ref{sec:Konfiguration} erwähnt,
+      \\
+      Wie unter~\vref{sec:Konfiguration} erwähnt,
       wird je nach Einstellung der Parcours nach jeder Generation neu generiert (allgemeine Lösung) oder
       er wird wiederverwendet (evolvieren auf Evolvierbarkeit).
       Der Parcours wird im ParcourGenerator generiert (Hauptprozess) und
@@ -586,21 +645,28 @@
 
         Nachdem eine neue Population und ein neuer Parcours erstellt worden ist.
         Muss eine Evaluation der Fitnessfunktion durchgeführt werden.
-        Die Verantwortliche Klasse ist die SimulationWorld.
+        Die verantwortliche Klasse ist die SimulationWorld.
         Zuerst muss jeder Genotyp zu einem Phänotyp abgebildet werden.
         Anschliessend muss der Parcours aus dem Blueprint in der \gls{PhysicsEngine} erstellt werden.
         Erst dann kann mit dem Simulieren der Individuen begonnen werden.
+
+        \medskip
+
         Die SimulationWorld merkt sich zu jedem Individuum die Position.
         Individuen welche sich während vier Sekunden kaum bewegt haben,
         werden aus der laufenden Simulation entfernt und ihr Fitnesswert wird abgespeichert.
-        Das Simulieren der Individuen kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
-        Es wird dann jeweils für \( Populationsgrösse / Anzahl von Simulationsprozessen \) Individuen eine eigene Simulation erstellt.
+        Das Simulieren der Individuen kann wie unter~\vref{sec:Konfiguration} schon erwähnt, parallelisiert werden.
+        \\
+        Jedem Simulationsprozess wird eine Teil-Population zugewiesen.
 
     \subsection{Reporting\label{subsec:Reporting}}
 
       Das Reporting-Modul hilft nach einer Simulation alle wichtigen Daten festzuhalten.
       Mithilfe einer Funktion welche eine Population als Parameter entgegennimmt,
       werden die Reports erstellt.
+
+      \medskip
+
       Es existieren folgende Typen von Reports:
 
       \begin{itemize}
@@ -641,15 +707,19 @@
 
     \subsection{Mutation\label{sec:Mutation}}
 
-      Auf die Selektionsstrategie folgt nun die Mutation der Individuen.
+      Auf die Selektionsstrategie folgt die Mutation der Individuen.
       Bei der Mutation wird über jede Eigenschaft des Individuums iteriert und
-      diese wird mit einer bestimmten Wahrscheinlichkeit (PROBABILITY) und um einen bestimmten Wert (STEP) verändert.
-      PROBABILITY kann Werte zwischen 0 und 1 annehmen, STEP hat keine Einschränkungen.
-      Nachdem für jedes Attribut diese Werte definiert worden sind, kann die Mutation stattfinden.
-      Limiten~(\vref{sub:IntroReqLimit}) wurden definiert, um nicht gewinnbringende Lösung zu verhindern.
+      wird mit einer Wahrscheinlichkeit und um einen Wert, die Schrittweite, verändert.
+      Die Wahrscheinlichkeit kann Werte zwischen 0 und 1 annehmen.
+      Für die Schrittweite gilt nur die Einschränkung, falls eine Limite definiert wurde,
+      dass diese nicht überschritten weren darf.
+      Limiten~(\vref{sub:IntroReqLimit}) werden definiert, um nicht gewinnbringende Lösung zu verhindern.
+
+      \medskip
+
       Die Position eines Beins wird unter einer zusätzlichen Bedingung mutiert. Falls sich der Körper so verändert hat,
       dass ein Bein ausserhalb des Körpers ist, wird die Position zufällig neu bestimmt.
-      Die Mutation läuft wie die Simulation parallel ab, das heisst, sie kann von mehreren CPU-Kernen profitieren.
+      Die Mutation läuft wie die Simulation parallel ab.
 
       \subsubsection{Hypothese zur Mutation\label{subsub:hypoMut}}
 

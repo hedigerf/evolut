@@ -31,7 +31,7 @@
       Damit wird erreicht, dass keine Synchronisation zwischen mehreren Motoren stattfinden muss.
       Was wiederum die Komplexität eines Motors reduziert.
 
-      \smallskip
+      \medskip
 
       Die Aufteilung bietet mehrere Vorteile.
       Die Implementation des Motors und der Mutation des Bewegungsablaufs kann getrennt werden.
@@ -39,7 +39,7 @@
       Innerhalb der Mutation muss deshalb einzig die Struktur der Daten bekannt sein.
       Vorteilhaft für die Implementation des Motors ist, dass dieser nur den vorgegebenen Ablauf abarbeiten muss.
 
-      \smallskip
+      \medskip
 
       Ein Nachteil der Implementation des Motors ist, dass das Feedback-System nicht trivial implementiert werden kann.
       Der Motor muss anhand des Feedbacks entscheiden, was weiter geschehen soll.
@@ -66,7 +66,7 @@
       Dies führt dazu, dass Individuen mit einem ausgereiften Bewegungsablauf mit grösserer Wahrscheinlichkeit
       für die Reproduktion selektiert und anschliessen mutiert werden.
 
-      \smallskip
+      \medskip
 
       Die erzielten Resultate mit der Implementation des Motors sind zufriedenstellend und
       liegen innerhalb der Erwartungen.
@@ -106,14 +106,14 @@
       wäre die Konstruktion eines Körpers schwieriger ausgefallen~(\vref{subsub:GenotypeBodypointCreation}).
       Der Kreis scheint nach wie vor, die einfachste Art der Körperpunktekonstruktion zu sein.
 
-      \smallskip
+      \medskip
 
       Der Ansatz der Konstruktion kann erweitert werden,
       so dass innerhalb des Kreises gewisse Bereiche eingeschränkt werden.
       Damit wird erreicht, dass der Körper eine gewisse Form annimmt.
       Ebenfalls kann so eine minimale oder maximale Grösse vorgegeben werden.
 
-      \smallskip
+      \medskip
 
       Es gilt zu prüfen ob die Einschränkung, dass ein Körper eines Indidviduums aus 4--8 Punkten besteht,
       geändert werden kann.
@@ -340,7 +340,7 @@
       Dies führt dazu, dass vorteilhafte, sinnvolle Mutationen durch unvorteilhafte überschattet werden.
       Damit werden wertvolle Lösungen verspielt.
 
-      \smallskip
+      \medskip
 
       Insbesondere für die Entwicklung des Bewegungsablaufs ist dies relevant.
       Mit kleineren Wahrscheinlichkeiten werden feinere Änderungen vorgenommen,
@@ -348,7 +348,7 @@
       Fallen die Änderungen zu gross aus, ist es möglich, dass im Ablauf eine unvorteilhafte Mutation
       zu Beginn des Bewegungsablaufs eine vorteilhafte Änderung zunichtemacht.
 
-      \smallskip
+      \medskip
 
       Die Wahrscheinlichkeit der Mutation steuert,
       ob der evolutionäre Algorithmus in eine Zufallssuche abgleitet~\cite{Sampson1976}.
@@ -365,7 +365,7 @@
       Eine wichtige Komponente im Bewegungsablauf stellt das Feedback dar.
       Mit einem Feedback-System können Ereignisse~(Boden berühren, Steigung und Gefällr) erkannt und verarbeitet werden.
 
-      \smallskip
+      \medskip
 
       Eine Möglichkeit ist es den Bewegungsablauf bzw.\ die Bewegung zu erweitern.
       So dass nicht nur die Bewegung weiterentwickelt wird, sondern auch wie die Rückmeldung an den Motor aussieht.
@@ -378,7 +378,7 @@
       Dabei steigt die Komplexität der Impelementations des Motor,
       da dieser ein Regelwerk (oder ähnlich) verwenden muss, um die Zustandswechsel zu organisieren.
 
-      \smallskip
+      \medskip
 
       In der Simulation ist bereits vorhanden, dass erkannt wird, wann ein Bein den Boden berührt.
       Diese Rückmeldung wird jedoch nicht verarbeitet. Es wird vermutet,

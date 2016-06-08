@@ -8,8 +8,8 @@
 
   \section{Natürliche vs.\ artifizielle Evolution}
 
-    Natürliche Evolution hat kein vordefiniertes Ziel und ist ein sogenannter open-ended Anpassungsprozess.
-    Unter einem open-ended Anpassungsprozess in der natürlichen Evolution
+    Natürliche Evolution hat kein vordefiniertes Ziel und ist ein sogenannter ``open-ended'' Anpassungsprozess.
+    Unter einem ``open-ended'' Anpassungsprozess in der natürlichen Evolution
     versteht man die Anpassung an die natürliche Umgebung.
     Da sich die natürliche Umgebung stetig ändert, ist der Prozess immer im Gange und endet nie.
     Artifizielle Evolution jedoch ist ein Optimierungsprozess,
@@ -57,7 +57,9 @@
         Bei der diskreten Repräsentation kann das Genom als binären String dargestellt [0111110] werden.
         Dieser binäre String kann anschliessend in einen Phänotyp übersetzt werden.
         Zum Beispiel kann eine Bitsequenz, direkt zu einer Zahl als Phänotyp übersetzt werden [0011] -> 3.
-        \\
+
+        \medskip
+
         Eine diskrete Repräsentation kann ebenfalls eine Folge von beliebigen Zeichen annehmen [ABCDEF].
         D. Floreano und C. Mattiussi~\cite[S.18]{book:bioInspired} zeigen dies anhand des ``Travelling Sales Man Problems'':
         Jeder Buchstabe in der Sequenz repräsentiert dabei einen Ort,
@@ -99,6 +101,7 @@
       Die Grösse der zu evolvierenden Population kann selber bestimmt werden.
       Jedoch muss beachtet werden, dass eine grössere Population mehr Rechenaufwand bedeutet.
       Auch die Eigenschaften des Suchraums dürfen dabei nicht ignoriert werden.
+      \\
       Wichtig bei der Erstellung einer initialen Population ist,
       möglichst diverse~(\vref{sub:diversity}) Individuen zu generieren,
       damit nicht wertvolle Lösungen verspielt werden.
@@ -108,6 +111,7 @@
       Mit Hilfe der Fitnessfunktion lassen sich Individuen beurteilen,
       wie gut geeignet ihre Gene sind, um die Problemstellung zu bewältigen.
       In der natürlichen Evolution ist die Fitness des Tieres, wie viele Nachkommen es erzeugen kann.
+      \\
       In der technischen Welt jedoch muss der Anwender sie jeweils selbst definieren und
       anhand der Problemstellung anpassen. Oft ist die Evaluation der Fitness-Funktion
       die rechenintensivste Teilaufgabe eines evolutionären Algorithmus~\cite[S.22]{book:bioInspired}.
@@ -140,8 +144,12 @@
         in dem jedes Individuum ein Stück des Rouletterads für sich beanspruchen~(\vref{fig:rouletteWheel}).
         Das Stück welches sie beanspruchen, ist so gross,
         wie ihre Fitness im Vergleich zu der Fitness ihrer Konkurrenten.
+        \\
         Das Individuum mit der grössten Fitness wird auch das grösste Stück des Rouletterads für sich beanspruchen und hat somit die grösste Wahrscheinlichkeit, Nachkommen zu erzeugen.
         Wenn die Population \(N\) Individuen gross ist, wird das Rad \(N\) mal gedreht um die Nachkommen zu bestimmen.
+
+        \medskip
+
         Proportionale Selektion funktioniert schlecht,
         wenn alle Individuen sehr ähnliche Fitnesswerte aufweisen oder es nur wenige/einen Ausreisser gibt.
         Denn dann haben alle Individuen die gleiche Chance selektiert zu werden.
@@ -151,7 +159,7 @@
           \caption[\protect\bibentry{book:bioInspired}, S.24]{Rouletterad der proportionalen Selektion\label{fig:rouletteWheel}}
         \end{figure}
 
-      \subsubsection{Rang-basierte Selektion}
+      \subsubsection{Rangselektion}
 
         Es wird zuerst eine Rangliste nach Fitness erstellt und dann werden die Reproduktionswahrscheinlichkeiten proportional zum Rang zugeordnet.
         Anstatt das Rouletterad~(\vref{fig:rouletteWheel}) nach Fitness der Individuen zu unterteilen,
@@ -160,14 +168,14 @@
         dass die Fitness der Individuen ähnlich sein darf,
         jedoch wird mit hoher Wahrscheinlichkeit das Bessere selektiert werden.
 
-      \subsubsection{Gekürzte Rang-basierte Selektion}
+      \subsubsection{Gekürzte Rangselektion}
 
         Es wird eine Rangliste für die Individuen der Population erstellt.
         Anstatt alle Individuen zu berücksichtigen, werden nur die besten der Rangliste selektiert und diese produzieren Nachkommen (\vref{fig:truncated_rank_based_selection}).
 
         \begin{figure}[H]
           \includegraphics[width=\textwidth,center]{graphics/truncated_rank_based_selection}
-          \caption{Schritte einer gekürzten rang-basierten Selektion\label{fig:truncated_rank_based_selection}}
+          \caption{Schritte einer gekürzten Rangselektion\label{fig:truncated_rank_based_selection}}
         \end{figure}
 
       \subsubsection{Turnierselektion\label{subsub:Turnier}}
@@ -176,6 +184,7 @@
         diese Individuen tragen untereinander ein Turnier (\vref{fig:tournament_based}) aus.
         Das Turnier gewinnt jenes Individuum, welches den höchsten Fitnesswert aufweist.
         Dies wird solange wiederholt, bis so viele Nachkommen vorhanden sind wie in der vorherigen Generation.
+        \\
         Ein grosser Vorteil von Turnierselektion ist die gute Balance zwischen
         Selektionsdruck und genetischer Diversität,
         da alle Individuen in der Population die gleiche Wahrscheinlichkeit haben, für das Turnier selektiert zu werden.
@@ -191,6 +200,7 @@
       Bei der Rekombination werden jeweils zwei Individuen selektiert und
       deren Gen-Paare neu kombiniert (untereinander vertauscht).
       Die~\vref{fig:crossOver} veranschaulicht diesen Prozess.
+      \\
       Nicht bei jedem Typ von evolutionären Algorithmen~(\vref{sub:artenEvAlgos}) und
       jeder Problemstellung ist Rekombination sinnvoll.
       Als Beispiel kann ein Haus mit Fenstern und Türen genommen werden.
@@ -241,6 +251,7 @@
 
       Mutationen operieren auf dem Genotyp des Individuums.
       Die Positionen eines Genoms werden mit einer bestimmten Wahrscheinlichkeit \(p_{m}\) mutiert.
+      \\
       Es ist jedoch Vorsicht geboten, da gewisse Lösungen durch Mutationen verloren gehen können~\cite{Sampson1976}.
       Wenn zu viel mutiert wird, kann die Selektion und Evolution der Individuen nicht stattfinden.
       Es wird dann eher eine Zufallssusche durchgeführt als eine richtige Evolution.
@@ -290,6 +301,7 @@
 
       Es gibt verschiedene Typen von evolutionären Algorithmen, welche sich hauptsächlich in der Wahl ihrer
       genetischen Repräsentation und Operationen unterscheiden~\cite{book:introEvComp}.
+      \\
       Die Auswahl des evolutionären Algorithmus hängt von den Eigenschaften der Problemstellung ab.
       Es gibt keinen Algorithmus der alle Probleme optimal lösen kann~\cite{book:genAlgoDataStructsEvProg}.
       Die am häufigsten verbreiteten Algorithmen sind: genetische Algorithmen~(\vref{item:genAlgo}),
@@ -323,6 +335,8 @@
         Evolutionäre Strategien~\cite{book:evStrat} sind ähnlich wie evolutionäre Programmierung.
         Das Genom wird durch reale Werte repräsentiert~\cite[S.134]{book:evAlgo}.
 
+        % TODO
+
   \section{Frozen Accident}
 
     Der Begriff~``frozen accident'' wird erstmals von F. H. C. Crick~\cite{Crick1968} beschrieben.
@@ -330,8 +344,12 @@
     weil er nicht für Optimalität entworfen ist.
     Der Code gilt als eingefroren~(``frozen''),
     weil viele Teile eines Organismus sich an einen anderen Code oder System anpassen müssten.
+
+    \medskip
+
     Alternative Systeme können effizienter sein, als das momentan verwendete.
     Doch es ist nicht möglich, dass das System in einem Schritt geändert wird.
     Nur einzelne, kleine Schritte in die entsprechende Richtung können unternommen werden.
     Dies wiederum führt zu Individuen mit geringerer Fitness.
-    Da viele Individuen existieren, wird ein Individuum mit geringer Fitness, eine kleinere Chancen haben selektiert zu werden (\vref{sec:Selektion}).
+    Da viele Individuen existieren, wird ein Individuum mit geringer Fitness,
+    eine kleinere Chancen haben selektiert zu werden (\vref{sec:Selektion}).
