@@ -380,9 +380,9 @@
       \smallskip
 
       In der Simulation ist bereits vorhanden, dass erkannt wird, wann ein Bein den Boden berührt.
-      Diese Rückmeldung wird jedoch nicht verarbeitet.
-      Es wird vermutet,
+      Diese Rückmeldung wird jedoch nicht verarbeitet. Es wird vermutet,
       dass die Erweiterung um ein solches System die Fitnesswerte im Verlauf der Generationen steigert.
+      Interessant ist auch, ob das Feedback-System zu komplexeren Bewegungsabläufen führt.
 
     \subsection{\(N\)-beinige Tiere}
 
@@ -418,14 +418,12 @@
 
       Die zeitliche Beschränkung dieser Arbeit hat es nicht erlaubt,
       die ursprünglich geplante Hypothese über den Vergleich von Selektionsstrategien durchzuführen.
-      In der Hypothese geht es darum die Auswirkungen von den Selektionsstrategien
-      Turnierselektion, Rangselektion
-      und proportionale Selektion auf die Simulationsresultate zu untersuchen.
-      Diese Hypothese würde genügend Stoff für eine weitere spannende Arbeit liefern.
+      In der Hypothese geht es darum die Auswirkungen von den Selektionsstrategien Turnierselektion,
+      Rangselektion und proportionale Selektion auf die Simulationsresultate zu untersuchen.
 
     \subsection{Hypothese Allgemeine Lösung vs.\ evolvieren auf Evolvierbarkeit\label{sub:hypoAnsatz}}
 
-      Leider war nicht genügend Zeit vorhanden folgende Hypothese zu validieren:
+      Es war nicht genügend Zeit vorhanden folgende Hypothese zu validieren:
       Individuen welche durch die allgemeine Lösung gefunden werden,
       sollten bei unterschiedlichen Parcours im Durchschnitt besser abschneiden,
       als ihre Gegenspieler~(Entwicklung auf Evolvierbarkeit),
@@ -453,21 +451,17 @@
 
     \subsection{Parcours}
 
-      Der Parcours wird nur mit einem Typ von Element generiert, ein Höhenfeld dass einen Berg repräsentiert.
-      Neue Terrain-Typen wie Eis, Wasser oder Grass könnten zusätzlich hinzugefügt werden.
-      Das Hinzufügen dieser Terrain-Typen würde die Entwicklung von Individuen zulassen,
-      welche sich in einer Welt bewegen, die näher an der Realität ist.
-      Vergleiche könnten gezogen werden, zwischen Individuen die in verschiedenen Terrains evolviert werden.
-
-      % ^ old, v new
-
       Ein Schritt in Richtung Annäherung an die Realität ist die Integration
-      verschiedener Terrain-Typen in den Parcours. Der Parcours verwendet nur einen Terrain-Typ.
-      Weiter Typen wie Eis, Gras, Sand oder Wasserlachen könnten hinzugefügt werden.
+      verschiedener Terrain-Typen in den Parcours. Weitere Typen wie Eis, Gras oder Sand können hinzugefügt werden.
+      Jeder dieser Terrain-Typen verlangt andere Anpassungen des Individuums.
+      Eisige Untergründe bieten wenig Halt und Reibung.
+      Sandige Terrains sind ein weicher Untergrund und benötigen deshalb andere Eigenscahften.
+      Eine interessante Fragestellung ist, wie die Terrain-Typen das Aussehen und den Bewegungsablauf beeinflussen.
+      Ein Parcours der einen Mix aus verschiedenen Terrain-Typen beinhaltet ist ebenfalls interessant zu untersuchen.
+      Darin werden alle Anforderung kombiniert und das Indidivuum muss diese abdecken.
       \\
-      Damit
-
-      % Tendenz?
+      Zusammen mit einem Feedback-System für die Bewegung und verschiedenen Terrain-Typen kann untersucht werden,
+      ob komplexere Bewegungsabläufe entstehen und wie diese sich in unterschiedlichen Umgebungen verhalten.
 
     \subsection{Neuronale Netzwerke}
 
