@@ -6,10 +6,10 @@
 
 \chapter{Diskussion und Ausblick\label{chap:perspective}}
 
-  % TODO Bespricht die erzielten Ergebnisse bezüglich ihrer Erwartbarkeit, Aussagekraft und Relevanz
-  % TODO Interpretation und Validierung der Resultate
-  % TODO Rückblick auf Aufgabenstellung, erreicht bzw. nicht erreicht
-  % TODO Legt dar, wie an die Resultate angeschlossen werden kann; legt dar, welche Chancen die Resultate bieten
+  % Bespricht die erzielten Ergebnisse bezüglich ihrer Erwartbarkeit, Aussagekraft und Relevanz
+  % Interpretation und Validierung der Resultate
+  % Rückblick auf Aufgabenstellung, erreicht bzw. nicht erreicht
+  % Legt dar, wie an die Resultate angeschlossen werden kann; legt dar, welche Chancen die Resultate bieten
 
   \section{Diskussion der Resultate\label{sec:diskRes}}
 
@@ -54,6 +54,21 @@
       Somit müssen diese Regeln dynamisch erstellt werden können.
       Aus diesen Gründen ist das Feedback-System nicht in den Motor integriert.
 
+    \subsection{Wie kann diese Steuerung evolviert werden?}
+
+      Damit die Steuerung der Bewegung, der Bewegungsablauf, evolviert werden kann,
+      muss dieser in einer Form vorliegen, die es erlaubt einzelne Werte zu manipulieren.
+      Der Bewegungsablauf beinhaltet eine Liste von Bewegungen.
+      In der Liste können Bewegungen beliebig gruppiert werden.
+      Wie in~\vref{subsub:EngineMovement} beschrieben
+      wird die Information zu einer Bewegung in mehrere Teile aufgespaltet.
+      Die gewählte Darstellungsform bietet eine fein gegliederte Beschreibung des Bewegungsablaufs.
+      Diese Gleiderung erlaubt es den Bewegungsablauf einfach zu entwickeln.
+      \\
+      Wie erwartet ist der Bewegungsablauf hauptverantwortlich für die Fitness eines Individuums.
+      Dies führt dazu, dass Individuen mit einem ausgereiften Bewegungsablauf mit grösserer Wahrscheinlichkeit
+      für die Reproduktion selektiert und anschliessen mutiert werden.
+
       \smallskip
 
       Die erzielten Resultate mit der Implementation des Motors sind zufriedenstellend und
@@ -81,23 +96,6 @@
       Damit die Vermutung validiert werden kann,
       muss ein geeignetes Verhältnis zwischen Hinzufügen und Löschen von Bewegungen gefunden werden,
       so dass die Simulation länger laufen kann.
-
-    \subsection{Wie kann diese Steuerung evolviert werden?}
-
-      Damit die Steuerung der Bewegung, der Bewegungsablauf, evolviert werden kann,
-      muss dieser in einer Form vorliegen, die es erlaubt einzelne Werte zu manipulieren.
-      Der Bewegungsablauf beinhaltet eine Liste von Bewegungen.
-      In der Liste können Bewegungen beliebig gruppiert werden.
-      Wie in~\vref{subsub:EngineMovement} beschrieben
-      wird die Information zu einer Bewegung in mehrere Teile aufgespaltet.
-      Die gewählte Darstellungsform bietet eine fein gegliederte Beschreibung des Bewegungsablaufs.
-      Diese Gleiderung erlaubt es den Bewegungsablauf einfach zu entwickeln.
-      \\
-      Der Bewegungsablauf ist hauptverantwortlich für die Fitness eines Individuums.
-      Dies führt dazu, dass Individuen mit einem ausgereiften Bewegungsablauf mit grösserer Wahrscheinlichkeit
-      für die Reproduktion selektiert und anschliessen mutiert werden.
-      \\
-      % TODO moaaar
 
     \subsection{Wie kann die Geometrie der Tiere evolviert werden?}
 
@@ -286,8 +284,7 @@
       müsste wie erwähnt unter~\vref{subsub:bpScnd} die Mutation der Anzahl Körperpunkte implementiert werden.
       Spätestens ab der 10. Generation bei jedem Simulationslauf,
       existieren nur noch Individuen mit der gleichen Anzahl Körperpunkten.
-      Die Hypothese kann erst valdiert werden, wenn wie besprochen, die Anzahl Körperpunkte mutiert wird.
-
+      Die Hypothese kann erst valdiert werden, wenn die Anzahl der Körperpunkte mutiert wird.
 
     \subsection{Hypothese Mutationswahrscheinlichkeiten}
 
@@ -298,8 +295,6 @@
 
   \section{Ausblick\label{sec:ausblick}}
 
-    % Tiere mit andere anzahl an beinen als 6
-
     Die erstellte Simulationsapplikation ist gut erweiterbar und ermöglicht Interessierten sie weiter auszubauen.
     Der Programmcode soll für Interessierte unter \url{http://github.com} freigegeben werden.
 
@@ -309,6 +304,9 @@
       welche am meisten helfen würde, bessere Resultate zu finden.
 
     \subsection{\(n\)-beinige Tiere}
+
+      % Tiere mit andere anzahl an beinen als 6
+
       Momentan beschränkt der definierte Bewegugngsablauf die Individuen auf sechs Beine.
       Wenn auf jedem Bein ein Bewegungsablauf definiert wird, wäre es möglich artifizielle Tiere mit \(n\)-Beinen zu erstellen.
       Es muss aber mit erhöhtem Rechenaufwand gerechnet werden, da die Bewegugnsabläufe miteinander synchronisiert werden müssen.

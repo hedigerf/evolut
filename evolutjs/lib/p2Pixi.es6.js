@@ -753,7 +753,7 @@ export class PixiAdapter extends p2.EventEmitter {
       this.drawCircle(graphics, offset[0] * ppu, -offset[1] * ppu, 2 * style.lineWidth, style);
 
     } else if (shape instanceof p2.Plane) {
-      // TODO: use shape angle
+      // _TODO use shape angle
       this.drawPlane(graphics, -10 * ppu, 10 * ppu, style);
 
     } else if (shape instanceof p2.Line) {
