@@ -56,7 +56,7 @@
       Aus diesen Gründen ist das Feedback-System nicht in den Motor integriert.
       Weiterführende Arbeiten könnten diesen Punkt aufnehmen und untersuchen~\vref{sub:PerspectiveFeedback}.
 
-    \subsection{Wie kann diese Steuerung evolviert werden?}
+    \subsection{Wie kann diese Steuerung evolviert werden?\label{sub:wieStEv}}
 
       Damit die Steuerung der Bewegung, der Bewegungsablauf, evolviert werden kann,
       muss dieser in einer Form vorliegen, die es erlaubt einzelne Werte zu manipulieren.
@@ -104,6 +104,8 @@
       Die Konstruktion der geometrischen Körper aus denen sich ein Individuum zusammensetzt,
       wurde unter~\vref{sub:Beine} und~\vref{subsub:GenotypeBodypointCreation} besprochen.
       Welche Geometrie die richtige ist, wird durch die Selektion und Mutation der Individuen bestimmt.
+
+      % TODO more?
 
     \subsection{Nimmt die Diversität mit zunehmenden Generationen stetig ab?}
       Es wurde erwatet, dass die anfänglich hohe Diversität stetig sinken würde,
@@ -258,6 +260,10 @@
         \caption{Ruderbewegung im Zeitraffer\label{fig:ruder}}
 
       \end{figure}
+
+      Die gefunden Resultate zeigen, dass nicht immer alle Beine benützen werden müssen, um sich durch den Parcours fortbewegen zu können.
+      Eine Anpassung der Wahrscheinlichkeit für das Hinzufügen von Bewegungen(~\vref{sub:wieStEv}), könnte die Ruderer veranlassen, alle Beine zu bewegen.
+      Weiterführende Simulationen mit angepassten Parameter könnten fähig sein, alle Beine der artifiziellen Tiere, auszunutzen.
 
     \subsection{Individuum: Allgemeine Lösung vs.\ Evolvieren auf Evolvierbarkeit}
 
