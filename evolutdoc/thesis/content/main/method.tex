@@ -510,7 +510,7 @@
 
       Javascript ist eine Script-Sprache.
       Diese benötigt ein Programm, welches den Quellcode interpretiert und ausführt.
-      Als Plattform wurde deshalb Electron eingesetzt. Electorn besteht aus node.js und Google Chrome.
+      Als Plattform wurde deshalb Electron eingesetzt. Electron besteht aus node.js und Google Chrome.
 
       \medskip
 
@@ -598,7 +598,7 @@
 
       \medskip
 
-      Es werden jeweils Individuen mit vier, fünkt, sechs, sieben und acht Körperpunkten~(\vref{sub:DesignBody}) zufällig generiert.
+      Es werden jeweils Individuen mit vier, fünf, sechs, sieben und acht Körperpunkten~(\vref{sub:DesignBody}) zufällig generiert.
       Die verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
 
@@ -647,7 +647,7 @@
         Muss eine Evaluation der Fitnessfunktion durchgeführt werden.
         Die verantwortliche Klasse ist die SimulationWorld.
         Zuerst muss jeder Genotyp zu einem Phänotyp abgebildet werden.
-        Anschliessend muss der Parcours aus dem Blueprint in der \gls{PhysicsEngine} erstellt werden.
+        Anschliessend muss der Parcours in der \gls{PhysicsEngine} erstellt werden.
         Erst dann kann mit dem Simulieren der Individuen begonnen werden.
 
         \medskip
@@ -677,7 +677,7 @@
         \item Fitness Graph Best Report: Enthält Koordinaten,
           um einen Graphen über das beste Individuum der Generation zu erstellen.
 
-        \item Genotype Blue Print Report: Enthält pro Generation ein \gls{JSON}-Objekt,
+        \item Genotype Blueprint Report: Enthält pro Generation ein \gls{JSON}-Objekt,
           das Informationen über die ganze Population enthält.
 
         \item Fitness Graph Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit der Körperpunktanzahl x.
@@ -709,7 +709,7 @@
 
       Auf die Selektionsstrategie folgt die Mutation der Individuen.
       Bei der Mutation wird über jede Eigenschaft des Individuums iteriert.
-      Diese Eingeschaften werden mit einer Wahrscheinlichkeit und um einen Wert, die Schrittweite, verändert.
+      Diese Eigenschaften werden mit einer Wahrscheinlichkeit und um einen Wert, die Schrittweite, verändert.
       Die Wahrscheinlichkeit kann Werte zwischen 0 und 1 annehmen.
       Falls eine Limite definiert wurde,
       darf die Summe des aktuellen Werts und der Schrittweite die Limite nicht überschreiten.
