@@ -318,7 +318,6 @@
         \caption{4000. Generation\label{fig:gen4000}}
       \end{figure}
 
-      %TODO was heisst das nun?
 
     \subsection{Hypothese Körperpunkte\label{sub:PerspectiveHypBodyPoints}}
 
@@ -400,14 +399,22 @@
       sollten die Individuen welche auf Evolvierbarkeit evolviert worden sind, auf Dauer überlegen sein.
       \\
       Um diese Hypothese zu validieren,
-      sollten zwei Simulationsläufe mit zwei Populationen aus den Lösungsansätzen durchgeführt werden:
+      sollte für beide Lösungsansätze je zwei Simulationsläufe mit 1000 Iterationen durchgeführt werden:
 
       \begin{itemize}
         \item Simulationslauf mit gleichem Parcours
         \item Simulationslauf mit 10 unterschiedlichen Parcours
       \end{itemize}
 
-      Anschliessend sollte ein Vergleich angestellt werden zwischen den Lösungsansätzen der beiden Läufen.
+      Folgende Kritierien müssen erfüllt sein:
+
+      \begin{itemize}
+        \item Es sollen zwei bestehende Populationen verwendet werden.
+        \item Die Parcours sollten identisch für beide Lösungsansätze sein
+      \end{itemize}
+
+      Abschliessend sollte ein Vergleich angestellt werden zwischen den Lösungsansätzen und ihrer Resultate.
+      Die nötige Implementierung der Parcours-Wiederverwendung müsste noch implementiert werden, um die Hyptohesenvalidation durchzuführen.
 
     \subsection{Parcours}
 
