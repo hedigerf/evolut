@@ -311,7 +311,7 @@
         \end{subfigure}
         \begin{subfigure}[b]{0.45\textwidth}
           \includegraphics[width=\linewidth,center]{graphics/simulation-discussion/5_gen4000}
-          \caption{Evolvierung auf Evolvierbarkeit\label{fig:gen4000_ev}}
+          \caption{Entwicklung auf Evolvierbarkeit\label{fig:gen4000_ev}}
         \end{subfigure}
 
         \caption{4000. Generation\label{fig:gen4000}}
@@ -382,17 +382,17 @@
 
       Die zeitliche Beschränkung dieser Arbeit hat es nicht erlaubt,
       die ursprünglich geplante Hypothese über den Vergleich von Selektionsstrategien durchzuführen.
-      In der Hypothese ging es darum die Auswirkungen von den Selektionsstrategien:
+      In der Hypothese geht es darum die Auswirkungen von den Selektionsstrategien:
       Turnierselektion, Rangselektion
       und proportionale Selektion auf die Simulationsresultate zu untersuchen.
       Diese Hypothese würde genügend Stoff für eine weitere spannende Arbeit liefern.
 
-    \subsection{Hypothese Allgemeine Lösung vs.\ Evolvierung auf Evolvierbarkeit\label{sub:hypoAnsatz}}
+    \subsection{Hypothese Allgemeine Lösung vs.\ evolvieren auf Evolvierbarkeit\label{sub:hypoAnsatz}}
 
       Leider war nicht genügend Zeit vorhanden folgende Hypothese zu validieren:
       Individuen welche durch die allgemeine Lösung gefunden werden,
       sollten bei unterschiedlichen Parcours im Durchschnitt besser abschneiden,
-      als ihre Gegenspieler~(Evolvierung auf Evolvierbarkeit),
+      als ihre Gegenspieler~(Entwicklung auf Evolvierbarkeit),
       da sie sich schneller an eine neue Umgebung anpassen können.
       Wenn immer der gleiche Parcours benutzt wird,
       sollten die Individuen welche auf Evolvierbarkeit evolviert worden sind, auf Dauer überlegen sein.
@@ -413,20 +413,22 @@
       \end{itemize}
 
       Abschliessend sollte ein Vergleich angestellt werden zwischen den Lösungsansätzen und ihrer Resultate.
-      Die nötige Implementierung der Parcours-Wiederverwendung müsste noch implementiert werden, um die Hyptohesenvalidation durchzuführen.
+      Die dafür nötige Implementierung der Parcours-Wiederverwendung ist noch offen.
 
     \subsection{Parcours}
 
-      Der Parcours wird nur mit einem Typ von Element generiert, ein Höhenfeld welches einen Berg repräsentiert.
+      Der Parcours wird nur mit einem Typ von Element generiert, ein Höhenfeld dass einen Berg repräsentiert.
       Neue Terrain-Typen wie Eis, Wasser oder Grass könnten zusätzlich hinzugefügt werden.
-      Das Hinzufügen dieser Terrain-Typen würde die Generierung von Individuen zulassen, welche näher an die Realtität herankommen.
+      Das Hinzufügen dieser Terrain-Typen würde die Entwicklung von Individuen zulassen,
+      welche sich in einer Welt bewegen, die näher an der Realität ist.
+      Vergleiche könnten gezogen werden, zwischen Individuen die in verschiedenen Terrains evolviert werden.
 
       % Tendenz?
 
-    \subsection{Neuronales Netzwerk}
+    \subsection{Neuronale Netzwerke}
 
       Neben den evolutinären Algorithmen gibt es noch eine andere Form von Algorithmus, der ähnliche Problemstellungen bewältigen kann.
-      Laut M. Füllsack~\cite{book:fullsack} funktionieren neuronale Netzte ähnlich wie das Neuronennetzwerk des Gehirns.
+      Laut M. Füllsack~\cite{book:fullsack} funktionieren neuronale Netze ähnlich wie das Neuronennetzwerk des Gehirns.
       Die bestehende Implementation des evolutionären Algorithmus könnte mit einer Version, welche auf neuronalen Netzwerke basiert, verglichen werden.
-      Vieleicht wären neuronale Netzwerke sogar besser geeignet als die momentane Implementation.
+      Vieleicht wären neuronale Netzwerke sogar besser geeignet als die aktuelle Implementation.
       % YEEES
