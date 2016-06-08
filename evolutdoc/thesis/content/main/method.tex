@@ -10,14 +10,14 @@
 
     Der Ansatz für das Design der Individuen ist an \Glspl{Hexapod} angelehnt.
     Dabei sind viele Eigenschaften der Ameise in den Entwurf eingeflossen.
-    Sie bieten mit ihren 6 Beinen eine gute Kombination aus Stabilität und Einfachheit der Steuerung.
+    Sie bieten mit ihren sechs Beinen eine gute Kombination aus Stabilität und Einfachheit der Steuerung.
 
     \subsection{Körper\label{sub:DesignBody}}
 
       Die Form des Körpers soll frei evolvierbar sein.
       Deshalb wird der Körper eines Individuums als Polygon mit \(n\) Punkten beschrieben.
       \\
-      Als Einschränkung wird festgelegt, dass ein Polygon aus minimal 4 und maximal 8 Punkte generiert wird.
+      Als Einschränkung wird festgelegt, dass ein Polygon aus minimal vier und maximal acht Punkte generiert wird.
       Diese Bedingung beschränkt sowohl den Rechenaufwand der Berechnung des Körpers während der Simulation~(\vref{sec:simulation}),
       als auch in der Mutationsphase~(\vref{sec:Mutation}).
       Weiter wird festgelegt, dass das Polygon ein \gls{SimplePolygon} sein muss.
@@ -43,15 +43,15 @@
       \subsubsection{Hypothese zu Körperpunkten\label{subsub:hypoKp}}
 
         Es wird die Hypothese aufgestellt,
-        dass sich ein Individuum mit 8 Körperpunkten schneller durch den Parcours bewegt,
+        dass sich ein Individuum mit acht Körperpunkten schneller durch den Parcours bewegt,
         als ein Individuum mit weniger Körperpunkten.
         Die Vermutung dabei ist, dass durch die komplexere Form des Individuums die Balance besser gehalten werden kann.
         Im~\vref{chap:Resultate} und~\vref{chap:perspective} wird diskutiert, ob dies zutrifft.
 
     \subsection{Beine\label{sub:Beine}}
 
-      Da als Grundkonzept ein \gls{Hexapod} verwendet wird, wird die Eigenschaft von 6 Beinen übernommen.
-      Analog zu einer Ameise werden die Beine in 3 symmetrische Beinpaare aufgeteilt.
+      Da als Grundkonzept ein \gls{Hexapod} verwendet wird, wird die Eigenschaft von sechs Beinen übernommen.
+      Analog zu einer Ameise werden die Beine in drei symmetrische Beinpaare aufgeteilt.
       \\
       Technisch bietet sich die Möglichkeit, die Beine nicht in Paare zu gliedern und asymmetrisch am Körper anzubringen.
       Doch in der Natur existiert eine solche Anordnung nicht, weshalb darauf verzichtet wird.
@@ -149,7 +149,7 @@
         Die Polar-Koordinaten \( P \) werden in kartesische Koordinaten transformiert und miteinander verbunden.
         \\
         \\
-        Die folgende Abbildung~\ref{fig:kp} zeigt die Form eines Individuums mit 6 Körperpunkten.
+        Die folgende Abbildung~\ref{fig:kp} zeigt die Konstruktion der Form eines Individuums mit sechs Körperpunkten.
 
         \begin{figure}[H]
           \centering
@@ -226,8 +226,8 @@
       dass die Evolution lauffähige Individuen hervorbringt.
       \\
       Der vorgegebene Ablauf ist der Ameise nachempfunden, wegen der Einfachheit und Stabilität.
-      Eine Ameise bewegt pro Schritt immer 3 Beine.
-      Alternierend wird auf einer Seite 1 und auf der anderen 2 Beine gehoben und nach vorne bewegt.
+      Eine Ameise bewegt pro Schritt immer drei Beine.
+      Alternierend wird auf einer Seite ein und auf der anderen zwei Beine gehoben und nach vorne bewegt.
       Diese Bewegung erlaubt es der Ameise stets stabil zu stehen,
       da ein Dreibein immer steht während die anderen bewegt werden.
       \\
@@ -543,7 +543,7 @@
       Pro Simulationsprozess können etwa 15 Individuen flüssig berechnet werden.
       Dies bedeutet das die optimale Populationsgrösse  \(Anzahl(CPU Kerne) * 15 \) beträgt.
       Dieser Wert wurde durch mehrere Versuche mit unterschiedlichen Prozessoren gefunden.
-      Es werden jeweils Individuen mit 4, 5, 6, 7 und 8 Körperpunkten~(\vref{sub:DesignBody}) zufällig generiert.
+      Es werden jeweils Individuen mit vier, fünkt, sechs, sieben und acht Körperpunkten~(\vref{sub:DesignBody}) zufällig generiert.
       Die Verantwortliche Klasse in Javascript ist der InitialPopulationGenerator.
       Das Endprodukt dieses Schrittes ist eine Population bestehenden aus den Genotypen der Individuen.
 
@@ -591,7 +591,7 @@
         Anschliessend muss der Parcours aus dem Blueprint erstellt werden.
         Erst dann kann mit der Simulation begonnen werden.
         Die SimulationWorld merkt sich zu jedem Individuum die Position.
-        Individuen welche sich während 4 Sekunden kaum bewegt haben,
+        Individuen welche sich während vier Sekunden kaum bewegt haben,
         werden aus der laufenden Simulation entfernt und ihr Fitnesswert wird abgespeichert.
         Die Simulation kann wie unter~\ref{sec:Konfiguration} schon erwähnt, parallelisiert werden. \\
         Es wird dann jeweils für \( Populationsgrösse / Anzahl Simulationsprozesse \) Individuen eine eigene Simulation erstellt.
@@ -614,7 +614,7 @@
         \item Genotype Blue Print Report: Enthält pro Generation ein \gls{JSON}-Objekt,
           das Informationen über die ganze Population enthält.
 
-        \item Fitness Graph Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit Body Points Anzahl x.
+        \item Fitness Graph Average Report bp x: Für diesen Typ von Report gibt es jeweils einen für alle Individuen mit der Körperpunktanzahl x.
               Ansonsten gleich wie der Fitness Graph Average Report.
 
         \item Diversity Report: Enthält die Berechnung der Punktstreuung für eine Generation.
