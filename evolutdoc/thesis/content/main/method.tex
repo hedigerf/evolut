@@ -708,9 +708,10 @@
     \subsection{Mutation\label{sec:Mutation}}
 
       Auf die Selektionsstrategie folgt die Mutation der Individuen.
-      Bei der Mutation wird über jede Eigenschaft des Individuums iteriert und
-      wird mit einer Wahrscheinlichkeit und um einen Wert, die Schrittweite, verändert.
+      Bei der Mutation wird über jede Eigenschaft des Individuums iteriert.
+      Diese Eingeschaften werden mit einer Wahrscheinlichkeit und um einen Wert, die Schrittweite, verändert.
       Die Wahrscheinlichkeit kann Werte zwischen 0 und 1 annehmen.
+      Falls eine Limite definiert wurde, darf das Addieren vom aktuellen wert und Schrittweite die Limite nicht überschreiten.
       Für die Schrittweite gilt nur die Einschränkung, falls eine Limite definiert wurde,
       dass diese nicht überschritten weren darf.
       Limiten~(\vref{sub:IntroReqLimit}) werden definiert, um nicht gewinnbringende Lösung zu verhindern.
@@ -721,7 +722,7 @@
       dass ein Bein ausserhalb des Körpers ist, wird die Position zufällig neu bestimmt.
       Die Mutation läuft wie die Simulation parallel ab.
 
-      \subsubsection{Hypothese zur Mutation\label{subsub:hypoMut}}
+      \subsubsection{Hypothese Mutationswahrscheinlichkeiten\label{subsub:hypoMut}}
 
         Es wird die Hypothese aufgestellt,
         dass kleinere Mutationswahrscheinlichkeiten bessere Fitnesswerte liefern als grosse.
