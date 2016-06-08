@@ -359,15 +359,36 @@
 
     \subsection{Feedback an den Bewegungsmotor\label{sub:PerspectiveFeedback}}
 
-      Die fehlende Implementation der Reaktion auf das Feedback der Steuerung ist sicher die Komponente,
-      welche am meisten helfen würde, bessere Resultate zu finden.
+      Eine wichtige Komponente im Bewegungsablauf stellt das Feedback dar.
+      Mit einem Feedback-System können Ereignisse (Boden berühren, Steigung, Abhang) erkannt und verarbeitet werden.
+
+      \smallskip
+
+      Eine Möglichkeit ist es den Bewegungsablauf bzw.\ die Bewegung zu erweitern.
+      So dass nicht nur die Bewegung weiterentwickelt wird, sondern auch wie die Rückmeldung an den Motor aussieht.
+      Die Rückmeldung kann als zusätzliches Attribut einer Bewegung definiert werden.
+      Das hat zur Folge, dass der Motor weiterhin als \acrshort{fsm} implementiert werden kann.
+      Eine Rückmeldung ist dann eine weitere Möglichkeit für einen Zustandswechsel.
+      Wobei der nächste Zustand bzw. Bewegung nicht die im Bewegungsablauf nachfolgende sein muss.
+      \\
+      Als weitere Option kann der Motor selbst ergänzt werden.
+      Dabei steigt die Komplexität der Impelementations des Motor,
+      da dieser ein Regelwerk (oder ähnlich) verwenden muss, um die Zustandswechsel zu organisieren.
+
+      \smallskip
+
+      In dieser Arbeit ist bereits vorhanden, dass erkannt wird, wann ein Bein den Boden berührt.
+      Diese Rückmeldung wird jedoch nicht verarbeitet.
+      Es wird vermutet,
+      dass die Erweiterung um ein solches System die Fitnesswerte im Verlauf der Generationen steigert.
 
     \subsection{\(n\)-beinige Tiere}
 
       % Tiere mit andere anzahl an beinen als 6
 
       Momentan beschränkt der definierte Bewegugngsablauf die Individuen auf sechs Beine.
-      Wenn auf jedem Bein ein Bewegungsablauf definiert wird, wäre es möglich artifizielle Tiere mit \(n\)-Beinen zu erstellen.
+      Wenn auf jedem Bein ein Bewegungsablauf definiert wird,
+      wäre es möglich artifizielle Tiere mit \(n\)-Beinen zu erstellen.
       Es muss aber mit erhöhtem Rechenaufwand gerechnet werden,
       da die Bewegugnsabläufe miteinander synchronisiert werden müssen und mehr Beine bewegt werden.
       Eine weitere spannende Forschungsfrage könnte formuliert werden:
@@ -429,8 +450,10 @@
 
     \subsection{Neuronale Netzwerke}
 
-      Neben den evolutinären Algorithmen gibt es noch eine andere Form von Algorithmus, der ähnliche Problemstellungen bewältigen kann.
+      Neben den evolutinären Algorithmen gibt es noch eine andere Form von Algorithmus,
+      der ähnliche Problemstellungen bewältigen kann.
       Laut M. Füllsack~\cite{book:fullsack} funktionieren neuronale Netze ähnlich wie das Neuronennetzwerk des Gehirns.
-      Die bestehende Implementation des evolutionären Algorithmus könnte mit einer Version, welche auf neuronalen Netzwerke basiert, verglichen werden.
+      Die bestehende Implementation des evolutionären Algorithmus könnte mit einer Version,
+      welche auf neuronalen Netzwerke basiert, verglichen werden.
       Vieleicht wären neuronale Netzwerke sogar besser geeignet als die aktuelle Implementation.
       % YEEES
