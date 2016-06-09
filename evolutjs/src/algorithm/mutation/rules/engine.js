@@ -26,96 +26,6 @@ import random from '../../../util/random';
  * @property {Number} movement.parameters
  */
 
-function mutateCompoundMovement(probabilities, genotype, movement) {
-
-  movement.id = random.pick(['all', 'one']);
-  movement.params = mutateMovements(probabilities, genotype, movement.params);
-
-  return movement;
-}
-
-function mutateSingleLens(probabilities, genotype, lens) {
-
-  if (EngineMutationRule.prototype.shouldMutate(probabilities.lens.index)) {
-    lens.index = random.pick(range(0, 3));
-  }
-  if (EngineMutationRule.prototype.shouldMutate(probabilities.lens.side)) {
-    lens.side = random.pick(values(Sides));
-  }
-  if (EngineMutationRule.prototype.shouldMutate(probabilities.lens.type)) {
-    lens.type = random.pick(values(Types));
-  }
-
-  return lens;
-}
-
-function mutateSingleParams(probabilities, genotype, movement) {
-
-  if (!movement.params || !movement.params.length) {
-    return movement;
-  }
-
-  const bounds = getMovement(movement.id).bounds;
-
-  switch (movement.id) {
-
-    case 'sta':
-    case 'sts':
-      const step = probabilities.movement[movement.id].step;
-      movement.params = movement.params.map((p, i) => EngineMutationRule.prototype.mutateNumeric(p, step, bounds[i]));
-      break;
-
-    case 'stm':
-    case 'utl':
-      movement.params = [random.pick(bounds)];
-      break;
-
-  }
-
-  return movement;
-}
-
-function mutateSingleMovement(probabilities, genotype, movement) {
-  movement.lens = mutateSingleLens(probabilities, genotype, movement.lens);
-  return mutateSingleParams(probabilities, genotype, movement);
-}
-
-/**
- * Mutate the initial movements.
- *
- * @param {Object<Number>} probabilities The probabilites
- * @param {Genotype} genotype
- * @param {Array<MovementDescriptor>} movements The movements
- * @return {Array<MovementDescriptor>} The mutated movements
- */
-function mutateMovements(probabilities, genotype, movements) {
-
-  const length = movements.length;
-  const mutated = [];
-
-  for (let i = 0; i < length; i++) {
-
-    if (EngineMutationRule.prototype.shouldMutate(probabilities.add)) {
-      mutated.push(makeRandomMovementDescriptor());
-    }
-
-    if (!EngineMutationRule.prototype.shouldMutate(probabilities.remove)) {
-
-      const movement = movements[i];
-      let mutatedMovement;
-
-      if (isCompoundMovement(movement)) {
-        mutatedMovement = mutateCompoundMovement(probabilities, genotype, movement);
-      } else {
-        mutatedMovement = mutateSingleMovement(probabilities, genotype, movement);
-      }
-      mutated.push(mutatedMovement);
-    }
-  }
-
-  return mutated;
-}
-
 /**
  * Represents a mutation rule for an engine.
  *
@@ -156,10 +66,128 @@ export default class EngineMutationRule extends MutationRule {
 
     const descriptor = genotype.engine.descriptor;
 
-    descriptor.initial = mutateMovements(this.options, genotype, descriptor.initial);
-    descriptor.movements = mutateMovements(this.options, genotype, descriptor.movements);
+    descriptor.initial = this.mutateMovements(genotype, descriptor.initial);
+    descriptor.movements = this.mutateMovements(genotype, descriptor.movements);
 
     return genotype;
+  }
+
+  /**
+   * Mutates a list of movements.
+   *
+   * @protected
+   * @param {Genotype} genotype
+   * @param {Array<MovementDescriptor>} movements The movements
+   * @return {Array<MovementDescriptor>} The mutated movements
+   */
+  mutateMovements(genotype, movements) {
+
+    const length = movements.length;
+    const mutated = [];
+
+    for (let i = 0; i < length; i++) {
+
+      if (this.shouldMutate(this.options.add)) {
+        mutated.push(makeRandomMovementDescriptor());
+      }
+
+      if (!this.shouldMutate(this.options.remove)) {
+
+        const movement = movements[i];
+        let mutatedMovement;
+
+        if (isCompoundMovement(movement)) {
+          mutatedMovement = this.mutateCompoundMovement(genotype, movement);
+        } else {
+          mutatedMovement = this.mutateSingleMovement(genotype, movement);
+        }
+        mutated.push(mutatedMovement);
+      }
+    }
+
+    return mutated;
+  }
+
+  /**
+   * Mutates a compound movement.
+   *
+   * @param {Genotype} genotype
+   * @param {MovementDescriptor} movement
+   * @return {MovementDescriptor}
+   */
+  mutateCompoundMovement(genotype, movement) {
+
+    movement.id = random.pick(['all', 'one']);
+    movement.params = this.mutateMovements(genotype, movement.params);
+
+    return movement;
+  }
+
+  /**
+   * Mutates a single movement.
+   *
+   * @param {Genotype} genotype
+   * @param {MovementDescriptor} movement
+   * @return {MovementDescriptor}
+   */
+  mutateSingleMovement(genotype, movement) {
+    movement.lens = this.mutateSingleLens(genotype, movement.lens);
+    return this.mutateSingleParams(genotype, movement);
+  }
+
+  /**
+   * Mutates a lens of a single movement.
+   *
+   * @param {Genotype} genotype
+   * @param {LensDescriptor} lens
+   * @return {LensDescriptor}
+   */
+  mutateSingleLens(genotype, lens) {
+
+    if (this.shouldMutate(this.options.lens.index)) {
+      lens.index = random.pick(range(0, 3));
+    }
+    if (this.shouldMutate(this.options.lens.side)) {
+      lens.side = random.pick(values(Sides));
+    }
+    if (this.shouldMutate(this.options.lens.type)) {
+      lens.type = random.pick(values(Types));
+    }
+
+    return lens;
+  }
+
+  /**
+   * Mutates the parameters of a single movement.
+   *
+   * @param {Genotype} genotype
+   * @param {MovementDescriptor} movement
+   * @return {MovementDescriptor}
+   */
+  mutateSingleParams(genotype, movement) {
+
+    if (!movement.params || !movement.params.length) {
+      return movement;
+    }
+
+    const bounds = getMovement(movement.id).bounds;
+
+    switch (movement.id) {
+
+      case 'sta':
+      case 'sts':
+        const step = this.options.movement[movement.id].step;
+        movement.params = movement.params.map((p, i) => this.mutateNumeric(p, step, bounds[i]));
+        break;
+
+      case 'stm':
+      case 'utl':
+        movement.params = [random.pick(bounds)];
+        break;
+
+    }
+
+    return movement;
   }
 
 }
