@@ -46,7 +46,12 @@ export default class DiversityCalculator {
     const punktStreuung = normSquaredDiversityVectors.reduce(sumUp, 0.0) / diversityVectors.size;
     return punktStreuung;
   }
-
+  /**
+   * tail-recurisve function which counts all different types of movements.
+   * @param  {List} movements [description]
+   * @param  {Object} count     [accumulator of count]
+   * @return {Object}           [count]
+   */
   static countMovements(movements, count) {
     const newCount = List(movements).reduce(({countMovement, countCompound}, movement) => {
       if (isCompoundMovement(movement)) {
@@ -57,7 +62,11 @@ export default class DiversityCalculator {
     }, count);
     return newCount;
   }
-
+  /**
+   * Creates one diversity vector
+   * @param  {Genotype} individual [genotype of the individual]
+   * @return {Object}            [the diversity vector]
+   */
   static createDiversityVector(individual) {
     // only use 0,2,4 because legs are symetrical
     const normLegPairDistance0 = norm(view(lensBodyHipJointPositionsNth(0), individual));

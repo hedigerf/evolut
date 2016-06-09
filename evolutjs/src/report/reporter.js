@@ -2,9 +2,16 @@ import { createTimePrefix, report } from '../util/path';
 import { List, Range } from 'immutable';
 import DiversityCalculator from './diversityCalculator';
 import fs from 'graceful-fs';
-
+/**
+ * Responsible for creating and handling reports.
+ */
 export default class Reporter {
-
+  /**
+   * [Creates the ReportFile an returns the path of it]
+   * @param  {string} reportName [the name of the report]
+   * @param  {string} prefix     [optional parameter, defaulted to current time]
+   * @return {string}            [the file path]
+   */
   static createReportFile(reportName, prefix = createTimePrefix()) {
 
     const fileName = prefix + '_' + reportName + '.txt';
@@ -17,7 +24,10 @@ export default class Reporter {
     });
     return filePath;
   }
-
+  /**
+   * Creates the FitnessGrapBestReport
+   * @return {Function} [function which is able to append to the report file]
+   */
   static createFitnessGraphBestReport() {
     const reportName = 'fitness_graph_best_report';
     const pathToReport = this.createReportFile(reportName);
@@ -27,7 +37,10 @@ export default class Reporter {
     };
     return reporterFunction;
   }
-
+  /**
+   * Creates the FitnessGraphAveragerReport
+   * @return {Function} [function which is able to append to the report file]
+   */
   static createFitnessGraphAveragerReport(reportName) {
     const pathToReport = this.createReportFile(reportName);
     const reporterFunction = (population)  => {
@@ -38,7 +51,10 @@ export default class Reporter {
     };
     return reporterFunction;
   }
-
+  /**
+   * Creates the FitnessGraphAveragerReportBodyPoints
+   * @return {Function} [function which is able to append to the report file]
+   */
   static createFitnessGraphAveragerReportBodyPoints() {
     const bpRange = List(Range(4, 9));
     const reporterFunctions = bpRange.map((bpCount) =>
@@ -51,7 +67,10 @@ export default class Reporter {
     };
     return f;
   }
-
+  /**
+   * Creates the genotypeBlueprintREport
+   * @return {Function} [function which is able to append to the report file]
+   */
   static createGenotypeBlueprintReport() {
     const prefix = createTimePrefix();
     const reportBaseName = 'genotype_blue_print_report';
@@ -66,7 +85,10 @@ export default class Reporter {
     };
     return reporterFunction;
   }
-
+  /**
+   * Creates the diveristyReport
+   * @return {Function} [function which is able to append to the report file]
+   */
   static createDiversityReport() {
     const reportName = 'diversity_report';
     const pathToReport = this.createReportFile(reportName);
@@ -76,7 +98,10 @@ export default class Reporter {
     };
     return reporterFunction;
   }
-
+  /**
+   * Creates all reports
+   * @return {[type]} [function which is able to append to all report files]
+   */
   static createReports() {
     const reportingFunctionList = List.of(
       this.createFitnessGraphAveragerReport('fitness_graph_average_report'),
@@ -86,11 +111,20 @@ export default class Reporter {
       reportingFunctionList.forEach((reportingFunction) => reportingFunction(population));
     };
   }
-
+  /**
+   * Creates a string which represents a coordinate
+   * @param  {string} x [y-cord.]
+   * @param  {string} y [x-cord.]
+   * @return {string}   [coordinate as string]
+   */
   static createGraphCoordStr(x, y) {
     return '(' + x + ',' +  y + ')';
   }
-
+  /**
+   * Appends a string to a report
+   * @param  {string} pathToReport [path to the report]
+   * @param  {string} str          [string to append]
+   */
   static appendToReport(pathToReport, str) {
     fs.appendFile(pathToReport, str,  (err) => {
       if (err) {
