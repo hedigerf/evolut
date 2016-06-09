@@ -7,20 +7,46 @@
  */
 
 import './menu';
-import { app, BrowserWindow, ipcMain } from 'electron';
-import { debug, error, info } from '../util/logUtil';
-import { List, Range } from 'immutable';
-import { path as appRoot } from 'app-root-path';
+import {
+  app, BrowserWindow, ipcMain
+}
+from 'electron';
+import {
+  debug, error, info
+}
+from '../util/logUtil';
+import {
+  List, Range
+}
+from 'immutable';
+import {
+  path as appRoot
+}
+from 'app-root-path';
 import config from './config';
-import { curry } from 'ramda';
+import {
+  curry
+}
+from 'ramda';
 import fs from 'graceful-fs';
-import { getLogger } from './log.js';
-import InitialPopulationGenerator from '../algorithm/population/initialPopulationGenerator';
-import { load } from '../util/path';
+import {
+  getLogger
+}
+from './log.js';
+import InitialPopulationGenerator from
+  '../algorithm/population/initialPopulationGenerator';
+import {
+  load
+}
+from '../util/path';
 import ParcourGenerator from '../algorithm/parcour/parcourGenerator';
 import Reporter from '../report/reporter';
-import TournamentBasedSelectionStrategy from '../algorithm/selection/tournamentBasedSelectionStrategy';
-import { Worker } from './ipc';
+import TournamentBasedSelectionStrategy from
+  '../algorithm/selection/tournamentBasedSelectionStrategy';
+import {
+  Worker
+}
+from './ipc';
 
 /**
  * Main application html file.
@@ -43,7 +69,8 @@ const maxSlopeStep = config('parcour.maxSlopeStep');
 const highestYStep = config('parcour.highestYStep');
 const limitSlope = config('parcour.limitSlope');
 // Find common solution with = 1, evolve evolvability with switchParcourAfterGeneration = increaseDifficultyAfter
-const switchParcourAfterGeneration = config('algorithm.switchParcourAfterGeneration');
+const switchParcourAfterGeneration = config(
+  'algorithm.switchParcourAfterGeneration');
 const reporters = Reporter.createReports();
 
 let parcour;
@@ -72,7 +99,8 @@ export function startWorker() {
   return worker;
 }
 
-function distributeInitialWork(ipcQueue, initialPopulation, options, worker, index) {
+function distributeInitialWork(ipcQueue, initialPopulation, options, worker,
+  index) {
   info(logger, 'starting to distribute inital work...');
   worker.webContents.on('did-finish-load', () => {
     distributeWork(ipcQueue, initialPopulation, options, worker, index);
@@ -92,16 +120,23 @@ function distributeWork(ipcQueue, population, options, worker, index) {
   const start = index * partialPopulationSize;
   const end = (index + 1) * partialPopulationSize;
   const partialPopulation = population.individuals.slice(start, end);
-  info(logger, 'distribute work.. partial population size: ' + partialPopulation.size);
+  info(logger, 'distribute work.. partial population size: ' +
+    partialPopulation.size);
   const stringified = partialPopulation.toArray().map((x) => JSON.stringify(x));
-  worker.webContents.send(ipcQueue, stringified, population.generationCount, options);
+  worker.webContents.send(ipcQueue, stringified, population.generationCount,
+    options);
 }
-
+/**
+ * Peforms all steps of the postprocession
+ * @param  {Population} population [the population to process]
+ */
 function performSimulationPostprocessing(population) {
-  info(logger, 'starting postprocessing with populationSize: ' + population.individuals.size);
+  info(logger, 'starting postprocessing with populationSize: ' + population.individuals
+    .size);
   reporters(population);
   info(logger, 'reporting done');
-  const selectionStrategy = new TournamentBasedSelectionStrategy(kTournamentBasedSelection);
+  const selectionStrategy = new TournamentBasedSelectionStrategy(
+    kTournamentBasedSelection);
   const selected = selectionStrategy.select(population);
   debug(logger, 'selected individuals size: ' + selected.individuals.size);
   info(logger, 'selection done');
@@ -115,7 +150,7 @@ function performSimulationPostprocessing(population) {
  * @param {Population} population The population to be mutated
  */
 function mutate(population) {
-  const distributor = curry(distributeWork)(Worker.MutationReceive, population, { });
+  const distributor = curry(distributeWork)(Worker.MutationReceive, population, {});
   workers.forEach(distributor);
 }
 
@@ -132,7 +167,11 @@ function prepareDistributor(distributeWork, population) {
     parcour = ParcourGenerator.generateParcour(maxSlope, highestY);
   }
   const distributor = curry(distributeWork)(
-    Worker.Receive, population, { parcour: JSON.stringify(parcour), maxSlope, highestY }
+    Worker.Receive, population, {
+      parcour: JSON.stringify(parcour),
+      maxSlope,
+      highestY
+    }
   );
   return distributor;
 }
@@ -167,7 +206,10 @@ function loadInitialPopulationFromFile() {
     .take(populationSize);
   generationCounter = initialPopulation.generationCount;
 
-  return { generationCount: initialPopulation.generationCount, individuals: shrinked};
+  return {
+    generationCount: initialPopulation.generationCount,
+    individuals: shrinked
+  };
 }
 
 /**
@@ -178,7 +220,8 @@ function loadInitialPopulationFromFile() {
 function createRandomInitialPopulation() {
 
   const bounds = Range(bodyPointsMin, bodyPointsMax + 1);
-  const initialPopulationGenerator = new InitialPopulationGenerator(bounds, populationSize);
+  const initialPopulationGenerator = new InitialPopulationGenerator(bounds,
+    populationSize);
 
   return initialPopulationGenerator.generateInitialPopulation();
 }
@@ -188,12 +231,15 @@ function createRandomInitialPopulation() {
  */
 ipcMain.on(Worker.Finished, (event, individualsStringified, uuid) => {
   finishedWorkCounter++;
-  debug(logger, 'received work finished from ' + uuid + '. finishedWorkCounter: ' + finishedWorkCounter);
+  debug(logger, 'received work finished from ' + uuid +
+    '. finishedWorkCounter: ' + finishedWorkCounter);
   const partialPopulation = individualsStringified.map((x) => JSON.parse(x));
   individuals = individuals.concat(partialPopulation);
   if (finishedWorkCounter % workerCount === 0) {
     debug(logger, 'population complete again.');
-    const population = { individuals, generationCount: generationCounter};
+    const population = {
+      individuals, generationCount: generationCounter
+    };
     performSimulationPostprocessing(population);
   }
 });
@@ -204,7 +250,8 @@ ipcMain.on(Worker.Finished, (event, individualsStringified, uuid) => {
 ipcMain.on(Worker.MutationFinished, (event, individualsStringified, uuid) => {
   finishedMutationWorkCounter++;
   debug(logger,
-    'received work finished mutation from ' + uuid + ' finishedMutationWorkCounter: ' + finishedMutationWorkCounter
+    'received work finished mutation from ' + uuid +
+    ' finishedMutationWorkCounter: ' + finishedMutationWorkCounter
   );
   const partialPopulation = individualsStringified.map((x) => JSON.parse(x));
   individualsMutation = individualsMutation.concat(partialPopulation);
@@ -217,7 +264,10 @@ ipcMain.on(Worker.MutationFinished, (event, individualsStringified, uuid) => {
       highestY = highestY + highestYStep;
     }
 
-    const options = { individuals: individualsMutation, generationCount: generationCounter};
+    const options = {
+      individuals: individualsMutation,
+      generationCount: generationCounter
+    };
     const distributor = prepareDistributor(distributeWork, options);
     workers.forEach(distributor);
 
@@ -231,7 +281,7 @@ ipcMain.on(Worker.MutationFinished, (event, individualsStringified, uuid) => {
  * Defines the behaviour when all windows are closed.
  * On platforms which run mac osx (darwin) the application should not quit.
  */
-app.on('window-all-closed', () =>  {
+app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
@@ -248,6 +298,7 @@ app.on('ready', () => {
   const workerRange = List(Range(0, workerCount));
   workers = workerRange.map(() => startWorker());
   const initialPopulation = createInitalPopulation();
-  const distributor = prepareDistributor(distributeInitialWork, initialPopulation);
+  const distributor = prepareDistributor(distributeInitialWork,
+    initialPopulation);
   workers.forEach(distributor);
 });
