@@ -1,14 +1,14 @@
 {
   "algorithm": {
     "populationSize": 10,
-    "loadPopulationFromFile": true,
+    "loadPopulationFromFile": false,
     "switchParcourAfterGeneration": 1
   },
   "parcour": {
-    "startMaxSlope": 0.02,
+    "startMaxSlope": 0,
     "maxSlopeStep": 0.01,
     "limitSlope": 1,
-    "startHighestY": 0.04,
+    "startHighestY": 0,
     "highestYStep": 0.02,
     "increaseDifficultyAfter": 100
   },
@@ -16,16 +16,10 @@
     "count": 1
   },
   "simulation": {
-    "evaluateAfterTickCount": 2000,
-    "solo": true,
     "runDuration": 30,
     "timeOut": true,
     "trackY": false,
     "trackBestIndividual": true,
     "render": true
-  },
-  "window": {
-	"height": 1130,
-	"width": 1920
   }
 }
