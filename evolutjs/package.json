@@ -42,7 +42,7 @@
     "babel-register": "^6.7.2",
     "graceful-fs": "^4.1.3",
     "immutable" : "^3.7.6",
-    "jquery": "^2.2.3",
+    "jquery": "3.3.1",
     "log4js": "^0.6.33",
     "mathjs": "latest",
     "moment": "latest",
